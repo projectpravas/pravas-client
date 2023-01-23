@@ -15,13 +15,14 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { styled } from "@mui/material/styles";
 import routes from "../../shared/routes/FrontendRoutes";
 import { NavLink as NLink, Link, useNavigate } from "react-router-dom";
+import { Grid } from "@mui/material";
 
 const pages = ["Contact Us", "Blogs", "Pravas", "About Us", "Home"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const NavLink = styled(NLink)`
   text-decoration: none;
-  margin-right: 10px;
+  margin-right: 30px;
 `;
 
 const Header = () => {
@@ -87,6 +88,7 @@ const Header = () => {
                     to={route.path}
                     style={({ isActive }) => ({
                       color: isActive ? "grey" : "black",
+                      borderBottom: isActive ? "3px solid #27488d" : "",
                     })}
                   >
                     {route.label}
@@ -94,7 +96,7 @@ const Header = () => {
                 </MenuItem>
               ))}
             </Menu>
-            <Container style={{ width: "15%", margin: "15px" }}>
+            <Container style={{ width: "30%", margin: "15px" }}>
               <img
                 src="PTSM-LOGO.png"
                 style={{ width: "100%", height: "100%" }}
@@ -105,7 +107,12 @@ const Header = () => {
           <Box
             sx={{
               flexGrow: 1,
-              display: { xs: "none", md: "flex", alignItems: "center" },
+              display: {
+                xs: "none",
+                md: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              },
             }}
           >
             <Container style={{ width: "15%", margin: "15px" }}>
@@ -114,18 +121,23 @@ const Header = () => {
                 style={{ width: "100%", height: "100%" }}
               />
             </Container>
-            {routes.map((route, i) => (
-              <NavLink
-                key={route.path + i}
-                sx={{ color: "#fff" }}
-                to={route.path}
-                style={({ isActive }) => ({
-                  color: isActive ? "grey" : "black",
-                })}
-              >
-                {route.label}
-              </NavLink>
-            ))}
+            <Grid container sx={{ justifyContent: "right" }}>
+              <Grid item>
+                {routes.map((route, i) => (
+                  <NavLink
+                    key={route.path + i}
+                    sx={{ color: "#fff" }}
+                    to={route.path}
+                    style={({ isActive }) => ({
+                      color: isActive ? "grey" : "black",
+                      borderBottom: isActive ? "3px solid #27488d" : "",
+                    })}
+                  >
+                    {route.label}
+                  </NavLink>
+                ))}
+              </Grid>
+            </Grid>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
