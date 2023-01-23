@@ -12,9 +12,17 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { styled } from "@mui/material/styles";
+import routes from "../../shared/routes/FrontendRoutes";
+import { NavLink as NLink, Link, useNavigate } from "react-router-dom";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["Contact Us", "Blogs", "Pravas", "About Us", "Home"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
+const NavLink = styled(NLink)`
+  text-decoration: none;
+  margin-right: 10px;
+`;
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -40,28 +48,9 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -71,7 +60,7 @@ const Header = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon />
+              <MenuIcon sx={{ color: "black" }} />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -91,41 +80,51 @@ const Header = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+              {routes.map((route, i) => (
+                <MenuItem key={route.path + i} onClick={handleCloseNavMenu}>
+                  <NavLink
+                    sx={{ color: "#fff" }}
+                    to={route.path}
+                    style={({ isActive }) => ({
+                      color: isActive ? "grey" : "black",
+                    })}
+                  >
+                    {route.label}
+                  </NavLink>
                 </MenuItem>
               ))}
             </Menu>
+            <Container style={{ width: "15%", margin: "15px" }}>
+              <img
+                src="PTSM-LOGO.png"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </Container>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
+
+          <Box
             sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
               flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
+              display: { xs: "none", md: "flex", alignItems: "center" },
             }}
           >
-            LOGO
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
+            <Container style={{ width: "15%", margin: "15px" }}>
+              <img
+                src="PTSM-LOGO.png"
+                style={{ width: "100%", height: "100%" }}
+              />
+            </Container>
+            {routes.map((route, i) => (
+              <NavLink
+                key={route.path + i}
+                sx={{ color: "#fff" }}
+                to={route.path}
+                style={({ isActive }) => ({
+                  color: isActive ? "grey" : "black",
+                })}
               >
-                {page}
-              </Button>
+                {route.label}
+              </NavLink>
             ))}
           </Box>
 
