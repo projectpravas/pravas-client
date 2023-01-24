@@ -211,7 +211,6 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
       >
         <Grid
           container
-          xs={12}
           sx={{
             m: 0,
             p: { xs: 0, sm: 2 },
