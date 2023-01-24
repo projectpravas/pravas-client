@@ -18,6 +18,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import {
   Avatar,
   Container,
@@ -26,6 +27,7 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
+import Footer from "../../ui/footer/Footer";
 
 const drawerWidth = 240;
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -155,10 +157,7 @@ const Sidebar = () => {
                 <Box sx={{ flexGrow: 0 }}>
                   <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <Avatar
-                        alt="Remy Sharp"
-                        src="/static/images/avatar/2.jpg"
-                      />
+                      <ManageAccountsIcon fontSize="large" />
                     </IconButton>
                   </Tooltip>
                   <Menu
@@ -281,6 +280,7 @@ const Sidebar = () => {
           eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
+        <Footer />
       </Box>
     </Box>
   );
