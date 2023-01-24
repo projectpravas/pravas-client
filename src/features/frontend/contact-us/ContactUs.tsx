@@ -7,7 +7,21 @@ import OfficeLocations from "./OfficeLocations";
 interface IContactUsProps {}
 
 const ContactUs: React.FunctionComponent<IContactUsProps> = (props) => {
-  return <></>;
+  return (
+    <>
+      <h2>Contact Us</h2>
+      <Container>
+        <Grid container spacing={5}>
+          <Grid item sx={{ mt: 10 }}>
+            <FeelFreeToContact />
+          </Grid>
+          <Grid item sx={{ mt: 10 }}>
+            <OfficeLocations />
+          </Grid>
+        </Grid>
+      </Container>
+    </>
+  );
 };
 
 export default ContactUs;
