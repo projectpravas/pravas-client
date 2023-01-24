@@ -16,6 +16,7 @@ import { styled } from "@mui/material/styles";
 import routes from "../../shared/routes/FrontendRoutes";
 import { NavLink as NLink, Link, useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 const pages = ["Contact Us", "Blogs", "Pravas", "About Us", "Home"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -143,7 +144,7 @@ const Header = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <PersonAddAlt1Icon fontSize="large" />
               </IconButton>
             </Tooltip>
             <Menu

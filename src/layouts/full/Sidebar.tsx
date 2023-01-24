@@ -18,9 +18,19 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import { Container } from "@mui/material";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import {
+  Avatar,
+  Container,
+  Grid,
+  Menu,
+  MenuItem,
+  Tooltip,
+} from "@mui/material";
+import Footer from "../../ui/footer/Footer";
 
 const drawerWidth = 240;
+const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -103,10 +113,22 @@ const Sidebar = () => {
     setOpen(false);
   };
 
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: "white" }}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -118,13 +140,51 @@ const Sidebar = () => {
               ...(open && { display: "none" }),
             }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: "black" }} />
           </IconButton>
-          <Container style={{ width: "10%", margin: "15px" }}>
-            <img
-              src="PTSM-LOGO.png"
-              style={{ width: "100%", height: "100%" }}
-            />
+          <Container>
+            <Grid
+              container
+              sx={{ alignItems: "center", justifyContent: "space-between" }}
+            >
+              <Grid item style={{ width: "10%", margin: "15px" }}>
+                <img
+                  src="PTSM-LOGO.png"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </Grid>
+              <Grid item>
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <ManageAccountsIcon fontSize="large" />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {settings.map((setting) => (
+                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                        <Typography textAlign="center">{setting}</Typography>
+                      </MenuItem>
+                    ))}
+                  </Menu>
+                </Box>
+              </Grid>
+            </Grid>
           </Container>
         </Toolbar>
       </AppBar>
@@ -220,6 +280,7 @@ const Sidebar = () => {
           eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
+        <Footer />
       </Box>
     </Box>
   );
