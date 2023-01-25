@@ -6,7 +6,6 @@ import Avatar from "@mui/material/Avatar";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import { Link as MLink } from "@mui/material";
 import Paper from "@mui/material/Paper";
-
 import ContactForm from "./ContactForm";
 import { styled } from "@mui/material/styles";
 
@@ -38,8 +37,8 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
                   </Box>
                   <Box
                     sx={{
-                      fontSize: 35,
-                      fontWeight: 700,
+                      fontSize: 34,
+                      fontWeight: 900,
                     }}
                   >
                     Feel Free to Contact
@@ -61,7 +60,10 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
                     container
                     sx={{
                       flexDirection: { xs: "column", md: "row" },
-                      justifyContent: { xs: "space-between" },
+                      justifyContent: {
+                        xs: "space-between",
+                        md: "space-around",
+                      },
                       alignItems: { xs: "center" },
                       textAlign: { xs: "center", md: "left" },
                     }}
@@ -210,7 +212,6 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
             </Grid>
           </Grid>
           {/* contact us form (Right Section) */}
-
           <Grid item xs={12} md={8} sx={{ px: 2, mt: { xs: 4, md: 0 } }}>
             <ContactForm />
           </Grid>
