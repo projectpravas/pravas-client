@@ -143,50 +143,49 @@ const Sidebar = () => {
           >
             <MenuIcon sx={{ color: "black" }} />
           </IconButton>
-          <Container>
-            <Grid
-              container
-              sx={{ alignItems: "center", justifyContent: "space-between" }}
-            >
-              <Grid item style={{ width: "10%", margin: "15px" }}>
-                <img
-                  src="PTSM-LOGO.png"
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </Grid>
-              <Grid item>
-                <Box sx={{ flexGrow: 0 }}>
-                  <Tooltip title="Open settings">
-                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                      <ManageAccountsIcon fontSize="large" />
-                    </IconButton>
-                  </Tooltip>
-                  <Menu
-                    sx={{ mt: "45px" }}
-                    id="menu-appbar"
-                    anchorEl={anchorElUser}
-                    anchorOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    keepMounted
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right",
-                    }}
-                    open={Boolean(anchorElUser)}
-                    onClose={handleCloseUserMenu}
-                  >
-                    {settings.map((setting) => (
-                      <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                        <Typography textAlign="center">{setting}</Typography>
-                      </MenuItem>
-                    ))}
-                  </Menu>
-                </Box>
-              </Grid>
+
+          <Grid
+            container
+            sx={{ alignItems: "center", justifyContent: "space-between" }}
+          >
+            <Grid item style={{ width: "10%", margin: "15px" }}>
+              <img
+                src="PTSM-LOGO.png"
+                style={{ width: "100%", height: "100%" }}
+              />
             </Grid>
-          </Container>
+            <Grid item>
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <ManageAccountsIcon fontSize="large" />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
