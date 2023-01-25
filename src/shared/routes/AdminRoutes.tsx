@@ -4,7 +4,7 @@ import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
-import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import PeopleIcon from "@mui/icons-material/People";
 
 const Tours = lazy(() => import("../../features/admin/tours/Tours"));
 const Dashboard = lazy(
@@ -59,7 +59,7 @@ export default [
   {
     label: "Users",
     component: <Users />,
-    icon: <PeopleOutlineIcon />,
+    icon: <PeopleIcon />,
     path: "users",
     showInMenu: true,
     roles: ["admin", "superadmin"],
