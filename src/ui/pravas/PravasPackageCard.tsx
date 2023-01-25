@@ -1,21 +1,25 @@
 import * as React from "react";
+import useState from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import Box from "@mui/material/Box";
 
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Dialog from "@mui/material/Dialog";
 
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import { Link } from "react-router-dom";
+
+import { Link, Routes, Route } from "react-router-dom";
 
 import { styled } from "@mui/system";
+import LocationClick from "./LocationClick";
 
 const NLink = styled(Grid)({
   "&:hover": {
@@ -46,6 +50,25 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
       xl: "1.4rem",
     },
   };
+
+  // Dialog open
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  // //   corousel Click...
+
+  // const [index, setIndex] = useState<number>(0);
+
+  // const handleSelect = (selectIndex: number, e: any) => {
+  //   setIndex(selectIndex);
+  // };
 
   return (
     <Container>
@@ -107,7 +130,12 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
                 }}
               >
                 <Typography sx={{ color: "#673ab9", mt: 3 }}>
-                  <AddAPhotoOutlinedIcon />
+                  <IconButton onClick={handleClickOpen}>
+                    <AddAPhotoOutlinedIcon />
+                  </IconButton>
+                  <Dialog open={open} onClose={handleClose}>
+                    <LocationClick />
+                  </Dialog>
                 </Typography>
               </Grid>
             </Grid>
