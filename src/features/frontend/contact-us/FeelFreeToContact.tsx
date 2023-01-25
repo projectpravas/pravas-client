@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -7,9 +7,8 @@ import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
 import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
+
+import ContactForm from "./ContactForm";
 
 interface IFeelFreeToContactProps {}
 
@@ -162,67 +161,9 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
             </Grid>
           </Grid>
           {/* contact us form (Right Section) */}
+
           <Grid item xs={12} md={8} sx={{ px: 2 }}>
-            <Grid container spacing={4}>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  id="outlined-basic"
-                  label="Your Name"
-                  variant="outlined"
-                  type="text"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  id="outlined-basic"
-                  label="Email Address"
-                  variant="outlined"
-                  type="email"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  id="outlined-basic"
-                  label="Phone Number"
-                  variant="outlined"
-                  sx={{ bgcolor: "faf5ee" }}
-                  type="tel"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <TextField
-                  id="outlined-basic"
-                  label="Subject"
-                  variant="outlined"
-                  type="text"
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="outlined-basic"
-                  label="Write Message"
-                  variant="outlined"
-                  type="text"
-                  fullWidth
-                  multiline
-                  rows={4}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  type="submit"
-                  endIcon={<SendIcon />}
-                >
-                  SEND A MESSAGE
-                </Button>
-              </Grid>
-            </Grid>
+            <ContactForm />
           </Grid>
         </Grid>
       </Container>

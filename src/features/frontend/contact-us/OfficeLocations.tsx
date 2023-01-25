@@ -4,7 +4,6 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Avatar from "@mui/material/Avatar";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-import { display } from "@mui/system";
 
 interface IOfficeLocationsProps {}
 
@@ -68,7 +67,7 @@ const OfficeLocations: React.FunctionComponent<IOfficeLocationsProps> = (
                 borderRadius: 2,
               }}
             >
-              <Grid xs={12} md={2}>
+              <Grid item xs={12} md={2}>
                 <Avatar
                   sx={{
                     width: 50,
@@ -83,7 +82,7 @@ const OfficeLocations: React.FunctionComponent<IOfficeLocationsProps> = (
                   <LocationOnOutlinedIcon />
                 </Avatar>
               </Grid>
-              <Grid xs={12} md={10}>
+              <Grid item xs={12} md={10}>
                 <Box
                   sx={{
                     color: "#fff",

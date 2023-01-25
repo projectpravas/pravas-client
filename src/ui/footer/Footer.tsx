@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { NavLink as NLink } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import List from "@mui/material/List";
+import Link from "@mui/material/Link";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import { styled } from "@mui/material";
@@ -18,7 +19,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
-const Link = styled(NLink)({
+const NavLink = styled(NLink)({
   textDecoration: "none",
   color: "#fff",
 });
@@ -49,7 +50,7 @@ const SocialMediaIconsGrid = (icon: ReactJSXElement, linkPath: string) => {
   return (
     <Grid item sx={{ p: 1 }}>
       <Avatar sx={{ backgroundColor: "#e0e0e0" }}>
-        <a href={linkPath}>{icon}</a>
+        <Link href={linkPath}>{icon}</Link>
       </Avatar>
     </Grid>
   );
@@ -83,13 +84,13 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                     maxWidth: "70%",
                   }}
                 >
-                  <Link to="https://pravasthejourney.com/">
+                  <NavLink to="https://pravasthejourney.com/">
                     <Box
                       component="img"
                       sx={{ width: { xs: "70%", sm: "100%" } }}
                       src="https://pravasthejourney.com/wp-content/uploads/2021/08/Pravas-Tourism-footer.png"
                     />
-                  </Link>
+                  </NavLink>
                 </Box>
                 <Divider color="#888" />
                 <Grid
@@ -102,19 +103,19 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                   <Grid item sx={{ mr: 2 }}>
                     <PhoneIcon />
                   </Grid>
-                  <a
+                  <Link
                     href={`tel:${"+91 72619 88688"}`}
                     style={{ textDecoration: "none", color: "#fff" }}
                   >
                     +91 72619 88688
-                  </a>
+                  </Link>
                 </Grid>
                 <Grid container sx={{ flexWrap: "nowrap" }}>
                   <Grid item sx={{ mr: 2 }}>
                     <EmailIcon />
                   </Grid>
 
-                  <a
+                  <Link
                     href={`mailTo:${"travel@pravasthejourney.com"}`}
                     style={{
                       textDecoration: "none",
@@ -123,7 +124,7 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                     }}
                   >
                     travel@pravasthejourney.com
-                  </a>
+                  </Link>
                 </Grid>
               </Box>
             </>,
@@ -134,17 +135,17 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                 <List dense={true}>
                   <ListItem>
                     <ListItemText>
-                      <Link to="#">Privacy Policy</Link>
+                      <NavLink to="#">Privacy Policy</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <Link to="#">Cancellation Policy</Link>
+                      <NavLink to="#">Cancellation Policy</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <Link to="#">Terms & Conditions</Link>
+                      <NavLink to="#">Terms & Conditions</NavLink>
                     </ListItemText>
                   </ListItem>
                 </List>
@@ -182,17 +183,17 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                 <List dense={true}>
                   <ListItem>
                     <ListItemText>
-                      <Link to="#">About</Link>
+                      <NavLink to="#">About</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <Link to="#">Pravas</Link>
+                      <NavLink to="#">Pravas</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <Link to="#">Contact</Link>
+                      <NavLink to="#">Contact</NavLink>
                     </ListItemText>
                   </ListItem>
                 </List>
