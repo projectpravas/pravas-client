@@ -1,4 +1,6 @@
 import { lazy } from "react";
+import Login from "../../features/frontend/auth/Login";
+import Register from "../../features/frontend/auth/Register";
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
 const ContactUs = lazy(
@@ -42,5 +44,19 @@ export default [
     path: "contact-us",
     showInMenu: true,
     hasAuthenticate: "all",
+  },
+  {
+    label: "Login",
+    component: <Login />,
+    path: "login",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Register",
+    component: <Register />,
+    path: "register",
+    showInMenu: false,
+    hasAuthenticate: "no",
   },
 ];
