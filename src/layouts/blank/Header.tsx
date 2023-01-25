@@ -19,7 +19,7 @@ import { Grid } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 const pages = ["Contact Us", "Blogs", "Pravas", "About Us", "Home"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = ["Login", "Register"];
 
 const NavLink = styled(NLink)`
   text-decoration: none;
@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "primary" }}>
+    <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -82,20 +82,22 @@ const Header = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {routes.map((route, i) => (
-                <MenuItem key={route.path + i} onClick={handleCloseNavMenu}>
-                  <NavLink
-                    sx={{ color: "#fff" }}
-                    to={route.path}
-                    style={({ isActive }) => ({
-                      color: isActive ? "grey" : "black",
-                      borderBottom: isActive ? "3px solid #27488d" : "",
-                    })}
-                  >
-                    {route.label}
-                  </NavLink>
-                </MenuItem>
-              ))}
+              {routes
+                .filter((route) => route.showInMenu)
+                .map((route, i) => (
+                  <MenuItem key={route.path + i} onClick={handleCloseNavMenu}>
+                    <NavLink
+                      sx={{ color: "#fff" }}
+                      to={route.path}
+                      style={({ isActive }) => ({
+                        color: isActive ? "grey" : "black",
+                        borderBottom: isActive ? "3px solid #27488d" : "",
+                      })}
+                    >
+                      {route.label}
+                    </NavLink>
+                  </MenuItem>
+                ))}
             </Menu>
             <Container style={{ width: "30%", margin: "15px" }}>
               <img
@@ -124,19 +126,21 @@ const Header = () => {
             </Container>
             <Grid container sx={{ justifyContent: "right" }}>
               <Grid item>
-                {routes.map((route, i) => (
-                  <NavLink
-                    key={route.path + i}
-                    sx={{ color: "#fff" }}
-                    to={route.path}
-                    style={({ isActive }) => ({
-                      color: isActive ? "grey" : "black",
-                      borderBottom: isActive ? "3px solid #27488d" : "",
-                    })}
-                  >
-                    {route.label}
-                  </NavLink>
-                ))}
+                {routes
+                  .filter((route) => route.showInMenu)
+                  .map((route, i) => (
+                    <NavLink
+                      key={route.path + i}
+                      sx={{ color: "#fff" }}
+                      to={route.path}
+                      style={({ isActive }) => ({
+                        color: isActive ? "grey" : "black",
+                        borderBottom: isActive ? "3px solid #27488d" : "",
+                      })}
+                    >
+                      {route.label}
+                    </NavLink>
+                  ))}
               </Grid>
             </Grid>
           </Box>
