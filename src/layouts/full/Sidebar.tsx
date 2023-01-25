@@ -27,7 +27,6 @@ import {
   MenuItem,
   Tooltip,
 } from "@mui/material";
-import Footer from "../../ui/footer/Footer";
 import SidebarMenu from "./SidebarMenu";
 import SidebarRoutes from "./SidebarRoutes";
 
@@ -238,7 +237,6 @@ const Sidebar = () => {
           eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
-        <Footer />
       </Box>
     </Box>
   );

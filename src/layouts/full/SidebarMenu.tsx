@@ -27,8 +27,7 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = (props) => {
               key={path + i}
               to={path}
               style={({ isActive }) => ({
-                color: isActive ? "#aaa" : "black",
-                borderBottom: isActive ? "3px solid #27488d" : "",
+                color: isActive ? "blue" : "black",
               })}
             >
               <ListItem
@@ -40,9 +39,24 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = (props) => {
                   <ListItemIcon
                     sx={{ minWidth: 0, justifyContent: "center", mr: 3 }}
                   >
-                    {icon}
+                    <NavLink
+                      to={path}
+                      style={({ isActive }) => ({
+                        color: isActive ? "grey" : "black",
+                      })}
+                    >
+                      {icon}
+                    </NavLink>
                   </ListItemIcon>
-                  <ListItemText primary={label} />
+                  <NavLink
+                    to={path}
+                    style={({ isActive }) => ({
+                      color: isActive ? "grey" : "black",
+                      borderBottom: isActive ? "3px solid #27488d" : "black",
+                    })}
+                  >
+                    <ListItemText primary={label} />
+                  </NavLink>
                 </ListItemButton>
               </ListItem>
             </NavLink>
