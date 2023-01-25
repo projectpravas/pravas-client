@@ -53,7 +53,12 @@ const Header = () => {
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -99,7 +104,7 @@ const Header = () => {
                   </MenuItem>
                 ))}
             </Menu>
-            <Container style={{ width: "30%", margin: "15px" }}>
+            <Container style={{ width: "40%", margin: "15px" }}>
               <img
                 src="PTSM-LOGO.png"
                 style={{ width: "100%", height: "100%" }}
