@@ -46,7 +46,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
               <Grid container spacing={4}>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    id="outlined-basic"
+                    id="name"
                     label="Your Name"
                     variant="outlined"
                     type="text"
@@ -67,7 +67,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    id="outlined-basic"
+                    id="email"
                     label="Email Address"
                     variant="outlined"
                     type="email"
@@ -85,7 +85,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    id="outlined-basic"
+                    id="mobile"
                     label="Mobile"
                     variant="outlined"
                     sx={{ bgcolor: "faf5ee" }}
@@ -104,7 +104,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <TextField
-                    id="outlined-basic"
+                    id="subject"
                     label="Subject"
                     variant="outlined"
                     type="text"
@@ -126,7 +126,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    id="outlined-basic"
+                    id="message"
                     label="Write Message"
                     variant="outlined"
                     type="text"
@@ -150,6 +150,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                 </Grid>
                 <Grid item xs={12}>
                   <Button
+                    id="contact-button"
                     type="submit"
                     variant="contained"
                     size="large"
