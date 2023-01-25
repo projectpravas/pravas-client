@@ -211,7 +211,7 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
           </Grid>
           {/* contact us form (Right Section) */}
 
-          <Grid item xs={12} md={8} sx={{ px: 2 }}>
+          <Grid item xs={12} md={8} sx={{ px: 2, mt: { xs: 4, md: 0 } }}>
             <ContactForm />
           </Grid>
         </Grid>
