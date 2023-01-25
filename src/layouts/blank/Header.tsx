@@ -50,7 +50,7 @@ const Header = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "primary" }}>
+    <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>

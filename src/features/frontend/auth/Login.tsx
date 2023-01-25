@@ -44,7 +44,7 @@ const Login = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: "80vh" }}>
         <CssBaseline />
         <Grid
           item
@@ -62,7 +62,7 @@ const Login = () => {
             backgroundPosition: "center",
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={1} square>
           <Box
             sx={{
               my: 8,
@@ -93,6 +93,7 @@ const Login = () => {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                size="small"
               />
               <TextField
                 margin="normal"
@@ -103,6 +104,7 @@ const Login = () => {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                size="small"
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
