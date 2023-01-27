@@ -1,6 +1,7 @@
 import User from "../../models/userModel";
 
 const defineInitialUser = ({
+  has_id = false,
   hasUserId = false,
   hasFirst = false,
   hasLast = false,
@@ -17,11 +18,14 @@ const defineInitialUser = ({
   hasGender = false,
   hasDob = false,
   hasPassword = false,
+  hasUserActivityDetails = false,
 }) => {
   const initialUser: User = {};
   const name: any = {};
   const address: any = {};
+  const userActivityDetails: any = {};
 
+  if (has_id) initialUser._id = "";
   if (hasUserId) initialUser.userId = undefined;
 
   if (hasFirst) name.first = "";
@@ -40,15 +44,21 @@ const defineInitialUser = ({
   if (hasStreet || hasCity || hasState || hasCountry || hasPincode)
     initialUser.address = address;
 
+  if (hasPassword) initialUser.password = "";
+
   if (hasStatus) initialUser.status = "inactive";
 
   if (hasRole) initialUser.role = "";
   if (hasAvatar) initialUser.avatar = "";
   if (hasGender) initialUser.gender = "";
-
   if (hasDob) initialUser.dob = "";
 
-  if (hasPassword) initialUser.password = "";
+  if (hasUserActivityDetails) {
+    userActivityDetails.userTimeStamp = 0;
+    userActivityDetails.sentEmailTimeStamp = 0;
+    userActivityDetails.passwordTimeStamp = 0;
+    initialUser.userActivityDetails = userActivityDetails;
+  }
 
   return initialUser;
 };

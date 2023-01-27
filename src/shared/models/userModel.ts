@@ -11,7 +11,14 @@ interface Address {
   pincode?: string;
 }
 
+interface UserActivityDetails {
+  userTimeStamp?: Number;
+  sentEmailTimeStamp?: Number;
+  passwordTimeStamp?: Number;
+}
+
 interface UserModel {
+  _id?: string;
   userId?: Number;
   name?: Name;
   mobile?: Array<Number>;
@@ -23,6 +30,7 @@ interface UserModel {
   gender?: String;
   avatar?: String | File;
   status?: String;
+  userActivityDetails?: UserActivityDetails;
 }
 
 export default UserModel;

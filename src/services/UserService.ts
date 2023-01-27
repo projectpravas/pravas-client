@@ -1,12 +1,13 @@
 import "../api/index";
 import { API, endpoints } from "../api/index";
+import User from "../shared/models/userModel";
 
 class UserService {
-  static createUser(user: object) {
+  static createUser(user: FormData | User) {
     return API.post(endpoints.api.users.create, user);
   } //createUser
 
-  static updateUser(id: string, user: object) {
+  static updateUser(id: string, user: FormData | User) {
     return API.put(endpoints.api.users.update + id, user);
   } //updateUser
 
