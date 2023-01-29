@@ -21,15 +21,15 @@ interface UserModel {
   _id?: string;
   userId?: Number;
   name?: Name;
-  mobile?: Array<Number>;
-  email?: String;
+  mobile?: string;
+  email?: string;
   address?: Address;
-  password?: String;
-  role?: String;
+  password?: string;
+  role?: string;
   dob?: Date | string;
-  gender?: String;
-  avatar?: String | File;
-  status?: String;
+  gender?: string;
+  avatar?: string | File;
+  status?: string;
   userActivityDetails?: UserActivityDetails;
 }
 

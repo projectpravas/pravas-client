@@ -25,6 +25,7 @@ const App = () => {
     <div className="App">
       <Network show={hasNetworkOffline} />
       <Toast />
+      <span id="recaptcha-container"></span>
 
       <Routes>
         <Route path="/*" element={<BlankLayout />} />

@@ -32,7 +32,7 @@ const defineInitialUser = ({
   if (hasLast) name.last = "";
   if (hasFirst || hasLast) initialUser.name = name;
 
-  if (hasMobile) initialUser.mobile = [];
+  if (hasMobile) initialUser.mobile = "";
 
   if (hasEmail) initialUser.email = "";
 
