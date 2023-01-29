@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -13,19 +12,25 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
-import {
-  Avatar,
-  Container,
-  Grid,
-  Menu,
-  MenuItem,
-  Tooltip,
-} from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
 import SidebarMenu from "./SidebarMenu";
 import SidebarRoutes from "./SidebarRoutes";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addLoggedUser } from "../../app/slices/AuthSlice";
+import settingsRoutes from "../../shared/routes/AdminRoutes";
+import { NavLink as NLink } from "react-router-dom";
+import { successToast } from "../../ui/toast/Toast";
+
+const NavLink = styled(NLink)({
+  textDecoration: "none",
+  marginRight: "30px",
+});
 
 const drawerWidth = 240;
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -100,6 +105,9 @@ const Sidebar = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -118,6 +126,13 @@ const Sidebar = () => {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    dispatch(addLoggedUser({}));
+    successToast("Logged out...", 3000);
+    navigate("/login");
   };
 
   return (
@@ -171,11 +186,37 @@ const Sidebar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <Typography textAlign="center">{setting}</Typography>
+                  {Array.isArray(settingsRoutes) &&
+                    settingsRoutes
+                      .filter((route) => route?.showInSettings)
+                      .map((route, i) => {
+                        return (
+                          <NavLink
+                            key={route?.label + "-" + i}
+                            to={`${route?.path}`}
+                            sx={{
+                              display: "block",
+                              width: "100%",
+                              color: "inherit",
+                            }}
+                            onClick={handleCloseUserMenu}
+                          >
+                            <MenuItem sx={{ textTransform: "capitalize" }}>
+                              {route?.label}
+                            </MenuItem>
+                          </NavLink>
+                        );
+                      })}
+                  {
+                    <MenuItem
+                      onClick={() => {
+                        handleCloseUserMenu();
+                        handleLogout();
+                      }}
+                    >
+                      {"Logout"}
                     </MenuItem>
-                  ))}
+                  }
                 </Menu>
               </Box>
             </Grid>

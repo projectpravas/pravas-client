@@ -14,6 +14,12 @@ const Bookings = lazy(() => import("../../features/admin/bookings/Bookings"));
 const Quotes = lazy(() => import("../../features/admin/quotes/Quotes"));
 const Records = lazy(() => import("../../features/admin/records/Records"));
 const Users = lazy(() => import("../../features/admin/users/Users"));
+const UserProfile = lazy(
+  () => import("../../features/admin/user-profile/UserProfile")
+);
+const AddEditUser = lazy(
+  () => import("../../features/admin/users/AddEditUser")
+);
 
 export default [
   {
@@ -22,7 +28,8 @@ export default [
     icon: <DashboardCustomizeIcon />,
     path: "dashboard",
     showInMenu: true,
-    roles: ["admin", "superadmin", "customer"],
+    showInSettings: true,
+    roles: ["admin", "superAdmin", "customer"],
   },
   {
     label: "Tours",
@@ -30,7 +37,8 @@ export default [
     icon: <TourIcon />,
     path: "tours",
     showInMenu: true,
-    roles: ["admin", "superadmin", "customer"],
+    showInSettings: false,
+    roles: ["admin", "superAdmin", "customer"],
   },
   {
     label: "Bookings",
@@ -38,7 +46,8 @@ export default [
     icon: <BookOnlineIcon />,
     path: "bookings",
     showInMenu: true,
-    roles: ["admin", "superadmin", "customer"],
+    showInSettings: false,
+    roles: ["admin", "superAdmin", "customer"],
   },
   {
     label: "Quotes",
@@ -46,7 +55,8 @@ export default [
     icon: <RequestQuoteIcon />,
     path: "quotes",
     showInMenu: true,
-    roles: ["admin", "superadmin"],
+    showInSettings: false,
+    roles: ["admin", "superAdmin"],
   },
   {
     label: "Records",
@@ -54,7 +64,8 @@ export default [
     icon: <ReceiptLongIcon />,
     path: "records",
     showInMenu: true,
-    roles: ["admin", "superadmin"],
+    showInSettings: false,
+    roles: ["admin", "superAdmin"],
   },
   {
     label: "Users",
@@ -62,6 +73,43 @@ export default [
     icon: <PeopleIcon />,
     path: "users",
     showInMenu: true,
-    roles: ["admin", "superadmin"],
+    showInSettings: false,
+    roles: ["superAdmin"],
+  },
+  {
+    label: "Customers",
+    component: <Users />,
+    icon: <PeopleIcon />,
+    path: "customers",
+    showInMenu: true,
+    showInSettings: false,
+    roles: ["admin", "superAdmin"],
+  },
+  {
+    label: "My Profile",
+    component: <UserProfile />,
+    icon: <PeopleIcon />,
+    path: "user-profile",
+    showInMenu: false,
+    showInSettings: true,
+    role: ["admin", "superAdmin", "customer"],
+  },
+  {
+    label: "Account",
+    component: <> Add account component in admin routes </>,
+    icon: <PeopleIcon />,
+    path: "/accounts",
+    showInMenu: false,
+    showInSettings: true,
+    role: ["admin", "superAdmin", "customer"],
+  },
+  {
+    label: "Add Edit User",
+    component: <AddEditUser />,
+    icon: <PeopleIcon />,
+    path: "add-edit/:id/:op/:role",
+    showInMenu: false,
+    showInSettings: false,
+    role: ["admin", "superAdmin"],
   },
 ];

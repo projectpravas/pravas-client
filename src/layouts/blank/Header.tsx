@@ -19,12 +19,12 @@ import { Grid } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 const pages = ["Contact Us", "Blogs", "Pravas", "About Us", "Home"];
-const settings = ["Login", "Register"];
+const settings = ["login", "register"];
 
-const NavLink = styled(NLink)`
-  text-decoration: none;
-  margin-right: 30px;
-`;
+const NavLink = styled(NLink)({
+  textDecoration: "none",
+  marginRight: "30px",
+});
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -151,7 +151,7 @@ const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Login / Register">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <PersonAddAlt1Icon fontSize="large" />
               </IconButton>
@@ -173,9 +173,16 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                <NavLink
+                  key={setting}
+                  to={`${setting}`}
+                  sx={{ display: "block", width: "100%", color: "inherit" }}
+                  onClick={handleCloseUserMenu}
+                >
+                  <MenuItem sx={{ textTransform: "capitalize" }}>
+                    {setting}
+                  </MenuItem>
+                </NavLink>
               ))}
             </Menu>
           </Box>
