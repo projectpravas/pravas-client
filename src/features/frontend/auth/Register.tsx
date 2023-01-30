@@ -244,6 +244,7 @@ const Register = () => {
                             id="mobile"
                             label="Mobile"
                             name="mobile"
+                            size="small"
                             autoComplete="mobile"
                             value={values?.mobile}
                             disabled={verifiedStatus}
@@ -389,6 +390,7 @@ const Register = () => {
                             label="Password"
                             // type="password"
                             id="password"
+                            size="small"
                             autoComplete="new-password"
                             value={values?.password}
                             onChange={handleChange}

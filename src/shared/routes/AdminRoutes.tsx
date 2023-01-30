@@ -5,6 +5,7 @@ import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PeopleIcon from "@mui/icons-material/People";
+import ChangePasswordIcon from "@mui/icons-material/LockReset";
 
 const Tours = lazy(() => import("../../features/admin/tours/Tours"));
 const Dashboard = lazy(
@@ -19,6 +20,10 @@ const UserProfile = lazy(
 );
 const AddEditUser = lazy(
   () => import("../../features/admin/users/AddEditUser")
+);
+
+const ChangePassword = lazy(
+  () => import("../../features/frontend/auth/ChangePassword")
 );
 
 export default [
@@ -90,6 +95,15 @@ export default [
     component: <UserProfile />,
     icon: <PeopleIcon />,
     path: "user-profile",
+    showInMenu: false,
+    showInSettings: true,
+    role: ["admin", "superAdmin", "customer"],
+  },
+  {
+    label: "Change Password",
+    component: <ChangePassword />,
+    icon: <ChangePasswordIcon />,
+    path: "change-password",
     showInMenu: false,
     showInSettings: true,
     role: ["admin", "superAdmin", "customer"],

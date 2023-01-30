@@ -49,6 +49,7 @@ const FooterGrid = (compArray: Array<ReactJSXElement>) => {
 const socialMIconStyle = {
   verticalAlign: "middle",
   padding: "1em",
+  boxSizing: "content-box",
   color: "#2c5799",
   "&:hover": { color: "#fff" },
 };

@@ -70,6 +70,8 @@ const Login = () => {
           sm={4}
           md={7}
           sx={{
+            // backgroundImage:
+            //   "url(https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg)",
             backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -169,6 +171,7 @@ const Login = () => {
                         name="password"
                         label="Password"
                         id="password"
+                        size="small"
                         autoComplete="new-password"
                         value={values?.password}
                         onChange={handleChange}
