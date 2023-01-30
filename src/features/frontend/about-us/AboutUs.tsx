@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { CardMedia } from '@mui/material';
-import { width } from '@mui/system';
 interface IAboutUsProps {}
 
 const AboutUs: React.FunctionComponent<IAboutUsProps> = (props:any) => {
