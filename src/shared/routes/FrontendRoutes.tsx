@@ -11,6 +11,12 @@ const ContactUs = lazy(
 );
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
 const Blogs = lazy(() => import("../../features/frontend/blogs/Blogs"));
+const ChangePassword = lazy(
+  () => import("../../features/frontend/auth/ChangePassword")
+);
+const PasswordRecovery = lazy(
+  () => import("../../features/frontend/auth/PasswordRecovery")
+);
 
 export default [
   {
@@ -59,6 +65,20 @@ export default [
     label: "Register",
     component: <Register />,
     path: "register",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Send Password Link",
+    component: <PasswordRecovery />,
+    path: "reset-password",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Reset Password",
+    component: <ChangePassword />,
+    path: "reset-password/:token",
     showInMenu: false,
     hasAuthenticate: "no",
   },

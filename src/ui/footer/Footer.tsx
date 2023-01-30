@@ -46,10 +46,25 @@ const FooterGrid = (compArray: Array<ReactJSXElement>) => {
   );
 };
 
+const socialMIconStyle = {
+  verticalAlign: "middle",
+  padding: "1em",
+  boxSizing: "content-box",
+  color: "#2c5799",
+  "&:hover": { color: "#fff" },
+};
+
 const SocialMediaIconsGrid = (icon: ReactJSXElement, linkPath: string) => {
   return (
     <Grid item sx={{ p: 1 }}>
-      <Avatar sx={{ backgroundColor: "#e0e0e0" }}>
+      <Avatar
+        sx={{
+          backgroundColor: "#f3f3f3",
+          "&:hover": {
+            backgroundColor: "#2c5799",
+          },
+        }}
+      >
         <Link href={linkPath}>{icon}</Link>
       </Avatar>
     </Grid>
@@ -183,17 +198,17 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                 <List dense={true}>
                   <ListItem>
                     <ListItemText>
-                      <NavLink to="#">About</NavLink>
+                      <NavLink to="/about-us">About</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <NavLink to="#">Pravas</NavLink>
+                      <NavLink to="/pravas">Pravas</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <NavLink to="#">Contact</NavLink>
+                      <NavLink to="/contact-us">Contact</NavLink>
                     </ListItemText>
                   </ListItem>
                 </List>
@@ -225,21 +240,17 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
               sx={{ justifyContent: { xs: "center", sm: "start" } }}
             >
               {SocialMediaIconsGrid(
-                <FacebookIcon
-                  sx={{ verticalAlign: "middle", color: "blue" }}
-                />,
+                <FacebookIcon sx={socialMIconStyle} />,
                 "https://www.facebook.com/PravasTheJourney/"
               )}
 
               {SocialMediaIconsGrid(
-                <InstagramIcon
-                  sx={{ verticalAlign: "middle", color: "#f707e2" }}
-                />,
+                <InstagramIcon sx={socialMIconStyle} />,
                 "https://www.instagram.com/PravasTheJourney/"
               )}
 
               {SocialMediaIconsGrid(
-                <YouTubeIcon sx={{ verticalAlign: "middle", color: "red" }} />,
+                <YouTubeIcon sx={socialMIconStyle} />,
                 "https://www.youtube.com/channel/UC8fBF7BsghNjfrdyGVvMKHw"
               )}
             </Grid>
@@ -260,7 +271,7 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
             }}
           >
             <Typography>
-              Pravas The Journey ©2023. All Rights Reserved.
+              {`Pravas The Journey ©${new Date().getFullYear()}. All Rights Reserved.`}
             </Typography>
           </Grid>
         </Grid>
