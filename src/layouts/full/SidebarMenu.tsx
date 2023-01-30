@@ -42,7 +42,7 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = (props) => {
                 <ListItem
                   key={path + i}
                   disablePadding
-                  sx={{ display: "block", mt: 1 }}
+                  sx={{ display: "block", mt: 0 }}
                 >
                   <ListItemButton sx={{ minHeight: 48, px: 2.5 }}>
                     <ListItemIcon
