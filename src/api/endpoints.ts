@@ -15,11 +15,14 @@ export default {
       getOne: "/tours/",
       getAll: "/tours",
     },
+
     auth: {
       login: "/auth/user-login",
-      validateToken: "/auth/validate-token",
-      resetPassword: "/auth/password-reset-link",
+      verifyToken: "/auth/validate-token",
       refreshToken: "/auth/refresh-token",
+      resetPasswordLink: "/auth/reset-password-link",
+      resetPassword: "/auth/reset-password",
+      changePassword: "/auth/change-password",
     },
   },
 };
