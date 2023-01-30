@@ -19,12 +19,12 @@ import { Grid } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 const pages = ["Contact Us", "Blogs", "Pravas", "About Us", "Home"];
-const settings = ["Login", "Register"];
+const settings = ["login", "register"];
 
-const NavLink = styled(NLink)`
-  text-decoration: none;
-  margin-right: 30px;
-`;
+const NavLink = styled(NLink)({
+  textDecoration: "none",
+  marginRight: "30px",
+});
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -53,7 +53,12 @@ const Header = () => {
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", md: "none" },
+            }}
+          >
             <IconButton
               size="large"
               aria-label="account of current user"
@@ -99,7 +104,7 @@ const Header = () => {
                   </MenuItem>
                 ))}
             </Menu>
-            <Container style={{ width: "30%", margin: "15px" }}>
+            <Container style={{ width: "40%", margin: "15px" }}>
               <img
                 src="PTSM-LOGO.png"
                 style={{ width: "100%", height: "100%" }}
@@ -146,7 +151,7 @@ const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Login / Register">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <PersonAddAlt1Icon fontSize="large" />
               </IconButton>
@@ -168,9 +173,16 @@ const Header = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
+                <NavLink
+                  key={setting}
+                  to={`${setting}`}
+                  sx={{ display: "block", width: "100%", color: "inherit" }}
+                  onClick={handleCloseUserMenu}
+                >
+                  <MenuItem sx={{ textTransform: "capitalize" }}>
+                    {setting}
+                  </MenuItem>
+                </NavLink>
               ))}
             </Menu>
           </Box>

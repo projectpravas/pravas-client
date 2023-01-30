@@ -6,6 +6,7 @@ import SendIcon from "@mui/icons-material/Send";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import { Formik } from "formik";
 import defineUserYupValidation from "../../../shared/yup-validations/user-validation/usersYupValidation";
+import { successToast } from "../../../ui/toast/Toast";
 
 interface IContactFormProps {}
 
@@ -31,6 +32,11 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
         validationSchema={userValidationSchema}
         onSubmit={(values, { resetForm }) => {
           console.log(values);
+
+          // call api to sumbit form to server
+          successToast("Message Submitted Successfully...", 3000);
+
+          resetForm();
         }}
       >
         {({
