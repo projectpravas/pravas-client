@@ -58,6 +58,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                     type="text"
                     fullWidth
                     name="name"
+                    size="small"
                     required
                     autoFocus
                     value={values?.name}
@@ -77,6 +78,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                     label="Email Address"
                     variant="outlined"
                     type="email"
+                    size="small"
                     fullWidth
                     required
                     name="email"
@@ -96,6 +98,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                     variant="outlined"
                     sx={{ bgcolor: "faf5ee" }}
                     type="tel"
+                    size="small"
                     fullWidth
                     required
                     name="mobile"
@@ -114,6 +117,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                     label="Subject"
                     variant="outlined"
                     type="text"
+                    size="small"
                     fullWidth
                     required
                     name="subject"
@@ -136,6 +140,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                     label="Write Message"
                     variant="outlined"
                     type="text"
+                    size="small"
                     fullWidth
                     multiline
                     rows={4}
