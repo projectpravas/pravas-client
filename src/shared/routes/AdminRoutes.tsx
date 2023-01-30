@@ -6,6 +6,7 @@ import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
 const Tours = lazy(() => import("../../features/admin/tours/Tours"));
 const Dashboard = lazy(
@@ -24,6 +25,9 @@ const AddEditUser = lazy(
 
 const ChangePassword = lazy(
   () => import("../../features/frontend/auth/ChangePassword")
+);
+const ExplorePackage = lazy(
+  () => import("../../features/frontend/pravas/ExplorePravas")
 );
 
 export default [
@@ -125,5 +129,14 @@ export default [
     showInMenu: false,
     showInSettings: false,
     role: ["admin", "superAdmin"],
+  },
+  {
+    label: "Explore Package",
+    component: <ExplorePackage />,
+    icon: <TravelExploreIcon />,
+    path: "explore-package",
+    showInMenu: false,
+    showInSettings: false,
+    role: ["admin", "superAdmin", "customer"],
   },
 ];

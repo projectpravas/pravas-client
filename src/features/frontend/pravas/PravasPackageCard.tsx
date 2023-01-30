@@ -192,7 +192,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
                 <NLink item sx={{ display: "flex" }}>
                   <Typography>
                     <Link
-                      to=""
+                      to="explore-package"
                       style={{
                         textDecoration: "none",
                         color: "#2c5799",
@@ -331,7 +331,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
                 <NLink item sx={{ display: "flex" }}>
                   <Typography>
                     <Link
-                      to=""
+                      to="explore-package"
                       style={{
                         textDecoration: "none",
                         color: "#2c5799",
@@ -470,7 +470,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
                 <NLink item sx={{ display: "flex" }}>
                   <Typography>
                     <Link
-                      to=""
+                      to="explore-package"
                       style={{
                         textDecoration: "none",
                         color: "#2c5799",
@@ -609,7 +609,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
                 <NLink item sx={{ display: "flex" }}>
                   <Typography>
                     <Link
-                      to=""
+                      to="explore-package"
                       style={{
                         textDecoration: "none",
                         color: "#2c5799",
@@ -748,7 +748,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
                 <NLink item sx={{ display: "flex" }}>
                   <Typography>
                     <Link
-                      to=""
+                      to="explore-package"
                       style={{
                         textDecoration: "none",
                         color: "#2c5799",
