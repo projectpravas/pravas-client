@@ -1,6 +1,9 @@
 import { lazy } from "react";
 import Login from "../../features/frontend/auth/Login";
 import Register from "../../features/frontend/auth/Register";
+import CancellationPolicy from "../../ui/footer/CancellationPolicy";
+import PrivacyPolicy from "../../ui/footer/PrivacyPolicy";
+import TermsAndConditions from "../../ui/footer/TermsAndConditions";
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
 const ContactUs = lazy(
@@ -56,6 +59,27 @@ export default [
     label: "Register",
     component: <Register />,
     path: "register",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Terms And Conditions",
+    component: <TermsAndConditions />,
+    path: "t&c",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Privacy Policy",
+    component: <PrivacyPolicy />,
+    path: "privacy-policy",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Cancellation Policy",
+    component: <CancellationPolicy />,
+    path: "cancellation-policy",
     showInMenu: false,
     hasAuthenticate: "no",
   },
