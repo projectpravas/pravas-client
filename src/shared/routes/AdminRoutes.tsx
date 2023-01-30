@@ -7,7 +7,7 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
 
-const Tours = lazy(() => import("../../features/admin/tours/Tours"));
+const Packages = lazy(() => import("../../features/admin/packages/Packages"));
 const Dashboard = lazy(
   () => import("../../features/admin/dashboard/Dashboard")
 );
@@ -31,6 +31,15 @@ export default [
     label: "Dashboard",
     component: <Dashboard />,
     icon: <DashboardCustomizeIcon />,
+    path: "",
+    showInMenu: false,
+    showInSettings: false,
+    roles: ["admin", "superAdmin", "customer"],
+  },
+  {
+    label: "Dashboard",
+    component: <Dashboard />,
+    icon: <DashboardCustomizeIcon />,
     path: "dashboard",
     showInMenu: true,
     showInSettings: true,
@@ -38,9 +47,9 @@ export default [
   },
   {
     label: "Tours",
-    component: <Tours />,
+    component: <Packages />,
     icon: <TourIcon />,
-    path: "tours",
+    path: "packages",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin", "customer"],
