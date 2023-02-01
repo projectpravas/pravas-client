@@ -17,6 +17,9 @@ const ChangePassword = lazy(
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
+const BlogDetails = lazy(
+  () => import("../../features/frontend/blogs/BlogDetails")
+);
 
 export default [
   {
@@ -103,4 +106,11 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
+  // {
+  //   label: "Blog Details",
+  //   component: <BlogDetails />,
+  //   path: "blog-details",
+  //   showInMenu: false,
+  //   hasAuthenticate: "no",
+  // },
 ];

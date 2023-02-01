@@ -23,13 +23,21 @@ interface IBlogPostProps {
   image: string;
   title: string;
   desc: string;
+  id: number | any;
+  setCurrentBlog: any;
 }
-
 const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   image,
   title,
   desc,
+  id,
+  setCurrentBlog,
 }) => {
+  const blogDetails = () => {
+    console.log("id", id);
+    setCurrentBlog(id);
+  };
+
   return (
     <>
       <Container>
@@ -52,7 +60,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                   flexWrap: "wrap",
                 }}
               >
-                {/* Image Area */}
+                {/* -------------------Image Area-------------------- */}
                 <Grid>
                   <Box position="relative">
                     <img
@@ -140,6 +148,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     py: 1,
                     cursor: "pointer",
                   }}
+                  onClick={blogDetails}
                 >
                   <Typography sx={{ p: 1, fontSize: 15, fontWeight: 900 }}>
                     Explore

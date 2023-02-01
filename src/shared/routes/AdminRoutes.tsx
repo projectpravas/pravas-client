@@ -21,7 +21,6 @@ const UserProfile = lazy(
 const AddEditUser = lazy(
   () => import("../../features/admin/users/AddEditUser")
 );
-
 const ChangePassword = lazy(
   () => import("../../features/frontend/auth/ChangePassword")
 );
