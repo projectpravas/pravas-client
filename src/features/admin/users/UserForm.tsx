@@ -518,21 +518,28 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                         }}
                       >
                         <Box>
-                          <Typography
-                            variant="caption"
-                            sx={{ fontWeight: 600, fontSize: "1.2em" }}
-                          >
-                            Edit
-                          </Typography>
-                          <EditSwitch
-                            sx={{
-                              transition: "2s ease-in-out",
-                            }}
-                            checked={editMode}
-                            aria-label="edit-switch"
-                            color="warning"
-                            onChange={() => setEditMode(!editMode)}
-                          />
+                          {type == "add" ? (
+                            ""
+                          ) : (
+                            <>
+                              <Typography
+                                variant="caption"
+                                sx={{ fontWeight: 600, fontSize: "1.2em" }}
+                              >
+                                Edit
+                              </Typography>
+
+                              <EditSwitch
+                                sx={{
+                                  transition: "2s ease-in-out",
+                                }}
+                                checked={editMode}
+                                aria-label="edit-switch"
+                                color="warning"
+                                onChange={() => setEditMode(!editMode)}
+                              />
+                            </>
+                          )}
                         </Box>
                         {/* <Box sx={{ marginTop: "5px" }}>
                           <Chip
