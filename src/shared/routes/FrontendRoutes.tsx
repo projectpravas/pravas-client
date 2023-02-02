@@ -9,6 +9,7 @@ const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
 const ContactUs = lazy(
   () => import("../../features/frontend/contact-us/ContactUs")
 );
+const Careers = lazy(() => import("../../ui/footer/Career/Careers"));
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
 const Blogs = lazy(() => import("../../features/frontend/blogs/Blogs"));
 const ChangePassword = lazy(
@@ -55,6 +56,13 @@ export default [
     component: <ContactUs />,
     path: "contact-us",
     showInMenu: true,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Careers",
+    component: <Careers />,
+    path: "careers",
+    showInMenu: false,
     hasAuthenticate: "all",
   },
   {

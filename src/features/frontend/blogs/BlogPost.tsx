@@ -7,7 +7,7 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
@@ -41,7 +41,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   return (
     <>
       <Container>
-        <Grid container>
+        <Grid container sx={{ pt: 2 }}>
           <Paper
             elevation={1}
             sx={{
@@ -50,7 +50,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
               "&:hover": { boxShadow: "0px 0px 30px -5px rgb(0 0 0 / 50%)" },
             }}
           >
-            <Grid container sx={{ p: 2 }} xs={12}>
+            <Grid container sx={{ p: 2, pb: 1.2 }} xs={12}>
               <Grid
                 item
                 xs={12}
@@ -70,6 +70,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         borderRadius: 10,
                       }}
                       src={image}
+                      alt=""
                     />
                     <Box
                       position="absolute"
@@ -87,7 +88,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     </Box>
                   </Box>
                 </Grid>
-                {/* Admin & Category */}
+                {/*------------------- Admin & Category ------------------------*/}
                 <Grid container sx={{ justifyContent: "space-between", py: 1 }}>
                   <Grid item>
                     <Grid
@@ -99,10 +100,15 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       }}
                     >
                       <Box pr={1}>
-                        <AccountBoxOutlinedIcon />
+                        <BorderColorOutlinedIcon
+                          fontSize="small"
+                          sx={{ fontSize: "0.8rem" }}
+                        />
                       </Box>
                       <Box>
-                        <Typography>Admin</Typography>
+                        <Typography sx={{ fontSize: "0.9rem" }}>
+                          Admin
+                        </Typography>
                       </Box>
                     </Grid>
                   </Grid>
@@ -115,19 +121,23 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         alignItems: "center",
                       }}
                     >
-                      <Box pr={1}>
-                        <QuestionAnswerOutlinedIcon />
-                      </Box>
                       <Box>
-                        <Typography>Category</Typography>
+                        <Typography sx={{ fontSize: "0.9rem" }}>
+                          Category
+                        </Typography>
                       </Box>
                     </Grid>
                   </Grid>
                 </Grid>
-                {/* Title & Description */}
+                {/* -----------------Title & Description-------------------- */}
                 <Grid sx={{ py: 1 }}>
                   <Typography
-                    sx={{ color: "#005d9d", fontSize: 18, fontWeight: 600 }}
+                    sx={{
+                      color: "#005d9d",
+                      fontSize: 19,
+                      fontWeight: 600,
+                      pb: 1,
+                    }}
                   >
                     {title}
                   </Typography>
@@ -137,15 +147,15 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     {desc}
                   </Typography>
                 </Grid>
-                {/* Divider */}
+                {/* ---------------------Divider-------------------- */}
                 <Divider />
-                {/* Read More */}
+                {/* -------------------Read More----------------------- */}
                 <ExploreGrid
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     color: "#005d9d",
-                    py: 1,
+                    pt: 1,
                     cursor: "pointer",
                   }}
                   onClick={blogDetails}

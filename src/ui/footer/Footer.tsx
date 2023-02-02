@@ -155,7 +155,9 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <NavLink to="cancellation-policy">Cancellation Policy</NavLink>
+                      <NavLink to="cancellation-policy">
+                        Cancellation Policy
+                      </NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -209,6 +211,11 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                   <ListItem>
                     <ListItemText>
                       <NavLink to="/contact-us">Contact</NavLink>
+                    </ListItemText>
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText>
+                      <NavLink to="/careers">Careers</NavLink>
                     </ListItemText>
                   </ListItem>
                 </List>
