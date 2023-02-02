@@ -64,14 +64,13 @@ const Login = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main">
         <CssBaseline />
+
         <Grid
           item
           xs={false}
           sm={4}
           md={7}
           sx={{
-            // backgroundImage:
-            //   "url(https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg)",
             backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -82,6 +81,7 @@ const Login = () => {
             backgroundPosition: "center",
           }}
         />
+
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={1} square>
           <Formik
             initialValues={initialUser}
