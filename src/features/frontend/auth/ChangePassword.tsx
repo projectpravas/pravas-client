@@ -265,6 +265,7 @@ const ChangePassword: React.FunctionComponent<IChangePasswordProps> = (
                                 autoFocus
                                 onBlur={handleBlur}
                                 type="password"
+                                size="small"
                                 onChange={(e) => {
                                   setOldPassword(e?.target?.value);
                                 }}
@@ -291,6 +292,7 @@ const ChangePassword: React.FunctionComponent<IChangePasswordProps> = (
                             name="password"
                             value={values?.password}
                             autoComplete="password"
+                            size="small"
                             onChange={handleChange}
                             type={showPassword ? "text" : "password"}
                             onBlur={(e) => {
@@ -355,6 +357,7 @@ const ChangePassword: React.FunctionComponent<IChangePasswordProps> = (
                             autoComplete="password"
                             onBlur={handleBlur}
                             type="password"
+                            size="small"
                             disabled={
                               !values?.password || !confirmPassword
                                 ? false

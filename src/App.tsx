@@ -31,6 +31,7 @@ const App = () => {
         <Route path="/*" element={<BlankLayout />} />
         <Route path="secured/*" element={<FullLayout />} />
       </Routes>
+     
     </div>
   );
 };
