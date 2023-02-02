@@ -150,17 +150,17 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                 <List dense={true}>
                   <ListItem>
                     <ListItemText>
-                      <NavLink to="#">Privacy Policy</NavLink>
+                      <NavLink to="privacy-policy">Privacy Policy</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <NavLink to="#">Cancellation Policy</NavLink>
+                      <NavLink to="cancellation-policy">Cancellation Policy</NavLink>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
                     <ListItemText>
-                      <NavLink to="#">Terms & Conditions</NavLink>
+                      <NavLink to="t&c">Terms & Conditions</NavLink>
                     </ListItemText>
                   </ListItem>
                 </List>
