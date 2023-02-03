@@ -20,7 +20,7 @@ const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
 
-);
+
 
 export default [
   {
