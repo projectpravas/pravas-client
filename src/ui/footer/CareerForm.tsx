@@ -18,14 +18,14 @@ import FormLabel from "@mui/material/FormLabel";
 import { Formik, Form, FormikProps } from "formik";
 import * as Yup from "yup";
 interface ICareerFormProps {
-  lastName: string;
-  firstName: string;
-  middleName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  age: number;
-  gender: string;
+  //   lastName: string;
+  //   firstName: string;
+  //   middleName: string;
+  //   email: string;
+  //   password: string;
+  //   confirmPassword: string;
+  //   age: number;
+  //   gender: string;
 }
 
 const CareerForm: React.FunctionComponent<ICareerFormProps> = (props) => {
@@ -35,12 +35,12 @@ const CareerForm: React.FunctionComponent<ICareerFormProps> = (props) => {
         initialValues={{
           lastName: "",
           firstName: "",
-          middleName: "",
+          mobile: "",
           email: "",
-          password: "",
-          confirmPassword: "",
+          applicationPosition: "",
           age: "",
           gender: "",
+          resumeUpload: "",
         }}
         onSubmit={(values) => {
           alert(JSON.stringify(values));
@@ -49,78 +49,86 @@ const CareerForm: React.FunctionComponent<ICareerFormProps> = (props) => {
         {({ values, handleSubmit, handleChange }) => {
           return (
             <Form onSubmit={handleSubmit}>
-              <TextField
-                name="lastName"
-                id="lastName"
-                type="text"
-                label="Last Name"
-                value={values.lastName}
-                onChange={handleChange}
-              />
-              <TextField
-                name="firstName"
-                id="firstName"
-                type="text"
-                label="First Name"
-                value={values.firstName}
-                onChange={handleChange}
-              />
-              <TextField
-                name="middleName"
-                id="middleName"
-                type="text"
-                label="Middle Name"
-                value={values.middleName}
-                onChange={handleChange}
-              />
-              <TextField
-                name="email"
-                id="email"
-                type="email"
-                label="Email"
-                value={values.email}
-                onChange={handleChange}
-              />
-              <TextField
-                name="password"
-                id="password"
-                type="password"
-                label="Password"
-                value={values.password}
-                onChange={handleChange}
-              />
-              <TextField
-                name="age"
-                id="age"
-                type="number"
-                label="Age"
-                value={values.age}
-                onChange={handleChange}
-              />
-              <FormControl>
-                <FormLabel id="gender">Gender</FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="gender"
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="male"
-                  />
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="female"
-                  />
-                  <FormControlLabel
-                    value="other"
-                    control={<Radio />}
-                    label="other"
-                  />
-                </RadioGroup>
-              </FormControl>
+              <Grid item>
+                <TextField
+                  name="lastName"
+                  id="lastName"
+                  type="text"
+                  label="Last Name"
+                  value={values.lastName}
+                  onChange={handleChange}
+                />
+                <TextField
+                  name="firstName"
+                  id="firstName"
+                  type="text"
+                  label="First Name"
+                  value={values.firstName}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item>
+                <TextField
+                  name="mobile"
+                  id="mobile"
+                  type="text"
+                  label="Mobile Number"
+                  value={values.mobile}
+                  onChange={handleChange}
+                />
+                <TextField
+                  name="email"
+                  id="email"
+                  type="email"
+                  label="Email"
+                  value={values.email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid>
+                <TextField
+                  name="applicationPosition"
+                  id="applicationPosition"
+                  type="text"
+                  label="Application position"
+                  value={values.applicationPosition}
+                  onChange={handleChange}
+                />
+                <TextField
+                  name="age"
+                  id="age"
+                  type="number"
+                  label="Age"
+                  value={values.age}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid>
+                <FormControl>
+                  <FormLabel id="gender">Gender</FormLabel>
+                  <RadioGroup
+                    row
+                    aria-labelledby="gender"
+                    name="row-radio-buttons-group"
+                  >
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio />}
+                      label="male"
+                    />
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio />}
+                      label="female"
+                    />
+                    <FormControlLabel
+                      value="other"
+                      control={<Radio />}
+                      label="other"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
             </Form>
           );
         }}

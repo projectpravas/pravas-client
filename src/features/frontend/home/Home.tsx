@@ -7,7 +7,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
       <h2>Home</h2>
-      {/* <CareerForm /> */}
+      <CareerForm />
     </>
   );
 };
