@@ -26,9 +26,6 @@ const AddEditUser = lazy(
 const ChangePassword = lazy(
   () => import("../../features/frontend/auth/ChangePassword")
 );
-const ExplorePackage = lazy(
-  () => import("../../features/frontend/pravas/ExplorePravas")
-);
 
 export default [
   {
@@ -129,14 +126,5 @@ export default [
     showInMenu: false,
     showInSettings: false,
     role: ["admin", "superAdmin"],
-  },
-  {
-    label: "Explore Package",
-    component: <ExplorePackage />,
-    icon: <TravelExploreIcon />,
-    path: "explore-package",
-    showInMenu: false,
-    showInSettings: false,
-    role: ["admin", "superAdmin", "customer"],
   },
 ];

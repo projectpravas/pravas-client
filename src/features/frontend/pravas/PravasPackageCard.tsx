@@ -16,35 +16,49 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 
-import { Link, Routes, Route } from "react-router-dom";
+import { Link, Routes, Route, NavLink } from "react-router-dom";
 
 import { styled } from "@mui/system";
 import LocationClick from "./LocationClick";
+import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 
 const NLink = styled(Grid)({
+  transition: "0.7s ease-in-out",
   "&:hover": {
     transform: "translate(10px) ",
-    color: "red",
+    color: "blue",
   },
 });
 
-interface IPravasPackageCardProps {}
+interface IPravasPackageCardProps {
+  id: number;
+  image: string[];
+  price: string;
+  duration: string;
+  heading: string;
+  seatAvability: string;
+}
 
-const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
-  props
-) => {
+const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
+  id,
+  image,
+  price,
+  duration,
+  heading,
+  seatAvability,
+}) => {
   const typoHead = {
     fontWeight: "bold",
     color: "#2c5799",
-    margin: "20px 0px 0px 20px",
+    margin: "20px 20px 20px 20px",
     fontSize: {
-      xs: "0.8rem",
+      xs: "1rem",
       md: "0.9rem",
       lg: "1rem",
       xl: "1.4rem",
     },
     marginLeft: {
-      xs: "0",
+      xs: "20px",
       md: "0.9rem",
       lg: "1rem",
       xl: "1.4rem",
@@ -62,22 +76,21 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
     setOpen(false);
   };
 
-  // //   corousel Click...
+  const items = [
+    "https://pravasthejourney.com/wp-content/uploads/2021/09/KASHMIR4.jpg",
 
-  // const [index, setIndex] = useState<number>(0);
+    "https://cdn.wallpapersafari.com/6/59/Lqkei8.jpg",
 
-  // const handleSelect = (selectIndex: number, e: any) => {
-  //   setIndex(selectIndex);
-  // };
+    "https://media.istockphoto.com/id/485422676/photo/shikara-boats-on-dal-lake-srinagar.jpg?s=612x612&w=0&k=20&c=AnenqHTLf68PPJVtke7MoktZoQ4tLs8mXTvedeTSPOk=",
+
+    "https://w0.peakpx.com/wallpaper/936/401/HD-wallpaper-neelam-valley-jammu-kashmir-landscape-mountain-mountains-pak-pakistan-pakistani.jpg",
+  ];
+  console.log(id);
 
   return (
     <Container>
-      <Grid
-        container
-        spacing={2}
-        sx={{ justifyContent: "space-evenly", flexWrap: "wrap" }}
-      >
-        <Grid item xs={12} md={6} lg={4}>
+      <Grid container spacing={2} sx={{ d: "flex", flexDirection: "coloumn" }}>
+        <Grid item>
           <Card
             sx={{
               padding: "15px 0px 15px 0px",
@@ -88,690 +101,145 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = (
               ":hover": { boxShadow: "1px 1px 10px grey" },
             }}
           >
-            <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-              <CardMedia
-                component="img"
-                height="100%"
-                sx={{ borderRadius: "20px" }}
-                src="https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg"
-                alt="Kashmir 5N6D"
-              />
-            </CardActionArea>
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography variant="h5" sx={typoHead}>
-                  Kashmir 5N6D
-                </Typography>
-
-                <Typography sx={{ display: "flex", p: 2 }}>
-                  <span
-                    style={{
-                      marginLeft: "2px",
-                      color: "#97978F",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    From
-                  </span>
-                  <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    ₹15800 / P
-                  </span>
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={3.4}
-                sx={{
-                  color: "#005792",
-
-                  width: "80%",
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                }}
-              >
-                <Typography sx={{ color: "#673ab9", mt: 3 }}>
-                  <IconButton onClick={handleClickOpen}>
-                    <AddAPhotoOutlinedIcon />
-                  </IconButton>
-                  <Dialog open={open} onClose={handleClose}>
-                    <LocationClick />
-                  </Dialog>
-                </Typography>
-              </Grid>
-            </Grid>
-            <Card
-              sx={{
-                width: "90%",
-                margin: "auto",
-                backgroundColor: "#ece5ff",
-
-                borderRadius: "10px",
-              }}
-            >
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  marginTop: "2%",
-                  padding: "10px 0px 10px 0px",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <CalendarMonthIcon
-                      sx={{ color: "#005792", fontSize: "130%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    5days
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <PeopleOutlineIcon
-                      sx={{ color: "#005792", fontSize: "150%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    15Seat
-                  </Typography>
-                </Grid>
-                <NLink item sx={{ display: "flex" }}>
-                  <Typography>
-                    <Link
-                      to="explore-package"
-                      style={{
-                        textDecoration: "none",
-                        color: "#2c5799",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Explore
-                    </Link>
-                  </Typography>
-                  <Typography>
-                    <ArrowRightAltIcon />
-                  </Typography>
-                </NLink>
-              </Grid>
-            </Card>
-            <Grid sx={{ position: "absolute", top: "8%", right: "10%" }}>
-              <Link to="">
-                <FavoriteBorderOutlinedIcon
-                  sx={{
-                    color: "#ffffff",
-                    bgcolor: "black",
-                    opacity: 0.5,
-                    borderRadius: "5px",
-                  }}
+            {/* ------------------image -area----- */}
+            <Grid item>
+              <CardActionArea sx={{ width: "90%", margin: "auto" }}>
+                <CardMedia
+                  sx={{ borderRadius: "15px" }}
+                  component="img"
+                  src={image[0]}
                 />
-              </Link>
+              </CardActionArea>
             </Grid>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card
-            sx={{
-              padding: "15px 0px 15px 0px",
-              borderRadius: "20px",
-              position: "relative",
-              backgroundColor: "#ffffff",
-              ":hover": { boxShadow: "1px 1px 10px grey" },
-            }}
-          >
-            <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-              <CardMedia
-                component="img"
-                height="100%"
-                sx={{ borderRadius: "20px" }}
-                src="https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg"
-                alt="Kashmir 5N6D"
-              />
-            </CardActionArea>
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography gutterBottom variant="h5" sx={typoHead}>
-                  Kashmir 5N6D
-                </Typography>
+            {/*----------- heading----------- */}
+            <Grid item>
+              <Grid container>
+                <Grid item xs={8}>
+                  <Typography variant="h5" sx={typoHead}>
+                    {heading}
+                  </Typography>
 
-                <Typography sx={{ display: "flex", p: 2 }}>
-                  <span
-                    style={{
-                      marginLeft: "2px",
-                      color: "#97978F",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    From
-                  </span>
-                  <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    ₹15800 / P
-                  </span>
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={3.4}
-                sx={{
-                  color: "#005792",
-
-                  width: "80%",
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                }}
-              >
-                <Typography sx={{ color: "#673ab9", mt: 3 }}>
-                  <AddAPhotoOutlinedIcon />
-                </Typography>
-              </Grid>
-            </Grid>
-            <Card
-              sx={{
-                width: "90%",
-                margin: "auto",
-                backgroundColor: "#ece5ff",
-
-                borderRadius: "10px",
-              }}
-            >
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  marginTop: "2%",
-                  padding: "10px 0px 10px 0px",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <CalendarMonthIcon
-                      sx={{ color: "#005792", fontSize: "130%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    5days
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <PeopleOutlineIcon
-                      sx={{ color: "#005792", fontSize: "150%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    15Seat
-                  </Typography>
-                </Grid>
-                <NLink item sx={{ display: "flex" }}>
-                  <Typography>
-                    <Link
-                      to="explore-package"
+                  <Typography sx={{ display: "flex", p: 2 }}>
+                    <span
                       style={{
-                        textDecoration: "none",
-                        color: "#2c5799",
+                        marginLeft: "2px",
+                        color: "#97978F",
                         fontWeight: "bold",
                       }}
                     >
-                      Explore
-                    </Link>
+                      From
+                    </span>
+                    <span style={{ marginLeft: "5px", color: "#41257b" }}>
+                      {price}
+                    </span>
                   </Typography>
-                  <Typography>
-                    <ArrowRightAltIcon />
-                  </Typography>
-                </NLink>
-              </Grid>
-            </Card>
-            <Grid sx={{ position: "absolute", top: "8%", right: "10%" }}>
-              <Link to="">
-                <FavoriteBorderOutlinedIcon
+                </Grid>
+                <Grid
+                  item
+                  xs={3.4}
                   sx={{
-                    color: "#ffffff",
-                    bgcolor: "black",
-                    opacity: 0.5,
-                    borderRadius: "5px",
+                    color: "#005792",
+
+                    width: "80%",
+                    display: "flex",
+                    flexDirection: "row-reverse",
                   }}
-                />
-              </Link>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card
-            sx={{
-              padding: "15px 0px 15px 0px",
-              borderRadius: "20px",
-              position: "relative",
-              backgroundColor: "#ffffff",
-              ":hover": { boxShadow: "1px 1px 10px grey" },
-            }}
-          >
-            <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-              <CardMedia
-                component="img"
-                height="100%"
-                sx={{ borderRadius: "20px" }}
-                src="https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg"
-                alt="Kashmir 5N6D"
-              />
-            </CardActionArea>
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography gutterBottom variant="h5" sx={typoHead}>
-                  Kashmir 5N6D
-                </Typography>
-
-                <Typography sx={{ display: "flex", p: 2 }}>
-                  <span
-                    style={{
-                      marginLeft: "2px",
-                      color: "#97978F",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    From
-                  </span>
-                  <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    ₹15800 / P
-                  </span>
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={3.4}
-                sx={{
-                  color: "#005792",
-
-                  width: "80%",
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                }}
-              >
-                <Typography sx={{ color: "#673ab9", mt: 3 }}>
-                  <AddAPhotoOutlinedIcon />
-                </Typography>
-              </Grid>
-            </Grid>
-            <Card
-              sx={{
-                width: "90%",
-                margin: "auto",
-                backgroundColor: "#ece5ff",
-
-                borderRadius: "10px",
-              }}
-            >
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  marginTop: "2%",
-                  padding: "10px 0px 10px 0px",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <CalendarMonthIcon
-                      sx={{ color: "#005792", fontSize: "130%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    5days
+                >
+                  <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
+                    <IconButton onClick={handleClickOpen}>
+                      <CameraAltOutlinedIcon />
+                    </IconButton>
+                    <Dialog open={open} onClose={handleClose}>
+                      {/* //// */}
+                      <LocationClick items={items} />
+                    </Dialog>
                   </Typography>
                 </Grid>
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <PeopleOutlineIcon
-                      sx={{ color: "#005792", fontSize: "150%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    15Seat
-                  </Typography>
-                </Grid>
-                <NLink item sx={{ display: "flex" }}>
-                  <Typography>
-                    <Link
-                      to="explore-package"
-                      style={{
-                        textDecoration: "none",
-                        color: "#2c5799",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Explore
-                    </Link>
-                  </Typography>
-                  <Typography>
-                    <ArrowRightAltIcon />
-                  </Typography>
-                </NLink>
               </Grid>
-            </Card>
-            <Grid sx={{ position: "absolute", top: "8%", right: "10%" }}>
-              <Link to="">
-                <FavoriteBorderOutlinedIcon
+            </Grid>
+
+            {/* ----------------days seat explorer---- */}
+            <Grid item>
+              <Card
+                elevation={0}
+                sx={{
+                  width: "90%",
+                  margin: "auto",
+                  backgroundColor: "#faf8f4",
+
+                  borderRadius: "10px",
+                }}
+              >
+                <Grid
+                  container
                   sx={{
-                    color: "#ffffff",
-                    bgcolor: "black",
-                    opacity: 0.5,
-                    borderRadius: "5px",
+                    display: "flex",
+                    marginTop: "2%",
+                    padding: "10px 0px 10px 0px",
+                    justifyContent: "space-evenly",
                   }}
-                />
-              </Link>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card
-            sx={{
-              padding: "15px 0px 15px 0px",
-              borderRadius: "20px",
-              position: "relative",
-              backgroundColor: "#ffffff",
-              ":hover": { boxShadow: "1px 1px 10px grey" },
-            }}
-          >
-            <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-              <CardMedia
-                component="img"
-                height="100%"
-                sx={{ borderRadius: "20px" }}
-                src="https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg"
-                alt="Kashmir 5N6D"
-              />
-            </CardActionArea>
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography gutterBottom variant="h5" sx={typoHead}>
-                  Kashmir 5N6D
-                </Typography>
-
-                <Typography sx={{ display: "flex", p: 2 }}>
-                  <span
-                    style={{
-                      marginLeft: "2px",
-                      color: "#97978F",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    From
-                  </span>
-                  <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    ₹15800 / P
-                  </span>
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={3.4}
-                sx={{
-                  color: "#005792",
-
-                  width: "80%",
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                }}
-              >
-                <Typography sx={{ color: "#673ab9", mt: 3 }}>
-                  <AddAPhotoOutlinedIcon />
-                </Typography>
-              </Grid>
-            </Grid>
-            <Card
-              sx={{
-                width: "90%",
-                margin: "auto",
-                backgroundColor: "#ece5ff",
-
-                borderRadius: "10px",
-              }}
-            >
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  marginTop: "2%",
-                  padding: "10px 0px 10px 0px",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <CalendarMonthIcon
-                      sx={{ color: "#005792", fontSize: "130%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    5days
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <PeopleOutlineIcon
-                      sx={{ color: "#005792", fontSize: "150%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    15Seat
-                  </Typography>
-                </Grid>
-                <NLink item sx={{ display: "flex" }}>
-                  <Typography>
-                    <Link
-                      to="explore-package"
-                      style={{
-                        textDecoration: "none",
-                        color: "#2c5799",
+                >
+                  <Grid item sx={{ display: "flex" }}>
+                    <Typography sx={{ alignSelf: "center" }}>
+                      <CalendarMonthIcon
+                        sx={{ color: "#005792", fontSize: "130%" }}
+                      />
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#97978F",
                         fontWeight: "bold",
+                        paddingLeft: "5px",
                       }}
                     >
-                      Explore
-                    </Link>
-                  </Typography>
-                  <Typography>
-                    <ArrowRightAltIcon />
-                  </Typography>
-                </NLink>
-              </Grid>
-            </Card>
-            <Grid sx={{ position: "absolute", top: "8%", right: "10%" }}>
+                      {duration}
+                    </Typography>
+                  </Grid>
+                  <Grid item sx={{ display: "flex" }}>
+                    <Typography sx={{ alignSelf: "center" }}>
+                      <PeopleOutlineIcon
+                        sx={{ color: "#005792", fontSize: "150%" }}
+                      />
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#97978F",
+                        fontWeight: "bold",
+                        paddingLeft: "5px",
+                      }}
+                    >
+                      {seatAvability}
+                    </Typography>
+                  </Grid>
+                  <NLink item sx={{ display: "flex" }}>
+                    <Typography>
+                      <NavLink
+                        to={`explore/${id}`}
+                        style={{
+                          textDecoration: "none",
+                          color: "#2c5799",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {"Explore"}
+                      </NavLink>
+                    </Typography>
+                    <Typography>
+                      <ArrowRightAltIcon />
+                    </Typography>
+                  </NLink>
+                </Grid>
+              </Card>
+            </Grid>
+            <Grid item sx={{ position: "absolute", top: "8%", right: "10%" }}>
               <Link to="">
                 <FavoriteBorderOutlinedIcon
                   sx={{
                     color: "#ffffff",
-                    bgcolor: "black",
+                    bgcolor: "#0000008a",
                     opacity: 0.5,
                     borderRadius: "5px",
-                  }}
-                />
-              </Link>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card
-            sx={{
-              padding: "15px 0px 15px 0px",
-              borderRadius: "20px",
-              position: "relative",
-              backgroundColor: "#ffffff",
-              ":hover": { boxShadow: "1px 1px 10px grey" },
-            }}
-          >
-            <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-              <CardMedia
-                component="img"
-                height="100%"
-                sx={{ borderRadius: "20px" }}
-                src="https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg"
-                alt="Kashmir 5N6D"
-              />
-            </CardActionArea>
-            <Grid container>
-              <Grid item xs={8}>
-                <Typography gutterBottom variant="h5" sx={typoHead}>
-                  Kashmir 5N6D
-                </Typography>
-
-                <Typography sx={{ display: "flex", p: 2 }}>
-                  <span
-                    style={{
-                      marginLeft: "2px",
-                      color: "#97978F",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    From
-                  </span>
-                  <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    ₹15800 / P
-                  </span>
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={3.4}
-                sx={{
-                  color: "#005792",
-
-                  width: "80%",
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                }}
-              >
-                <Typography sx={{ color: "#673ab9", mt: 3 }}>
-                  <AddAPhotoOutlinedIcon />
-                </Typography>
-              </Grid>
-            </Grid>
-            <Card
-              sx={{
-                width: "90%",
-                margin: "auto",
-                backgroundColor: "#ece5ff",
-
-                borderRadius: "10px",
-              }}
-            >
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  marginTop: "2%",
-                  padding: "10px 0px 10px 0px",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <CalendarMonthIcon
-                      sx={{ color: "#005792", fontSize: "130%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    5days
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <PeopleOutlineIcon
-                      sx={{ color: "#005792", fontSize: "150%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    15Seat
-                  </Typography>
-                </Grid>
-                <NLink item sx={{ display: "flex" }}>
-                  <Typography>
-                    <Link
-                      to="explore-package"
-                      style={{
-                        textDecoration: "none",
-                        color: "#2c5799",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      Explore
-                    </Link>
-                  </Typography>
-                  <Typography>
-                    <ArrowRightAltIcon />
-                  </Typography>
-                </NLink>
-              </Grid>
-            </Card>
-            <Grid sx={{ position: "absolute", top: "8%", right: "10%" }}>
-              <Link to="">
-                <FavoriteBorderOutlinedIcon
-                  sx={{
-                    color: "#ffffff",
-                    bgcolor: "black",
-                    opacity: 0.5,
-                    borderRadius: "5px",
+                    padding: "2px",
                   }}
                 />
               </Link>

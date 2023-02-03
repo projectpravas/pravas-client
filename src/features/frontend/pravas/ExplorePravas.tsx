@@ -1,20 +1,11 @@
-import React from "react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
-
-// import { LinkedInIcon, ImTumblr, NearMe } from "react-icons/im";
 
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -25,11 +16,9 @@ import Link from "@mui/material/Link";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Card from "@mui/material/Card";
 
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import ArrowLeftIcon from "@mui/icons-material/ArrowLeft";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import Paper from "@mui/material/Paper";
@@ -38,7 +27,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -50,6 +38,8 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 
 import { NavLink } from "react-router-dom";
+import Carousel from "react-material-ui-carousel";
+import packageCard from "./data";
 
 // -----tableCellstyles---
 const DattaTab = styled(TableCell)({
@@ -91,12 +81,66 @@ const CarouselStyle = styled(Carousel)({
 
 interface IExplorePravasProps {}
 
-const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
-  //    -----share button state-------
-  const [visible, setVisible] = React.useState(false);
+interface TourDetails {
+  id?: number;
+  heading?: string;
+  image?: string[];
+  price?: string;
+  duration?: string;
+  tourType?: string;
+  seatAvability?: string;
+  desc?: string;
+  tour_plan?: [
+    {
+      day?: string;
+      tPlanDesc?: string;
+    }
+  ];
+  includes?: [
+    {
+      includeTour?: string;
+    }
+  ];
+  exclude?: [
+    {
+      excludeTour?: string;
+    }
+  ];
+}
 
+const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = ({}) => {
+  const { id } = useParams();
+
+  //    -----share button state-------
+  const [visible, setVisible] = useState(false);
   // -----Accordion ------
-  const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [expanded, setExpanded] = useState<string | false>(false);
+  const [tourDetails, setTourDetails] = useState<TourDetails>({
+    id: NaN,
+    image: [""],
+    price: "",
+    duration: "",
+    heading: "",
+    tourType: "",
+    seatAvability: "",
+    desc: "",
+    tour_plan: [
+      {
+        day: "",
+        tPlanDesc: "",
+      },
+    ],
+    includes: [
+      {
+        includeTour: "",
+      },
+    ],
+    exclude: [
+      {
+        excludeTour: "",
+      },
+    ],
+  });
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -118,15 +162,22 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
   const data = [{ tourDates: "26 to 30 Dec 2022", seats: "Full" }];
 
+  useEffect(() => {
+    const tourObj = packageCard.find(
+      (obj) => Number(obj?.id) == Number(id)
+    ) as TourDetails;
+    setTourDetails(tourObj);
+  }, [id]);
+
   return (
     <Grid>
       {/* slides of karshmir image */}
       <Grid style={{ backgroundColor: "#eee" }}>
-        <CarouselStyle autoPlay infiniteLoop>
+        <CarouselStyle autoPlay>
           <div style={{ height: "500px" }}>
             <img
               style={{ width: "100%", height: "100%" }}
-              src="https://pravasthejourney.com/wp-content/uploads/2021/09/KASHMIR4.jpg"
+              src="https://cdn.wallpapersafari.com/6/59/Lqkei8.jpg"
             />
           </div>
           <div style={{ height: "500px" }}>
@@ -139,7 +190,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           <div style={{ height: "500px" }}>
             <img
               style={{ width: "100%", height: "100%" }}
-              src="https://pravasthejourney.com/wp-content/uploads/2021/09/KASHMIR4.jpg"
+              src="https://media.istockphoto.com/id/485422676/photo/shikara-boats-on-dal-lake-srinagar.jpg?s=612x612&w=0&k=20&c=AnenqHTLf68PPJVtke7MoktZoQ4tLs8mXTvedeTSPOk="
             />
           </div>
           <div style={{ height: "500px" }}>
@@ -177,7 +228,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               margin: "auto",
             }}
           >
-            Kashmir 5N6D
+            {tourDetails?.heading}
           </Typography>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -205,7 +256,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                 <Typography sx={{ color: "gray", fontWeight: "bold" }}>
                   Total Cost
                 </Typography>
-                <Typography sx={{ color: "#0d6efd" }}> ₹15800</Typography>
+                <Typography sx={{ color: "#0d6efd" }}>
+                  {`₹${tourDetails?.price}`}
+                </Typography>
               </Box>
             </Grid>
             <Grid
@@ -224,7 +277,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                 <Typography sx={{ color: "gray", fontWeight: "bold" }}>
                   Duration
                 </Typography>
-                <Typography> 5days</Typography>
+                <Typography> {tourDetails?.duration}</Typography>
               </Box>
             </Grid>
             <Grid
@@ -247,13 +300,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   to=""
                   style={{ textDecoration: "none", fontWeight: "bold" }}
                 >
-                  Customize,
-                </NavLink>
-                <NavLink
-                  to=""
-                  style={{ textDecoration: "none", fontWeight: "bold" }}
-                >
-                  Group
+                  {tourDetails?.tourType}
                 </NavLink>
               </Box>
             </Grid>
@@ -315,7 +362,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   <FacebookIcon sx={{ fontSize: "200%" }} />
                 </Link>
                 <Link
-                  sx={{ padding: "10px" }}
+                  sx={{ padding: "10px", fontWeight: "200" }}
                   href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;p[title]=Kashmir+4N5D"
                   target="_blank"
                 >
@@ -346,7 +393,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={8} lg={8}>
             <Typography variant="h5" sx={{ fontWeight: "800", p: 2 }}>
-              Kashmir
+              {tourDetails?.heading}
             </Typography>
             <Typography
               sx={{
@@ -356,21 +403,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                 fontSize: "16px",
               }}
             >
-              Someone has truly said, ‘if there is heaven on earth its Kashmir.’
-              The beautiful valleys, Mughal gardens, Dal Lake, House boats,
-              Glacier makes Kashmir a perfect tourist destination. Every place
-              in Kashmir has its different beauty. The snow at Gulmarg and the
-              cable car ride to top of Gulmarg mountains makes your day
-              memorable. The beautiful Betab, Aru valleys give you a pleasant
-              view. The freezing cold-water streams at Pahalgam gives you a
-              different experience. The Sonmarg glacier pony ride is one of the
-              must do adventure. Shikara ride with your loved ones in Dal lake
-              gives a special touch to your Kashmir tour. Explore Kashmir, the
-              beautiful place on earth. We at Pravas are happy to offer best
-              kashmir tour packages. We offer kashmir tour packages for family,
-              couples. Our team will take care of all your bookings and
-              arrangments. We assure you for best kashmir tour packages from
-              Pune.
+              {tourDetails?.desc}
             </Typography>
             <Divider sx={{ p: 3 }} />
             <Typography variant="h5" sx={{ fontWeight: "800", p: 2 }}>
@@ -435,95 +468,51 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   >
                     <TypoAccordion>Tour Plan</TypoAccordion>
                   </AccordionSummary>
-                  <AccordionDetails
-                    sx={{
-                      color: "#5c5e64",
-                      lineHeight: "1.86em",
-                      letterSpacing: "-.2px",
-                      fontSize: "16px",
-                    }}
-                  >
-                    <Typography>
-                      <b> Day 1 - Srinagar Arrival & Local Sightseeing</b>
-                    </Typography>
-                    Upon your arrival at Srinagar airport you will be received
-                    by our driver and straightway transferred to your pre-booked
-                    hotel, After check inn you will leave for city sightseeing
-                    of beautiful Mughal Gardens, Nishat Bagh, Shalimar Bagh,
-                    Pari Mahal(Palace of Fairies ), SP museum ,Chashma Shahi,
-                    Holly Hazratbal Shrine situated on the banks of Dal Lake.
-                    Later in the afternoon, drive up to Shankaracharya Temple.
-                    <Typography>
-                      <b> Meals:</b> Dinner
-                    </Typography>
-                    <Typography>
-                      <b>Day 2 - Srinagar – Gulmarg –Transfer</b>
-                    </Typography>
-                    After morning breakfast, get ready to proceed for Gulmarg
-                    hill station ,Gulmarg the “meadows of flowers” is primarily
-                    famous for its inviting natural beauty, sightseeing spots
-                    and dazzling flowers that adorn the valley with heavenly
-                    look, One can enjoy Gondola Ride (Cable Car tickets not
-                    included in package) which has two phases (Gulmarg –Kongdori
-                    and Kongdori – Affarwat Mountain Peak taking a person to
-                    14000ft above sea level ) ,During winters Gulmarg is best
-                    known for Ski ,Snow Scoter Ride ,Snow Boarding etc .
-                    <Typography>
-                      <b> Meals:</b> Breakfast, Dinner
-                    </Typography>
-                    <Typography>
-                      <b>Day 3 - Gulmarg – Pahalgam Transfer</b>
-                    </Typography>
-                    AAfter breakfast you will be transferred by road to
-                    Pahalgam. (Valley of Shepherds) Enroute you will have a rare
-                    opportunity to visit the Saffron fields at Pampore Town ,
-                    Also visit Avantipura Temple Ruins etc. dating back to 10th
-                    Century, Arrive at Pahalgam and proceed to your hotel for
-                    check inn ,After check inn you can visit famous Aru valley,
-                    Betaab valley if you wish on the same day Or Take Rest at
-                    hotel. Meals:
-                    <Typography>
-                      <b> Meals:</b> Breakfast, Dinner
-                    </Typography>
-                    <Typography>
-                      <b>
-                        Day 4 - Pahalgam Local Sightseeing – Srinagar Return +
-                        Shikara Ride & Houseboat stay
-                      </b>
-                    </Typography>
-                    After breakfast if you want you can hire horses to trek up
-                    to Famous Aru Valley, Betaab Valley by local taxi Or One can
-                    also horse ride up to Mini Switzerland (Baisaran Valley
-                    there ) Till Late afternoon time you will be done with it
-                    ,Post lunch time you will be transferred to Srinagar city (2
-                    & half hour drive ) for last night stay in Houseboat in
-                    world famous Dal Lake/Nigeen Lake ,You will be also given 01
-                    hour shikara ride on Dal Lake Nigeen Lake. Meals: Breakfast,
-                    Dinner
-                    <Typography>
-                      <b>Day 5 - Srinagar Airport Drop</b>
-                    </Typography>
-                    After breakfast if you have time you can do shopping while
-                    going towards Srinagar airport to catch your flight.
-                    <Typography>
-                      <b> Meals:</b>: Breakfast
-                    </Typography>
-                    <Link
-                      href="https://wa.me/917261988688?text=I'm%20interested%20in%20*Kashmir%20Tour*"
-                      target="_blank"
-                    >
-                      <Button
-                        variant="contained"
-                        sx={{
-                          m: 3,
-                          borderRadius: "30px",
-                          padding: "10px 20px",
-                          backgroundColor: "#2c5798",
-                        }}
-                      >
-                        Book Now
-                      </Button>
-                    </Link>
+
+                  <AccordionDetails>
+                    {Array.isArray(packageCard) &&
+                      packageCard.map((pack) => (
+                        <>
+                          {Array.isArray(pack?.tour_plan) &&
+                            pack?.tour_plan.map((tour, i) => (
+                              <>
+                                <Typography
+                                  sx={{
+                                    color: "#5c5e64",
+                                    lineHeight: "1.86em",
+                                    letterSpacing: "-.2px",
+                                    fontSize: "16px",
+                                    margin: "10px",
+                                  }}
+                                >
+                                  <b>{tour?.day}</b>
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    color: "#5c5e64",
+                                    lineHeight: "1.86em",
+                                    letterSpacing: "-.2px",
+                                    fontSize: "16px",
+                                    margin: "10px",
+                                  }}
+                                >
+                                  {tour?.tPlanDesc}
+                                </Typography>
+                                <Typography
+                                  sx={{
+                                    color: "#5c5e64",
+                                    lineHeight: "1.86em",
+                                    letterSpacing: "-.2px",
+                                    fontSize: "16px",
+                                    margin: "10px",
+                                  }}
+                                >
+                                  <b> Meals:</b> Dinner
+                                </Typography>
+                              </>
+                            ))}
+                        </>
+                      ))}
                   </AccordionDetails>
                 </Accordion>
                 {/* ----Hotels-- */}
@@ -594,31 +583,20 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     <TypoAccordion>Includes</TypoAccordion>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <List sx={{ listStyleType: "disc", pl: 2 }}>
-                      <ItemList>
-                        Accommodation on twin/triple sharing basis (as per
-                        booking)
-                      </ItemList>
-                      <ItemList>
-                        Meals - Breakfast and Dinner (as per itinerary)
-                      </ItemList>
-                      <ItemList>
-                        All travelling / transfers and sightseeing exactly as
-                        per the itinerary
-                      </ItemList>
-                      <ItemList>
-                        Entry fees (if mentioned in your bookings)
-                      </ItemList>
-                      <ItemList>Srinagar Airport Pick up and Drop</ItemList>
-                      <ItemList>Tour Leader/Manager</ItemList>
-                      <ItemList>Well trained driver</ItemList>
-                      <ItemList>Toll, Parking charges for vehicle</ItemList>
-                      <ItemList>
-                        Assistance in Air ticket/ Railway ticket bookings for
-                        tour dates.
-                      </ItemList>
-                      <ItemList>All applicable Taxes</ItemList>
-                    </List>
+                    {Array.isArray(packageCard) &&
+                      packageCard.map((inc) => (
+                        <>
+                          {Array.isArray(inc?.includes) &&
+                            inc?.includes.map((incList, i) => (
+                              <List
+                                key={i}
+                                sx={{ listStyleType: "disc", pl: 2 }}
+                              >
+                                <ItemList>{incList?.includeTour}</ItemList>
+                              </List>
+                            ))}
+                        </>
+                      ))}
                   </AccordionDetails>
                 </Accordion>
                 {/* ----Exclude-- */}
@@ -636,22 +614,20 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     <TypoAccordion>Excludes</TypoAccordion>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <List sx={{ listStyleType: "disc", pl: 2 }}>
-                      <ItemList>Flight / Train / Bus Ticket</ItemList>
-                      <ItemList>Meals not mentioned in Includes List</ItemList>
-                      <ItemList>
-                        Camera, Photography/Videography charges wherever
-                        applicable
-                      </ItemList>
-                      <ItemList>Any Personal expenses</ItemList>
-                      <ItemList>Gulmarg Gondola Cable Car Tickets</ItemList>
-                      <ItemList>Horse / Pony rides for sightseeing</ItemList>
-                      <ItemList>Any Insurance</ItemList>
-                      <ItemList>
-                        Any up gradation in room category, food menu etc
-                      </ItemList>
-                      <ItemList>Anything else than includes list</ItemList>
-                    </List>
+                    {Array.isArray(packageCard) &&
+                      packageCard.map((exc) => (
+                        <>
+                          {Array.isArray(exc?.exclude) &&
+                            exc?.exclude.map((excList, i) => (
+                              <List
+                                key={i}
+                                sx={{ listStyleType: "disc", pl: 2 }}
+                              >
+                                <ItemList>{excList?.excludeTour}</ItemList>
+                              </List>
+                            ))}
+                        </>
+                      ))}
                   </AccordionDetails>
                 </Accordion>
                 {/* ----Notes-- */}

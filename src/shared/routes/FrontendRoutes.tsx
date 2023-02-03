@@ -4,6 +4,7 @@ import Register from "../../features/frontend/auth/Register";
 import CancellationPolicy from "../../ui/footer/CancellationPolicy";
 import PrivacyPolicy from "../../ui/footer/PrivacyPolicy";
 import TermsAndConditions from "../../ui/footer/TermsAndConditions";
+
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
 const ContactUs = lazy(
@@ -16,6 +17,9 @@ const ChangePassword = lazy(
 );
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
+);
+const ExplorePackage = lazy(
+  () => import("../../features/frontend/pravas/ExplorePravas")
 );
 
 export default [
@@ -100,6 +104,13 @@ export default [
     label: "Cancellation Policy",
     component: <CancellationPolicy />,
     path: "cancellation-policy",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Explore Package",
+    path: "pravas/explore/:id",
+    component: <ExplorePackage />,
     showInMenu: false,
     hasAuthenticate: "no",
   },
