@@ -4,6 +4,7 @@ import Register from "../../features/frontend/auth/Register";
 import CancellationPolicy from "../../ui/footer/CancellationPolicy";
 import PrivacyPolicy from "../../ui/footer/PrivacyPolicy";
 import TermsAndConditions from "../../ui/footer/TermsAndConditions";
+
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
 const ContactUs = lazy(
@@ -18,8 +19,7 @@ const ChangePassword = lazy(
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
-const BlogDetails = lazy(
-  () => import("../../features/frontend/blogs/BlogDetails")
+
 );
 
 export default [
@@ -114,11 +114,5 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
-  // {
-  //   label: "Blog Details",
-  //   component: <BlogDetails />,
-  //   path: "blog-details",
-  //   showInMenu: false,
-  //   hasAuthenticate: "no",
-  // },
+
 ];
