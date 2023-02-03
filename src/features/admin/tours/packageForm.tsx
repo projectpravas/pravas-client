@@ -14,15 +14,25 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+
 import { Form, ErrorMessage, FieldArray, FormikProvider } from "formik";
 
 import { Formik } from "formik";
 // import defineInitialTour from "../../../shared/yup-validations/tour-validation/initialTour";
 // import defineTourYupSchema from "../../../shared/yup-validations/tour-validation/tourYupValidation";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import TourService from "../../../services/TourService";
 
 interface IPackageFormProps {}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
 
 interface TourInterface {
   title?: string;
@@ -81,9 +91,38 @@ const commnObj = {
 //   ...commnObj,
 // });
 
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 const tourTypes = ["Adventure", "Group", "Honeymoon", "Trek", "Customize"];
 
 const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
+  const [tabvalue, setTabValue] = React.useState(0);
+
   const [days, setDays] = useState(0);
   const [daysArray, setDaysArray] = useState<Array<number>>([]);
   const [itinerary, setItinerary] = useState<Array<ItineraryObj>>([
@@ -98,6 +137,11 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
       },
     },
   ]);
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setTabValue(newValue);
+    setDaysArray(daysArray);
+  };
 
   const [hotels, setHotels] = useState<Array<hotelsInterface>>([
     {
@@ -407,7 +451,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
             <form onSubmit={handleSubmit}>
               <Container>
                 {/* //Basic tour plan */}
-                <Accordion>
+                <Accordion defaultExpanded>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -474,7 +518,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <TextField
-                          type="number"
+                          type="text"
                           size="small"
                           name="duration.days"
                           label="Days"
@@ -544,17 +588,23 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                 </Accordion>
 
                 {/* Tour Plan Day by day */}
-                <Accordion>
+                <Accordion defaultExpanded>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>Tour Plan</Typography>
+                    <Typography>Daywise Tour Plan</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Grid container spacing={2}>
-                      {daysArray.map((v, i) => (
+                    <Grid
+                      container
+                      spacing={2}
+                      sx={{
+                        justifyContent: "center",
+                      }}
+                    >
+                      {/* {daysArray.map((v, i) => (
                         <Accordion sx={{ width: "100%" }} key={v}>
                           <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -615,6 +665,146 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             </Grid>
                           </AccordionDetails>
                         </Accordion>
+                      ))} */}
+
+                      {/* tabs */}
+
+                      {/* <Box sx={{ width: "100%" }}>
+                        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                          <Tabs
+                            value={tabvalue}
+                            onChange={handleTabChange}
+                            aria-label="basic tabs example"
+                          >
+                            {daysArray.map((v, i) => (
+                              <Tab
+                                key={v + i}
+                                label={`Day-${i + 1}`}
+                                {...a11yProps(i)}
+                              />
+                            ))}
+                          </Tabs>
+                        </Box>
+                        {daysArray.map((v, i) => (
+                          <TabPanel value={tabvalue} index={i}>
+                            <Grid container spacing={2}>
+                              <Grid
+                                item
+                                xs={12}
+                                key={v + i}
+                                draggable
+                                onDragStart={(e) => dragStart(e, i)}
+                                onDragEnter={(e) => dragEnter(e, i)}
+                                onDragEnd={drop}
+                                onDragOver={(e) => e.preventDefault()}
+                              >
+                                <Typography>Day : {i + 1} </Typography>
+                                <TextField
+                                  type="text"
+                                  size="small"
+                                  margin="normal"
+                                  name={`planTitle/${v}`}
+                                  label="Plan Title"
+                                  value={itinerary[i].planTitle}
+                                  onChange={(e: any) => {
+                                    handleChange(e);
+                                    handleItinerary(e);
+                                  }}
+                                />
+                                <TextField
+                                  fullWidth
+                                  margin="normal"
+                                  multiline
+                                  minRows={2}
+                                  type="text"
+                                  name={`planDesc/${v}`}
+                                  label="Plan Description"
+                                  value={itinerary[i].planDesc}
+                                  onChange={(e: any) => {
+                                    handleChange(e);
+                                    handleItinerary(e);
+                                  }}
+                                />
+                                <FormGroup
+                                  row
+                                  onClick={(e: any) => handleItinerary(e, v)}
+                                >
+                                  <FormControlLabel
+                                    control={<Checkbox name="breakfast" />}
+                                    label="Breakfast"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="lunch" />}
+                                    label="Lunch"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="dinner" />}
+                                    label="Dinner"
+                                  />
+                                </FormGroup>
+                              </Grid>
+                            </Grid>
+                          </TabPanel>
+                        ))}
+                      </Box> */}
+                      {/* cards */}
+                      {daysArray.map((v, i) => (
+                        <Grid item xs={12} md={4} sx={{ margin: 2 }}>
+                          <Grid container spacing={1}>
+                            <Paper variant="elevation">
+                              <Grid
+                                item
+                                sx={{ padding: 2 }}
+                                xs={12}
+                                key={v}
+                                draggable
+                                onDragStart={(e) => dragStart(e, i)}
+                                onDragEnter={(e) => dragEnter(e, i)}
+                                onDragEnd={drop}
+                                onDragOver={(e) => e.preventDefault()}
+                              >
+                                <Typography>Day : {i + 1} </Typography>
+                                <TextField
+                                  type="text"
+                                  size="small"
+                                  margin="normal"
+                                  name={`planTitle/${v}`}
+                                  label="Plan Title"
+                                  //   value={values?.tourPlan?.itinerary?.planTitle}
+                                  onChange={handleItinerary}
+                                />
+                                <TextField
+                                  fullWidth
+                                  multiline
+                                  margin="normal"
+                                  minRows={2}
+                                  type="text"
+                                  name={`planDesc/${v}`}
+                                  label="Plan Description"
+                                  //   value={values?.tourPlan?.itinerary?.planDesc}
+                                  onChange={handleItinerary}
+                                />
+                                <FormGroup
+                                  row
+                                  onClick={(e: any) => handleItinerary(e, v)}
+                                >
+                                  <FormControlLabel
+                                    control={<Checkbox name="breakfast" />}
+                                    label="Breakfast"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="lunch" />}
+                                    label="Lunch"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="dinner" />}
+                                    label="Dinner"
+                                  />
+                                </FormGroup>
+                              </Grid>
+                            </Paper>
+                          </Grid>
+                        </Grid>
                       ))}
                     </Grid>
                   </AccordionDetails>
