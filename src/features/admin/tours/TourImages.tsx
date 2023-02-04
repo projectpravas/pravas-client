@@ -149,7 +149,6 @@ const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
                   >
                     <DeleteButton />
                   </IconButton>
-                  {/* <Box sx={{ height: 150 }}> */}
                   <img
                     src={img}
                     style={{
@@ -158,7 +157,6 @@ const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
                       padding: "2px",
                     }}
                   />
-                  {/* </Box> */}
                 </Grid>
               );
             })}

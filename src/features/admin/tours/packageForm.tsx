@@ -60,8 +60,6 @@ interface TourInterface {
 
 interface ItineraryObj {
   day: number;
-  // title?: string;
-  // desc?: string;
   planTitle?: string;
   planDesc?: string;
   meals: {
@@ -69,10 +67,6 @@ interface ItineraryObj {
     lunch: boolean;
     dinner: boolean;
   };
-}
-
-interface ImagesInterface {
-  images: any[];
 }
 
 interface hotelsInterface {

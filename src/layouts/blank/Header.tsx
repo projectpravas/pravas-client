@@ -19,6 +19,7 @@ import { Grid } from "@mui/material";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../app/slices/AuthSlice";
+import User from "../../shared/models/userModel";
 
 const pages = ["Contact Us", "Blogs", "Pravas", "About Us", "Home"];
 const settings = ["login", "register"];
@@ -36,7 +37,7 @@ const Header = () => {
     null
   );
 
-  const currentLoggedUser = useSelector(selectLoggedUser);
+  const currentLoggedUser: User = useSelector(selectLoggedUser);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -52,8 +53,6 @@ const Header = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
-  console.log(currentLoggedUser);
 
   return (
     <AppBar position="static" sx={{ backgroundColor: "white" }}>
@@ -162,9 +161,9 @@ const Header = () => {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip
-              title={currentLoggedUser ? "My Profile" : "Login / Register"}
+              title={currentLoggedUser?._id ? "My Profile" : "Login / Register"}
             >
-              {currentLoggedUser ? (
+              {currentLoggedUser?._id ? (
                 <NavLink to="/secured/dashboard" sx={{ p: 0, mr: 0 }}>
                   <AccountCircleIcon fontSize="large" />
                 </NavLink>
