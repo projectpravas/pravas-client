@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -139,10 +139,12 @@ const PersistedSidebar = () => {
             sx={{ alignItems: "center", justifyContent: "space-between" }}
           >
             <Grid item style={{ width: "10%", margin: "15px" }}>
-              <img
-                src="/PTSM-LOGO.png"
-                style={{ width: "100%", height: "100%" }}
-              />
+              <NavLink to="/home">
+                <img
+                  src="/PTSM-LOGO.png"
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </NavLink>
             </Grid>
             <Grid item>
               <Box sx={{ flexGrow: 0 }}>

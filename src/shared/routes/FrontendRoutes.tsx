@@ -20,13 +20,18 @@ const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
 
-
-
 export default [
   {
     label: "Home",
     component: <Home />,
     path: "",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Home",
+    component: <Home />,
+    path: "/home",
     showInMenu: true,
     hasAuthenticate: "all",
   },
@@ -114,5 +119,4 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
-
 ];
