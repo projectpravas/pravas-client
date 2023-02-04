@@ -6,6 +6,7 @@ import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
+import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
 const Tours = lazy(() => import("../../features/admin/tours/Tours"));
 const Dashboard = lazy(
