@@ -21,6 +21,7 @@ import { Formik } from "formik";
 // import defineTourYupSchema from "../../../shared/yup-validations/tour-validation/tourYupValidation";
 import { Button } from "@mui/material";
 import TourService from "../../../services/TourService";
+import Images from "./TourImages";
 
 interface IPackageFormProps {}
 
@@ -46,6 +47,10 @@ interface ItineraryObj {
     lunch: boolean;
     dinner: boolean;
   };
+}
+
+interface ImagesInterface {
+  images: any[];
 }
 
 interface hotelsInterface {
@@ -105,6 +110,8 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
       hotelNames: "",
     },
   ]);
+
+  const [images, setImages] = useState<File[]>([]);
 
   const [includes, setIncludes] = useState([{ include: "" }]);
   const [excludes, setExcludes] = useState([{ exclude: "" }]);
@@ -406,6 +413,8 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
           return (
             <form onSubmit={handleSubmit}>
               <Container>
+                <Images setImages={setImages} imgs={images} />
+
                 {/* //Basic tour plan */}
                 <Accordion>
                   <AccordionSummary
