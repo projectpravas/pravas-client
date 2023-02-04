@@ -13,7 +13,7 @@ interface Itinerary {
 interface TourPlan {
   scheduleDate?: Array<Date>;
   itinerary?: Array<Itinerary>;
-  hotels?: Array<string>;
+  hotels?: Array<object>;
   includes?: Array<string>;
   excludes?: Array<string>;
   tourNotes?: Array<string>;

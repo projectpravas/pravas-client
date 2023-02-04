@@ -6,7 +6,7 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
 import { styled } from "@mui/material/styles";
-
+import useDnD from "../../../shared/draganddrop/useDnD";
 const StyledBox = styled(Box)({
   height: 100,
   backgroundColor: "#2222",
@@ -65,6 +65,7 @@ const AddMoreImages = ({
 
 const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
   const [imagesState, setImagesState] = useState<string[]>([]);
+  const { dragEnter, dragStart, drop } = useDnD();
 
   const setImagesInPackage = (imgArr: File[]) => {
     setImages(imgArr);
@@ -131,6 +132,11 @@ const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
                   xs={12}
                   sm={2}
                   sx={{ position: "relative", p: 1 }}
+                  draggable
+                  onDragStart={(e) => dragStart(e, i)}
+                  onDragEnter={(e) => dragEnter(e, i)}
+                  onDragEnd={(e) => drop(e, imagesState, setImagesState)}
+                  onDragOver={(e) => e.preventDefault()}
                 >
                   <IconButton
                     size="small"
