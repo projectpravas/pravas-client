@@ -14,9 +14,6 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Box from "@mui/material/Box";
 
 import { Form, ErrorMessage, FieldArray, FormikProvider } from "formik";
 
@@ -27,12 +24,6 @@ import { Button, Paper } from "@mui/material";
 import TourService from "../../../services/TourService";
 
 interface IPackageFormProps {}
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
 
 interface TourInterface {
   title?: string;
@@ -91,38 +82,9 @@ const commnObj = {
 //   ...commnObj,
 // });
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 const tourTypes = ["Adventure", "Group", "Honeymoon", "Trek", "Customize"];
 
 const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
-  const [tabvalue, setTabValue] = React.useState(0);
-
   const [days, setDays] = useState(0);
   const [daysArray, setDaysArray] = useState<Array<number>>([]);
   const [itinerary, setItinerary] = useState<Array<ItineraryObj>>([
@@ -137,11 +99,6 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
       },
     },
   ]);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-    setDaysArray(daysArray);
-  };
 
   const [hotels, setHotels] = useState<Array<hotelsInterface>>([
     {
@@ -451,7 +408,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
             <form onSubmit={handleSubmit}>
               <Container>
                 {/* //Basic tour plan */}
-                <Accordion defaultExpanded>
+                <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -460,9 +417,14 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                     <Typography>Basic Tour Details</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Grid container spacing={2}>
+                    <Grid
+                      container
+                      spacing={2}
+                      sx={{ justifyContent: "center" }}
+                    >
                       <Grid item xs={12} md={4}>
                         <TextField
+                          fullWidth
                           type="text"
                           size="small"
                           name="title"
@@ -474,7 +436,6 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                           }}
                         />
                       </Grid>
-
                       <Grid item xs={12} md={4}>
                         <FormControl size="small" fullWidth>
                           <InputLabel
@@ -505,6 +466,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <TextField
+                          fullWidth
                           type="number"
                           size="small"
                           name="price"
@@ -516,8 +478,10 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                           }}
                         />
                       </Grid>
+
                       <Grid item xs={12} md={4}>
                         <TextField
+                          fullWidth
                           type="text"
                           size="small"
                           name="duration.days"
@@ -557,6 +521,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <TextField
+                          fullWidth
                           type="number"
                           size="small"
                           name="maxPersons"
@@ -568,6 +533,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                           }}
                         />
                       </Grid>
+
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
@@ -588,7 +554,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                 </Accordion>
 
                 {/* Tour Plan Day by day */}
-                <Accordion defaultExpanded>
+                <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -599,7 +565,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                   <AccordionDetails>
                     <Grid
                       container
-                      spacing={2}
+                      spacing={1}
                       sx={{
                         justifyContent: "center",
                       }}
@@ -749,20 +715,21 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                       </Box> */}
                       {/* cards */}
                       {daysArray.map((v, i) => (
-                        <Grid item xs={12} md={4} sx={{ margin: 2 }}>
-                          <Grid container spacing={1}>
+                        <Grid
+                          item
+                          xs={12}
+                          md={4}
+                          sx={{ margin: 2 }}
+                          key={v}
+                          draggable
+                          onDragStart={(e) => dragStart(e, i)}
+                          onDragEnter={(e) => dragEnter(e, i)}
+                          onDragEnd={drop}
+                          onDragOver={(e) => e.preventDefault()}
+                        >
+                          <Grid container>
                             <Paper variant="elevation">
-                              <Grid
-                                item
-                                sx={{ padding: 2 }}
-                                xs={12}
-                                key={v}
-                                draggable
-                                onDragStart={(e) => dragStart(e, i)}
-                                onDragEnter={(e) => dragEnter(e, i)}
-                                onDragEnd={drop}
-                                onDragOver={(e) => e.preventDefault()}
-                              >
+                              <Grid item sx={{ padding: 2 }} xs={12}>
                                 <Typography>Day : {i + 1} </Typography>
                                 <TextField
                                   type="text"
@@ -812,7 +779,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* hotels */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -828,6 +795,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             <React.Fragment key={index}>
                               <Grid item xs={12} md={4}>
                                 <TextField
+                                  fullWidth
                                   size="small"
                                   name="city"
                                   id="hotels.city"
@@ -840,6 +808,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                               </Grid>
                               <Grid item xs={12} md={4}>
                                 <TextField
+                                  fullWidth
                                   size="small"
                                   name="hotelNames"
                                   id="hotels.hotelNames"
@@ -851,23 +820,37 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                                 />
                               </Grid>
                               <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    // push({ city: "", hotelNames: "" })
-                                    handleAddRemove("hotels", "add", index)
-                                  }
-                                >
-                                  Add
-                                </Button>
-                              </Grid>
-                              <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    handleAddRemove("hotels", "remove", index)
-                                  }
-                                >
-                                  Remove
-                                </Button>
+                                <Grid container justifyContent="space-around">
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>
+                                        // push({ city: "", hotelNames: "" })
+                                        handleAddRemove("hotels", "add", index)
+                                      }
+                                    >
+                                      Add
+                                    </Button>
+                                  </Grid>
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      color="warning"
+                                      variant="contained"
+                                      onClick={() =>
+                                        handleAddRemove(
+                                          "hotels",
+                                          "remove",
+                                          index
+                                        )
+                                      }
+                                    >
+                                      Remove
+                                    </Button>
+                                  </Grid>
+                                </Grid>
                               </Grid>
                             </React.Fragment>
                           ))}
@@ -878,7 +861,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* Includes */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -935,7 +918,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* Exclues */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -991,7 +974,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* Notes */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
