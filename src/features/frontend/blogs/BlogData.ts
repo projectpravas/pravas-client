@@ -126,6 +126,7 @@ export const data = [
     blog: [
       {
         heading: "Kashmir Tulip Festival 2023",
+        desc: "",
       },
       {
         heading: "What is the Kashmir Tulip Festival?",
@@ -187,6 +188,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2023/01/Tour-Operator-in-pune-580x450.webp",
     title: "Tour Operator in Pune",
     desc: "Travelling is possibly the most liberating experience one can ever have if one is open",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 4,
@@ -194,6 +216,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2022/11/Rajasthan-tour-and-travel-consultant-in-Pune-580x450.webp",
     title: "Rajasthan tour and travel consultant in Pune",
     desc: "Globetrotters, brace yourself to explore the Land of kings. Know when and what with this",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 5,
@@ -201,6 +244,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2022/11/Kerala-travel-consultant-580x450.webp",
     title: "Kerala tour and travel consultant in Pune",
     desc: "Are you looking forward to taking a trip to Kerala post-pandemic? Heres what you should",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 6,
@@ -208,6 +272,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2022/07/Leh-ladakh-tours-from-pune-580x450.jpg",
     title: "Is July good time to visit Leh?",
     desc: "What is the best season to visit Leh-Ladakh? The best season to visit Leh-Ladakh is",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 7,
@@ -215,6 +300,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2022/07/shikara-boat-ride-at-kashmir-tour-from-pune-580x450.png",
     title: "The best time to travel to Kashmir",
     desc: "Kashmir is one of the most popular travel destinations in our country. With boundless natural",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 8,
@@ -222,6 +328,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2022/07/Leh-group-tours-from-pune-580x450.jpg",
     title: "Trip to Leh from Pune",
     desc: "Leh is one of the most unique and beautiful places in the country. With its",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 9,
@@ -229,6 +356,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2021/09/KASHMIR2-580x450.jpg",
     title: "Kashmir Tour & travel consultant in Pune",
     desc: "Often referred to as heaven on earth, Kashmir has been one of the most popular",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 10,
@@ -236,6 +384,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2022/06/TadobaS5-580x450.jpg",
     title: "The best season for Tadoba Wildlife Safari",
     desc: "Tadoba National Park, also known as the ‘Jewel of Vidarbha’ is a must-see destination. With",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 11,
@@ -243,6 +412,27 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2022/06/Pravas-post-580x400.jpg",
     title: "Pravas – The Journey",
     desc: "Pravas was founded by Ajit Ashok Takalkar, a life-long seeker of adventure and travel. With more",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
   {
     id: 12,
@@ -250,5 +440,26 @@ export const data = [
       "https://pravasthejourney.com/wp-content/uploads/2020/12/TadobaB1-580x400.jpg",
     title: "Tadoba the land of Tigers",
     desc: "Tadoba the land of Tigers. Tadoba Andhari Tiger Reserve one of the oldest reserve in India. Started",
+    blog: [
+      {
+        heading: "Mount Abu Summer Festival 2023",
+        desc: `A state adorned with deserts, hill stations, royal palaces, ancient forts, and color themed cities, Rajasthan is a bewitching land of India that stands true to its tourism department’s tagline – ‘The Incredible state of India’. It caters to the spectators around the world and homeland alike, for its vibrant culture, festivals and art forms throughout the year. This blog will explore one such events that lightens up the otherwise scorching Rajasthan in summertime – Mount Abu Summer Fest. 
+  
+          This 3 day carnival is held on Buddha Pournima every year by joint efforts of The Rajasthan Tourism Municipal Board, Mt.Abu & District Administration. It is organized at Mount Abu, a hill station located at a height of 1722 metres above the sea level and covered by lushy greenery of Aravalli hills. This scenic beauty is gifted with steep rocks, tranquil lakes, a picturesque backdrop, and a favorable climate which make it a perfect spot for the festival. 
+          
+          This year, the festival will be held from 13 May to 15 May 2023. The affair is much awaited occasion for visitors, folk art enthusiasts, and artists who get decked up to entertain their audience. This event hosts Rajasthani as well as Gujarati art professionals who represent their respective cultures and folklores. `,
+      },
+      {
+        heading: "Highlights of Mount Abu Summer festival ",
+        desc: `The festival starts with a beautiful procession from RTDC Hotel Shikhar and proceed towards Nakki Lake Chowk, which is the event spot for next two days. The inaugration witnesses energetic and intriguing Ballad performance, wherein the singers narrate the stories of folk heroes and legendary lovers.
+  
+          This is followed by wonderful folk dances like Gair,and Ghoomar. Major attraction of this festival are the outdoor games like horse racing, tug of war, skating races, panihari matka race, and boat races in and around Nakki Lake that test the competitive and enthusiastic spirit of the participants as well as the viewers. Apart from that, CRPF band holds an enthralling show matching their otherwise robust energy. The onlookers can also enjoy a much enchanting Shaam-E-Qawwali that bestows the audience with ultimate charm and happiness. Its worth the experience! 
+          
+          If you are thinking of taking a summer trip to Rajasthan, make sure you visit this festival once and celebrate it along with localities and fellow travellers with you. The Rajasthani cuisine and warm hospitality at restaurants and luxurious stays is cherry on top of the experience. Moreover, you can bring back some ethnic Rajasthani apparels and showpieces to your home. 
+          
+          You can book a taxi from Udaipur airport to reach the hill station. It is 185 kms away from Mount Abu. Buses are also available from the airport and railway station. The nearest train station is Abu Road railway station that is 28 km away. 
+          Plan your Rajasthan tour with Pravas and get to know more about the places worth a visit around Mount Abu as well. Click here for package information`,
+      },
+    ],
   },
 ];

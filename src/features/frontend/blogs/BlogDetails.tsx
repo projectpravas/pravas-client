@@ -3,6 +3,7 @@ import { Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/material";
 import { data } from "./BlogData";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 interface IBlogDetailsProps {}
 
@@ -12,6 +13,10 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
   const singleCareerData = data.find((obj) => obj?.id == Number(id));
   return (
     <>
+      <Helmet>
+        <title>{singleCareerData?.title}</title>
+        <meta name="description" content={singleCareerData?.blog[0].desc} />
+      </Helmet>
       <Container>
         <Grid container>
           {/* image Area  */}
