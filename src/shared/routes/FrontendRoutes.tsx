@@ -15,15 +15,16 @@ const CareerDetails = lazy(
 );
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
 const Blogs = lazy(() => import("../../features/frontend/blogs/Blogs"));
+const BlogDetails = lazy(
+  () => import("../../features/frontend/blogs/BlogDetails")
+);
 const ChangePassword = lazy(
   () => import("../../features/frontend/auth/ChangePassword")
 );
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
-const BlogDetails = lazy(
-  () => import("../../features/frontend/blogs/BlogDetails")
-);
+const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 
 export default [
   {
@@ -53,6 +54,13 @@ export default [
     path: "blogs",
     showInMenu: true,
     hasAuthenticate: "all",
+  },
+  {
+    label: "Blog Details",
+    component: <BlogDetails />,
+    path: "blogs/:id",
+    showInMenu: false,
+    hasAuthenticate: "no",
   },
   {
     label: "Contact Us",
@@ -124,11 +132,11 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
-  // {
-  //   label: "Blog Details",
-  //   component: <BlogDetails />,
-  //   path: "blog-details",
-  //   showInMenu: false,
-  //   hasAuthenticate: "no",
-  // },
+  {
+    label: "Page Not Found",
+    component: <PageNotFound />,
+    path: "*",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
 ];

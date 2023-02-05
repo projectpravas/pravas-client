@@ -7,7 +7,7 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
-import React, { useState } from "react";
+import * as React from "react";
 import ForwardToInboxOutlinedIcon from "@mui/icons-material/ForwardToInboxOutlined";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";

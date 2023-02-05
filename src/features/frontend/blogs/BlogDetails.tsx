@@ -1,12 +1,15 @@
+import * as React from "react";
 import { Container, Grid, Typography } from "@mui/material";
 import { Box } from "@mui/material";
-import * as React from "react";
+import { data } from "./BlogData";
+import { useParams } from "react-router-dom";
 
-interface IBlogDetailsProps {
-  data: any;
-}
+interface IBlogDetailsProps {}
 
-const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = ({ data }) => {
+const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
+  const { id } = useParams();
+
+  const singleCareerData = data.find((obj) => obj?.id == Number(id));
   return (
     <>
       <Container>
@@ -14,7 +17,7 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = ({ data }) => {
           {/* image Area  */}
           <Grid item xs={12}>
             <img
-              src={data?.largeImage}
+              src={singleCareerData?.largeImage}
               style={{ width: "100%", height: "100%" }}
             />
           </Grid>
@@ -22,8 +25,8 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = ({ data }) => {
           <Grid item xs={12}></Grid>
           {/* Blog Details */}
           <Grid item xs={12}>
-            {Array.isArray(data?.blog) &&
-              data?.blog.map((details: any, i: any) => {
+            {Array.isArray(singleCareerData?.blog) &&
+              singleCareerData?.blog.map((details: any, i: any) => {
                 return (
                   <Box sx={{ py: 1 }}>
                     <Typography

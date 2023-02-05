@@ -16,7 +16,7 @@ const CareerCard: React.FunctionComponent<ICareerCardProps> = ({
   return (
     <>
       <Container>
-        <Grid container justifyContent="space-between">
+        <Grid container justifyContent="space-between" sx={{ p: 2 }}>
           {/* -------------Title & Tags------------ */}
           <Grid item xs={12} md={6}>
             <Grid container flexDirection="column" spacing={4}>
@@ -31,13 +31,13 @@ const CareerCard: React.FunctionComponent<ICareerCardProps> = ({
               </Grid>
               {/* Tags */}
               <Grid item>
-                <Stack direction="row" spacing={3}>
+                <Stack direction="row" spacing={1}>
                   {Array.isArray(jobDetail?.tags) &&
                     jobDetail?.tags.map((tag: string, i: number) => (
                       <Chip
                         key={i}
                         label={tag}
-                        color="success"
+                        color="info"
                         variant="filled"
                         sx={{ borderRadius: 2 }}
                       />
