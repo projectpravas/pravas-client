@@ -4,6 +4,7 @@ import Register from "../../features/frontend/auth/Register";
 import CancellationPolicy from "../../ui/footer/CancellationPolicy";
 import PrivacyPolicy from "../../ui/footer/PrivacyPolicy";
 import TermsAndConditions from "../../ui/footer/TermsAndConditions";
+
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
 const ContactUs = lazy(
