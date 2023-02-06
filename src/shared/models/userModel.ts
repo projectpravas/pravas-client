@@ -19,7 +19,7 @@ interface UserActivityDetails {
 
 interface UserModel {
   _id?: string;
-  userId?: Number;
+  userId?: number;
   name?: Name;
   mobile?: string;
   email?: string;

@@ -6,6 +6,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
+import FormHelperText from "@mui/material/FormHelperText";
 import Typography from "@mui/material/Typography";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -14,13 +15,35 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import useDnD from "../../../shared/draganddrop/useDnD";
+import defineTourYupSchema from "../../../shared/yup-validations/tour-validation/tourYupValidation";
+
 import { Form, ErrorMessage, FieldArray, FormikProvider } from "formik";
 
 import { Formik } from "formik";
 // import defineInitialTour from "../../../shared/yup-validations/tour-validation/initialTour";
 // import defineTourYupSchema from "../../../shared/yup-validations/tour-validation/tourYupValidation";
-import { Button } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import TourService from "../../../services/TourService";
+import Images from "./TourImages";
+
+const tourSchema = defineTourYupSchema({
+  hasTitle: true,
+  hasCategory: true,
+  hasPrice: true,
+  hasDays: true,
+  hasFeatured: true,
+  hasMaxPersons: true,
+  hasTourDesc: true,
+  hasPlanTitle: true,
+  hasPlanDesc: true,
+  hasMeals: true,
+  hasCity: true,
+  hasHotelNames: true,
+  hasIncludes: true,
+  hasExcludes: true,
+  hasTourNotes: true,
+});
 
 interface IPackageFormProps {}
 
@@ -46,6 +69,10 @@ interface ItineraryObj {
     lunch: boolean;
     dinner: boolean;
   };
+}
+
+interface ImagesInterface {
+  images: any[];
 }
 
 interface hotelsInterface {
@@ -84,6 +111,7 @@ const commnObj = {
 const tourTypes = ["Adventure", "Group", "Honeymoon", "Trek", "Customize"];
 
 const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
+  const { dragEnter, dragStart, drop } = useDnD();
   const [days, setDays] = useState(0);
   const [daysArray, setDaysArray] = useState<Array<number>>([]);
   const [itinerary, setItinerary] = useState<Array<ItineraryObj>>([
@@ -105,6 +133,8 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
       hotelNames: "",
     },
   ]);
+
+  const [images, setImages] = useState<File[]>([]);
 
   const [includes, setIncludes] = useState([{ include: "" }]);
   const [excludes, setExcludes] = useState([{ exclude: "" }]);
@@ -205,40 +235,40 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
   //drag and drop
 
-  const dragItem: any = useRef();
-  const dragItem2: any = useRef();
-  const dragOverItem: any = useRef();
-  const dragOverItem2: any = useRef();
+  // const dragItem: any = useRef();
+  // const dragItem2: any = useRef();
+  // const dragOverItem: any = useRef();
+  // const dragOverItem2: any = useRef();
 
-  const dragStart = (e: any, position: number) => {
-    dragItem.current = position;
-    dragItem2.current = position;
-    // console.log(e.target.innerHTML);
-  };
+  // const dragStart = (e: any, position: number) => {
+  //   dragItem.current = position;
+  //   dragItem2.current = position;
+  //   // console.log(e.target.innerHTML);
+  // };
 
-  const dragEnter = (e: any, position: number) => {
-    dragOverItem.current = position;
-    dragOverItem2.current = position;
-    // console.log(e.target.innerHTML);
-  };
+  // const dragEnter = (e: any, position: number) => {
+  //   dragOverItem.current = position;
+  //   dragOverItem2.current = position;
+  //   // console.log(e.target.innerHTML);
+  // };
 
-  const drop = (e: any) => {
-    const copyListItems = [...daysArray];
-    const dragItemContent = copyListItems[dragItem.current];
-    copyListItems.splice(dragItem.current, 1);
-    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
-    dragItem.current = null;
-    dragOverItem.current = null;
-    setDaysArray(copyListItems);
+  // const drop = (e: any) => {
+  //   const copyListItems = [...daysArray];
+  //   const dragItemContent = copyListItems[dragItem.current];
+  //   copyListItems.splice(dragItem.current, 1);
+  //   copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+  //   dragItem.current = null;
+  //   dragOverItem.current = null;
+  //   setDaysArray(copyListItems);
 
-    const copyListItems2 = [...itinerary];
-    const dragItemContent2 = copyListItems2[dragItem2.current];
-    copyListItems2.splice(dragItem2.current, 1);
-    copyListItems2.splice(dragOverItem2.current, 0, dragItemContent2);
-    dragItem2.current = null;
-    dragOverItem2.current = null;
-    setItinerary(copyListItems2);
-  };
+  //   const copyListItems2 = [...itinerary];
+  //   const dragItemContent2 = copyListItems2[dragItem2.current];
+  //   copyListItems2.splice(dragItem2.current, 1);
+  //   copyListItems2.splice(dragOverItem2.current, 0, dragItemContent2);
+  //   dragItem2.current = null;
+  //   dragOverItem2.current = null;
+  //   setItinerary(copyListItems2);
+  // };
   ///////
 
   const handleAddRemove = (tag: string, method: string, i: number) => {
@@ -356,7 +386,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
             ],
           },
         }}
-        // validationSchema={tourYupSchema}
+        validationSchema={tourSchema}
         onSubmit={(values, { resetForm }) => {
           console.log(values);
 
@@ -406,8 +436,10 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
           return (
             <form onSubmit={handleSubmit}>
               <Container>
+                <Images setImages={setImages} imgs={images} />
+
                 {/* //Basic tour plan */}
-                <Accordion>
+                <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -416,9 +448,14 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                     <Typography>Basic Tour Details</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Grid container spacing={2}>
+                    <Grid
+                      container
+                      spacing={2}
+                      sx={{ justifyContent: "center" }}
+                    >
                       <Grid item xs={12} md={4}>
                         <TextField
+                          fullWidth
                           type="text"
                           size="small"
                           name="title"
@@ -428,9 +465,15 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             handleChange(e);
                             handleTour(e);
                           }}
+                          autoComplete="title"
+                          autoFocus
+                          onBlur={handleBlur}
+                          error={touched.title && errors.title ? true : false}
+                          helperText={
+                            touched.title && errors.title ? errors.title : ""
+                          }
                         />
                       </Grid>
-
                       <Grid item xs={12} md={4}>
                         <FormControl size="small" fullWidth>
                           <InputLabel
@@ -450,6 +493,12 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                               handleChange(e);
                               handleTour(e);
                             }}
+                            autoComplete="tourType"
+                            autoFocus
+                            onBlur={handleBlur}
+                            error={
+                              touched.tourType && errors.tourType ? true : false
+                            }
                           >
                             {tourTypes.map((v, i) => (
                               <MenuItem key={v + i} value={v}>
@@ -457,10 +506,16 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                               </MenuItem>
                             ))}
                           </Select>
+                          <FormHelperText>
+                            {touched.tourType && errors.tourType
+                              ? errors.tourType
+                              : ""}
+                          </FormHelperText>
                         </FormControl>
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <TextField
+                          fullWidth
                           type="number"
                           size="small"
                           name="price"
@@ -470,11 +525,20 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             handleChange(e);
                             handleTour(e);
                           }}
+                          autoComplete="price"
+                          autoFocus
+                          onBlur={handleBlur}
+                          error={touched.price && errors.price ? true : false}
+                          helperText={
+                            touched.price && errors.price ? errors.price : ""
+                          }
                         />
                       </Grid>
+
                       <Grid item xs={12} md={4}>
                         <TextField
-                          type="number"
+                          fullWidth
+                          type="text"
                           size="small"
                           name="duration.days"
                           label="Days"
@@ -484,6 +548,19 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             setDays(Number(e?.target?.value));
                             handleTour(e);
                           }}
+                          autoComplete="duration.days"
+                          autoFocus
+                          onBlur={handleBlur}
+                          error={
+                            touched.duration?.days && errors.duration?.days
+                              ? true
+                              : false
+                          }
+                          helperText={
+                            touched.duration?.days && errors.duration?.days
+                              ? errors.duration.days
+                              : ""
+                          }
                         />
                       </Grid>
                       <Grid item xs={12} md={4}>
@@ -505,14 +582,26 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                               handleChange(e);
                               handleTour(e);
                             }}
+                            autoComplete="featured"
+                            autoFocus
+                            onBlur={handleBlur}
+                            error={
+                              touched.featured && errors.featured ? true : false
+                            }
                           >
                             <MenuItem value="true">Yes</MenuItem>
                             <MenuItem value="false">No</MenuItem>
                           </Select>
+                          <FormHelperText>
+                            {touched.featured && errors.featured
+                              ? errors.featured
+                              : ""}
+                          </FormHelperText>
                         </FormControl>
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <TextField
+                          fullWidth
                           type="number"
                           size="small"
                           name="maxPersons"
@@ -522,8 +611,22 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             handleChange(e);
                             handleTour(e);
                           }}
+                          autoComplete="maxPersons"
+                          autoFocus
+                          onBlur={handleBlur}
+                          error={
+                            touched.maxPersons && errors.maxPersons
+                              ? true
+                              : false
+                          }
+                          helperText={
+                            touched.maxPersons && errors.maxPersons
+                              ? errors.maxPersons
+                              : ""
+                          }
                         />
                       </Grid>
+
                       <Grid item xs={12}>
                         <TextField
                           fullWidth
@@ -537,6 +640,17 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             handleChange(e);
                             handleTour(e);
                           }}
+                          autoComplete="tourDesc"
+                          autoFocus
+                          onBlur={handleBlur}
+                          error={
+                            touched.tourDesc && errors.tourDesc ? true : false
+                          }
+                          helperText={
+                            touched.tourDesc && errors.tourDesc
+                              ? errors.tourDesc
+                              : ""
+                          }
                         />
                       </Grid>
                     </Grid>
@@ -544,17 +658,23 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                 </Accordion>
 
                 {/* Tour Plan Day by day */}
-                <Accordion>
+                <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                   >
-                    <Typography>Tour Plan</Typography>
+                    <Typography>Daywise Tour Plan</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Grid container spacing={2}>
-                      {daysArray.map((v, i) => (
+                    <Grid
+                      container
+                      spacing={1}
+                      sx={{
+                        justifyContent: "center",
+                      }}
+                    >
+                      {/* {daysArray.map((v, i) => (
                         <Accordion sx={{ width: "100%" }} key={v}>
                           <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -615,6 +735,158 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                             </Grid>
                           </AccordionDetails>
                         </Accordion>
+                      ))} */}
+
+                      {/* tabs */}
+
+                      {/* <Box sx={{ width: "100%" }}>
+                        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                          <Tabs
+                            value={tabvalue}
+                            onChange={handleTabChange}
+                            aria-label="basic tabs example"
+                          >
+                            {daysArray.map((v, i) => (
+                              <Tab
+                                key={v + i}
+                                label={`Day-${i + 1}`}
+                                {...a11yProps(i)}
+                              />
+                            ))}
+                          </Tabs>
+                        </Box>
+                        {daysArray.map((v, i) => (
+                          <TabPanel value={tabvalue} index={i}>
+                            <Grid container spacing={2}>
+                              <Grid
+                                item
+                                xs={12}
+                                key={v + i}
+                                draggable
+                                onDragStart={(e) => dragStart(e, i)}
+                                onDragEnter={(e) => dragEnter(e, i)}
+                                onDragEnd={drop}
+                                onDragOver={(e) => e.preventDefault()}
+                              >
+                                <Typography>Day : {i + 1} </Typography>
+                                <TextField
+                                  type="text"
+                                  size="small"
+                                  margin="normal"
+                                  name={`planTitle/${v}`}
+                                  label="Plan Title"
+                                  value={itinerary[i].planTitle}
+                                  onChange={(e: any) => {
+                                    handleChange(e);
+                                    handleItinerary(e);
+                                  }}
+                                />
+                                <TextField
+                                  fullWidth
+                                  margin="normal"
+                                  multiline
+                                  minRows={2}
+                                  type="text"
+                                  name={`planDesc/${v}`}
+                                  label="Plan Description"
+                                  value={itinerary[i].planDesc}
+                                  onChange={(e: any) => {
+                                    handleChange(e);
+                                    handleItinerary(e);
+                                  }}
+                                />
+                                <FormGroup
+                                  row
+                                  onClick={(e: any) => handleItinerary(e, v)}
+                                >
+                                  <FormControlLabel
+                                    control={<Checkbox name="breakfast" />}
+                                    label="Breakfast"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="lunch" />}
+                                    label="Lunch"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="dinner" />}
+                                    label="Dinner"
+                                  />
+                                </FormGroup>
+                              </Grid>
+                            </Grid>
+                          </TabPanel>
+                        ))}
+                      </Box> */}
+                      {/* cards */}
+                      {daysArray.map((v, i) => (
+                        <Grid
+                          item
+                          xs={12}
+                          md={4}
+                          sx={{ margin: 2 }}
+                          key={v}
+                          draggable
+                          onDragStart={(e) => dragStart(e, i)}
+                          onDragEnter={(e) => dragEnter(e, i)}
+                          onDragEnd={(e) =>
+                            drop(
+                              e,
+                              daysArray,
+                              setDaysArray,
+                              itinerary,
+                              setItinerary
+                            )
+                          }
+                          onDragOver={(e) => e.preventDefault()}
+                        >
+                          <Grid container>
+                            <Paper variant="elevation">
+                              <Grid item sx={{ padding: 2 }} xs={12}>
+                                <Typography>Day : {i + 1} </Typography>
+                                <TextField
+                                  type="text"
+                                  size="small"
+                                  margin="normal"
+                                  name={`planTitle/${v}`}
+                                  label="Plan Title"
+                                  //   value={values?.tourPlan?.itinerary?.planTitle}
+                                  onChange={handleItinerary}
+                                  autoComplete={`planTitle/${v}`}
+                                  autoFocus
+                                  onBlur={handleBlur}
+                                />
+                                <TextField
+                                  fullWidth
+                                  multiline
+                                  margin="normal"
+                                  minRows={2}
+                                  type="text"
+                                  name={`planDesc/${v}`}
+                                  label="Plan Description"
+                                  //   value={values?.tourPlan?.itinerary?.planDesc}
+                                  onChange={handleItinerary}
+                                />
+                                <FormGroup
+                                  row
+                                  onClick={(e: any) => handleItinerary(e, v)}
+                                >
+                                  <FormControlLabel
+                                    control={<Checkbox name="breakfast" />}
+                                    label="Breakfast"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="lunch" />}
+                                    label="Lunch"
+                                  />
+                                  <FormControlLabel
+                                    control={<Checkbox name="dinner" />}
+                                    label="Dinner"
+                                  />
+                                </FormGroup>
+                              </Grid>
+                            </Paper>
+                          </Grid>
+                        </Grid>
                       ))}
                     </Grid>
                   </AccordionDetails>
@@ -622,7 +894,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* hotels */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -636,8 +908,9 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                         {Array.isArray(hotels) &&
                           hotels?.map((hotel, index) => (
                             <React.Fragment key={index}>
-                              <Grid item xs={12} md={4}>
+                              <Grid item xs={12} md={5}>
                                 <TextField
+                                  fullWidth
                                   size="small"
                                   name="city"
                                   id="hotels.city"
@@ -648,8 +921,9 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                                   }
                                 />
                               </Grid>
-                              <Grid item xs={12} md={4}>
+                              <Grid item xs={12} md={5}>
                                 <TextField
+                                  fullWidth
                                   size="small"
                                   name="hotelNames"
                                   id="hotels.hotelNames"
@@ -661,23 +935,37 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                                 />
                               </Grid>
                               <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    // push({ city: "", hotelNames: "" })
-                                    handleAddRemove("hotels", "add", index)
-                                  }
-                                >
-                                  Add
-                                </Button>
-                              </Grid>
-                              <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    handleAddRemove("hotels", "remove", index)
-                                  }
-                                >
-                                  Remove
-                                </Button>
+                                <Grid container justifyContent="space-around">
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>
+                                        // push({ city: "", hotelNames: "" })
+                                        handleAddRemove("hotels", "add", index)
+                                      }
+                                    >
+                                      Add
+                                    </Button>
+                                  </Grid>
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      color="warning"
+                                      variant="contained"
+                                      onClick={() =>
+                                        handleAddRemove(
+                                          "hotels",
+                                          "remove",
+                                          index
+                                        )
+                                      }
+                                    >
+                                      Remove
+                                    </Button>
+                                  </Grid>
+                                </Grid>
                               </Grid>
                             </React.Fragment>
                           ))}
@@ -688,7 +976,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* Includes */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -718,23 +1006,41 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                               </Grid>
 
                               <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    // push({ city: "", hotelNames: "" })
-                                    handleAddRemove("includes", "add", index)
-                                  }
-                                >
-                                  Add
-                                </Button>
-                              </Grid>
-                              <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    handleAddRemove("includes", "remove", index)
-                                  }
-                                >
-                                  Remove
-                                </Button>
+                                <Grid container justifyContent="space-around">
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>
+                                        // push({ city: "", hotelNames: "" })
+                                        handleAddRemove(
+                                          "includes",
+                                          "add",
+                                          index
+                                        )
+                                      }
+                                    >
+                                      Add
+                                    </Button>
+                                  </Grid>
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="warning"
+                                      onClick={() =>
+                                        handleAddRemove(
+                                          "includes",
+                                          "remove",
+                                          index
+                                        )
+                                      }
+                                    >
+                                      Remove
+                                    </Button>
+                                  </Grid>
+                                </Grid>
                               </Grid>
                             </React.Fragment>
                           ))}
@@ -745,7 +1051,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* Exclues */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -775,22 +1081,40 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                               </Grid>
 
                               <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    handleAddRemove("excludes", "add", index)
-                                  }
-                                >
-                                  Add
-                                </Button>
-                              </Grid>
-                              <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    handleAddRemove("excludes", "remove", index)
-                                  }
-                                >
-                                  Remove
-                                </Button>
+                                <Grid container justifyContent="space-around">
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>
+                                        handleAddRemove(
+                                          "excludes",
+                                          "add",
+                                          index
+                                        )
+                                      }
+                                    >
+                                      Add
+                                    </Button>
+                                  </Grid>
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="warning"
+                                      onClick={() =>
+                                        handleAddRemove(
+                                          "excludes",
+                                          "remove",
+                                          index
+                                        )
+                                      }
+                                    >
+                                      Remove
+                                    </Button>
+                                  </Grid>
+                                </Grid>
                               </Grid>
                             </React.Fragment>
                           ))}
@@ -801,7 +1125,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
                 {/* Notes */}
 
-                <Accordion>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -831,22 +1155,36 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                               </Grid>
 
                               <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    handleAddRemove("notes", "add", index)
-                                  }
-                                >
-                                  Add
-                                </Button>
-                              </Grid>
-                              <Grid item xs={12} md={2}>
-                                <Button
-                                  onClick={() =>
-                                    handleAddRemove("notes", "remove", index)
-                                  }
-                                >
-                                  Remove
-                                </Button>
+                                <Grid container justifyContent="space-around">
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>
+                                        handleAddRemove("notes", "add", index)
+                                      }
+                                    >
+                                      Add
+                                    </Button>
+                                  </Grid>
+                                  <Grid item xs={12} md={5}>
+                                    <Button
+                                      fullWidth
+                                      variant="contained"
+                                      color="warning"
+                                      onClick={() =>
+                                        handleAddRemove(
+                                          "notes",
+                                          "remove",
+                                          index
+                                        )
+                                      }
+                                    >
+                                      Remove
+                                    </Button>
+                                  </Grid>
+                                </Grid>
                               </Grid>
                             </React.Fragment>
                           ))}

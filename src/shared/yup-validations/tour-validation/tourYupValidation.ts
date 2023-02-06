@@ -21,6 +21,8 @@ interface TourYupSchemaInterface {
   hasPlanDesc?: boolean;
   hasMeals?: boolean;
   hasHotels?: boolean;
+  hasCity?: boolean;
+  hasHotelNames?: boolean;
   hasIncludes?: boolean;
   hasExcludes?: boolean;
   hasTourNotes?: boolean;
@@ -56,6 +58,9 @@ const defineTourYupSchema = ({
   hasMeals = false,
 
   hasHotels = false,
+  hasCity = false,
+  hasHotelNames = false,
+
   hasIncludes = false,
   hasExcludes = false,
   hasTourNotes = false,
@@ -71,6 +76,7 @@ const defineTourYupSchema = ({
   const durationObj: any = {};
   const itineraryObj: any = {};
   const tourPlanObj: any = {};
+  const hotelsObject: any = {};
   const feedbacksObj: any = {};
 
   if (hasTourId)
@@ -143,6 +149,9 @@ const defineTourYupSchema = ({
 
   if (hasHotels)
     tourPlanObj.hotels = yup.array().required("Hotels are required");
+  if (hasCity) hotelsObject.city = yup.string().required("City is required");
+  if (hasHotelNames)
+    hotelsObject.hotelNames = yup.string().required("Hotel Names are required");
   if (hasIncludes)
     tourPlanObj.includes = yup.array().required("Includes are required");
   if (hasExcludes)

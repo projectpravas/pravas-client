@@ -35,6 +35,7 @@ const combineFields = {
   hasMobile: true,
   hasEmail: true,
   hasPassword: true,
+  
 };
 
 const signupInitialUser = defineInitialUser({ ...combineFields });
