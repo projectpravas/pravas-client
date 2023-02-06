@@ -22,12 +22,20 @@ const UserProfile = lazy(
 const AddEditUser = lazy(
   () => import("../../features/admin/users/AddEditUser")
 );
-
 const ChangePassword = lazy(
   () => import("../../features/frontend/auth/ChangePassword")
 );
 
 export default [
+  {
+    label: "Dashboard",
+    component: <Dashboard />,
+    icon: <DashboardCustomizeIcon />,
+    path: "",
+    showInMenu: false,
+    showInSettings: false,
+    roles: ["admin", "superAdmin", "customer"],
+  },
   {
     label: "Dashboard",
     component: <Dashboard />,

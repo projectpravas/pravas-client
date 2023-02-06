@@ -1,4 +1,6 @@
 import * as React from "react";
+
+import CareerDetails from "../../../ui/footer/Career/CareerDetails";
 import CareerForm from "../../../ui/footer/CareerForm";
 
 interface IHomeProps {}

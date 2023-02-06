@@ -64,14 +64,13 @@ const Login = () => {
     <ThemeProvider theme={theme}>
       <Grid container component="main">
         <CssBaseline />
+
         <Grid
           item
           xs={false}
           sm={4}
           md={7}
           sx={{
-            // backgroundImage:
-            //   "url(https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg)",
             backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -82,6 +81,7 @@ const Login = () => {
             backgroundPosition: "center",
           }}
         />
+
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={1} square>
           <Formik
             initialValues={initialUser}
@@ -147,78 +147,83 @@ const Login = () => {
                       Sign in
                     </Typography>
                     <Box sx={{ mt: 1 }}>
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        size="small"
-                        value={values.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={touched.email && errors.email ? true : false}
-                        helperText={
-                          touched.email && errors.email ? errors.email : ""
-                        }
-                      />
-                      <TextField
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        id="password"
-                        size="small"
-                        autoComplete="new-password"
-                        value={values?.password}
-                        onChange={handleChange}
-                        onFocus={() => setActiveElementId("password")}
-                        onBlur={(e) => {
-                          handleBlur(e);
-                          setActiveElementId("");
-                        }}
-                        type={showPassword ? "text" : "password"}
-                        InputLabelProps={{
-                          shrink:
-                            activeElementId == "password"
-                              ? true
-                              : values?.password?.length != 0
-                              ? true
-                              : false,
-                        }}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment
-                              position="end"
-                              sx={{ order: 2, mr: "1em" }}
-                            >
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
+                      <Grid>
+                        <TextField
+                          margin="normal"
+                          required
+                          fullWidth
+                          id="email"
+                          label="Email Address"
+                          name="email"
+                          autoComplete="email"
+                          autoFocus
+                          size="small"
+                          value={values.email}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={touched.email && errors.email ? true : false}
+                          helperText={
+                            touched.email && errors.email ? errors.email : ""
+                          }
+                        />
+                      </Grid>
+                      <Grid>
+                        <TextField
+                          required
+                          fullWidth
+                          margin="normal"
+                          name="password"
+                          label="Password"
+                          id="password"
+                          size="small"
+                          autoComplete="new-password"
+                          value={values?.password}
+                          onChange={handleChange}
+                          onFocus={() => setActiveElementId("password")}
+                          onBlur={(e) => {
+                            handleBlur(e);
+                            setActiveElementId("");
+                          }}
+                          type={showPassword ? "text" : "password"}
+                          InputLabelProps={{
+                            shrink:
+                              activeElementId == "password"
+                                ? true
+                                : values?.password?.length != 0
+                                ? true
+                                : false,
+                          }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment
+                                position="end"
+                                sx={{ order: 2, mr: "1em" }}
                               >
-                                {showPassword ? (
-                                  <VisibilityOff />
-                                ) : (
-                                  <Visibility />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                        error={
-                          touched?.password && errors?.password ? true : false
-                        }
-                        helperText={
-                          touched?.password && errors?.password
-                            ? errors?.password
-                            : ""
-                        }
-                      />
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowPassword}
+                                  onMouseDown={handleMouseDownPassword}
+                                  edge="end"
+                                >
+                                  {showPassword ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
+                          error={
+                            touched?.password && errors?.password ? true : false
+                          }
+                          helperText={
+                            touched?.password && errors?.password
+                              ? errors?.password
+                              : ""
+                          }
+                        />
+                      </Grid>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -240,12 +245,12 @@ const Login = () => {
                         Sign In
                       </Button>
                       <Grid container>
-                        <Grid item xs>
+                        <Grid item xs={6}>
                           <Link to={"/reset-password"}>Forgot password?</Link>
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={6}>
                           <Link to={"/register"}>
-                            {"Don't have an account?  Sign Up"}
+                            {"Don't have an account? Sign Up"}
                           </Link>
                         </Grid>
                       </Grid>
