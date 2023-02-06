@@ -2,11 +2,11 @@ import "../api/index";
 import { API, endPoints } from "../api/index";
 
 class TourService {
-  static createTour(tour: object) {
+  static createTour(tour: object | FormData) {
     return API.post(endPoints.api.tours.create, tour);
   } //createTour
 
-  static updateTour(id: string, tour: object) {
+  static updateTour(id: string, tour: object | FormData) {
     return API.put(endPoints.api.tours.update + id, tour);
   } //updateTour
 
