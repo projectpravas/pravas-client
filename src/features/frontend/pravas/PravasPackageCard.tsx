@@ -9,6 +9,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
+import Paper from "@mui/material/Paper";
 
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
@@ -47,24 +48,6 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
   heading,
   seatAvability,
 }) => {
-  const typoHead = {
-    fontWeight: "bold",
-    color: "#2c5799",
-    margin: "20px 20px 20px 20px",
-    fontSize: {
-      xs: "1rem",
-      md: "0.9rem",
-      lg: "1rem",
-      xl: "1.4rem",
-    },
-    marginLeft: {
-      xs: "20px",
-      md: "0.9rem",
-      lg: "1rem",
-      xl: "1.4rem",
-    },
-  };
-
   // Dialog open
   const [open, setOpen] = React.useState(false);
 
@@ -89,163 +72,190 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
 
   return (
     <Container>
-      <Grid container spacing={2} sx={{ d: "flex", flexDirection: "coloumn" }}>
-        <Grid item>
-          <Card
-            sx={{
-              padding: "15px 0px 15px 0px",
-              borderRadius: "20px",
-              position: "relative",
-              backgroundColor: "#ffffff",
-
-              ":hover": { boxShadow: "1px 1px 10px grey" },
-            }}
-          >
-            {/* ------------------image -area----- */}
-            <Grid item>
-              <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-                <CardMedia
-                  sx={{ borderRadius: "15px" }}
-                  component="img"
-                  src={image[0]}
-                />
-              </CardActionArea>
-            </Grid>
-            {/*----------- heading----------- */}
-            <Grid item>
-              <Grid container>
+      <Grid
+        container
+        spacing={1}
+        sx={{
+          d: "flex",
+          flexDirection: "coloumn",
+          position: "relative",
+        }}
+      >
+        <Paper sx={{ borderRadius: "25px" }}>
+          <Grid item>
+            <Grid container flexDirection="column" sx={{ padding: "10px" }}>
+              {/* *********************image area *********************** */}
+              <Grid item xs={12}>
+                <CardActionArea sx={{ width: "100%", margin: "auto" }}>
+                  <CardMedia
+                    sx={{ borderRadius: 8 }}
+                    component="img"
+                    src={image[0]}
+                  />
+                </CardActionArea>
+              </Grid>
+              <Grid item sx={{ position: "absolute", top: "5%", right: "10%" }}>
+                <Link to="">
+                  <FavoriteBorderOutlinedIcon
+                    sx={{
+                      color: "#ffffff",
+                      bgcolor: "#0000008a",
+                      opacity: 0.5,
+                      borderRadius: "5px",
+                      padding: "2px",
+                    }}
+                  />
+                </Link>
+              </Grid>
+              {/* *********************Heading area and  price area & photo icon *********************** */}
+              <Grid
+                item
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "end",
+                  margin: "20px 0 0 14px",
+                }}
+              >
                 <Grid item xs={8}>
-                  <Typography variant="h5" sx={typoHead}>
+                  <Typography
+                    sx={{
+                      color: "#27488D",
+                      fontFamily: "Sans-serif",
+                      fontSize: " 22px",
+                      fontWeight: "750",
+                      height: "30px",
+                    }}
+                  >
                     {heading}
                   </Typography>
-
-                  <Typography sx={{ display: "flex", p: 2 }}>
-                    <span
-                      style={{
-                        marginLeft: "2px",
-                        color: "#97978F",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      From
-                    </span>
-                    <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                      {price}
-                    </span>
-                  </Typography>
                 </Grid>
+                {/* *****************cameraIcon*********** */}
                 <Grid
                   item
                   xs={3.4}
                   sx={{
                     color: "#005792",
-
-                    width: "80%",
                     display: "flex",
+                    justifyContent: "space-between",
                     flexDirection: "row-reverse",
                   }}
                 >
-                  <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
+                  <Typography sx={{ color: "#673ab9" }}>
                     <IconButton onClick={handleClickOpen}>
                       <CameraAltOutlinedIcon />
                     </IconButton>
                     <Dialog open={open} onClose={handleClose}>
-                      {/* //// */}
+                      {/* //lphotos of locations// */}
                       <LocationClick items={items} />
                     </Dialog>
                   </Typography>
                 </Grid>
               </Grid>
-            </Grid>
-
-            {/* ----------------days seat explorer---- */}
-            <Grid item>
-              <Card
-                elevation={0}
-                sx={{
-                  width: "90%",
-                  margin: "auto",
-                  backgroundColor: "#faf8f4",
-
-                  borderRadius: "10px",
-                }}
-              >
-                <Grid
-                  container
+              {/* ***********Price dates************** */}
+              <Grid item>
+                <Typography
                   sx={{
                     display: "flex",
-                    marginTop: "2%",
-                    padding: "10px 0px 10px 0px",
-                    justifyContent: "space-evenly",
+                    paddingLeft: 2,
+                    color: "#7A7A7A",
+                    fontWeight: 400,
+                    fontSize: "20px",
+                    fontFamily: "Sans-serif",
+
+                    mb: 2,
                   }}
                 >
-                  <Grid item sx={{ display: "flex" }}>
-                    <Typography sx={{ alignSelf: "center" }}>
-                      <CalendarMonthIcon
-                        sx={{ color: "#005792", fontSize: "130%" }}
-                      />
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#97978F",
-                        fontWeight: "bold",
-                        paddingLeft: "5px",
-                      }}
-                    >
-                      {duration}
-                    </Typography>
-                  </Grid>
-                  <Grid item sx={{ display: "flex" }}>
-                    <Typography sx={{ alignSelf: "center" }}>
-                      <PeopleOutlineIcon
-                        sx={{ color: "#005792", fontSize: "150%" }}
-                      />
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: "#97978F",
-                        fontWeight: "bold",
-                        paddingLeft: "5px",
-                      }}
-                    >
-                      {seatAvability}
-                    </Typography>
-                  </Grid>
-                  <NLink item sx={{ display: "flex" }}>
-                    <Typography>
-                      <NavLink
-                        to={`explore/${id}`}
-                        style={{
-                          textDecoration: "none",
-                          color: "#2c5799",
+                  From
+                  <span
+                    style={{
+                      marginLeft: "5px",
+                      color: "#27488D",
+                      fontSize: "20px",
+                      fontWeight: 400,
+                      fontFamily: "Sans-serif",
+                    }}
+                  >
+                    {price}
+                  </span>
+                </Typography>
+              </Grid>
+              {/* *********************Days seats and explore *********************** */}
+              <Grid item xs={12}>
+                <Card
+                  elevation={0}
+                  sx={{
+                    width: "100%",
+                    margin: "auto",
+                    backgroundColor: "#faf8f4",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <Grid
+                    container
+                    sx={{
+                      display: "flex",
+                      marginTop: "2%",
+                      padding: "10px 0px 10px 0px",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <Grid item sx={{ display: "flex" }}>
+                      <Typography sx={{ alignSelf: "center" }}>
+                        <CalendarMonthIcon
+                          sx={{ color: "#005792", fontSize: "130%" }}
+                        />
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#97978F",
                           fontWeight: "bold",
+                          paddingLeft: "5px",
                         }}
                       >
-                        {"Explore"}
-                      </NavLink>
-                    </Typography>
-                    <Typography>
-                      <ArrowRightAltIcon />
-                    </Typography>
-                  </NLink>
-                </Grid>
-              </Card>
+                        {duration}
+                      </Typography>
+                    </Grid>
+                    <Grid item sx={{ display: "flex" }}>
+                      <Typography sx={{ alignSelf: "center" }}>
+                        <PeopleOutlineIcon
+                          sx={{ color: "#005792", fontSize: "150%" }}
+                        />
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#97978F",
+                          fontWeight: "bold",
+                          paddingLeft: "5px",
+                        }}
+                      >
+                        {seatAvability}
+                      </Typography>
+                    </Grid>
+                    <NLink item sx={{ display: "flex" }}>
+                      <Typography>
+                        <NavLink
+                          to={`explore/${id}`}
+                          style={{
+                            textDecoration: "none",
+                            color: "#2c5799",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {"Explore"}
+                        </NavLink>
+                      </Typography>
+                      <Typography>
+                        <ArrowRightAltIcon />
+                      </Typography>
+                    </NLink>
+                  </Grid>
+                </Card>
+              </Grid>
             </Grid>
-            <Grid item sx={{ position: "absolute", top: "8%", right: "10%" }}>
-              <Link to="">
-                <FavoriteBorderOutlinedIcon
-                  sx={{
-                    color: "#ffffff",
-                    bgcolor: "#0000008a",
-                    opacity: 0.5,
-                    borderRadius: "5px",
-                    padding: "2px",
-                  }}
-                />
-              </Link>
-            </Grid>
-          </Card>
-        </Grid>
+          </Grid>
+        </Paper>
       </Grid>
     </Container>
   );

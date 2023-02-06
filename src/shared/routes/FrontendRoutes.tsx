@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Login from "../../features/frontend/auth/Login";
 import Register from "../../features/frontend/auth/Register";
+
 import CancellationPolicy from "../../ui/footer/CancellationPolicy";
 import PrivacyPolicy from "../../ui/footer/PrivacyPolicy";
 import TermsAndConditions from "../../ui/footer/TermsAndConditions";
@@ -19,8 +20,9 @@ const ChangePassword = lazy(
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
-
-
+const ExplorePravas = lazy(
+  () => import("../../features/frontend/pravas/ExplorePravas")
+);
 
 export default [
   {
@@ -42,6 +44,13 @@ export default [
     component: <Pravas />,
     path: "pravas",
     showInMenu: true,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Explore Details",
+    component: <ExplorePravas />,
+    path: "pravas/explore/:id",
+    showInMenu: false,
     hasAuthenticate: "all",
   },
   {
@@ -114,5 +123,4 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
-
 ];

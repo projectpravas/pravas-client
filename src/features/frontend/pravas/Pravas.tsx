@@ -102,17 +102,9 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
                 sm={6}
                 md={4}
                 sx={{ marginTop: "15px", marginBottom: "15px" }}
-                key={item?.id + "-" + i}
+                key={item?.id + i}
               >
-                <PravasPackageCard
-                  // id={item?.id}
-                  // image={item?.image[0]}
-                  // price={item?.price}
-                  // duration={item?.duration}
-                  // heading={item?.heading}
-                  // seatAvability={item?.seatAvability}
-                  {...item}
-                />
+                <PravasPackageCard {...item} />
               </Grid>
             ))}
         </Grid>
