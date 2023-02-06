@@ -75,7 +75,6 @@ const CareerCard: React.FunctionComponent<ICareerCardProps> = ({
                       Apply Now
                     </Button>
                   </Grid>
-
                   <NavLink
                     to={`${jobDetail?.id}`}
                     style={{ textDecoration: "none", color: "black" }}
