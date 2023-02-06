@@ -11,7 +11,6 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
-import { data } from "./BlogData";
 import { NavLink } from "react-router-dom";
 
 const ExploreGrid = styled(Grid)({
