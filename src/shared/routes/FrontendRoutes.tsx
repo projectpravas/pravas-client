@@ -15,6 +15,9 @@ const CareerDetails = lazy(
   () => import("../../ui/footer/Career/CareerDetails")
 );
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
+const ExplorePravas = lazy(
+  () => import("../../features/frontend/pravas/ExplorePravas")
+);
 const Blogs = lazy(() => import("../../features/frontend/blogs/Blogs"));
 const BlogDetails = lazy(
   () => import("../../features/frontend/blogs/BlogDetails")
@@ -47,6 +50,13 @@ export default [
     component: <Pravas />,
     path: "pravas",
     showInMenu: true,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Pravas Explore",
+    component: <ExplorePravas />,
+    path: "pravas/explore/:id",
+    showInMenu: false,
     hasAuthenticate: "all",
   },
   {
