@@ -97,6 +97,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
             borderRadius: "20px",
             position: "relative",
             backgroundColor: "#ffffff",
+            marginX: "-8px",
 
             ":hover": { boxShadow: "1px 1px 10px grey" },
           }}

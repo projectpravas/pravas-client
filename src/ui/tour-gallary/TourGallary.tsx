@@ -16,36 +16,29 @@ interface IImageGallaryProps {
 
 const reqdata: any = [];
 data.map((v, i) => reqdata.push(...v.image));
-// const arrHead = data.map((head, i) => head?.heading);
 
-// console.log("heading:", arrHead);
-// console.log("data", reqdata);
 const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
   id,
   image,
   heading,
 }) => {
-  const [imgAll, setImgAll] = React.useState([]);
+  const [images, setImages] = React.useState<Array<any>>([]);
   const [collectionHead, setCollectionHead] = React.useState<any>([]);
 
   React.useEffect(() => {
-    setImgAll(reqdata);
+    setImages(reqdata);
     setCollectionHead([...new Set(data.map((item) => item.heading))]);
   }, []);
 
-  const gallary_filter = (itemData: any) => {
-    const filterData: any = data.filter(
-      (item: any) => item.heading == itemData
-    );
-    setImgAll(filterData);
+  const gallary_filter = (itemHead: any) => {
+    const filterData: any = data.filter((item: any) => {
+      if (item.heading == itemHead) setImages([...item.image]);
+    });
   };
-  console.log("img:", imgAll);
-
-  // console.log("heading:", collectionHead);
 
   return (
     <Grid container>
-      <Stack direction="row">
+      <Stack direction="row" spacing={2} sx={{ margin: "auto" }}>
         {collectionHead.map((itemHead: string, i: number) => (
           <Button variant="contained" onClick={() => gallary_filter(itemHead)}>
             {itemHead}
@@ -59,10 +52,10 @@ const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
         cols={6}
         rowHeight={300}
       >
-        {Array.isArray(imgAll) &&
-          imgAll.map((item: any, i: number) => (
+        {Array.isArray(images) &&
+          images.map((item: any, i: number) => (
             <ImageListItem key={item?.image}>
-              <img src={item.image} key={item?.id} />
+              <img src={item} key={item?.id} />
             </ImageListItem>
           ))}
       </ImageList>

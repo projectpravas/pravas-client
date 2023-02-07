@@ -112,7 +112,6 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
                   marginBottom: "15px",
                   // marginRight: "-15px",
                   // marginLeft: "15px",
-                  marginX: "-5px",
                 }}
                 key={item?.id + i}
               >
