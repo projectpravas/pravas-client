@@ -464,11 +464,7 @@ const Register = () => {
                         id="sign-in-button"
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        disabled={
-                          verifiedStatus && isValid && signUpCheckbox
-                            ? false
-                            : true
-                        }
+                        disabled={verifiedStatus && isValid ? false : true}
                       >
                         Sign Up
                       </Button>

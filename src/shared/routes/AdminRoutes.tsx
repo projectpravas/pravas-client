@@ -53,6 +53,16 @@ export default [
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin", "customer"],
+    subMenu: [
+      {
+        label: "Packages",
+        component: "",
+        icon: "",
+        path: "packages",
+        showInMenu: true,
+        showInSettings: false,
+      },
+    ],
   },
   {
     label: "Bookings",
