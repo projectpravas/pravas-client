@@ -36,6 +36,13 @@ export default [
     label: "Home",
     component: <Home />,
     path: "",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Home",
+    component: <Home />,
+    path: "/home",
     showInMenu: true,
     hasAuthenticate: "all",
   },

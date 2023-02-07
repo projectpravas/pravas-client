@@ -119,9 +119,9 @@ export default [
   },
   {
     label: "Account",
-    component: <> Add account component in admin routes </>,
+    component: <h1> Add account component in admin routes </h1>,
     icon: <PeopleIcon />,
-    path: "/accounts",
+    path: "accounts",
     showInMenu: false,
     showInSettings: true,
     role: ["admin", "superAdmin", "customer"],
