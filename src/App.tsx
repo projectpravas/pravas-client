@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import "../src/index.css";
 import Network from "./ui/connections/Network";
 import { Toast } from "./ui/toast/Toast";
+import { Helmet } from "react-helmet";
 
 const App = () => {
   const [hasNetworkOffline, setHasNetworkOffline] = useState(false);
@@ -23,6 +24,11 @@ const App = () => {
   }, []);
   return (
     <div className="App">
+      <Helmet>
+        <title>Pravas Tourism</title>
+        <meta name="description" content="pravas tourism" />
+        <meta name="keywords" content="Tours & Travel" />
+      </Helmet>
       <Network show={hasNetworkOffline} />
       <Toast />
       <span id="recaptcha-container"></span>
@@ -31,7 +37,6 @@ const App = () => {
         <Route path="/*" element={<BlankLayout />} />
         <Route path="secured/*" element={<FullLayout />} />
       </Routes>
-     
     </div>
   );
 };

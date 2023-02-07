@@ -11,6 +11,7 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
+import { NavLink } from "react-router-dom";
 
 const ExploreGrid = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -24,20 +25,13 @@ interface IBlogPostProps {
   title: string;
   desc: string;
   id: number | any;
-  setCurrentBlog: any;
 }
 const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   image,
   title,
   desc,
   id,
-  setCurrentBlog,
 }) => {
-  const blogDetails = () => {
-    console.log("id", id);
-    setCurrentBlog(id);
-  };
-
   return (
     <>
       <Container>
@@ -150,21 +144,26 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                 {/* ---------------------Divider-------------------- */}
                 <Divider />
                 {/* -------------------Read More----------------------- */}
-                <ExploreGrid
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#005d9d",
-                    pt: 1,
-                    cursor: "pointer",
-                  }}
-                  onClick={blogDetails}
+
+                <NavLink
+                  to={`${id}`}
+                  style={{ textDecoration: "none", color: "black" }}
                 >
-                  <Typography sx={{ p: 1, fontSize: 15, fontWeight: 900 }}>
-                    Explore
-                  </Typography>
-                  <EastIcon />
-                </ExploreGrid>
+                  <ExploreGrid
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#005d9d",
+                      pt: 1,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Typography sx={{ p: 1, fontSize: 15, fontWeight: 900 }}>
+                      Explore
+                    </Typography>
+                    <EastIcon />
+                  </ExploreGrid>
+                </NavLink>
               </Grid>
             </Grid>
           </Paper>

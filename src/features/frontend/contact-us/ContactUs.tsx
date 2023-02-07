@@ -4,12 +4,18 @@ import * as React from "react";
 import FeelFreeToContact from "./FeelFreeToContact";
 import OfficeLocations from "./OfficeLocations";
 import MapLocation from "./MapLocation";
+import { Helmet } from "react-helmet";
 
 interface IContactUsProps {}
 
 const ContactUs: React.FunctionComponent<IContactUsProps> = (props) => {
   return (
     <>
+      <Helmet>
+        <title>Contact Pravas</title>
+        <meta name="description" content="Pravas Tourism Contact-us" />
+        <meta name="keywords" content="Pravas Tourism Contact-us" />
+      </Helmet>
       <Container>
         <Grid container spacing={5}>
           <Grid item sx={{ mt: 10 }}>
