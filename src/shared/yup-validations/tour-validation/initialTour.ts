@@ -1,4 +1,4 @@
-import { array } from "yup";
+import { array, string } from "yup";
 import TourModel from "../../models/tourModel";
 
 const defineInitialTour = ({
@@ -47,14 +47,14 @@ const defineInitialTour = ({
   if (hasTourId) initialTour.tourId = NaN;
   if (hasTitle) initialTour.title = "";
   if (hasCategory) initialTour.category = "";
-  if (hasPrice) initialTour.price = NaN;
+  if (hasPrice) initialTour.price = 0;
 
-  if (hasDays || hasNights) initialTour.duration = { days: NaN, nights: NaN };
+  if (hasDays || hasNights) initialTour.duration = { days: 0, nights: 0 };
 
   if (hasTourType) initialTour.tourType = [];
   if (hasTourDesc) initialTour.tourDesc = "";
   if (hasTourInfo) initialTour.tourInfo = "";
-  if (hasMaxPersons) initialTour.maxPersons = NaN;
+  if (hasMaxPersons) initialTour.maxPersons = 0;
   if (hasParticipants) initialTour.participants = [];
   if (hasTourLocation) initialTour.tourLocation = "";
   if (hasFeatured) initialTour.featured = false;
@@ -65,14 +65,19 @@ const defineInitialTour = ({
   if (hasDay) itineraryObj.day = "";
   if (hasPlanTitle) itineraryObj.planTitle = "";
   if (hasPlanDesc) itineraryObj.planDesc = "";
-  if (hasMeals) itineraryObj.meals = [];
+  if (hasMeals)
+    itineraryObj.meals = {
+      breakfast: false,
+      dinner: false,
+      lunch: false,
+    };
   if (hasDay || hasPlanTitle || hasPlanDesc || hasMeals)
     tourPlanObj.itinerary = [itineraryObj];
 
-  if (hasHotels) tourPlanObj.hotels = [];
-  if (hasIncludes) tourPlanObj.includes = [];
-  if (hasExcludes) tourPlanObj.excludes = [];
-  if (hasTourNotes) tourPlanObj.tourNotes = [];
+  if (hasHotels) tourPlanObj.hotels = [{ city: "", hotelNames: "" }];
+  if (hasIncludes) tourPlanObj.includes = [{ include: "" }];
+  if (hasExcludes) tourPlanObj.excludes = [{ exclude: "" }];
+  if (hasTourNotes) tourPlanObj.tourNotes = [{ note: "" }];
 
   if (
     hasScheduleDate ||

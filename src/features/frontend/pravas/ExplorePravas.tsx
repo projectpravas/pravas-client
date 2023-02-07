@@ -40,6 +40,7 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import { NavLink } from "react-router-dom";
 import Carousel from "react-material-ui-carousel";
 import packageCard from "./data";
+import { Helmet } from "react-helmet";
 
 // -----tableCellstyles---
 const DattaTab = styled(TableCell)({
@@ -171,6 +172,11 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = ({}) => {
 
   return (
     <Grid>
+      <Helmet>
+        <title>{tourDetails?.heading}</title>
+        <meta name="description" content={tourDetails?.desc} />
+        <meta name="keywords" content={tourDetails?.desc} />
+      </Helmet>
       {/* slides of karshmir image */}
       <Grid style={{ backgroundColor: "#eee" }}>
         <CarouselStyle autoPlay>

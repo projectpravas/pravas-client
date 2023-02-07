@@ -2,12 +2,18 @@ import * as React from "react";
 import { Container, Grid, Paper } from "@mui/material";
 import CareerCard from "./CareerCard";
 import { careerDetails } from "./CareerData";
+import { Helmet } from "react-helmet";
 
 interface ICareersProps {}
 
 const Careers: React.FunctionComponent<ICareersProps> = (props) => {
   return (
     <>
+      <Helmet>
+        <title>Pravas Careers</title>
+        <meta name="description" content="Careers With Us" />
+        <meta name="keywords" content="Pravas Tourism Careers" />
+      </Helmet>
       <Container sx={{ py: 4 }}>
         <Grid container justifyContent="center">
           {Array.isArray(careerDetails) &&

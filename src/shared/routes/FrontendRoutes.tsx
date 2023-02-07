@@ -11,20 +11,37 @@ const ContactUs = lazy(
   () => import("../../features/frontend/contact-us/ContactUs")
 );
 const Careers = lazy(() => import("../../ui/footer/Career/Careers"));
+const CareerDetails = lazy(
+  () => import("../../ui/footer/Career/CareerDetails")
+);
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
+const ExplorePravas = lazy(
+  () => import("../../features/frontend/pravas/ExplorePravas")
+);
 const Blogs = lazy(() => import("../../features/frontend/blogs/Blogs"));
+const BlogDetails = lazy(
+  () => import("../../features/frontend/blogs/BlogDetails")
+);
 const ChangePassword = lazy(
   () => import("../../features/frontend/auth/ChangePassword")
 );
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
+const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 
 export default [
   {
     label: "Home",
     component: <Home />,
     path: "",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Home",
+    component: <Home />,
+    path: "/home",
     showInMenu: true,
     hasAuthenticate: "all",
   },
@@ -43,11 +60,25 @@ export default [
     hasAuthenticate: "all",
   },
   {
+    label: "Pravas Explore",
+    component: <ExplorePravas />,
+    path: "pravas/explore/:id",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+  {
     label: "Blogs",
     component: <Blogs />,
     path: "blogs",
     showInMenu: true,
     hasAuthenticate: "all",
+  },
+  {
+    label: "Blog Details",
+    component: <BlogDetails />,
+    path: "blogs/:id",
+    showInMenu: false,
+    hasAuthenticate: "no",
   },
   {
     label: "Contact Us",
@@ -60,6 +91,13 @@ export default [
     label: "Careers",
     component: <Careers />,
     path: "careers",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Career Details",
+    component: <CareerDetails />,
+    path: "careers/:id",
     showInMenu: false,
     hasAuthenticate: "all",
   },
@@ -109,6 +147,13 @@ export default [
     label: "Cancellation Policy",
     component: <CancellationPolicy />,
     path: "cancellation-policy",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Page Not Found",
+    component: <PageNotFound />,
+    path: "*",
     showInMenu: false,
     hasAuthenticate: "no",
   },

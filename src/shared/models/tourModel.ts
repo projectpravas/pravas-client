@@ -7,22 +7,50 @@ interface Itinerary {
   day?: number;
   planTitle?: string;
   planDesc?: string;
-  meals?: Object;
+  meals?: {
+    breakfast?: boolean;
+    dinner?: boolean;
+    lunch?: boolean;
+  };
+  _id: false;
+}
+
+interface Hotels {
+  city: string;
+  hotelNames: string;
+  _id: false;
+}
+
+interface Includes {
+  include: string;
+  _id: false;
+}
+
+interface Excludes {
+  exclude: string;
+  _id: false;
+}
+
+interface Notes {
+  note: string;
+  _id: false;
 }
 
 interface TourPlan {
   scheduleDate?: Array<Date>;
   itinerary?: Array<Itinerary>;
-  hotels?: Array<object>;
-  includes?: Array<string>;
-  excludes?: Array<string>;
-  tourNotes?: Array<string>;
+  hotels?: Array<Hotels>;
+  includes?: Array<Includes>;
+  excludes?: Array<Excludes>;   
+  tourNotes?: Array<Notes>;
+  _id: false;
 }
 
 interface Feedbacks {
   pravasiId?: string;
   liked?: Boolean;
   comment?: string;
+  _id: false;
 }
 
 interface TourModel {

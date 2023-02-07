@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import Tooltip from "@mui/material/Tooltip";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import IconButton from "@mui/material/IconButton";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -29,7 +30,7 @@ const DeleteButton = styled(ClearIcon)({
 interface IImagesProps {
   [key: string]: any;
   setImages: Function;
-  imgs: File[];
+  imgs: string[] | any;
 }
 
 interface IImageState {
@@ -44,7 +45,7 @@ const AddMoreImages = ({
   name: string;
 }) => {
   return (
-    <>
+    <Box>
       <label htmlFor={name}>
         <StyledBox>
           <AddAPhotoIcon fontSize="large" />
@@ -59,12 +60,12 @@ const AddMoreImages = ({
         accept=".png,.jpeg,.jpg,.webp,.svg..jfif"
         onChange={handleChange}
       />
-    </>
+    </Box>
   );
 };
 
 const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
-  const [imagesState, setImagesState] = useState<string[]>([]);
+  const [imagesState, setImagesState] = useState<string[] | any>([]);
   const { dragEnter, dragStart, drop } = useDnD();
 
   const setImagesInPackage = (imgArr: File[]) => {
@@ -118,9 +119,9 @@ const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
   return (
     <>
       <Paper sx={{ overflow: "auto", m: 1 }}>
-        <Grid container spacing={1} sx={{ p: 1 }}>
+        <Grid container spacing={1} sx={{ p: 1, textAlign: "center" }}>
           <Grid item xs={12}>
-            <h4 style={{ margin: 0 }}>Images</h4>
+            <h4 style={{ margin: 0, textAlign: "left" }}>Images</h4>
           </Grid>
 
           {Array.isArray(imagesState) &&
@@ -131,7 +132,7 @@ const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
                   item
                   xs={12}
                   sm={2}
-                  sx={{ position: "relative", p: 1 }}
+                  sx={{ position: "relative", p: 1, cursor: "grab" }}
                   draggable
                   onDragStart={(e) => dragStart(e, i)}
                   onDragEnter={(e) => dragEnter(e, i)}
@@ -149,23 +150,42 @@ const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
                   >
                     <DeleteButton />
                   </IconButton>
-                  {/* <Box sx={{ height: 150 }}> */}
-                  <img
-                    src={img}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      padding: "2px",
-                    }}
-                  />
-                  {/* </Box> */}
+                  <Tooltip title="Drag to change the image" followCursor>
+                    <img
+                      src={img}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        padding: "2px",
+                      }}
+                    />
+                  </Tooltip>
                 </Grid>
               );
             })}
 
           {imgs?.length < 10 && (
             <Grid item xs={12} sm={2}>
-              <AddMoreImages handleChange={handleImagesChange} name="images" />
+              <Grid item sx={{ height: "100%", p: 1 }}>
+                <AddMoreImages
+                  handleChange={handleImagesChange}
+                  name="images"
+                />
+              </Grid>
+            </Grid>
+          )}
+          {imgs?.length <= 0 && (
+            <Grid item xs={12} sm={8} alignSelf="center" justifySelf="center">
+              <h3
+                style={{
+                  display: "inline-block",
+                  color: "red",
+                  textAlign: "center",
+                  margin: "auto",
+                }}
+              >
+                Images are required
+              </h3>
             </Grid>
           )}
         </Grid>

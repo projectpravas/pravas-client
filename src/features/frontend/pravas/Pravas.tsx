@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 
 import PravasPackageCard from "./PravasPackageCard";
+import { Helmet } from "react-helmet";
 
 interface IPravasProps {}
 
@@ -92,6 +93,11 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   ];
   return (
     <>
+       <Helmet>
+        <title>Pravas Tours</title>
+        <meta name="description" content="Pravas Tourism" />
+        <meta name="keywords" content="Pravas Tourism" />
+      </Helmet>
       <Container>
         <Grid container>
           {Array.isArray(PackegeCard) &&
