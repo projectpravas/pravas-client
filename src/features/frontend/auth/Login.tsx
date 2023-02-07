@@ -88,8 +88,6 @@ const Login = () => {
             enableReinitialize
             validationSchema={loginValidation}
             onSubmit={(values, { resetForm }) => {
-              console.log(values);
-
               AuthService.userLogin(values)
                 .then((res) => {
                   const aToken = res?.headers["x-accesstoken"] as string;

@@ -35,7 +35,6 @@ const combineFields = {
   hasMobile: true,
   hasEmail: true,
   hasPassword: true,
-  
 };
 
 const signupInitialUser = defineInitialUser({ ...combineFields });
@@ -147,8 +146,6 @@ const Register = () => {
               enableReinitialize
               validationSchema={signupValidation}
               onSubmit={(values, { resetForm }) => {
-                console.log(values);
-
                 UserService.createUser({
                   ...values,
                   status: "active",
