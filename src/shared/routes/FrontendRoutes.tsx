@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import Login from "../../features/frontend/auth/Login";
 import Register from "../../features/frontend/auth/Register";
+import PageNotFound from "../../ui/404/PageNotFound";
 
 import CancellationPolicy from "../../ui/footer/CancellationPolicy";
 import PrivacyPolicy from "../../ui/footer/PrivacyPolicy";

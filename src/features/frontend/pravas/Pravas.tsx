@@ -93,13 +93,13 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   ];
   return (
     <>
-       <Helmet>
+      <Helmet>
         <title>Pravas Tours</title>
         <meta name="description" content="Pravas Tourism" />
         <meta name="keywords" content="Pravas Tourism" />
       </Helmet>
       <Container>
-        <Grid container>
+        <Grid container marginY={10}>
           {Array.isArray(PackegeCard) &&
             PackegeCard.map((item, i) => (
               <Grid
@@ -107,7 +107,13 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
                 xs={12}
                 sm={6}
                 md={4}
-                sx={{ marginTop: "15px", marginBottom: "15px" }}
+                sx={{
+                  marginTop: "15px",
+                  marginBottom: "15px",
+                  // marginRight: "-15px",
+                  // marginLeft: "15px",
+                  marginX: "-5px",
+                }}
                 key={item?.id + i}
               >
                 <PravasPackageCard {...item} />
