@@ -1,5 +1,6 @@
-import { Button } from "@mui/material";
 import React from "react";
+import { Button } from "@mui/material";
+// import Pagination from "@mui/material/Pagination";
 
 interface IPaginationProps {
   totalPosts: number;
@@ -38,6 +39,7 @@ const Pagination: React.FunctionComponent<IPaginationProps> = ({
           );
         })}
       </div>
+      {/* <Pagination count={pages} variant="outlined" shape="rounded" /> */}
     </>
   );
 };

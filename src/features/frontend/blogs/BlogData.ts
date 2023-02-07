@@ -187,6 +187,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2023/01/Tour-Operator-in-pune-580x450.webp",
     title: "Tour Operator in Pune",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Travelling is possibly the most liberating experience one can ever have if one is open",
     blog: [
       {
@@ -215,6 +217,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2022/11/Rajasthan-tour-and-travel-consultant-in-Pune-580x450.webp",
     title: "Rajasthan tour and travel consultant in Pune",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Globetrotters, brace yourself to explore the Land of kings. Know when and what with this",
     blog: [
       {
@@ -243,6 +247,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2022/11/Kerala-travel-consultant-580x450.webp",
     title: "Kerala tour and travel consultant in Pune",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Are you looking forward to taking a trip to Kerala post-pandemic? Heres what you should",
     blog: [
       {
@@ -271,6 +277,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2022/07/Leh-ladakh-tours-from-pune-580x450.jpg",
     title: "Is July good time to visit Leh?",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "What is the best season to visit Leh-Ladakh? The best season to visit Leh-Ladakh is",
     blog: [
       {
@@ -299,6 +307,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2022/07/shikara-boat-ride-at-kashmir-tour-from-pune-580x450.png",
     title: "The best time to travel to Kashmir",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Kashmir is one of the most popular travel destinations in our country. With boundless natural",
     blog: [
       {
@@ -327,6 +337,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2022/07/Leh-group-tours-from-pune-580x450.jpg",
     title: "Trip to Leh from Pune",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Leh is one of the most unique and beautiful places in the country. With its",
     blog: [
       {
@@ -355,6 +367,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2021/09/KASHMIR2-580x450.jpg",
     title: "Kashmir Tour & travel consultant in Pune",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Often referred to as heaven on earth, Kashmir has been one of the most popular",
     blog: [
       {
@@ -383,6 +397,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2022/06/TadobaS5-580x450.jpg",
     title: "The best season for Tadoba Wildlife Safari",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Tadoba National Park, also known as the ‘Jewel of Vidarbha’ is a must-see destination. With",
     blog: [
       {
@@ -411,6 +427,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2022/06/Pravas-post-580x400.jpg",
     title: "Pravas – The Journey",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Pravas was founded by Ajit Ashok Takalkar, a life-long seeker of adventure and travel. With more",
     blog: [
       {
@@ -439,6 +457,8 @@ export const data = [
     image:
       "https://pravasthejourney.com/wp-content/uploads/2020/12/TadobaB1-580x400.jpg",
     title: "Tadoba the land of Tigers",
+    largeImage:
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Tulip-Festival-Kashmir-2023.webp",
     desc: "Tadoba the land of Tigers. Tadoba Andhari Tiger Reserve one of the oldest reserve in India. Started",
     blog: [
       {

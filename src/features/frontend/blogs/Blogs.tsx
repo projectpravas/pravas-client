@@ -5,12 +5,13 @@ import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
 import { data } from "./BlogData";
 import { Helmet } from "react-helmet";
+import AddBlog from "./AddBlog/AddBlog";
 
 interface IBlogsProps {}
 
 const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postPerPage] = React.useState(9);
+  const [postPerPage] = React.useState(3);
 
   const lastPostIndex = currentPage * postPerPage;
   const firstPostIndex = lastPostIndex - postPerPage;
@@ -59,6 +60,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
           />
         </Grid>
       </Container>
+      <AddBlog />
     </>
   );
 };

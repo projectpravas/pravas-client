@@ -38,8 +38,7 @@ const GoToTop: React.FunctionComponent<IGoToTopProps> = (props) => {
       width: 3rem;
       height: 3rem;
       color: #fff;
-      background-color: blue;
-      //   border: 1px solid red;
+      background-color: #f7a707;
       border-radius: 50%;
       position: fixed;
       bottom: 3rem;
