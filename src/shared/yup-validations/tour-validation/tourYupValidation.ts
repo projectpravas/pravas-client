@@ -88,23 +88,24 @@ const defineTourYupSchema = ({
   if (hasPrice)
     tourSchemaObj.price = yup
       .number()
-      .required("Category is required")
-      .positive("-ve Numbers are not allowed");
+      .required("Price is required")
+      .positive("-ve/zero Number is not allowed");
 
   if (hasDays)
     durationObj.days = yup
       .number()
       .required("Days required")
-      .positive("-ve Numbers are not allowed");
+      .positive("-ve/zero Number is not allowed")
+      .max(30, "Max 30 day are allowed");
   if (hasNights)
     durationObj.nights = yup
       .number()
       .required("Nights required")
-      .positive("-ve Numbers are not allowed");
+      .positive("-ve/zero Number is not allowed");
   if (hasDays || hasNights) tourSchemaObj.duration = yup.object(durationObj);
 
   if (hasTourType)
-    tourSchemaObj.tourType = yup.string().required("Tour Type is required");
+    tourSchemaObj.tourType = yup.array().min(1, "TourType can't be empty");
   if (hasTourDesc)
     tourSchemaObj.tourDesc = yup
       .string()
@@ -116,8 +117,8 @@ const defineTourYupSchema = ({
   if (hasMaxPersons)
     tourSchemaObj.maxPersons = yup
       .number()
-      .required("Total Seats is required")
-      .positive("-ve Numbers are not allowed");
+      .required("Total Seats are required")
+      .positive("-ve/zero Number is not allowed");
   if (hasParticipants)
     tourSchemaObj.participants = yup
       .string()
@@ -143,7 +144,7 @@ const defineTourYupSchema = ({
     itineraryObj.planDesc = yup
       .string()
       .required("Plan Description is Required");
-  if (hasMeals) itineraryObj.meals = yup.array().required("Meals is Required");
+  if (hasMeals) itineraryObj.meals = yup.object().required("Meals is Required");
   if (hasDay || hasPlanTitle || hasPlanDesc || hasMeals)
     tourPlanObj.itinerary = yup.object(itineraryObj);
 
