@@ -408,6 +408,14 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
             .then((res) => {
               const msg = res?.data?.message || "Package created successfully";
               successToast(msg, 3000);
+
+              localStorage.setItem("basicTourData", "");
+              localStorage.setItem("itineraryData", "");
+              localStorage.setItem("hotelsData", "");
+              localStorage.setItem("includesData", "");
+              localStorage.setItem("excludesData", "");
+              localStorage.setItem("notesData", "");
+              resetForm({});
             })
             .catch((err) => {
               console.error(err);
