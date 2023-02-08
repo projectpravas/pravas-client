@@ -240,7 +240,7 @@ const Login = () => {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        disabled={isValid && loginChkBox ? false : true}
+                        disabled={isValid ? false : true}
                       >
                         Sign In
                       </Button>
