@@ -37,7 +37,7 @@ import UnverifiedUserIcon from "@mui/icons-material/GppBad";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Verified from "@mui/icons-material/VerifiedRounded";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
-import { endPoints } from "../../../api";
+import { endpoints } from "../../../api";
 import { useNavigate } from "react-router-dom";
 import { createFD } from "./createFormData";
 
@@ -385,7 +385,7 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                             profilePic == "" || profilePic == undefined
                               ? "/images/profile-picture-avatar-png-green.png"
                               : profilePic?.includes("user-profile")
-                              ? `${endPoints.serverBaseURL}/${profilePic}`
+                              ? `${endpoints.serverBaseURL}/${profilePic}`
                               : profilePic
                           }
                           style={{
