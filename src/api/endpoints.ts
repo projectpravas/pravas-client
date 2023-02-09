@@ -24,5 +24,12 @@ export default {
       resetPassword: "/auth/reset-password",
       changePassword: "/auth/change-password",
     },
+    enquiries: {
+      create: "/enquiries",
+      update: "/enquiries/",
+      delete: "/enquiries/",
+      getOne: "/enquiries/",
+      getAll: "/enquiries",
+    },
   },
 };

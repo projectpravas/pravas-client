@@ -29,6 +29,9 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import EnquiryService from "../../../services/EnquiryService";
+import EnquiryModel from "../../../shared/models/enquiryModel";
+import { errorToast, successToast } from "../../../ui/toast/Toast";
 
 const schema = yup
   .object({
@@ -101,6 +104,10 @@ interface IFormInput {
   anythingElse: string;
 }
 
+const from = new Date().toISOString().slice(0, 10);
+
+const to = new Date().toISOString().slice(0, 10);
+
 const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   props
 ) => {
@@ -109,14 +116,14 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<IFormInput>({
+  } = useForm<EnquiryModel>({
     mode: "onTouched",
     resolver: yupResolver(schema),
     defaultValues: {
       destinations: [{ place: "" }],
       travelDates: {
-        from: new Date().toISOString().slice(0, 10),
-        to: new Date().toISOString().slice(0, 10),
+        from: from,
+        to: to,
       },
       travelDuration: 0,
       participants: [{ name: "", age: 0 }],
@@ -145,8 +152,18 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
     name: "participants",
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<EnquiryModel> = (data) => {
     console.log(data);
+    EnquiryService.createEnquiry(data)
+      .then((res) => {
+        const msg = res?.data?.message || "Enquiry Created Successfully";
+        successToast(msg, 2000);
+        control._reset(control._defaultValues);
+      })
+      .catch((err) => {
+        const msg = err?.resonse?.data?.message || "Could not create enquiry";
+        errorToast(msg, 2000);
+      });
   };
   return (
     <>
