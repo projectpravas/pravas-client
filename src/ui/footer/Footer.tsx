@@ -103,7 +103,8 @@ const Footer: React.FunctionComponent<IFooterProps> = (props) => {
                     <Box
                       component="img"
                       sx={{ width: { xs: "70%", sm: "100%" } }}
-                      src="https://pravasthejourney.com/wp-content/uploads/2021/08/Pravas-Tourism-footer.png"
+                      src="./Pravas-Tourism-footer.png"
+                      // src="https://pravasthejourney.com/wp-content/uploads/2021/08/Pravas-Tourism-footer.png"
                     />
                   </NavLink>
                 </Box>
