@@ -29,9 +29,8 @@ const CancellationPolicy = lazy(
   () => import("../../ui/footer/CancellationPolicy")
 );
 const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
-const TermsAndConditions = lazy(
-  () => import("../../ui/footer/TermsAndConditions")
-);
+const TermsAndConditions = lazy(() => import("../../ui/404/PageNotFound"));
+const PageNotFound = lazy(() => import("../../ui/footer/TermsAndConditions"));
 
 export default [
   {
