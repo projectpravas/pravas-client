@@ -90,6 +90,21 @@ interface IhotelsInterface {
   hotelNames: string;
 }
 
+interface IincludesInterface {
+  touched: boolean;
+  include: string;
+}
+
+interface IexcludesInterface {
+  touched: boolean;
+  exclude: string;
+}
+
+interface InotesInterface {
+  touched: boolean;
+  note: string;
+}
+
 const commnObj = {
   hasTitle: true,
   hasPrice: true,
@@ -98,13 +113,9 @@ const commnObj = {
   hasMaxPersons: true,
   hasTourDesc: true,
   hasCity: true,
-  hasHotelNames: true,
-  hasIncludes: true,
-  hasExcludes: true,
-  hasTourNotes: true,
 };
 
-const initialTour = defineInitialTour({
+let initialTour = defineInitialTour({
   ...commnObj,
   hasCategory: true,
   hasDay: true,
@@ -112,6 +123,9 @@ const initialTour = defineInitialTour({
   hasPlanDesc: true,
   hasMeals: true,
   hasHotels: true,
+  hasIncludes: true,
+  hasExcludes: true,
+  hasTourNotes: true,
 });
 
 const tourYupSchema = defineTourYupSchema({
@@ -146,7 +160,9 @@ const tourItemObj = {
   featured: false,
 };
 
-const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
+const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
+  props
+) => {
   const { dragEnter, dragStart, drop } = useDnD();
   const [days, setDays] = useState(0);
   const [daysArray, setDaysArray] = useState<Array<number>>([]);
@@ -156,22 +172,28 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
   ]);
   const [images, setImages] = useState<string[] | any>([]);
   const [hotels, setHotels] = useState<Array<IhotelsInterface>>([hotelItemObj]);
-  const [includes, setIncludes] = useState([includesItemObj]);
-  const [excludes, setExcludes] = useState([excludesItemObj]);
-  const [tourNotes, setTourNotes] = useState([notesItemObj]);
+  const [includes, setIncludes] = useState<Array<IincludesInterface>>([
+    includesItemObj,
+  ]);
+  const [excludes, setExcludes] = useState<Array<IexcludesInterface>>([
+    excludesItemObj,
+  ]);
+  const [tourNotes, setTourNotes] = useState<Array<InotesInterface>>([
+    notesItemObj,
+  ]);
   const [tour, setTour] = useState<TourInterface>(tourItemObj);
 
   const theme = useTheme();
 
   const setPlanDay = () => {
-    const arr = [...itinerary];
+    let arr = [...itinerary];
     daysArray.forEach((v, i) => {
       arr[i].day = i + 1;
     });
     setItinerary([...arr]);
   };
 
-  const daysCount = (day: number) => {
+  const daysCount = (day: number, itemArr: any) => {
     const arr = [];
     const dataArr = [];
 
@@ -190,7 +212,7 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
     }
 
     setDaysArray(arr);
-    setItinerary(dataArr);
+    setItinerary(itemArr ? itemArr : dataArr);
   };
 
   const handleItinerary = (
@@ -344,16 +366,22 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
     let excludesData = JSON.parse(localStorage.getItem("excludesData") as any);
     let notesData = JSON.parse(localStorage.getItem("notesData") as any);
 
-    setTour(basicTourData);
-    setItinerary(itineraryData);
-    setHotels(hotelsData);
-    setIncludes(includesData);
-    setExcludes(excludesData);
-    setTourNotes(notesData);
+    setTour(basicTourData ? basicTourData : tourItemObj);
+    basicTourData?.duration?.days &&
+      daysCount(Number(basicTourData?.duration?.days), itineraryData);
+    setHotels(hotelsData ? hotelsData : hotelItemObj);
+    setIncludes(includesData ? includesData : includesItemObj);
+    setExcludes(excludesData ? excludesData : excludesItemObj);
+    setTourNotes(notesData ? notesData : notesItemObj);
+    // setItinerary(itineraryData ? itineraryData : itineraryItemObj);
+    // setDaysArray(daysArray);
+    // setPlanDay();
+
+    initialTour = { ...initialTour, ...basicTourData };
   };
 
   useEffect(() => {
-    daysCount(days);
+    daysCount(days, false);
   }, [days]);
 
   useEffect(() => {
@@ -363,12 +391,15 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
 
   //local storage set
   useEffect(() => {
+    let itineraryArr = Array.isArray(itinerary)
+      ? [...itinerary]
+      : [itineraryItemObj];
     let basicTourData: TourInterface = { ...tour };
-    let itineraryData: Array<ItineraryObj> = [...itinerary];
+    let itineraryData: Array<ItineraryObj> = itineraryArr;
     let hotelsData: Array<IhotelsInterface> = [...hotels];
-    let includesData: Array<Object> = [...includes];
-    let excludesData: Array<Object> = [...excludes];
-    let notesData: Array<Object> = [...tourNotes];
+    let includesData: Array<IincludesInterface> = [...includes];
+    let excludesData: Array<IexcludesInterface> = [...excludes];
+    let notesData: Array<InotesInterface> = [...tourNotes];
 
     const basicTourDataString = JSON.stringify(basicTourData);
     const itineraryDataString = JSON.stringify(itineraryData);
@@ -381,13 +412,25 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
       localStorage.setItem("basicTourData", basicTourDataString);
     if (JSON.stringify(itineraryItemObj) != itineraryDataString)
       localStorage.setItem("itineraryData", itineraryDataString);
-    if (JSON.stringify(hotelItemObj) != hotelsDataString)
+    if (
+      JSON.stringify(hotelItemObj) != hotelsDataString &&
+      hotelsData[0].city != ""
+    )
       localStorage.setItem("hotelsData", hotelsDataString);
-    if (JSON.stringify(includesItemObj) != includesDataString)
+    if (
+      JSON.stringify(includesItemObj) != includesDataString &&
+      includesData[0].include != ""
+    )
       localStorage.setItem("includesData", includesDataString);
-    if (JSON.stringify(excludesItemObj) != excludesDataString)
+    if (
+      JSON.stringify(excludesItemObj) != excludesDataString &&
+      excludesData[0].exclude != ""
+    )
       localStorage.setItem("excludesData", excludesDataString);
-    if (JSON.stringify(notesItemObj) != notesDataString)
+    if (
+      JSON.stringify(notesItemObj) != notesDataString &&
+      notesData[0].note != ""
+    )
       localStorage.setItem("notesData", notesDataString);
   }, [tour, itinerary, hotels, includes, excludes, tourNotes]);
 
@@ -400,14 +443,24 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
     <>
       <Formik
         initialValues={initialTour}
+        enableReinitialize
         validationSchema={tourYupSchema}
         onSubmit={(values, { resetForm }) => {
           const tourObj = createFD(images);
 
+          return;
           TourService.createTour(tourObj)
             .then((res) => {
               const msg = res?.data?.message || "Package created successfully";
               successToast(msg, 3000);
+
+              localStorage.setItem("basicTourData", "");
+              localStorage.setItem("itineraryData", "");
+              localStorage.setItem("hotelsData", "");
+              localStorage.setItem("includesData", "");
+              localStorage.setItem("excludesData", "");
+              localStorage.setItem("notesData", "");
+              resetForm({});
             })
             .catch((err) => {
               console.error(err);
@@ -428,6 +481,8 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
         }) => {
           const durationTouched: any = touched?.duration;
           const durationErrors: any = errors?.duration;
+
+          // console.log(errors, values);
 
           return (
             <form onSubmit={handleSubmit}>
@@ -825,19 +880,40 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                                   }
                                 />
                                 <FormGroup
+                                  key={v}
                                   row
                                   onClick={(e: any) => handleItinerary(e, v)}
                                 >
                                   <FormControlLabel
-                                    control={<Checkbox name="breakfast" />}
+                                    key={v}
+                                    control={
+                                      <Checkbox
+                                        name="breakfast"
+                                        checked={
+                                          dayPlanItems[i]?.meals?.breakfast
+                                        }
+                                      />
+                                    }
                                     label="Breakfast"
                                   />
                                   <FormControlLabel
-                                    control={<Checkbox name="lunch" />}
+                                    key={v}
+                                    control={
+                                      <Checkbox
+                                        name="lunch"
+                                        checked={dayPlanItems[i]?.meals?.lunch}
+                                      />
+                                    }
                                     label="Lunch"
                                   />
                                   <FormControlLabel
-                                    control={<Checkbox name="dinner" />}
+                                    key={v}
+                                    control={
+                                      <Checkbox
+                                        name="dinner"
+                                        checked={dayPlanItems[i]?.meals?.dinner}
+                                      />
+                                    }
                                     label="Dinner"
                                   />
                                 </FormGroup>
@@ -1343,4 +1419,4 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
   );
 };
 
-export default PackageForm;
+export default TourAndPackageForm;
