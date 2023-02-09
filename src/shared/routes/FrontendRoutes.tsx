@@ -67,13 +67,7 @@ export default [
     showInMenu: false,
     hasAuthenticate: "all",
   },
-  {
-    label: "Pravas Explore",
-    component: <ExplorePravas />,
-    path: "pravas/explore/:id",
-    showInMenu: false,
-    hasAuthenticate: "all",
-  },
+
   {
     label: "Blogs",
     component: <Blogs />,

@@ -26,16 +26,7 @@ const TextFieldDesign = styled(TextField)({
   width: "300px",
 });
 
-interface ICareerFormProps {
-  //   lastName: string;
-  //   firstName: string;
-  //   middleName: string;
-  //   email: string;
-  //   password: string;
-  //   confirmPassword: string;
-  //   age: number;
-  //   gender: string;
-}
+interface ICareerFormProps {}
 
 const CareerForm: React.FunctionComponent<ICareerFormProps> = (props) => {
   return (
