@@ -146,8 +146,6 @@ const Register = () => {
               enableReinitialize
               validationSchema={signupValidation}
               onSubmit={(values, { resetForm }) => {
-                console.log(values);
-
                 UserService.createUser({
                   ...values,
                   status: "active",
