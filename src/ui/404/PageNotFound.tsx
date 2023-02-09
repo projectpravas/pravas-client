@@ -9,20 +9,35 @@ interface IPageNotFoundProps {}
 const PageNotFound: React.FunctionComponent<IPageNotFoundProps> = (props) => {
   return (
     <>
-      <Grid bgcolor="#276612" paddingY={3}>
+      <Grid
+        bgcolor="#276612"
+        paddingY={3}
+        sx={{ paddingBottom: { xs: 3, md: 6 } }}
+      >
         <Grid container flexDirection="column" alignItems="center">
-          <Grid item sx={{ width: "45%" }}>
+          <Grid item sx={{ width: { xs: "70%", md: "40%" } }}>
             <Lottie loop={true} animationData={notFoundAnim} />
           </Grid>
           <Grid
             item
-            sx={{ color: "#fff", fontSize: 155, fontWeight: 700, mt: -8 }}
+            sx={{
+              color: "#fff",
+              fontSize: { xs: 100, md: 155 },
+              fontWeight: 700,
+              mt: { xs: -4, md: -8 },
+            }}
           >
             404
           </Grid>
           <Grid
             item
-            sx={{ color: "#F3D830", fontSize: 42, fontWeight: 600, mt: -3 }}
+            sx={{
+              color: "#F3D830",
+              fontSize: { xs: 26, md: 42 },
+              fontWeight: 600,
+              mt: -3,
+              mb: { xs: -2, md: -1 },
+            }}
           >
             Page Not Found
           </Grid>
@@ -33,6 +48,7 @@ const PageNotFound: React.FunctionComponent<IPageNotFoundProps> = (props) => {
               fontSize: 20,
               fontWeight: 400,
               textAlign: "center",
+              px: { xs: 2, md: 0 },
             }}
           >
             <p style={{ marginBottom: 0 }}>
@@ -71,3 +87,5 @@ const PageNotFound: React.FunctionComponent<IPageNotFoundProps> = (props) => {
 };
 
 export default PageNotFound;
+
+// #276612

@@ -1,14 +1,11 @@
 import * as React from "react";
-import {
-  Box,
-  Container,
-  Divider,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import QuestionAnswerOutlinedIcon from "@mui/icons-material/QuestionAnswerOutlined";
 import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
@@ -83,7 +80,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                   </Box>
                 </Grid>
                 {/*------------------- Admin & Category ------------------------*/}
-                <Grid container sx={{ justifyContent: "space-between", py: 1 }}>
+                <Grid container sx={{ justifyContent: "space-between", p: 1 }}>
                   <Grid item>
                     <Grid
                       container
@@ -124,7 +121,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                   </Grid>
                 </Grid>
                 {/* -----------------Title & Description-------------------- */}
-                <Grid sx={{ py: 1 }}>
+                <Grid sx={{ p: 1 }}>
                   <Typography
                     sx={{
                       color: "#005d9d",
