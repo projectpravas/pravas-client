@@ -17,35 +17,110 @@ import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
 import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
+const categoryArr = [
+  "Destination",
+  "Place To Visit",
+  "Best Time To Travel",
+  "Experiance",
+];
+
 interface IAddBlogProps {}
 
 const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
   // Image State
-  const [product, setProduct] = React.useState({});
+  const [product, setProduct] = React.useState("");
   const [previewImage, setPreviewImage] = React.useState("");
+
   // Tags State
   const [item, setItem] = React.useState<string>("");
-  const [chipValue, setChipValue] = React.useState(["Pravas"]);
+  const [chipValue, setChipValue] = React.useState<string[]>([]);
   // Rich Text Editor State
-  const [value, setValue] = useState("");
+  const [cat, setCat] = useState("");
 
+  // Form Data
+  const [formData, setFormData] = React.useState({
+    title: "",
+    richText: "",
+    seoTitle: "",
+    metaDescription: "",
+    focusKeyphrases: "",
+    slug: "",
+    categories: [] as string[],
+    tags: [] as string[],
+    image: "",
+  });
+  // React.ChangeEvent<HTMLInputElement>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
+    const { name, value } = e?.target;
+
+    if (name == "tags") {
+      setItem(value);
+    } else {
+    }
+
+    // console.log(name, value, checked);
+
+    // setFormData((prev) => {
+    //   return { ...prev, [name]: value };
+    // });
+  };
+
+  const handleCategory = (e: any, val: string) => {
+    const { name, value, checked } = e?.target;
+
+    const catArr = formData?.categories;
+
+    if (checked) {
+      !catArr.includes(name as string) && catArr.push(name as string);
+    } else {
+      const index = catArr.findIndex((val) => val == name);
+
+      index >= 0 && Array.isArray(catArr) && catArr.splice(index, 1);
+    }
+    setFormData({ ...formData, categories: catArr });
+  };
+
+  const addCategory = (e: any) => {
+    const { name, value, checked } = e?.target;
+    const catArr = formData?.categories;
+
+    const flag = catArr
+      .filter((value) => value.toLowerCase())
+      .includes(name.toLowerCase());
+
+    if (!flag) {
+      catArr.push(name as string);
+      setFormData({ ...formData, categories: catArr });
+    }
+    setCat("");
+  };
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    formData.tags = chipValue;
+
+    console.log("formData: ", formData);
+  };
+
+  // chip Add method
   const additem = () => {
-    setChipValue([...chipValue, item]);
+    if (
+      !chipValue
+        .filter((value) => value.toLowerCase())
+        .includes(item.toLowerCase())
+    )
+      if (item) setChipValue([...chipValue, item.toLowerCase()]);
     setItem("");
-    console.log("ChipValue: ", chipValue);
   };
 
-  const handleItem = (event: any) => {
-    setItem(event.target.value);
-  };
-
+  // chip delete method
   const handleDelete = (chip: any) => {
     setChipValue(chipValue.filter((list) => list !== chip));
   };
-
+  // Image method
   const handleImageChange = (e: any) => {
-    const file = e.target.files[0];
-    setProduct({ ...product, image: file });
+    const file = e?.target?.files[0];
+    setProduct(file);
     // convert image to base64
     const render = new FileReader();
 
@@ -90,13 +165,20 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     fullWidth
                     name="title"
                     size="medium"
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <div>
-                    <RichTextEditor setValue={setValue} />
+                    <RichTextEditor
+                      setValue={setFormData}
+                      formData={formData}
+                    />
                   </div>
-                  {/* <div dangerouslySetInnerHTML={{ __html: value }} /> */}
+                  <div
+                  // dangerouslySetInnerHTML={{ __html: formData?.richText }}
+                  />
+                  {/* <div>{value}</div> */}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -107,6 +189,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     fullWidth
                     name="seoTitle"
                     size="medium"
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -120,17 +203,19 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     size="medium"
                     multiline
                     rows={2}
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    id="focus Keyphrases"
+                    id="focusKeyphrases"
                     variant="outlined"
                     type="text"
                     label="Focus KeyPhrases"
                     fullWidth
-                    name="focus Keyphrases"
+                    name="focusKeyphrases"
                     size="medium"
+                    onChange={handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -142,6 +227,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     fullWidth
                     name="slug"
                     size="medium"
+                    onChange={handleChange}
                   />
                 </Grid>
               </Grid>
@@ -172,25 +258,36 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                       >
                         Category
                       </FormLabel>
-                      <FormGroup>
-                        <FormControlLabel
-                          control={<Checkbox name="gilad" />}
-                          label="Destination"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox name="jason" />}
-                          label="Place To Visit"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox name="antoine" />}
-                          label="Best Time To Travel"
-                        />
-                        <FormControlLabel
-                          control={<Checkbox name="antoine" />}
-                          label="Experiance"
-                        />
+                      <FormGroup
+                        onClick={(e) => {
+                          handleCategory(e, "val");
+                        }}
+                      >
+                        {Array.isArray(categoryArr) &&
+                          categoryArr.map((cat, i) => {
+                            return (
+                              <FormControlLabel
+                                key={cat + "" + i}
+                                control={<Checkbox name={`${cat}`} />}
+                                label={cat}
+                              />
+                            );
+                          })}
                       </FormGroup>
                     </FormControl>
+
+                    <Grid item xs={9} md={9}>
+                      <TextField
+                        id="categoryAd"
+                        variant="outlined"
+                        type="text"
+                        label="Add Category"
+                        name="addCat"
+                        size="small"
+                        onChange={(e) => setCat(e?.target?.value)}
+                      />
+                      <Button onClick={addCategory}>Add</Button>
+                    </Grid>
                   </Paper>
                 </Grid>
                 <Grid item xs={12}>
@@ -214,7 +311,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                             name="tags"
                             size="small"
                             value={item}
-                            onChange={handleItem}
+                            onChange={handleChange}
                           />
                         </Grid>
                         <Grid item xs={2} md={2}>
@@ -327,6 +424,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
               size="large"
               endIcon={<OpenInBrowserIcon />}
               sx={{ backgroundColor: "#27488d", mx: 2 }}
+              onClick={handleSubmit}
             >
               Publish
             </Button>

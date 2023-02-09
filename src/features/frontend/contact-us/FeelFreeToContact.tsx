@@ -48,7 +48,7 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
               </Grid>
 
               {/* phone */}
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6} md={12}>
                 <Paper
                   elevation={1}
                   sx={{
@@ -141,7 +141,7 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
               </Grid>
 
               {/* email */}
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6} md={12}>
                 <Paper
                   elevation={1}
                   sx={{
