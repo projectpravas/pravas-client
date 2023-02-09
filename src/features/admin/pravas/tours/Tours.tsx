@@ -1,13 +1,13 @@
 import React from "react";
-import PackageForm from "./packageForm";
+import CustomTourForm from "../../../frontend/customtourform/CustomTourForm";
+import TourForm from "../TourAndPackageForm";
 
 interface IToursProps {}
 
 const Tours: React.FunctionComponent<IToursProps> = (props) => {
   return (
     <>
-      <h1>Tours</h1>
-      <PackageForm />
+      <CustomTourForm />
     </>
   );
 };

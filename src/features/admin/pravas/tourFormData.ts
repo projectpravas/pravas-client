@@ -111,6 +111,7 @@ export const createFD = (images: string[] | any) => {
     tourPlan: tourPlanData,
   };
 
+  console.log(tourObj);
   /////////////////////////////////////
   const fd = new FormData();
 

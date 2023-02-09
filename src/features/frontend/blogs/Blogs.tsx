@@ -1,10 +1,11 @@
-import { Grid } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import * as React from "react";
 import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
 import { data } from "./BlogData";
 import { Helmet } from "react-helmet";
+import AddBlog from "./AddBlog/AddBlog";
 
 interface IBlogsProps {}
 
@@ -35,12 +36,19 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
           <Grid
             container
             padding={1}
-            paddingY={8}
+            paddingY={6}
             justifyContent="space-evenly"
           >
             {Array.isArray(currentPosts) &&
               currentPosts.map((blog, i) => (
-                <Grid item xs={12} sm={6} md={4} key={blog?.title + i}>
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  key={blog?.title + i}
+                  sx={{ pt: 3 }}
+                >
                   <BlogPost
                     id={blog?.id}
                     image={blog?.image}
@@ -59,6 +67,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
           />
         </Grid>
       </Container>
+      <AddBlog />
     </>
   );
 };

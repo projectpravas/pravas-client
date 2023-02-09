@@ -1,11 +1,4 @@
 import { lazy } from "react";
-import Login from "../../features/frontend/auth/Login";
-import Register from "../../features/frontend/auth/Register";
-import PageNotFound from "../../ui/404/PageNotFound";
-
-import CancellationPolicy from "../../ui/footer/CancellationPolicy";
-import PrivacyPolicy from "../../ui/footer/PrivacyPolicy";
-import TermsAndConditions from "../../ui/footer/TermsAndConditions";
 
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
@@ -29,6 +22,15 @@ const ChangePassword = lazy(
 );
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
+);
+const Login = lazy(() => import("../../features/frontend/auth/Login"));
+const Register = lazy(() => import("../../features/frontend/auth/Register"));
+const CancellationPolicy = lazy(
+  () => import("../../ui/footer/CancellationPolicy")
+);
+const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
+const TermsAndConditions = lazy(
+  () => import("../../ui/footer/TermsAndConditions")
 );
 
 export default [
