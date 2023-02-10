@@ -101,46 +101,9 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
                           primary={label}
                           sx={{ marginRight: "20px" }}
                         />
-                        {subMenus && (
-                          <ListItemButton
-                            onClick={(e) => {
-                              handleClick();
-                              e.preventDefault();
-                              e.stopPropagation();
-                            }}
-                          >
-                            {open ? <ExpandLess /> : <ExpandMore />}
-                          </ListItemButton>
-                        )}
                       </Box>
                     </NavLink>
                   </ListItemButton>
-                  {Array.isArray(subMenus) &&
-                    subMenus.map(
-                      (subMenu, i) =>
-                        subMenu?.showInMenu && (
-                          <React.Fragment key={subMenu?.label + i}>
-                            <Collapse in={open} timeout="auto" unmountOnExit>
-                              <List disablePadding>
-                                <NavLink
-                                  to={`${path}/${subMenu?.path}`}
-                                  sx={{ display: "flex" }}
-                                >
-                                  <ListItemButton
-                                    sx={{
-                                      ml: openStatus ? 4 : 1,
-                                      transition: "0.2s ease-in-out",
-                                    }}
-                                  >
-                                    <ListItemIcon>{subMenu?.icon}</ListItemIcon>
-                                    <ListItemText primary={subMenu?.label} />
-                                  </ListItemButton>
-                                </NavLink>
-                              </List>
-                            </Collapse>
-                          </React.Fragment>
-                        )
-                    )}
                 </ListItem>
               </NavLink>
             ))}

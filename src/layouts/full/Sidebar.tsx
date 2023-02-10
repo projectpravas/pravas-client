@@ -130,6 +130,13 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
+  const secondaryAppFlag =
+    pathname.split("/").length >= 3 &&
+    Array.isArray(AdminRoutes) &&
+    AdminRoutes.map((route) => {
+      if (route?.subMenus) return route?.path;
+    }).includes(pathname.split("/")[2]);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -261,23 +268,35 @@ const Sidebar = () => {
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <ThemeProvider theme={customTheme}>
-          <DrawerHeader
-            sx={{ minHeight: { xs: "64px", md: "70px", lg: "90px" } }}
-          >
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </DrawerHeader>
-        </ThemeProvider>
-        <Divider />
-        {/* sidebar menu  */}
-        <SidebarMenu openStatus={open} />
-        <Divider />
+        <Box
+          sx={{
+            position: "fixed",
+            zIndex: 1,
+            backgroundColor: "#fff",
+            width: open ? "240px" : "64px",
+            transition: "0.2s ease-in-out",
+          }}
+        >
+          <ThemeProvider theme={customTheme}>
+            <DrawerHeader
+              sx={{ minHeight: { xs: "64px", md: "70px", lg: "90px" } }}
+            >
+              <IconButton onClick={handleDrawerClose} sx={{ mr: 1 }}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </DrawerHeader>
+          </ThemeProvider>
+          <Divider />
+        </Box>
+        <Box sx={{ mt: { xs: "64px", md: "70px", lg: "90px" } }}>
+          {/* sidebar menu  */}
+          <SidebarMenu openStatus={open} />
+          <Divider />
+        </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader
@@ -286,12 +305,16 @@ const Sidebar = () => {
           }}
         />
         {/* sidebar routes */}
-        {pathname.split("/").length > 3 &&
-          Array.isArray(AdminRoutes) &&
-          AdminRoutes.map((route) => {
-            if (route?.subMenus) return route?.path;
-          }).includes(pathname.split("/")[2]) && <SecondaryAppbar />}
-        <SidebarRoutes />
+        {secondaryAppFlag && <SecondaryAppbar openStatus={open} />}
+        <Box
+          sx={{
+            pt: secondaryAppFlag
+              ? { xs: "72px", md: "78px", lg: "98px" }
+              : "0px",
+          }}
+        >
+          <SidebarRoutes />
+        </Box>
       </Box>
     </Box>
   );
