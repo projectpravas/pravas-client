@@ -196,19 +196,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
           />
         </Grid>
-        {/* <CarouselStyle autoPlay>
-          {Array.isArray(tourDetails?.images) &&
-            tourDetails?.images.map((image, i) => (
-              <>
-                <div key={i} style={{ height: "500px" }}>
-                  <img
-                    style={{ width: "100%", height: "100%" }}
-                    src={`${endPoints?.serverBaseURL}/${image}`}
-                  />
-                </div>
-              </>
-            ))}
-        </CarouselStyle> */}
       </Grid>
       {/* ************** Heading of Tour *******************    */}
       <Grid sx={{ backgroundColor: "#FBF6D9" }}>
@@ -517,8 +504,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      border: " 1px  solid #ddd  ",
-                      borderTop: "none",
+                      borderBottom: "1px  solid #ddd",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -559,8 +545,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   <AccordionDetails
                     sx={{
                       backgroundColor: "white",
-                      border: " 1px  solid #ddd  ",
-                      borderTop: "none",
+                      borderBottom: "1px  solid #ddd",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -620,6 +605,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   onChange={handleChange("panel3")}
                   style={{
                     margin: " 30px 0px ",
+                    borderRadius: "10px",
                   }}
                   sx={{
                     "&:before": {
@@ -632,7 +618,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     aria-controls="panel3bh-content"
                     id="panel3bh-header"
                     sx={{
-                      // borderRadius: "10px",
+                      borderRadius: "10px",
                       borderTopLeftRadius: "10px",
                       borderTopRightRadius: "10px",
                       backgroundColor: "#faf5ee",
@@ -646,8 +632,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      border: " 1px  solid #ddd  ",
-                      borderTop: "none",
+                      borderBottom: "1px  solid #ddd",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -734,8 +719,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      border: " 1px  solid #ddd  ",
-                      borderTop: "none",
+                      borderBottom: "1px  solid #ddd",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -784,8 +768,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      border: " 1px  solid #ddd  ",
-                      borderTop: "none",
+                      borderBottom: "1px  solid #ddd",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -833,8 +816,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      border: " 1px  solid #ddd  ",
-                      borderTop: "none",
+                      borderBottom: "1px  solid #ddd",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
