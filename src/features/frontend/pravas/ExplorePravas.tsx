@@ -1,52 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
-
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
-import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
 import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-
 import Button from "@mui/material/Button";
 import MUIDataTable from "mui-datatables";
-import { styled } from "@mui/system";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
-
-// import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-
-import { NavLink } from "react-router-dom";
 import Carousel from "react-material-ui-carousel";
+import { styled } from "@mui/system";
+import { NavLink } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import TourService from "../../../services/TourService";
 import { endPoints } from "../../../api";
-import { log } from "console";
-import { Avatar } from "@mui/material";
-// import ReactTable from "react-table";
+import TourService from "../../../services/TourService";
+import { useParams } from "react-router-dom";
 
 // -----tableCellstyles---
 const DattaTab = styled(TableCell)({
@@ -158,11 +141,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
   //*************tour location table******************** */
   const tableData = tourDetails?.tourPlan?.hotels;
-  console.log("datatable:", tableData);
-  // const columnss = [
-  //   { path: "city", name: "City" },
-  //   { path: "hotels", name: "hotels" },
-  // ];
+
   const data = [{ tourDates: "26 to 30 Dec 2022", seats: "Full" }];
 
   const loadExplore = () => {
@@ -182,8 +161,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   React.useEffect(() => {
     loadExplore();
   }, []);
-
-  console.log("tourDetails1111: ", tourDetails);
 
   return (
     <Grid>
@@ -219,182 +196,174 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
           />
         </Grid>
-        {/* <CarouselStyle autoPlay>
-          {Array.isArray(tourDetails?.images) &&
-            tourDetails?.images.map((image, i) => (
-              <>
-                <div key={i} style={{ height: "500px" }}>
-                  <img
-                    style={{ width: "100%", height: "100%" }}
-                    src={`${endPoints?.serverBaseURL}/${image}`}
-                  />
-                </div>
-              </>
-            ))}
-        </CarouselStyle> */}
       </Grid>
       {/* ************** Heading of Tour *******************    */}
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          backgroundColor: "#FBF6D9",
-          borderTopBottom: { xs: "1px solid gray" },
-        }}
-      >
-        <Grid
-          item
-          xs={12}
-          md={6}
-          sx={{
-            display: "flex",
-            height: "100px",
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: "bold",
-              display: "flex",
-              alignItems: "center",
-              marginTop: "5px",
-            }}
-            marginX={{ xs: 2, lg: 12 }}
-          >
-            {tourDetails?.title}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} md={6}>
+      <Grid sx={{ backgroundColor: "#FBF6D9" }}>
+        <Container>
           <Grid
+            container
+            spacing={2}
             sx={{
-              height: "100px",
-              display: "flex",
-              alignItems: "center",
-              padding: "25px",
+              backgroundColor: "#FBF6D9",
+              borderTopBottom: { xs: "1px solid gray" },
             }}
           >
             <Grid
               item
               xs={12}
-              lg={6}
+              md={6}
               sx={{
                 display: "flex",
+                height: "100px",
+                alignItems: "center",
               }}
             >
-              <AccountBalanceWalletOutlinedIcon
+              <Typography
+                variant="h5"
                 sx={{
-                  color: "#357EC7",
-                  fontSize: "1.5rem",
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  marginTop: "5px",
                 }}
-              />
-
-              <Box sx={{ marginLeft: "8px" }}>
-                <Typography
-                  sx={{
-                    color: " #3e3d3d",
-                    fontWeight: "300",
-                    fontSize: "14px",
-                    fontFamily: "popins",
-                  }}
-                >
-                  Total Cost
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "#000000",
-                    fontFamily: "popins",
-                    fontSize: "1rem",
-                    fontWeight: "600",
-                  }}
-                >
-                  {`₹ ${tourDetails?.price}`}
-                </Typography>
-              </Box>
+              >
+                {tourDetails?.title}
+              </Typography>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={6}
-              sx={{
-                display: "flex",
-              }}
-            >
-              <AccessTimeOutlinedIcon
+            <Grid item xs={12} md={6}>
+              <Grid
                 sx={{
-                  color: "#357EC7",
-                  fontSize: "1.5rem",
+                  height: "100px",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "25px",
                 }}
-              />
+              >
+                <Grid
+                  item
+                  xs={12}
+                  lg={6}
+                  sx={{
+                    display: "flex",
+                  }}
+                >
+                  <AccountBalanceWalletOutlinedIcon
+                    sx={{
+                      color: "#357EC7",
+                      fontSize: "1.5rem",
+                    }}
+                  />
 
-              <Box sx={{ marginLeft: "8px" }}>
-                <Typography
+                  <Box sx={{ marginLeft: "8px" }}>
+                    <Typography
+                      sx={{
+                        color: " #3e3d3d",
+                        fontWeight: "300",
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                      }}
+                    >
+                      Total Cost
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#000000",
+                        fontFamily: "poppins",
+                        fontSize: "1rem",
+                        fontWeight: "600",
+                      }}
+                    >
+                      {`₹ ${tourDetails?.price}`}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  lg={6}
                   sx={{
-                    color: " #3e3d3d",
-                    fontWeight: "300",
-                    fontSize: "14px",
-                    fontFamily: "popins",
+                    display: "flex",
                   }}
                 >
-                  Duration
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "#000000",
-                    fontFamily: "popins",
-                    fontSize: "1rem",
-                    fontWeight: "700",
-                  }}
-                >
-                  {tourDetails?.duration?.days} days
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              lg={6}
-              sx={{
-                display: "flex",
-              }}
-            >
-              <LocalCarWashOutlinedIcon
-                sx={{ color: "#357EC7", fontSize: "1.5rem" }}
-              />
+                  <AccessTimeOutlinedIcon
+                    sx={{
+                      color: "#357EC7",
+                      fontSize: "1.5rem",
+                    }}
+                  />
 
-              <Box sx={{ marginLeft: "8px" }}>
-                <Typography
+                  <Box sx={{ marginLeft: "8px" }}>
+                    <Typography
+                      sx={{
+                        color: " #3e3d3d",
+                        fontWeight: "300",
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                      }}
+                    >
+                      Duration
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#000000",
+                        fontSize: "1rem",
+                        fontWeight: "700",
+                        fontFamily: "poppins",
+                      }}
+                    >
+                      {tourDetails?.duration?.days} days
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid
+                  item
+                  xs={12}
+                  lg={6}
                   sx={{
-                    color: " #3e3d3d",
-                    fontWeight: "300",
-                    fontSize: "14px",
-                    fontFamily: "popins",
+                    display: "flex",
                   }}
                 >
-                  TourType
-                </Typography>
-                <NavLink
-                  to=""
-                  style={{
-                    textDecoration: "none",
-                    color: "#000000",
-                    fontFamily: "popins",
-                    fontSize: "1rem",
-                    fontWeight: "700",
-                  }}
-                >
-                  {tourDetails?.tourType.join(" ")}
-                </NavLink>
-              </Box>
+                  <LocalCarWashOutlinedIcon
+                    sx={{ color: "#357EC7", fontSize: "1.5rem" }}
+                  />
+
+                  <Box sx={{ marginLeft: "8px" }}>
+                    <Typography
+                      sx={{
+                        color: " #3e3d3d",
+                        fontWeight: "300",
+                        fontSize: "14px",
+                        fontFamily: "poppins",
+                      }}
+                    >
+                      TourType
+                    </Typography>
+                    <NavLink
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "#000000",
+                        fontFamily: "poppins",
+                        fontSize: "1rem",
+                        fontWeight: "700",
+                      }}
+                    >
+                      {tourDetails?.tourType.join(" ")}
+                    </NavLink>
+                  </Box>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </Container>
       </Grid>
 
       {/* ----------------------share and review----------------------------- */}
 
       {/* ----**************--share and review-------****************---- */}
-      <Grid sx={{ backgroundColor: "#00000021" }}>
+      <Grid
+        sx={{ backgroundColor: "white", borderBottom: "1px solid #faf5ee" }}
+      >
         <Container
           sx={{
             height: "100px",
@@ -450,7 +419,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   target="_blank"
                 >
                   {"t"}
-                  {/* <ImTumblr style={{ fontSize: "200%" }} /> */}
                 </Link>
                 <Link
                   sx={{ padding: "10px" }}
@@ -494,16 +462,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             </Typography>
 
             <Box sx={{ borderRadious: "5px" }}>
-              <Grid
-                style={{ padding: "10px", fontWeight: "800", color: "#555" }}
-              >
-                <span>Year</span>-{new Date().getFullYear()}
-              </Grid>
-
               {/* ---*****************-----Accordian  of tour plan------*******------ */}
 
               <div>
-                {/*----- Upcoming tours---- */}
+                {/*----*******************- Upcoming tours---*********************- */}
                 <Accordion
                   elevation={0}
                   expanded={expanded === "panel1"}
@@ -513,12 +475,17 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     borderRadius: "8px",
                     margin: " 30px 0px ",
                   }}
+                  sx={{
+                    "&:before": {
+                      display: "none",
+                    },
+                  }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1bh-content"
                     id="panel1bh-header"
-                    sx={{ backgroundColor: "#faf5ee" }}
+                    sx={{ borderRadius: "10px", backgroundColor: "#faf5ee" }}
                   >
                     <TypoAccordion
                       sx={{
@@ -533,7 +500,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       Upcoming Tours Dates
                     </TypoAccordion>
                   </AccordionSummary>
-                  <AccordionDetails sx={{ color: "#5c5e64" }}>
+                  <AccordionDetails
+                    sx={{
+                      color: "#5c5e64",
+                      backgroundColor: "white",
+                      borderBottom: "1px  solid #ddd",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
                     <MUIDataTable
                       title={"UpComing-Tours"}
                       columns={columns}
@@ -542,7 +517,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   </AccordionDetails>
                 </Accordion>
 
-                {/* ----TourPlan-- */}
+                {/* --***********************--TourPlan-******************- */}
                 <Accordion
                   elevation={0}
                   expanded={expanded === "panel2"}
@@ -551,19 +526,30 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     margin: " 30px 0px ",
                     backgroundColor: "#faf5ee",
                     borderRadius: "8px",
-                    borderTop: "none",
+                  }}
+                  sx={{
+                    "&:before": {
+                      display: "none",
+                    },
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel2bh-content"
                     id="panel2bh-header"
-                    sx={{ backgroundColor: "#faf5ee" }}
+                    sx={{ borderRadius: "10px", backgroundColor: "#faf5ee" }}
                   >
                     <TypoAccordion>iternary/Tour Plan</TypoAccordion>
                   </AccordionSummary>
 
-                  <AccordionDetails>
+                  <AccordionDetails
+                    sx={{
+                      backgroundColor: "white",
+                      borderBottom: "1px  solid #ddd",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
                     {Array.isArray(tourDetails?.tourPlan?.itinerary) &&
                       tourDetails?.tourPlan?.itinerary.map((dayPlan, i) => (
                         <>
@@ -612,44 +598,87 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       ))}
                   </AccordionDetails>
                 </Accordion>
-                {/* ----Hotels-- */}
+                {/* --********************--Hotels--************************* */}
                 <Accordion
                   elevation={0}
                   expanded={expanded === "panel3"}
                   onChange={handleChange("panel3")}
                   style={{
                     margin: " 30px 0px ",
-                    backgroundColor: "#faf5ee",
-                    borderRadius: "8px",
-                    borderTop: "none",
+                    borderRadius: "10px",
+                  }}
+                  sx={{
+                    "&:before": {
+                      display: "none",
+                    },
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel3bh-content"
                     id="panel3bh-header"
-                    sx={{ backgroundColor: "#faf5ee" }}
+                    sx={{
+                      borderRadius: "10px",
+                      borderTopLeftRadius: "10px",
+                      borderTopRightRadius: "10px",
+                      backgroundColor: "#faf5ee",
+                    }}
                   >
-                    <TypoAccordion>Hotels</TypoAccordion>
+                    <TypoAccordion sx={{ backgroundColor: "#faf5ee" }}>
+                      Hotels
+                    </TypoAccordion>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails
+                    sx={{
+                      color: "#5c5e64",
+                      backgroundColor: "white",
+                      borderBottom: "1px  solid #ddd",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
                     <table
                       style={{
                         borderSpacing: "0px",
-                        tableLayout: "fixed",
-                        marginLeft: "auto",
-                        marginRight: "auto",
+
+                        margin: "0px",
                       }}
                     >
                       <tr>
-                        <th style={{ border: "1px solid gray" }}>City</th>
-                        <th style={{ border: "1px solid gray" }}>Hotel</th>
+                        <th
+                          style={{
+                            border: "1px solid gray",
+                            padding: "10px 0 10px 0",
+                          }}
+                        >
+                          City
+                        </th>
+                        <th
+                          style={{
+                            border: "1px solid gray",
+                            padding: "10px 0 10px 0",
+                            width: "100%",
+                          }}
+                        >
+                          Hotel
+                        </th>
                       </tr>
                       {Array.isArray(tableData) &&
                         tableData.map((ele: any, i: number) => {
                           return (
-                            <tr key={i} style={{ border: "1px solid gray" }}>
-                              <td style={{ border: "1px solid gray" }}>
+                            <tr
+                              key={i}
+                              style={{
+                                border: "1px solid gray",
+                                padding: "5px",
+                              }}
+                            >
+                              <td
+                                style={{
+                                  border: "1px solid gray",
+                                  padding: "5px",
+                                }}
+                              >
                                 {ele?.city}
                               </td>
                               <td style={{ border: "1px solid gray" }}>
@@ -671,18 +700,30 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     margin: " 30px 0px ",
                     backgroundColor: "#faf5ee",
                     borderRadius: "8px",
-                    borderTop: "none",
+                  }}
+                  sx={{
+                    "&:before": {
+                      display: "none",
+                    },
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel4bh-content"
                     id="panel3bh-header"
-                    sx={{ backgroundColor: "#faf5ee" }}
+                    sx={{ borderRadius: "10px", backgroundColor: "#faf5ee" }}
                   >
                     <TypoAccordion>Includes</TypoAccordion>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails
+                    sx={{
+                      color: "#5c5e64",
+                      backgroundColor: "white",
+                      borderBottom: "1px  solid #ddd",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
                     {Array.isArray(tourDetails?.tourPlan?.includes) &&
                       tourDetails?.tourPlan?.includes.map(
                         (incList: any, i: number) => (
@@ -708,18 +749,30 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     margin: " 30px 0px ",
                     backgroundColor: "#faf5ee",
                     borderRadius: "8px",
-                    borderTop: "none",
+                  }}
+                  sx={{
+                    "&:before": {
+                      display: "none",
+                    },
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel5bh-content"
                     id="panel3bh-header"
-                    sx={{ backgroundColor: "#faf5ee" }}
+                    sx={{ borderRadius: "10px", backgroundColor: "#faf5ee" }}
                   >
                     <TypoAccordion>Excludes</TypoAccordion>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails
+                    sx={{
+                      color: "#5c5e64",
+                      backgroundColor: "white",
+                      borderBottom: "1px  solid #ddd",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
                     {Array.isArray(tourDetails?.tourPlan?.excludes) &&
                       tourDetails?.tourPlan?.excludes.map(
                         (excList: any, i: number) => (
@@ -744,18 +797,30 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     margin: " 30px 0px ",
                     backgroundColor: "#faf5ee",
                     borderRadius: "8px",
-                    borderTop: "none",
+                  }}
+                  sx={{
+                    "&:before": {
+                      display: "none",
+                    },
                   }}
                 >
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel6bh-content"
                     id="panel3bh-header"
-                    sx={{ backgroundColor: "#faf5ee" }}
+                    sx={{ borderRadius: "10px", backgroundColor: "#faf5ee" }}
                   >
                     <TypoAccordion>Note</TypoAccordion>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails
+                    sx={{
+                      color: "#5c5e64",
+                      backgroundColor: "white",
+                      borderBottom: "1px  solid #ddd",
+                      borderBottomLeftRadius: "10px",
+                      borderBottomRightRadius: "10px",
+                    }}
+                  >
                     {Array.isArray(tourDetails?.tourPlan?.tourNotes) &&
                       tourDetails?.tourPlan?.tourNotes.map(
                         (noteList: any, i: number) => (
@@ -764,75 +829,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                               key={noteList?.note}
                               sx={{ listStyleType: "disc", pl: 2 }}
                             >
-                              <ItemList>
-                                {/* Due to
-                        <b> Local Taxi Operators/Pony Walas Union Rules</b> at
-                        Hill stations like Sonmarg, Gulmarg & Pahalgam a tourist
-                        is bound to use local cab or pony service to access and
-                        explore local points of interest that are mentioned in
-                        our detailed itinerates.. */}
-                                {noteList?.note}
-                              </ItemList>
-
-                              {/* <ItemList>
-                        <b> Gondola (Cable Car )</b> at Gulmarg has two phases,
-                        Phase I - Gulmarg to Kongdori 3500 ft & Phase II -
-                        Kongdori – Affarwat Peak 14000ft above the sea level.
-                        <Typography>
-                          <b>Ticket bookings</b> can be done at -
-                          <Link
-                            href="https://jkcablecar.payu.in/"
-                            target="_blank"
-                          >
-                            https://jkcablecar.payu.in/
-                          </Link>
-                        </Typography>
-                      </ItemList>
-
-                      <ItemList>
-                        Carry Original ID Proof (Aadhar Card/ Driving License/
-                        Voter ID) & Xerox copy of same.
-                      </ItemList>
-                      <ItemList>
-                        Above mentioned Itinerary is subject to change without
-                        any prior notice.
-                      </ItemList>
-                      <ItemList>
-                        In case of non-availability of Rooms similar Category
-                        Hotels will be provided.
-                      </ItemList>
-                      <ItemList>
-                        Any expenses incurred due to weather problems, pandemic
-                        outbreak, technical issues, forced instances, natural
-                        calamities, political disturbances, strikes that cause
-                        delays the will be charged extra, and directly payable
-                        by Guest.
-                      </ItemList>
-                      <ItemList>
-                        Company’s Terms and Conditions applicable. (
-                        <Link
-                          href="https://pravasthejourney.com/terms-and-conditions/"
-                          target="_blank"
-                        >
-                          https://pravasthejourney.com/terms-and-conditions/
-                        </Link>
-                        )
-                      </ItemList>
-                      <ItemList>
-                        Cancelation policy mentioned on our website is
-                        applicable. (
-                        <Link
-                          href="https://pravasthejourney.com/cancellation-refund/ "
-                          target="_blank"
-                        >
-                          https://pravasthejourney.com/cancellation-refund/
-                        </Link>
-                        )
-                      </ItemList>
-                      <ItemList>
-                        Consumption of tobacco products and alcohol is strictly
-                        prohibited.
-                      </ItemList> */}
+                              <ItemList>{noteList?.note}</ItemList>
                             </List>
                           </>
                         )
