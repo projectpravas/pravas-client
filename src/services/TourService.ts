@@ -1,12 +1,13 @@
 import "../api/index";
 import { API, endPoints } from "../api/index";
+import TourModel from "../shared/models/tourModel";
 
 class TourService {
-  static createTour(tour: object | FormData) {
+  static createTour(tour: TourModel | FormData) {
     return API.post(endPoints.api.tours.create, tour);
   } //createTour
 
-  static updateTour(id: string, tour: object | FormData) {
+  static updateTour(id: string, tour: TourModel | FormData) {
     return API.put(endPoints.api.tours.update + id, tour);
   } //updateTour
 

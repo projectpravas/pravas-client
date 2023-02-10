@@ -1,9 +1,4 @@
 import { lazy } from "react";
-const Login = lazy(() => import ("../../features/frontend/auth/Login"));
-const Register = lazy(() => import ("../../features/frontend/auth/Register"));
-const CancellationPolicy = lazy(() => import ("../../ui/footer/CancellationPolicy"));
-const PrivacyPolicy = lazy(() => import ("../../ui/footer/PrivacyPolicy"));
-const TermsAndConditions = lazy(() => import ("../../ui/footer/TermsAndConditions"));
 
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
@@ -28,13 +23,27 @@ const ChangePassword = lazy(
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
-const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
+const Login = lazy(() => import("../../features/frontend/auth/Login"));
+const Register = lazy(() => import("../../features/frontend/auth/Register"));
+const CancellationPolicy = lazy(
+  () => import("../../ui/footer/CancellationPolicy")
+);
+const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
+const TermsAndConditions = lazy(() => import("../../ui/404/PageNotFound"));
+const PageNotFound = lazy(() => import("../../ui/footer/TermsAndConditions"));
 
 export default [
   {
     label: "Home",
     component: <Home />,
     path: "",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+  {
+    label: "Home",
+    component: <Home />,
+    path: "/home",
     showInMenu: true,
     hasAuthenticate: "all",
   },
@@ -53,12 +62,13 @@ export default [
     hasAuthenticate: "all",
   },
   {
-    label: "Pravas Explore",
+    label: "Explore Details",
     component: <ExplorePravas />,
     path: "pravas/explore/:id",
     showInMenu: false,
     hasAuthenticate: "all",
   },
+
   {
     label: "Blogs",
     component: <Blogs />,

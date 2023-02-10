@@ -7,6 +7,8 @@ import BlogPost from "../blogs/BlogPost";
 import {data} from "../blogs/BlogData";
 import BlogsHome from "./BlogsHome";
 import PravasHome from "./PravasHome";
+import TourGallery from "../../../ui/tour-gallary/TourGallary";
+
 interface IHomeProps {}
 
 const typohead = {
@@ -31,7 +33,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
      </Grid>
      
      {/* Youtube video section */}
-     <Grid container pt={15} pl={10} pr={10}>
+     {/* <Grid container pt={15} pl={10} pr={10}>
       <Grid item xs={12} md={6}>
       <a href="https://www.youtube.com/watch?v=NYlnaBkB7RY" target="blank" style={{width:"100%"}}>
        <img width="560" height="315" src="https://pravasthejourney.com/wp-content/uploads/2022/09/omkar-mulgund.webp" alt="not" />
@@ -41,20 +43,22 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
        <label>WORLD OF SMILES.</label>
         <Typography>Pravas - A chance to rush-n-crush the daily routine moreover has some peaceful moments. Or get over boredom and be far from a problem or stress. We will take you to the quiet place where you can breathe fresh, spend quality time, revives your energy to grow further. Yes, you can find all these treasures all-in-one trip.</Typography>
       </Grid>
-     </Grid>
+     </Grid> */}
 
      {/* blogs cards carousel  */}
      <BlogsHome />
 
      {/* Pravas cards carousel  */}
-      <PravasHome />
+      {/* <PravasHome /> */}
       
       <Helmet>
         <title>Pravas Tourism</title>
         <meta name="description" content="Pravas Tourism" />
         <meta name="keywords" content="Pravas Tourism" />
       </Helmet>
-      
+
+       {/* gallery  */}
+      {/* <TourGallery /> */}
     </>
   );
 };

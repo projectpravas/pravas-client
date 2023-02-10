@@ -1,5 +1,12 @@
 import React from "react";
-import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
+import {
+  styled,
+  useTheme,
+  Theme,
+  CSSObject,
+  createTheme,
+  ThemeProvider,
+} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
@@ -19,11 +26,25 @@ import Tooltip from "@mui/material/Tooltip";
 import SidebarMenu from "./SidebarMenu";
 import SidebarRoutes from "./SidebarRoutes";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addLoggedUser } from "../../app/slices/AuthSlice";
 import settingsRoutes from "../../shared/routes/AdminRoutes";
 import { NavLink as NLink } from "react-router-dom";
 import { successToast } from "../../ui/toast/Toast";
+import AdminRoutes from "../../shared/routes/AdminRoutes";
+import SecondaryAppbar from "./SecondaryAppbar";
+
+const customTheme = createTheme({
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 200,
+      md: 400,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
+});
 
 const NavLink = styled(NLink)({
   textDecoration: "none",
@@ -107,6 +128,14 @@ const Sidebar = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const secondaryAppFlag =
+    pathname.split("/").length >= 3 &&
+    Array.isArray(AdminRoutes) &&
+    AdminRoutes.map((route) => {
+      if (route?.subMenus) return route?.path;
+    }).includes(pathname.split("/")[2]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -152,96 +181,140 @@ const Sidebar = () => {
           >
             <MenuIcon sx={{ color: "black" }} />
           </IconButton>
-
-          <Grid
-            container
-            sx={{ alignItems: "center", justifyContent: "space-between" }}
-          >
-            <Grid item style={{ width: "10%", margin: "15px" }}>
-              <img
-                src="PTSM-LOGO.png"
-                style={{ width: "100%", height: "100%" }}
-              />
+          <ThemeProvider theme={customTheme}>
+            <Grid
+              container
+              sx={{
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: { xs: "64px", md: "70px", lg: "90px" },
+              }}
+            >
+              <Grid
+                item
+                sx={{
+                  width: { xs: "50%", sm: "10vw" },
+                  minWidth: "70px",
+                  margin: "15px",
+                  maxHeight: "64px",
+                }}
+              >
+                <NavLink to="/home">
+                  <img
+                    src="/PTSM-LOGO.png"
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                </NavLink>
+              </Grid>
+              <Grid item>
+                <Box sx={{ flexGrow: 0 }}>
+                  <Tooltip title="Open settings">
+                    <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                      <ManageAccountsIcon fontSize="large" />
+                    </IconButton>
+                  </Tooltip>
+                  <Menu
+                    sx={{ mt: "45px" }}
+                    id="menu-appbar"
+                    anchorEl={anchorElUser}
+                    anchorOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    keepMounted
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right",
+                    }}
+                    open={Boolean(anchorElUser)}
+                    onClose={handleCloseUserMenu}
+                  >
+                    {Array.isArray(settingsRoutes) &&
+                      settingsRoutes
+                        .filter((route) => route?.showInSettings)
+                        .map((route, i) => {
+                          return (
+                            <NavLink
+                              key={route?.label + "-" + i}
+                              to={`${route?.path}`}
+                              sx={{
+                                display: "block",
+                                width: "100%",
+                                color: "inherit",
+                              }}
+                              onClick={handleCloseUserMenu}
+                            >
+                              <MenuItem sx={{ textTransform: "capitalize" }}>
+                                {route?.label}
+                              </MenuItem>
+                            </NavLink>
+                          );
+                        })}
+                    {
+                      <MenuItem
+                        onClick={() => {
+                          handleCloseUserMenu();
+                          handleLogout();
+                        }}
+                      >
+                        {"Logout"}
+                      </MenuItem>
+                    }
+                  </Menu>
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <ManageAccountsIcon fontSize="large" />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {Array.isArray(settingsRoutes) &&
-                    settingsRoutes
-                      .filter((route) => route?.showInSettings)
-                      .map((route, i) => {
-                        return (
-                          <NavLink
-                            key={route?.label + "-" + i}
-                            to={`${route?.path}`}
-                            sx={{
-                              display: "block",
-                              width: "100%",
-                              color: "inherit",
-                            }}
-                            onClick={handleCloseUserMenu}
-                          >
-                            <MenuItem sx={{ textTransform: "capitalize" }}>
-                              {route?.label}
-                            </MenuItem>
-                          </NavLink>
-                        );
-                      })}
-                  {
-                    <MenuItem
-                      onClick={() => {
-                        handleCloseUserMenu();
-                        handleLogout();
-                      }}
-                    >
-                      {"Logout"}
-                    </MenuItem>
-                  }
-                </Menu>
-              </Box>
-            </Grid>
-          </Grid>
+          </ThemeProvider>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        {/* sidebar menu  */}
-        <SidebarMenu />
-        <Divider />
+        <Box
+          sx={{
+            position: "fixed",
+            zIndex: 1,
+            backgroundColor: "#fff",
+            width: open ? "240px" : "64px",
+            transition: "0.2s ease-in-out",
+          }}
+        >
+          <ThemeProvider theme={customTheme}>
+            <DrawerHeader
+              sx={{ minHeight: { xs: "64px", md: "70px", lg: "90px" } }}
+            >
+              <IconButton onClick={handleDrawerClose} sx={{ mr: 1 }}>
+                {theme.direction === "rtl" ? (
+                  <ChevronRightIcon />
+                ) : (
+                  <ChevronLeftIcon />
+                )}
+              </IconButton>
+            </DrawerHeader>
+          </ThemeProvider>
+          <Divider />
+        </Box>
+        <Box sx={{ mt: { xs: "64px", md: "70px", lg: "90px" } }}>
+          {/* sidebar menu  */}
+          <SidebarMenu openStatus={open} />
+          <Divider />
+        </Box>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
+        <DrawerHeader
+          sx={{
+            minHeight: { xs: "40px", md: "46px", lg: "66px" },
+          }}
+        />
         {/* sidebar routes */}
-        <SidebarRoutes />
+        {secondaryAppFlag && <SecondaryAppbar openStatus={open} />}
+        <Box
+          sx={{
+            pt: secondaryAppFlag
+              ? { xs: "72px", md: "78px", lg: "98px" }
+              : "0px",
+          }}
+        >
+          <SidebarRoutes />
+        </Box>
       </Box>
     </Box>
   );

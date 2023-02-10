@@ -265,6 +265,12 @@ const PackageForm: React.FunctionComponent<IPackageFormProps> = (props) => {
                 },
               },
             ],
+            hotels: [
+              {
+                city: "",
+                hotelNames: "",
+              },
+            ],
           },
         }}
         // validationSchema={tourYupSchema}

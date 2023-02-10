@@ -24,5 +24,13 @@ export default {
       resetPassword: "/auth/reset-password",
       changePassword: "/auth/change-password",
     },
+
+    blog: {
+      create: "/blogs",
+      update: "/blogs/",
+      delete: "/blogs/",
+      getOne: "/blogs/",
+      getAll: "/blogs",
+    },
   },
 };

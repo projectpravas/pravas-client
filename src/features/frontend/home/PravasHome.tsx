@@ -1,5 +1,6 @@
 import * as React from 'react';
-
+import OwlCarousel from 'react-owl-carousel';  
+import './owl.css'; 
 interface IPravasHomeProps {
 }
 

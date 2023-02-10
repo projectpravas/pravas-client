@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import UserService from "../../../services/UserService";
 import { errorToast } from "../../../ui/toast/Toast";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
@@ -40,6 +40,7 @@ const Users: React.FunctionComponent<IUsersProps> = (props) => {
         data={users}
         loadUsers={loadUsers}
       />
+      <Outlet />
     </>
   );
 };

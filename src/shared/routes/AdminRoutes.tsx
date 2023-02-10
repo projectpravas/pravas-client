@@ -7,8 +7,16 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import CardTravelTwoToneIcon from "@mui/icons-material/CardTravelTwoTone";
 
-const Tours = lazy(() => import("../../features/admin/tours/Tours"));
+const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
+const TourAndPackageForm = lazy(
+  () => import("../../features/admin/pravas/TourAndPackageForm")
+);
+const Packages = lazy(
+  () => import("../../features/admin/pravas/packages/Packages")
+);
+const Pravas = lazy(() => import("../../features/admin/pravas/Pravas"));
 const Dashboard = lazy(
   () => import("../../features/admin/dashboard/Dashboard")
 );
@@ -46,13 +54,31 @@ export default [
     roles: ["admin", "superAdmin", "customer"],
   },
   {
-    label: "Tours",
-    component: <Tours />,
+    label: "Pravas",
+    component: <Pravas />,
     icon: <TourIcon />,
-    path: "tours",
+    path: "pravas",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin", "customer"],
+    subMenus: [
+      {
+        label: "Packages",
+        component: <Packages />,
+        icon: <CardTravelTwoToneIcon />,
+        path: "packages",
+        showInMenu: true,
+        showInSettings: false,
+      },
+      {
+        label: "Tours",
+        component: <Tours />,
+        icon: <TravelExploreIcon />,
+        path: "tours",
+        showInMenu: true,
+        showInSettings: false,
+      },
+    ],
   },
   {
     label: "Bookings",
@@ -119,9 +145,9 @@ export default [
   },
   {
     label: "Account",
-    component: <> Add account component in admin routes </>,
+    component: <h1> Add account component in admin routes </h1>,
     icon: <PeopleIcon />,
-    path: "/accounts",
+    path: "accounts",
     showInMenu: false,
     showInSettings: true,
     role: ["admin", "superAdmin", "customer"],

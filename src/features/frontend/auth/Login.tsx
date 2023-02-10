@@ -88,8 +88,6 @@ const Login = () => {
             enableReinitialize
             validationSchema={loginValidation}
             onSubmit={(values, { resetForm }) => {
-              console.log(values);
-
               AuthService.userLogin(values)
                 .then((res) => {
                   const aToken = res?.headers["x-accesstoken"] as string;
@@ -240,7 +238,7 @@ const Login = () => {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
-                        disabled={isValid && loginChkBox ? false : true}
+                        disabled={isValid ? false : true}
                       >
                         Sign In
                       </Button>

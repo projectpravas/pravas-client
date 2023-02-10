@@ -6,6 +6,7 @@ import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import { CardMedia } from "@mui/material";
 import { Helmet } from "react-helmet";
+import { Container } from "@mui/system";
 interface IAboutUsProps {}
 
 const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
@@ -76,75 +77,74 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
         <meta name="description" content="About Pravas Tourism" />
         <meta name="keywords" content="About Pravas Tourism" />
       </Helmet>
-      <Grid
-        container
-        sx={{ flexWrap: "wrap", padding: "3% 6% 2% 6%", margin: "2% 0 8% 0" }}
-      >
-        <Grid item xs={12} md={6} lg={6}>
-          <Item sx={{ backgroundColor: "transparent" }}>
-            <Typography
-              style={{
-                fontSize: "39px",
-                color: "#005d9d",
-                fontWeight: "600",
-                textAlign: "left",
-                lineHeight: "1.3em",
-                padding: "0% 2% 0 2%",
-              }}
-              component="h2"
-            >
-              Explore the world and create memories that will last a lifetime
-            </Typography>{" "}
-            {/* heading*/}
-            <Typography sx={typoPara}>
-              Pravas – A chance to rush-n-crush the daily routine moreover has
-              some peaceful moments. Or get over boredom and be far from a
-              problem or stress. Pravas ensures travellers to have a great
-              traveling experience after visiting their dream destinations
-              either on a customize tour or with a group tour. You will get a
-              chance to enjoy local foods, team up with local people, visit
-              heritage monuments and much more.
-            </Typography>{" "}
-            {/* P1*/}
-            <Typography sx={typoPara}>
-              Pravas is there whether you are planning to go for a honeymoon, a
-              romantic getaway with your spouse or planning to have an
-              adventurous holiday with your friends. Our Taylor made tours will
-              always be much more than you expect. Travel with team Pravas and
-              be on a journey of smiles.
-            </Typography>{" "}
-            {/* P2*/}
-          </Item>
-        </Grid>
+      <Container>
+        <Grid container sx={{ flexWrap: "wrap", margin: "2% 0 8% 0" }}>
+          <Grid item xs={12} md={6} lg={6}>
+            <Item sx={{ backgroundColor: "transparent" }}>
+              <Typography
+                style={{
+                  fontSize: "39px",
+                  color: "#005d9d",
+                  fontWeight: "600",
+                  textAlign: "left",
+                  lineHeight: "1.3em",
+                  padding: "0% 2% 0 2%",
+                }}
+                component="h2"
+              >
+                Explore the world and create memories that will last a lifetime
+              </Typography>{" "}
+              {/* heading*/}
+              <Typography sx={typoPara}>
+                Pravas – A chance to rush-n-crush the daily routine moreover has
+                some peaceful moments. Or get over boredom and be far from a
+                problem or stress. Pravas ensures travellers to have a great
+                traveling experience after visiting their dream destinations
+                either on a customize tour or with a group tour. You will get a
+                chance to enjoy local foods, team up with local people, visit
+                heritage monuments and much more.
+              </Typography>{" "}
+              {/* P1*/}
+              <Typography sx={typoPara}>
+                Pravas is there whether you are planning to go for a honeymoon,
+                a romantic getaway with your spouse or planning to have an
+                adventurous holiday with your friends. Our Taylor made tours
+                will always be much more than you expect. Travel with team
+                Pravas and be on a journey of smiles.
+              </Typography>{" "}
+              {/* P2*/}
+            </Item>
+          </Grid>
 
-        <Grid item xs={12} md={6} lg={6} sx={{ alignItems: "center" }}>
-          <Item sx={{ backgroundColor: "transparent" }}>
-            <Typography
-              sx={{
-                padding: "1% 2% 0 2%",
-                lineHeight: "24px",
-                fontSize: "16px",
-                letterSpacing: "-.2px",
-                fontWeight: "400",
-                lineheight: "1.5",
-                textAlign: "left",
-              }}
-            >
-              Moreover, it is full of excitement, recreation, innovation,
-              leisure, and desire. For some people, travelling can be a time of
-              self-realization, and for some, it is the way of exploration and
-              getting new experiences. There isn’t any doubt about – Traveling
-              holds power to shape life positively.
-            </Typography>
-            <img
-              src="https://pravasthejourney.com/wp-content/uploads/2022/06/team.jpg"
-              style={{ marginTop: "6%" }}
-              width="95%"
-              alt=""
-            />
-          </Item>
+          <Grid item xs={12} md={6} lg={6} sx={{ alignItems: "center" }}>
+            <Item sx={{ backgroundColor: "transparent" }}>
+              <Typography
+                sx={{
+                  padding: "1% 2% 0 2%",
+                  lineHeight: "24px",
+                  fontSize: "16px",
+                  letterSpacing: "-.2px",
+                  fontWeight: "400",
+                  lineheight: "1.5",
+                  textAlign: "left",
+                }}
+              >
+                Moreover, it is full of excitement, recreation, innovation,
+                leisure, and desire. For some people, travelling can be a time
+                of self-realization, and for some, it is the way of exploration
+                and getting new experiences. There isn’t any doubt about –
+                Traveling holds power to shape life positively.
+              </Typography>
+              <img
+                src="https://pravasthejourney.com/wp-content/uploads/2022/06/team.jpg"
+                style={{ marginTop: "6%" }}
+                width="95%"
+                alt=""
+              />
+            </Item>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
       {/*explore*/}
       <Grid
         container
@@ -235,107 +235,107 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
         </Grid>
       </Grid>
       {/*ceo*/}
-      <Grid
-        container
-        sx={{ flexWrap: "wrap", bgcolor: "#f7fafc", padding: "6%" }}
-      >
-        <Grid item xs={12} sm={6} p={2}>
-          <Typography sx={typoVision}>VISION</Typography>
+      <Container>
+        <Grid container sx={{ flexWrap: "wrap", my: 2 }}>
+          <Grid item xs={12} sm={6} p={2}>
+            <Typography sx={typoVision}>VISION</Typography>
 
-          <Typography sx={typoVpara}>
-            Our primary focus is on cherishing the small moments like – the
-            haunting tunes of a local song, the enticing smells of a spice
-            market, the sunset during a jungle safari or the brilliant light of
-            a thousand diyas at a temple. We always find something new and
-            different to offer in terms of heritage, architecture, and
-            experience. We take you to the quiet place where you can breathe
-            fresh, spend quality time, and revive your energy to grow further.
-            We are focused to give all these treasures all in one tour.
-            <br />
-            <br />
-            Pravas is there whether you are planning to go for a honeymoon, a
-            romantic getaway with your spouse or planning to have an adventurous
-            holiday with your friends. Our Taylor made tours will always be much
-            more than you expect. Travel with team Pravas and be on a journey of
-            smiles.
-          </Typography>
+            <Typography sx={typoVpara}>
+              Our primary focus is on cherishing the small moments like – the
+              haunting tunes of a local song, the enticing smells of a spice
+              market, the sunset during a jungle safari or the brilliant light
+              of a thousand diyas at a temple. We always find something new and
+              different to offer in terms of heritage, architecture, and
+              experience. We take you to the quiet place where you can breathe
+              fresh, spend quality time, and revive your energy to grow further.
+              We are focused to give all these treasures all in one tour.
+              <br />
+              <br />
+              Pravas is there whether you are planning to go for a honeymoon, a
+              romantic getaway with your spouse or planning to have an
+              adventurous holiday with your friends. Our Taylor made tours will
+              always be much more than you expect. Travel with team Pravas and
+              be on a journey of smiles.
+            </Typography>
+          </Grid>
+          {/*vision*/}
+          <Grid item xs={12} sm={6} p={2}>
+            <Typography sx={typoVision}>CORE VALUES</Typography>
+
+            <Typography sx={typoVpara}>
+              Pravas has an enthusiastic, passionate team who are delivering
+              ‘out-of-the-world’ travel experiences. They are playing a pivotal
+              role in finding and managing tours at some of the most beautiful
+              domestic as well as international locations.
+              <br />
+              <br />
+              Pravas is there whether you are planning to go for a honeymoon, a
+              romantic getaway with your spouse or planning to have an
+              adventurous holiday with your friends. Our Taylor made tours will
+              always be much more than you expect. Travel with team Pravas and
+              be on a journey of smiles.
+            </Typography>
+          </Grid>{" "}
+          {/*core*/}
         </Grid>
-        {/*vision*/}
-        <Grid item xs={12} sm={6} p={2}>
-          <Typography sx={typoVision}>CORE VALUES</Typography>
-
-          <Typography sx={typoVpara}>
-            Pravas has an enthusiastic, passionate team who are delivering
-            ‘out-of-the-world’ travel experiences. They are playing a pivotal
-            role in finding and managing tours at some of the most beautiful
-            domestic as well as international locations.
-            <br />
-            <br />
-            Pravas is there whether you are planning to go for a honeymoon, a
-            romantic getaway with your spouse or planning to have an adventurous
-            holiday with your friends. Our Taylor made tours will always be much
-            more than you expect. Travel with team Pravas and be on a journey of
-            smiles.
-          </Typography>
-        </Grid>{" "}
-        {/*core*/}
-      </Grid>{" "}
+      </Container>
       {/*Vision*/}
-      <Grid container sx={{ flexWrap: "wrap", minWidth: "xs" }}>
-        <Box
-          sx={{
-            height: "70%",
-            width: "100%",
-            bgcolor: "#f4f3ef",
-            alignItems: "center",
-            padding: "6%",
-          }}
-        >
-          <Typography
+      <Container>
+        <Grid container sx={{ flexWrap: "wrap", minWidth: "xs" }}>
+          <Box
             sx={{
-              fontSize: "50px",
-              display: "flex",
-              justifyContent: "center",
-              fontWeight: 700,
-              lineHeight: 1.2,
-              marginBottom: "3%",
-              color: "#2e2e3e",
+              height: "70%",
+              width: "100%",
+              alignItems: "center",
+              padding: "6%",
             }}
           >
-            Meet the Team
-          </Typography>
+            <Typography
+              sx={{
+                fontSize: "50px",
+                display: "flex",
+                justifyContent: "center",
+                fontWeight: 700,
+                lineHeight: 1.2,
+                marginBottom: "3%",
+                color: "#2e2e3e",
+              }}
+            >
+              Meet the Team
+            </Typography>
 
-          <Item
-            sx={{
-              display: "flex",
-              justifyContent: "space-evenly",
-              bgcolor: "transparent",
-            }}
-          >
-            <MyCard>
-              <CardMedia
-                component="img"
-                height="250rem"
-                image="https://pravasthejourney.com/wp-content/uploads/2022/06/Akshay.jpg"
-                alt="green iguana"
-              />
-              <Typography sx={typoName}>Akshay</Typography>
-              <Typography sx={typePosition}>DIRECTOR</Typography>
-            </MyCard>
+            <Item
+              sx={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                bgcolor: "transparent",
+              }}
+            >
+              <MyCard>
+                <CardMedia
+                  component="img"
+                  height="250rem"
+                  image="https://pravasthejourney.com/wp-content/uploads/2022/06/Akshay.jpg"
+                  alt="green iguana"
+                />
+                <Typography sx={typoName}>Akshay</Typography>
+                <Typography sx={typePosition}>DIRECTOR</Typography>
+              </MyCard>
 
-            <MyCard>
-              <CardMedia
-                component="img"
-                height="250rem"
-                image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
-                alt="green iguana"
-              />
-              <Typography sx={typoName}>Asha</Typography>
-              <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
-            </MyCard>
-          </Item>
-        </Box>
-      </Grid>{" "}
+              <MyCard>
+                <CardMedia
+                  component="img"
+                  height="250rem"
+                  image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
+                  alt="green iguana"
+                />
+                <Typography sx={typoName}>Asha</Typography>
+                <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
+              </MyCard>
+            </Item>
+          </Box>
+        </Grid>
+      </Container>
       {/*team*/}
     </>
   );

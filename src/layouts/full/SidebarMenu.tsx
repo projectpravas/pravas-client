@@ -1,25 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import List from "@mui/material/List";
 import User from "../../shared/models/userModel";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import ListItemText from "@mui/material/ListItemText";
 import routes from "../../shared/routes/AdminRoutes";
 import { NavLink as NLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../app/slices/AuthSlice";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import StarBorder from "@mui/icons-material/StarBorder";
 
-interface ISidebarMenuProps {}
+interface ISidebarMenuProps {
+  openStatus: boolean;
+}
 
 const NavLink = styled(NLink)`
   text-decoration: none;
   margin-right: 10px;
 `;
 
-const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = (props) => {
+// const ExpandCollapseIcon = () => {
+//   const [open, setOpen] = React.useState(true);
+//   return ;
+// };
+
+const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
+  openStatus,
+}) => {
   const currentLoggedUser: User = useSelector(selectLoggedUser);
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const parent = () => {};
+
+  // useEffect(() => {
+  //   setOpen(openStatus);
+  // }, [openStatus]);
+
   return (
     <>
       <List>
@@ -30,7 +56,7 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = (props) => {
                 route?.showInMenu &&
                 route?.roles?.includes(currentLoggedUser?.role as string)
             )
-            .map(({ label, path, icon, roles }, i) => (
+            .map(({ label, path, icon, roles, subMenus }, i) => (
               <NavLink
                 end
                 key={path + i}
@@ -64,7 +90,18 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = (props) => {
                         borderBottom: isActive ? "3px solid #27488d" : "black",
                       })}
                     >
-                      <ListItemText primary={label} />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <ListItemText
+                          primary={label}
+                          sx={{ marginRight: "20px" }}
+                        />
+                      </Box>
                     </NavLink>
                   </ListItemButton>
                 </ListItem>
