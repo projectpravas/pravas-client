@@ -32,5 +32,10 @@ export default {
       getOne: "/blogs/",
       getAll: "/blogs",
     },
+
+    bookingOrders: {
+      bookNow: "/bookingOrders/create-order",
+      verify: "/bookingOrders/verify-order",
+    },
   },
 };

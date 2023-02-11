@@ -1,3 +1,3 @@
 import API from "./API";
-import endPoints from "./endPoints";
+import endPoints from "./endpoints";
 export { API, endPoints };
