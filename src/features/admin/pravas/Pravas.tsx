@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
-import PravasTabs from "./PravasTabs";
+import Packages from "../pravas/packages/Packages";
 
 interface IPravasProps {}
 
@@ -13,8 +13,8 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
     <div style={{ marginTop: showPravas ? "48px" : "" }}>
       {showPravas && <h2>Pravas</h2>}
 
-      <Outlet />
-      <PravasTabs />
+      {/* <Outlet /> */}
+      <Packages />
     </div>
   );
 };

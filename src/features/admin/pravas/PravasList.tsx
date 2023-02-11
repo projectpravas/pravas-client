@@ -125,27 +125,36 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       },
     },
     {
-      label: "Surname",
-      name: "name.last",
+      label: "Price",
+      name: "price",
       options: {
         filter: true,
         sort: true,
       },
     },
     {
-      label: "Mobile",
-      name: "mobile",
+      label: "Max Persons",
+      name: "maxPersons",
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      label: "Email",
-      name: "email",
+      label: "Duration",
+      name: "duration",
       options: {
         filter: true,
         sort: false,
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          const tour: any = data[rowIndex];
+          console.log(tour);
+          return (
+            <>
+              {tour?.duration?.days} days {tour?.duration?.nights} nights
+            </>
+          );
+        },
       },
     },
     {
@@ -156,7 +165,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         sort: true,
 
         customBodyRender: (value: string, metaData: any) => {
-          const user = data[metaData.rowIndex];
+          const tour = data[metaData.rowIndex];
           return (
             <>
               {
@@ -164,7 +173,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
                   style={{ color: value == "active" ? "green" : "red" }}
                   label={value == "active" ? "active" : "inactive"}
                   onClick={() =>
-                    handleStausAndVerification("status", value, user)
+                    handleStausAndVerification("status", value, tour)
                   }
                 />
               }
@@ -180,16 +189,16 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         filter: true,
         sort: true,
         customBodyRender: (value: boolean, metaData: any) => {
-          const user = data[metaData.rowIndex];
+          const tour = data[metaData.rowIndex];
           return (
             <>
               {
                 <Chip
                   color={value == true ? "primary" : "warning"}
                   label={value == true ? "Verified" : "unverified"}
-                  // onClick={() =>
-                  //   handleStausAndVerification("verified", value, user)
-                  // }
+                  onClick={() =>
+                    handleStausAndVerification("verified", value, tour)
+                  }
                 />
               }
             </>

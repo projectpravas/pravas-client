@@ -145,17 +145,16 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const data = [{ tourDates: "26 to 30 Dec 2022", seats: "Full" }];
 
   const loadExplore = () => {
-    TourService.fetchAllTours()
-
-      .then((response) => {
-        const result: TourDetails[] = response?.data?.data;
-        console.log("result:", result);
-        const tourObj = result.find((obj) => obj?._id == id);
-        if (tourObj) setTourDetails(tourObj);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // TourService.fetchAllTours()
+    //   .then((response) => {
+    //     const result: TourDetails[] = response?.data?.data;
+    //     console.log("result:", result);
+    //     const tourObj = result.find((obj) => obj?._id == id);
+    //     if (tourObj) setTourDetails(tourObj);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   React.useEffect(() => {

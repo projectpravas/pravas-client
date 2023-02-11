@@ -24,8 +24,7 @@ import { Grid, Menu, MenuItem, ThemeProvider, Tooltip } from "@mui/material";
 import SidebarMenu from "./SidebarMenu";
 import SidebarRoutes from "./SidebarRoutes";
 import AdminRoutes from "../../shared/routes/AdminRoutes";
-import SecondaryAppbar from "../../features/admin/pravas/PravasTabs";
-
+import SecondaryAppbar from "./SecondaryAppbar";
 const customTheme = createTheme({
   breakpoints: {
     values: {
@@ -267,7 +266,7 @@ const PersistedSidebar = () => {
         <SidebarMenu openStatus={false} />
         <Divider />
       </Drawer>
-      {/* <Main open={open}>
+      <Main open={open}>
         <DrawerHeader />
         <Box sx={{ position: "relative" }}>
           {pathname.split("/").length > 3 &&
@@ -280,7 +279,7 @@ const PersistedSidebar = () => {
           <Box sx={{ pt: open ? 7 : 8 }}></Box>
           <SidebarRoutes />
         </Box>
-      </Main> */}
+      </Main>
     </Box>
   );
 };

@@ -8,7 +8,6 @@ import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import CardTravelTwoToneIcon from "@mui/icons-material/CardTravelTwoTone";
-import PravasTabs from "../../features/admin/pravas/PravasTabs";
 
 const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
 const TourAndPackageForm = lazy(

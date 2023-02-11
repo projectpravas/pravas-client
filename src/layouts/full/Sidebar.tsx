@@ -32,8 +32,7 @@ import settingsRoutes from "../../shared/routes/AdminRoutes";
 import { NavLink as NLink } from "react-router-dom";
 import { successToast } from "../../ui/toast/Toast";
 import AdminRoutes from "../../shared/routes/AdminRoutes";
-import SecondaryAppbar from "../../features/admin/pravas/PravasTabs";
-import PravasTabs from "../../features/admin/pravas/PravasTabs";
+import SecondaryAppbar from "../full/SecondaryAppbar";
 
 const customTheme = createTheme({
   breakpoints: {
@@ -312,7 +311,7 @@ const Sidebar = () => {
         <Box
           sx={{
             pt: secondaryAppFlag
-              ? { xs: "72px", md: "78px", lg: "98px" }
+              ? { xs: "72px", md: "72px", lg: "98px" }
               : "0px",
           }}
         >
