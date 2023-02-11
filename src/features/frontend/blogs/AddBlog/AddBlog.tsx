@@ -16,13 +16,7 @@ import RichTextEditor from "./RichTextEditor";
 import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
 import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-
-const categoryArr = [
-  "Destination",
-  "Place To Visit",
-  "Best Time To Travel",
-  "Experiance",
-];
+import { Formik } from "formik";
 
 interface IAddBlogProps {}
 
@@ -36,6 +30,12 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
   const [chipValue, setChipValue] = React.useState<string[]>([]);
   // Rich Text Editor State
   const [cat, setCat] = useState("");
+  const [showCategory, setShowCategory] = useState([
+    "Destination",
+    "Place To Visit",
+    "Best Time To Travel",
+    "Experiance",
+  ]);
 
   // Form Data
   const [formData, setFormData] = React.useState({
@@ -56,17 +56,12 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
     if (name == "tags") {
       setItem(value);
     } else {
+      setFormData({ ...formData, [name]: value });
     }
-
-    // console.log(name, value, checked);
-
-    // setFormData((prev) => {
-    //   return { ...prev, [name]: value };
-    // });
   };
 
-  const handleCategory = (e: any, val: string) => {
-    const { name, value, checked } = e?.target;
+  const handleCategory = (e: any) => {
+    const { name, checked } = e?.target;
 
     const catArr = formData?.categories;
 
@@ -80,17 +75,16 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
     setFormData({ ...formData, categories: catArr });
   };
 
-  const addCategory = (e: any) => {
-    const { name, value, checked } = e?.target;
-    const catArr = formData?.categories;
+  const addCategory = () => {
+    const value: string = cat;
+    const catArr = showCategory;
 
     const flag = catArr
-      .filter((value) => value.toLowerCase())
-      .includes(name.toLowerCase());
+      .filter((v) => v.toLowerCase())
+      .includes(value.toLowerCase());
 
     if (!flag) {
-      catArr.push(name as string);
-      setFormData({ ...formData, categories: catArr });
+      setShowCategory([...showCategory, value]);
     }
     setCat("");
   };
@@ -98,6 +92,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     formData.tags = chipValue;
+    formData.image = previewImage;
 
     console.log("formData: ", formData);
   };
@@ -151,6 +146,32 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
             <Button variant="contained">Add New</Button>
           </Grid>
         </Grid>
+
+        {/* <Formik
+          initialValues={{}}
+          validationSchema={{}}
+          onSubmit={(values, { resetForm }) => {
+            console.log(values);
+          }}
+        >
+          {({
+            values,
+            errors,
+            isValid,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+          }) => {
+            return (
+              <form>
+                
+
+              </form>
+            );
+          }}
+          
+        </Formik> */}
         <Paper elevation={3} sx={{ p: 4 }}>
           <Grid container spacing={4}>
             {/* --------------------------------left section-------------------------- */}
@@ -163,6 +184,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     type="text"
                     label="Title"
                     fullWidth
+                    // value={formData?.title}
                     name="title"
                     size="medium"
                     onChange={handleChange}
@@ -187,6 +209,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     type="text"
                     label="SEO Title"
                     fullWidth
+                    // value={formData?.seoTitle}
                     name="seoTitle"
                     size="medium"
                     onChange={handleChange}
@@ -199,6 +222,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     type="text"
                     label="meta Description"
                     fullWidth
+                    // value={formData?.metaDescription}
                     name="metaDescription"
                     size="medium"
                     multiline
@@ -213,6 +237,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     type="text"
                     label="Focus KeyPhrases"
                     fullWidth
+                    // value={formData?.focusKeyphrases}
                     name="focusKeyphrases"
                     size="medium"
                     onChange={handleChange}
@@ -225,6 +250,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     type="text"
                     label="Slug"
                     fullWidth
+                    // value={formData?.slug}
                     name="slug"
                     size="medium"
                     onChange={handleChange}
@@ -235,62 +261,93 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
             {/* --------------------------------right section-------------------------- */}
             <Grid item xs={12} md={4}>
               <Grid container spacing={2}>
-                <Grid item xs={12}>
+                {/* Category */}
+                <Grid item xs={12} sm={6} md={12}>
                   <Paper
                     elevation={1}
                     sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
                       borderRadius: 4,
                       "&:hover": {
                         boxShadow: "0px 0px 20px -5px rgb(0 0 0 / 50%)",
                       },
                     }}
                   >
-                    <FormControl
-                      sx={{ m: 3 }}
-                      component="fieldset"
-                      variant="standard"
+                    <Grid
+                      container
+                      sx={{
+                        flexDirection: "column",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        p: 2,
+                      }}
+                      spacing={1}
                     >
-                      <FormLabel
-                        component="legend"
-                        sx={{ fontSize: "1.25rem", fontWeight: 500 }}
-                      >
-                        Category
-                      </FormLabel>
-                      <FormGroup
-                        onClick={(e) => {
-                          handleCategory(e, "val");
-                        }}
-                      >
-                        {Array.isArray(categoryArr) &&
-                          categoryArr.map((cat, i) => {
-                            return (
-                              <FormControlLabel
-                                key={cat + "" + i}
-                                control={<Checkbox name={`${cat}`} />}
-                                label={cat}
-                              />
-                            );
-                          })}
-                      </FormGroup>
-                    </FormControl>
-
-                    <Grid item xs={9} md={9}>
-                      <TextField
-                        id="categoryAd"
-                        variant="outlined"
-                        type="text"
-                        label="Add Category"
-                        name="addCat"
-                        size="small"
-                        onChange={(e) => setCat(e?.target?.value)}
-                      />
-                      <Button onClick={addCategory}>Add</Button>
+                      <Grid item xs={12}>
+                        <Grid container spacing={1}>
+                          <Grid item xs={9}>
+                            <TextField
+                              id="categoryAd"
+                              variant="outlined"
+                              type="text"
+                              label="Add Category"
+                              name="addCat"
+                              value={cat}
+                              size="small"
+                              onChange={(e) => setCat(e?.target?.value)}
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <Button
+                              variant="contained"
+                              sx={{ backgroundColor: "#27488d" }}
+                              onClick={addCategory}
+                            >
+                              Add
+                            </Button>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12} alignSelf="start">
+                        <FormControl
+                          // sx={{ m: 2 }}
+                          component="fieldset"
+                          variant="standard"
+                        >
+                          <FormLabel
+                            component="legend"
+                            sx={{
+                              fontSize: "1.25rem",
+                              fontWeight: 500,
+                            }}
+                          >
+                            Category
+                          </FormLabel>
+                          <FormGroup
+                            onClick={(e) => {
+                              handleCategory(e);
+                            }}
+                          >
+                            {Array.isArray(showCategory) &&
+                              showCategory.map((cat, i) => {
+                                return (
+                                  <FormControlLabel
+                                    key={cat + "" + i}
+                                    control={<Checkbox name={`${cat}`} />}
+                                    label={cat}
+                                    sx={{
+                                      textTransform: "capitalize",
+                                    }}
+                                  />
+                                );
+                              })}
+                          </FormGroup>
+                        </FormControl>
+                      </Grid>
                     </Grid>
                   </Paper>
                 </Grid>
-                <Grid item xs={12}>
+                {/* Tags */}
+                <Grid item xs={12} sm={6} md={12}>
                   <Paper
                     elevation={1}
                     sx={{
@@ -314,7 +371,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                             onChange={handleChange}
                           />
                         </Grid>
-                        <Grid item xs={2} md={2}>
+                        <Grid item xs={3} md={3}>
                           <Button
                             variant="contained"
                             onClick={additem}
@@ -344,6 +401,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     </Box>
                   </Paper>
                 </Grid>
+                {/* Image */}
                 <Grid item xs={12}>
                   <Paper
                     elevation={1}
