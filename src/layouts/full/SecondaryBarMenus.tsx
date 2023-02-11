@@ -41,6 +41,10 @@ const SecondaryBarMenus: React.FunctionComponent<ISecondaryBarMenus> = (
             <NavLink
               sx={{ display: "flex", m: 0 }}
               to={`${pathname.split("/")[2]}/${tab?.path}`}
+              style={({ isActive }) => ({
+                color: isActive ? "grey" : "black",
+                borderBottom: isActive ? "3px solid #27488d" : "black",
+              })}
             >
               <Grid item xs={12} alignSelf="center">
                 <BottomNavigationAction

@@ -32,6 +32,13 @@ export default {
       getOne: "/blogs/",
       getAll: "/blogs",
     },
+    enquiries: {
+      create: "/enquiries",
+      update: "/enquiries/",
+      delete: "/enquiries/",
+      getOne: "/enquiries/",
+      getAll: "/enquiries",
+    },
 
     bookingOrders: {
       bookNow: "/bookingOrders/create-order",

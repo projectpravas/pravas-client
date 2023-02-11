@@ -4,7 +4,10 @@ export default [
     heading: "Hampi & Badami",
     image: [
       "https://pravasthejourney.com/wp-content/uploads/2022/06/Hampi.jpg",
+      "https://pravasthejourney.com/wp-content/uploads/2022/06/Hampi.jpg",
+      "https://pravasthejourney.com/wp-content/uploads/2022/06/Hampi.jpg",
     ],
+
     price: " ₹15800 / P",
     duration: "5days",
     tourType: "",
@@ -113,6 +116,7 @@ export default [
     heading: "Kashmir 4N5D",
     image: [
       "https://pravasthejourney.com/wp-content/uploads/2022/09/Kashmir-4n5d.webp",
+      "https://images.unsplash.com/photo-1567601169793-64703dc5324a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGthc2htaXJ8ZW58MHx8MHx8&w=1000&q=80",
     ],
     price: " ₹19850 / P",
     duration: "5days",
