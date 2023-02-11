@@ -18,7 +18,7 @@ interface Participants {
 }
 
 interface EnquiryModel {
-  enuiryId?: number;
+  enquiryId?: number;
   destinations?: Destinations[];
   travelDates?: TravelDates;
   travelDuration?: number;
