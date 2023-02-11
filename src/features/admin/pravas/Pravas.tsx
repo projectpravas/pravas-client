@@ -10,12 +10,12 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
     pathname.split("/")[pathname.split("/").length - 1] == "pravas";
 
   return (
-    // <div style={{ marginTop: showPravas ? "" : "48px" }}>
-    //   {showPravas && <h2>Pravas</h2>}
+    <div style={{ marginTop: showPravas ? "48px" : "" }}>
+      {showPravas && <h2>Pravas</h2>}
 
-    //   <Outlet />
-    // </div>
-    <PravasTabs />
+      <Outlet />
+      <PravasTabs />
+    </div>
   );
 };
 

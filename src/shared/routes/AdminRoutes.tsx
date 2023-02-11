@@ -64,14 +64,6 @@ export default [
     roles: ["admin", "superAdmin", "customer"],
     subMenus: [
       {
-        label: "Packages-form",
-        component: <TourAndPackageForm />,
-        icon: <></>,
-        path: "packages/packages-form  ",
-        showInMenu: false,
-        showInSettings: false,
-      },
-      {
         label: "Packages",
         component: <Packages />,
         icon: <CardTravelTwoToneIcon />,

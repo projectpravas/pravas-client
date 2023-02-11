@@ -23,16 +23,14 @@ const ChangePassword = lazy(
 const PasswordRecovery = lazy(
   () => import("../../features/frontend/auth/PasswordRecovery")
 );
-const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 const Login = lazy(() => import("../../features/frontend/auth/Login"));
 const Register = lazy(() => import("../../features/frontend/auth/Register"));
 const CancellationPolicy = lazy(
   () => import("../../ui/footer/CancellationPolicy")
 );
 const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
-const TermsAndConditions = lazy(
-  () => import("../../ui/footer/TermsAndConditions")
-);
+const TermsAndConditions = lazy(() => import("../../ui/404/PageNotFound"));
+const PageNotFound = lazy(() => import("../../ui/footer/TermsAndConditions"));
 
 export default [
   {
@@ -64,12 +62,13 @@ export default [
     hasAuthenticate: "all",
   },
   {
-    label: "Pravas Explore",
+    label: "Explore Details",
     component: <ExplorePravas />,
     path: "pravas/explore/:id",
     showInMenu: false,
     hasAuthenticate: "all",
   },
+
   {
     label: "Blogs",
     component: <Blogs />,
