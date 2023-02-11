@@ -8,6 +8,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import CardTravelTwoToneIcon from "@mui/icons-material/CardTravelTwoTone";
+import PravasTabs from "../../features/admin/pravas/PravasTabs";
 
 const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
 const TourAndPackageForm = lazy(
@@ -168,5 +169,21 @@ export default [
     showInMenu: false,
     showInSettings: false,
     role: ["admin", "superAdmin"],
+  },
+  {
+    label: "Packages",
+    component: <Packages />,
+    icon: <CardTravelTwoToneIcon />,
+    path: "pravas/packages",
+    showInMenu: true,
+    showInSettings: false,
+  },
+  {
+    label: "Tours",
+    component: <Tours />,
+    icon: <TravelExploreIcon />,
+    path: "pravas/tours",
+    showInMenu: true,
+    showInSettings: false,
   },
 ];

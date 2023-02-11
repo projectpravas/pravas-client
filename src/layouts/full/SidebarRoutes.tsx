@@ -17,14 +17,14 @@ const SidebarRoutes: React.FunctionComponent<ISidebarRoutesProps> = (props) => {
               path={route?.path}
               element={route?.component}
             >
-              {Array.isArray(route?.subMenus) &&
+              {/* {Array.isArray(route?.subMenus) &&
                 route?.subMenus.map((subMenu, i) => (
                   <Route
                     key={subMenu?.path + i}
                     path={`${subMenu?.path}`}
                     element={subMenu?.component}
                   />
-                ))}
+                ))} */}
             </Route>
           ))}
       </Routes>

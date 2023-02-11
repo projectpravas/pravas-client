@@ -12,23 +12,26 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Chip } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import Tooltip from "@mui/material/Tooltip";
 import Container from "@mui/material/Container";
+import TourModel from "../../../shared/models/tourModel";
+import TourService from "../../../services/TourService";
 
-interface IUserListProps {
+interface IPravasListProps {
   title: string;
   data: object[];
-  loadUsers: Function;
+  loadTours: Function;
 }
 
-const UserList: React.FunctionComponent<IUserListProps> = ({
+const PravasList: React.FunctionComponent<IPravasListProps> = ({
   title,
   data,
-  loadUsers,
+  loadTours,
 }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const role = pathname.includes("users") ? "admin" : "customer";
+  const category = pathname.includes("pravas") ? "package" : "tour";
 
   //handle delete
   const handleDelete = (id: string) => {
@@ -42,7 +45,7 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result?.isConfirmed) {
-        UserService.deleteUser(id)
+        TourService.deleteTour(id)
           .then((res) => {
             Swal.fire("Deleted!", "Deleted successfully...", "success");
             navigate(``);
@@ -62,16 +65,16 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
   };
 
   // handle add
-  const handleAdd = (role: string) => {
-    navigate(`/secured/add-edit/0/add/${role}`);
+  const handleAdd = (category: string) => {
+    navigate(`/secured/add-edit/0/add/${category}`);
   };
 
   // handle edit
-  const handleEdit = (id: string, role: string) => {
-    navigate(`/secured/add-edit/${id}/edit/${role}`);
+  const handleEdit = (id: string, category: string) => {
+    navigate(`/secured/add-edit/${id}/edit/${category}`);
   };
 
-  const handleStausAndVerification = (op: string, value: any, user: any) => {
+  const handleStausAndVerification = (op: string, value: any, tour: any) => {
     let newValue =
       value == "active"
         ? "inactive"
@@ -87,9 +90,9 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
     op == "status" && fd.append("status", newValue as string);
     // op == "verified" && fd.append("verified", newValue as string);
 
-    UserService.updateUser(user?._id, fd)
+    TourService.updateTour(tour?._id, fd)
       .then((res) => {
-        loadUsers();
+        loadTours();
         successToast(
           `${op == "status" ? "Status" : "Verification"} Changed..`,
           2000
@@ -107,15 +110,15 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
   const columns = [
     {
       label: "ID",
-      name: "userId",
+      name: "tourId",
       options: {
         filter: false,
         sort: true,
       },
     },
     {
-      label: "Name",
-      name: "name.first",
+      label: "Title",
+      name: "title",
       options: {
         filter: true,
         sort: true,
@@ -201,17 +204,17 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
         filter: true,
         sort: true,
         customBodyRenderLite: (index: number) => {
-          const user: User = data[index];
+          const tour: TourModel = data[index];
           return (
             <Box sx={{ display: "flex" }}>
               <IconButton
                 onClick={() =>
-                  handleEdit(user?._id as string, user?.role || "")
+                  handleEdit(tour?._id as string, tour?.category || "")
                 }
               >
                 <EditIcon style={{ color: "#444" }} />
               </IconButton>
-              <IconButton onClick={() => handleDelete(user?._id as string)}>
+              <IconButton onClick={() => handleDelete(tour?._id as string)}>
                 <DeleteIcon color="error" />
               </IconButton>
             </Box>
@@ -228,8 +231,8 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
     customToolbar: () => {
       return (
         <Tooltip title={`Add ${title.split(" ")[0]}`} placement="top">
-          <IconButton onClick={() => handleAdd(role)}>
-            <PersonAddIcon color="primary" fontSize="large" />
+          <IconButton onClick={() => handleAdd(category)}>
+            <AddLocationAltIcon color="primary" fontSize="large" />
           </IconButton>
         </Tooltip>
       );
@@ -250,4 +253,4 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
   );
 };
 
-export default UserList;
+export default PravasList;
