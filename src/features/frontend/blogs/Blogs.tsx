@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import { data } from "./BlogData";
 import { Helmet } from "react-helmet";
 import AddBlog from "./AddBlog/AddBlog";
+import FAQ from "./FAQ";
 
 interface IBlogsProps {}
 
@@ -68,6 +69,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
         </Grid>
       </Container>
       <AddBlog />
+      <FAQ />
     </>
   );
 };
