@@ -15,9 +15,7 @@ const CreatePackageForm: React.FunctionComponent<ICreatePackageFormProps> = (
   const { pathname } = useLocation();
 
   const loadTours = () => {
-    TourService.fetchAllTours(
-      `?category=${pathname.includes("pravas") ? "package" : "tour"}`
-    )
+    TourService.fetchAllTours(`?category=${"package"}`)
       .then((res) => {
         setTours(res?.data?.data);
       })
