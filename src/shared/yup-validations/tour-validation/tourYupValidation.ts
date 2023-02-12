@@ -28,6 +28,7 @@ interface TourYupSchemaInterface {
   hasTourNotes?: boolean;
   hasCustomized?: boolean;
   hasTourStatus?: boolean;
+  hasPackageStatus?: boolean;
   hasPravasiId?: boolean;
   hasLiked?: boolean;
   hasComment?: boolean;
@@ -67,6 +68,7 @@ const defineTourYupSchema = ({
 
   hasCustomized = false,
   hasTourStatus = false,
+  hasPackageStatus = false,
 
   hasPravasiId = false,
   hasLiked = false,
@@ -177,6 +179,10 @@ const defineTourYupSchema = ({
     tourSchemaObj.customized = yup.boolean().required("Cutomised is required");
   if (hasTourStatus)
     tourSchemaObj.tourStatus = yup.string().required("Tour Status is required");
+  if (hasPackageStatus)
+    tourSchemaObj.packageStatus = yup
+      .string()
+      .required("Package Status is required");
 
   if (hasPravasiId)
     feedbacksObj.pravasiId = yup.string().required("Pravasi Id is required");

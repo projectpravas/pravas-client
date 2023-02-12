@@ -33,6 +33,7 @@ const defineInitialTour = ({
 
   hasCustomized = false,
   hasTourStatus = false,
+  hasPackageStatus = false,
 
   hasPravasiId = false,
   hasLiked = false,
@@ -94,6 +95,7 @@ const defineInitialTour = ({
 
   if (hasCustomized) initialTour.customized = false;
   if (hasTourStatus) initialTour.tourStatus = "";
+  if (hasPackageStatus) initialTour.packageStatus = "";
 
   if (hasPravasiId) feedbackobj.pravasiId = "";
   if (hasLiked) feedbackobj.liked = false;
