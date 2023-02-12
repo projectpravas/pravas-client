@@ -18,7 +18,11 @@ interface Participants {
 }
 
 interface EnquiryModel {
+  _id?: String;
   enquiryId?: number;
+  contactPersonName?: String;
+  contactPersonMobile?: String;
+  contactPersonEmail?: String;
   destinations?: Destinations[];
   travelDates?: TravelDates;
   travelDuration?: number;
@@ -27,5 +31,6 @@ interface EnquiryModel {
   rooms?: number;
   meals?: Meals;
   anythingElse?: string;
+  enquiryStatus?: string;
 }
 export default EnquiryModel;

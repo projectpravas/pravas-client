@@ -13,11 +13,9 @@ import { Button } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
-import { Box } from "@mui/material";
 import { Grid } from "@mui/material";
 import { Accordion } from "@mui/material";
 import { AccordionSummary } from "@mui/material";
@@ -32,9 +30,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import EnquiryService from "../../../services/EnquiryService";
 import EnquiryModel from "../../../shared/models/enquiryModel";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
+import Container from "@mui/material/Container";
 
 const schema = yup
   .object({
+    contactPersonName: yup
+      .string()
+      .required("Name is required")
+      .min(3, "min 3 characters required")
+      .max(25, "max 25 characters allowed"),
+    contactPersonMobile: yup
+      .string()
+      .required("Mobile is required")
+      .matches(/^[0-9]{10}$/, "Mobile Must be 10 Digit"),
+    contactPersonEmail: yup
+      .string()
+      .required("Email is required")
+      .matches(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,6}$/, "Enter valid Email Address"),
+
     destinations: yup.array().of(
       yup.object().shape({
         place: yup
@@ -115,11 +128,14 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
     control,
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<EnquiryModel>({
     mode: "onTouched",
     resolver: yupResolver(schema),
     defaultValues: {
+      contactPersonName: "",
+      contactPersonMobile: "",
+      contactPersonEmail: "",
       destinations: [{ place: "" }],
       travelDates: {
         from: from,
@@ -154,7 +170,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
 
   const onSubmit: SubmitHandler<EnquiryModel> = (data) => {
     console.log(data);
-    EnquiryService.createEnquiry(data)
+    EnquiryService.createEnquiry({ ...data, enquiryStatus: "open" })
       .then((res) => {
         const msg = res?.data?.message || "Enquiry Created Successfully";
         successToast(msg, 2000);
@@ -166,7 +182,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
       });
   };
   return (
-    <>
+    <Container>
       <h2>Custom Tour</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Destinations */}
@@ -443,6 +459,108 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
           </AccordionDetails>
         </Accordion>
 
+        {/* contact Details */}
+        <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Contact Details</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid item xs={12} md={4}>
+                <Controller
+                  name="contactPersonName"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      fullWidth
+                      margin="normal"
+                      size="small"
+                      type="text"
+                      label="Contact Person Name"
+                      {...field}
+                      InputLabelProps={{ shrink: true }}
+                      error={
+                        touchedFields?.contactPersonName &&
+                        errors?.contactPersonName?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.contactPersonName &&
+                        errors?.contactPersonName?.message
+                          ? errors?.contactPersonName?.message
+                          : ""
+                      }
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Controller
+                  name="contactPersonMobile"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      fullWidth
+                      margin="normal"
+                      size="small"
+                      type="text"
+                      label="Mobile"
+                      InputLabelProps={{ shrink: true }}
+                      {...field}
+                      error={
+                        touchedFields?.contactPersonMobile &&
+                        errors?.contactPersonMobile?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.contactPersonMobile &&
+                        errors?.contactPersonMobile?.message
+                          ? errors?.contactPersonMobile?.message
+                          : ""
+                      }
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <Controller
+                  name="contactPersonEmail"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      fullWidth
+                      margin="normal"
+                      size="small"
+                      type="text"
+                      label="Email"
+                      {...field}
+                      error={
+                        touchedFields?.contactPersonEmail &&
+                        errors?.contactPersonEmail?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.contactPersonEmail &&
+                        errors?.contactPersonEmail?.message
+                          ? errors?.contactPersonEmail?.message
+                          : ""
+                      }
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </AccordionDetails>
+        </Accordion>
+
         {/* hotel Category */}
         <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
           <AccordionSummary
@@ -607,11 +725,16 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
           </AccordionDetails>
         </Accordion>
 
-        <Button type="submit" variant="contained">
+        <Button
+          type="submit"
+          variant="contained"
+          disabled={!isValid ? true : false}
+          sx={{ marginTop: 2, marginBottom: 2 }}
+        >
           Submit
         </Button>
       </form>
-    </>
+    </Container>
   );
 };
 

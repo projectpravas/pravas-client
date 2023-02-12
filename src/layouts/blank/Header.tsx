@@ -112,7 +112,7 @@ const Header = () => {
             <Container style={{ width: "40%", margin: "15px" }}>
               <NavLink to="/home">
                 <img
-                  src="PTSM-LOGO.png"
+                  src="/PTSM-LOGO.png"
                   style={{ width: "100%", height: "100%" }}
                 />
               </NavLink>
@@ -133,7 +133,7 @@ const Header = () => {
             <Container style={{ width: "15%", margin: "15px" }}>
               <NavLink to="/home">
                 <img
-                  src="PTSM-LOGO.png"
+                  src="/PTSM-LOGO.png"
                   style={{ width: "100%", height: "100%" }}
                 />
               </NavLink>
