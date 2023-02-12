@@ -7,6 +7,18 @@
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Pravas Tourism" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+
+    <meta name="keywords" content="relevant, keywords, for, your, page" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Your Page Title" />
+    <meta
+      property="og:description"
+      content="A brief description of your page's content"
+    />
+    <meta property="og:image" content="https://yourpage.com/your-image.jpg" />
+    <meta property="og:url" content="https://yourpage.com/your-page-url" />
+    <link rel="canonical" href="https://yourpage.com/your-page-url" />
+
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -27,8 +39,21 @@
       rel="stylesheet"
     />
 
+    <!-- Razorpay intrgration -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
     <title>React App</title>
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "WebPage",
+        "name": "Your Page Title",
+        "description": "A brief description of your page's content",
+        "url": "https://yourpage.com/your-page-url"
+      }
+    </script>
   </head>
+
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

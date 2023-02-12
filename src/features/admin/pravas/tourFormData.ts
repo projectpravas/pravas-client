@@ -1,6 +1,9 @@
 import TourModel from "../../../shared/models/tourModel";
 
-export const createFD = (images: string[] | any) => {
+export const createFD = (
+  images: string[] | any,
+  category: "tour" | "package"
+) => {
   // get values from the localStorage
   let basicTourData = JSON.parse(localStorage.getItem("basicTourData") as any);
   let tourPlanData: any = {};
@@ -13,13 +16,13 @@ export const createFD = (images: string[] | any) => {
   // Clear unwanted fields and restucture data to create FormData
   //  set basicTourData
   basicTourData.images = images;
-  basicTourData.category = "package";
+  basicTourData.category = category;
   basicTourData.customized = basicTourData?.tourType?.includes("Customize");
-  //   basicTourData.feedbacks = [];
 
   // Set Day by day data to state
 
   let itineraryResult: any = [];
+  let day = 1;
 
   for (let obj of itineraryData) {
     const dayplan: any = {};
@@ -31,10 +34,11 @@ export const createFD = (images: string[] | any) => {
       } else if (key.includes("meals")) {
         dayplan.meals = value as string;
       } else if (key.includes("day")) {
-        dayplan.day = value as number;
+        dayplan.day = day as number;
       }
     });
     itineraryResult = [...itineraryResult, dayplan];
+    day++;
   }
   itineraryData = itineraryResult;
 
@@ -152,7 +156,8 @@ export const createFD = (images: string[] | any) => {
     }
   }
 
-  tourObj?.feedbacks && fd.append("feedbacks", tourObj?.feedbacks as any);
+  tourObj?.feedbacks &&
+    fd.append("feedbacks", JSON.stringify(tourObj?.feedbacks) as string);
 
   // tourPlan object
   if (tourObj?.tourPlan) {

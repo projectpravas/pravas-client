@@ -14,9 +14,7 @@ const Tours: React.FunctionComponent<IToursProps> = (props) => {
   const { pathname } = useLocation();
 
   const loadTours = () => {
-    TourService.fetchAllTours(
-      `?category=${pathname.includes("pravas") ? "package" : "tour"}`
-    )
+    TourService.fetchAllTours(`?category=${"tour"}`)
       .then((res) => {
         setTours(res?.data?.data);
       })

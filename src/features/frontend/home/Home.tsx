@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Helmet } from "react-helmet";
 
-import CareerForm from "../../../ui/footer/CareerForm";
-import TourGallery from "../../../ui/tour-gallary/TourGallary";
+// import CareerForm from "../../../ui/footer/CareerForm";
+// import TourGallery from "../../../ui/tour-gallary/TourGallary";
 
 interface IHomeProps {}
 
@@ -15,8 +15,8 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         <meta name="keywords" content="Pravas Tourism" />
       </Helmet>
       <h2>Home</h2>
-      <CareerForm />
-      <TourGallery />
+      {/* <CareerForm /> */}
+      {/* <TourGallery /> */}
     </>
   );
 };

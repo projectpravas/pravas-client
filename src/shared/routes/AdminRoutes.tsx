@@ -54,6 +54,7 @@ export default [
     showInSettings: true,
     roles: ["admin", "superAdmin", "customer"],
   },
+
   {
     label: "Pravas",
     component: <Pravas />,
@@ -63,6 +64,16 @@ export default [
     showInSettings: false,
     roles: ["admin", "superAdmin", "customer"],
     subMenus: [
+      {
+        label: "Tour And Package Form",
+        component: <TourAndPackageForm />,
+        icon: <></>,
+        path: ":base/add-edit/:0/:add/:admin",
+        // path: "secured/pravas/packages/add-edit/0/edit/admin",
+        showInMenu: false,
+        showInSettings: false,
+      },
+
       {
         label: "Packages",
         component: <Packages />,
@@ -162,20 +173,21 @@ export default [
     showInSettings: false,
     role: ["admin", "superAdmin"],
   },
-  {
-    label: "Packages",
-    component: <Packages />,
-    icon: <CardTravelTwoToneIcon />,
-    path: "pravas/packages",
-    showInMenu: true,
-    showInSettings: false,
-  },
-  {
-    label: "Tours",
-    component: <Tours />,
-    icon: <TravelExploreIcon />,
-    path: "pravas/tours",
-    showInMenu: true,
-    showInSettings: false,
-  },
+
+  // {
+  //   label: "Packages",
+  //   component: <Packages />,
+  //   icon: <CardTravelTwoToneIcon />,
+  //   path: "pravas/packages",
+  //   showInMenu: true,
+  //   showInSettings: false,
+  // },
+  // {
+  //   label: "Tours",
+  //   component: <Tours />,
+  //   icon: <TravelExploreIcon />,
+  //   path: "pravas/tours",
+  //   showInMenu: true,
+  //   showInSettings: false,
+  // },
 ];
