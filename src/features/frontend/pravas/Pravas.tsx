@@ -13,13 +13,13 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   const [allPackage, setAllPackage] = React.useState<Array<any>>([]);
 
   const loadPackages = () => {
-    // TourService.fetchAllTours()
-    //   .then((response) => {
-    //     setAllPackage(response?.data?.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    TourService.fetchAllTours()
+      .then((response) => {
+        setAllPackage(response?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   React.useEffect(() => {
