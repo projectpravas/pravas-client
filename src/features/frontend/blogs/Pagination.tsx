@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
+import Paginations from "@mui/material/Pagination";
 
 interface IPaginationProps {
   totalPosts: number;
@@ -12,10 +13,10 @@ const Pagination: React.FunctionComponent<IPaginationProps> = ({
   postsPerPage,
   setCurrentPage,
 }) => {
-  let pages = [];
+  let totalPages = 1;
 
   for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-    pages.push(i);
+    totalPages = i;
   }
 
   const setPage = (pageNumber: number) => {
@@ -25,18 +26,13 @@ const Pagination: React.FunctionComponent<IPaginationProps> = ({
   return (
     <>
       <div>
-        {pages.map((page, i) => {
-          return (
-            <Button
-              variant="contained"
-              key={i}
-              sx={{ m: 1 }}
-              onClick={() => setPage(page)}
-            >
-              {page}
-            </Button>
-          );
-        })}
+        <Paginations
+          count={totalPages}
+          color="primary"
+          defaultPage={1}
+          size="large"
+          onChange={(event, value) => setPage(value)}
+        />
       </div>
     </>
   );

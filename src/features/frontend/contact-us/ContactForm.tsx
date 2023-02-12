@@ -50,7 +50,7 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
         }) => {
           return (
             <form onSubmit={handleSubmit}>
-              <Grid container spacing={4}>
+              <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
                   <TextField
                     id="name"
