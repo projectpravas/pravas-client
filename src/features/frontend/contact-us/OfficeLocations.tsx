@@ -15,7 +15,7 @@ const OfficeLocations: React.FunctionComponent<IOfficeLocationsProps> = (
     <>
       <Container>
         <Grid container spacing={2} sx={{ justifyContent: "space-between" }}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Link
               sx={{
                 textDecoration: "none",
@@ -66,7 +66,7 @@ const OfficeLocations: React.FunctionComponent<IOfficeLocationsProps> = (
               </Grid>
             </Link>
           </Grid>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} sm={6} md={6}>
             <Link
               sx={{
                 textDecoration: "none",

@@ -16,7 +16,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
-import TableCell from "@mui/material/TableCell";
+// import TableCell from "@mui/material/TableCell";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
@@ -30,13 +30,22 @@ import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
+import {
+  Table,
+  TableHead,
+  TableRow,
+  TableContainer,
+  TableBody,
+  TableCell,
+} from "@mui/material";
 
 // -----tableCellstyles---
-const DattaTab = styled(TableCell)({
+const DataTab = styled(TableCell)({
   color: "#5c5e64",
-
+  border: "1px solid gray ",
   letterSpacing: "-.2px",
   fontSize: "16px",
+  textAlign: "center",
 });
 
 // ---ListItems styles=---
@@ -110,6 +119,7 @@ interface TourDetails {
     includes: IInclude[];
     excludes: Iexclude[];
     tourNotes: Inote[];
+    scheduleDate?: string[] | any[];
   };
 }
 
@@ -120,6 +130,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   // -----Accordion ------
   const [expanded, setExpanded] = useState<string | false>(false);
   const [tourDetails, setTourDetails] = useState<TourDetails>();
+
+  const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -142,12 +154,18 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   //*************tour location table******************** */
   const tableData = tourDetails?.tourPlan?.hotels;
 
-  const data = [{ tourDates: "26 to 30 Dec 2022", seats: "Full" }];
+  const tourDatesSheDule = tourDetails?.tourPlan?.scheduleDate;
+
+  // const data = [{ SheDule: "26 to 30 Dec 2022", seats: "Full" }];
+
+  //**************must watch filter***************
 
   const loadExplore = () => {
     TourService.fetchAllTours()
+
       .then((response) => {
         const result: TourDetails[] = response?.data?.data;
+        setAllPackageWatch(response?.data?.data);
         const tourObj = result.find((obj) => obj?._id == id);
         if (tourObj) setTourDetails(tourObj);
       })
@@ -155,7 +173,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         console.log(err);
       });
   };
+  console.log("tourDetails:", tourDetails);
 
+  console.log("AllPackageWatch:", allPackageWatch);
   React.useEffect(() => {
     loadExplore();
   }, []);
@@ -345,6 +365,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                         fontSize: "1rem",
                         fontWeight: "700",
                       }}
+                      key={tourDetails?._id}
                     >
                       {tourDetails?.tourType.join(" ")}
                     </NavLink>
@@ -355,8 +376,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Container>
       </Grid>
-
-      {/* ----------------------share and review----------------------------- */}
 
       {/* ----**************--share and review-------****************---- */}
       <Grid
@@ -375,7 +394,19 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             item
             sx={{ position: "relative", height: "35px", alignItems: "center" }}
           >
-            <Button variant="contained" onClick={() => setVisible(!visible)}>
+            <Button
+              sx={{
+                bgcolor: "#f0f3f6",
+                color: "#838590",
+                fontWeight: "700",
+                fontFamily: "poppins",
+                "&:hover": {
+                  bgcolor: "#27488d",
+                  color: "white",
+                },
+              }}
+              onClick={() => setVisible(!visible)}
+            >
               <NearMeOutlinedIcon />
               {visible ? "Share" : "  Share"}
             </Button>
@@ -429,7 +460,19 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             )}
           </Grid>
           <Grid item>
-            <Button variant="contained" sx={{ m: 2 }}>
+            <Button
+              sx={{
+                marginLeft: "10px",
+                bgcolor: "#f0f3f6",
+                color: "#838590",
+                fontWeight: "700",
+                fontFamily: "poppins",
+                "&:hover": {
+                  bgcolor: "#27488d",
+                  color: "white",
+                },
+              }}
+            >
               <NearMeOutlinedIcon />
               Review
             </Button>
@@ -502,16 +545,115 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      borderBottom: "1px  solid #ddd",
+                      border: "1px  solid #faf5ee",
+                      borderTop: "none",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
                   >
-                    <MUIDataTable
-                      title={"UpComing-Tours"}
-                      columns={columns}
-                      data={data}
-                    />
+                    <TableContainer>
+                      <Table sx={{ border: "1px solid gray" }}>
+                        <TableHead>
+                          <TableRow>
+                            <DataTab rowSpan={2} sx={{ width: "10%" }}>
+                              Sr No
+                            </DataTab>
+                            <DataTab rowSpan={2} sx={{ width: "30%" }}>
+                              TourName
+                            </DataTab>
+                            <DataTab rowSpan={1} colSpan={2}>
+                              Tour Dates
+                            </DataTab>
+                            <DataTab rowSpan={2} sx={{ width: "15%" }}>
+                              Booking
+                            </DataTab>
+                          </TableRow>
+                          <TableRow>
+                            <DataTab
+                              sx={{ width: "30%" }}
+                              rowSpan={1}
+                              colSpan={1}
+                            >
+                              To
+                            </DataTab>
+                            <DataTab
+                              sx={{ width: "30%" }}
+                              rowSpan={1}
+                              colSpan={1}
+                            >
+                              From
+                            </DataTab>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {Array.isArray(tourDatesSheDule) &&
+                          tourDatesSheDule?.length > 0 ? (
+                            tourDatesSheDule.map(
+                              (shedDate: string | any, i: number) => (
+                                <TableRow
+                                  key={shedDate.id + i}
+                                  sx={{
+                                    "&:last-child td, &:last-child th": {
+                                      border: 0,
+                                    },
+                                  }}
+                                >
+                                  <DataTab component="th" scope="row">
+                                    {shedDate?.srNo}
+                                  </DataTab>
+                                  <DataTab align="right">
+                                    {shedDate?.tourName}
+                                  </DataTab>
+                                  <DataTab align="right">
+                                    {shedDate?.tourDates}
+                                  </DataTab>
+                                  <DataTab
+                                    align="right"
+                                    sx={{
+                                      "&:last-child td, &:last-child th": {
+                                        border: 0,
+                                      },
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  >
+                                    <Button
+                                      variant="contained"
+                                      sx={{
+                                        bgcolor: "#2c5799",
+                                        color: "white",
+                                        borderRadius: "15px",
+                                        fontSize: "12px",
+                                      }}
+                                    >
+                                      Booking
+                                    </Button>
+                                  </DataTab>
+                                </TableRow>
+                              )
+                            )
+                          ) : (
+                            <TableRow
+                              sx={{
+                                textAlign: "center",
+                              }}
+                            >
+                              <DataTab
+                                colSpan={5}
+                                sx={{
+                                  textAlign: "center",
+                                  fontSize: "16px",
+                                  fontFamily: "poppins",
+                                }}
+                              >
+                                {"Currently no Tour sheduled for this package"}
+                              </DataTab>
+                            </TableRow>
+                          )}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
                   </AccordionDetails>
                 </Accordion>
 
@@ -543,7 +685,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   <AccordionDetails
                     sx={{
                       backgroundColor: "white",
-                      borderBottom: "1px  solid #ddd",
+                      // borderBottom: "1px  solid #ddd",
+                      border: "1px  solid #faf5ee",
+                      borderTop: "none",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -630,7 +774,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      borderBottom: "1px  solid #ddd",
+                      // borderBottom: "1px  solid #ddd",
+                      border: "1px  solid #faf5ee",
+                      borderTop: "none",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -638,8 +784,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     <table
                       style={{
                         borderSpacing: "0px",
-
-                        margin: "0px",
+                        margin: "0px 5px 0px 5px",
                       }}
                     >
                       <tr>
@@ -674,12 +819,19 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                               <td
                                 style={{
                                   border: "1px solid gray",
-                                  padding: "5px",
+                                  padding: "5px 15px 5px 15px",
+                                  fontSize: "14px",
                                 }}
                               >
                                 {ele?.city}
                               </td>
-                              <td style={{ border: "1px solid gray" }}>
+                              <td
+                                style={{
+                                  border: "1px solid gray",
+                                  padding: "5px 15px 5px 15px",
+                                  fontSize: "14px",
+                                }}
+                              >
                                 {ele?.hotelNames}
                               </td>
                             </tr>
@@ -717,7 +869,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      borderBottom: "1px  solid #ddd",
+                      // borderBottom: "1px  solid #ddd",
+                      border: "1px  solid #faf5ee",
+                      borderTop: "none",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -766,7 +920,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      borderBottom: "1px  solid #ddd",
+                      // borderBottom: "1px  solid #ddd",
+                      border: "1px  solid #faf5ee",
+                      borderTop: "none",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -815,6 +971,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       color: "#5c5e64",
                       backgroundColor: "white",
                       borderBottom: "1px  solid #ddd",
+                      border: "1px  solid #faf5ee",
+                      borderTop: "none",
                       borderBottomLeftRadius: "10px",
                       borderBottomRightRadius: "10px",
                     }}
@@ -839,7 +997,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
           {/*---------- *****---Tour Information------***--------- */}
           <Grid item xs={12} md={4} lg={4}>
-            <Paper sx={{ p: 4, borderRadious: "10px", mt: 5 }}>
+            <Paper
+              elevation={0}
+              sx={{
+                border: "1px solid #faf5ee ",
+                p: 4,
+                borderRadius: "10px",
+                mt: 5,
+              }}
+            >
               <Typography variant="h5" sx={{ fontWeight: "800", p: 2 }}>
                 Tour Information
               </Typography>
@@ -878,6 +1044,84 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   </Box>
                 </Grid>
               </Box>
+            </Paper>
+            {/*************************must Watch************************ */}
+            <Paper
+              elevation={0}
+              sx={{
+                border: "1px solid #faf5ee ",
+                borderRadius: "10px",
+                marginTop: "20px",
+              }}
+            >
+              <Container sx={{ marginTop: "15px" }}>
+                <Typography
+                  sx={{
+                    fontFamily: "poppins",
+                    color: "#313041",
+
+                    fontSize: "20px",
+                    fontWeight: "700",
+                    marginLeft: "20px",
+                  }}
+                >
+                  Must Watch
+                </Typography>
+              </Container>
+
+              {Array.isArray(allPackageWatch) &&
+                allPackageWatch.map((mustWatchcard, i) => (
+                  <Container
+                    key={mustWatchcard.id + i}
+                    sx={{ borderBottom: "1px  solid #faf5ee" }}
+                  >
+                    <Grid container sx={{ marginLeft: "20px" }}>
+                      <Grid
+                        sx={{
+                          display: "flex",
+                          my: 2,
+                        }}
+                      >
+                        <img
+                          style={{ width: "35%", borderRadius: "10px" }}
+                          src={`${endPoints?.serverBaseURL}/${mustWatchcard?.images[0]}`}
+                        />
+
+                        <Grid sx={{ ml: 2 }}>
+                          <Typography
+                            sx={{
+                              color: "#2C5799",
+                              fontSize: "16px",
+                              fontWeight: "800",
+                              fontFamily: "poppins",
+                            }}
+                          >
+                            {mustWatchcard?.title}
+                          </Typography>
+                          <Typography sx={{ display: "flex", mt: 1 }}>
+                            <span
+                              style={{
+                                color: "#97978F",
+                                fontWeight: "700",
+                              }}
+                            >
+                              From
+                            </span>
+                            <span
+                              style={{
+                                marginLeft: "10px",
+                                color: "#2C5799",
+                                fontWeight: "700",
+                              }}
+                            >
+                              {`₹${mustWatchcard?.price}`}
+                            </span>
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </Container>
+                ))}
             </Paper>
           </Grid>
         </Grid>
