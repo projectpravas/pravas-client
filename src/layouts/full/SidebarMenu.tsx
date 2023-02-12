@@ -5,16 +5,12 @@ import User from "../../shared/models/userModel";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
 import ListItemText from "@mui/material/ListItemText";
 import routes from "../../shared/routes/AdminRoutes";
 import { NavLink as NLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../app/slices/AuthSlice";
 import Box from "@mui/material/Box";
-import Collapse from "@mui/material/Collapse";
-import StarBorder from "@mui/icons-material/StarBorder";
 
 interface ISidebarMenuProps {
   openStatus: boolean;
@@ -25,26 +21,10 @@ const NavLink = styled(NLink)`
   margin-right: 10px;
 `;
 
-// const ExpandCollapseIcon = () => {
-//   const [open, setOpen] = React.useState(true);
-//   return ;
-// };
-
 const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
   openStatus,
 }) => {
   const currentLoggedUser: User = useSelector(selectLoggedUser);
-  const [open, setOpen] = React.useState(true);
-
-  const handleClick = () => {
-    setOpen(!open);
-  };
-
-  const parent = () => {};
-
-  // useEffect(() => {
-  //   setOpen(openStatus);
-  // }, [openStatus]);
 
   return (
     <>
@@ -56,7 +36,7 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
                 route?.showInMenu &&
                 route?.roles?.includes(currentLoggedUser?.role as string)
             )
-            .map(({ label, path, icon, roles, subMenus }, i) => (
+            .map(({ label, path, icon, roles }, i) => (
               <NavLink
                 end
                 key={path + i}
@@ -101,46 +81,9 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
                           primary={label}
                           sx={{ marginRight: "20px" }}
                         />
-                        {subMenus && (
-                          <ListItemButton
-                            onClick={(e) => {
-                              handleClick();
-                              e.preventDefault();
-                              e.stopPropagation();
-                            }}
-                          >
-                            {open ? <ExpandLess /> : <ExpandMore />}
-                          </ListItemButton>
-                        )}
                       </Box>
                     </NavLink>
                   </ListItemButton>
-                  {Array.isArray(subMenus) &&
-                    subMenus.map(
-                      (subMenu, i) =>
-                        subMenu?.showInMenu && (
-                          <React.Fragment key={subMenu?.label + i}>
-                            <Collapse in={open} timeout="auto" unmountOnExit>
-                              <List disablePadding>
-                                <NavLink
-                                  to={`${path}/${subMenu?.path}`}
-                                  sx={{ display: "flex" }}
-                                >
-                                  <ListItemButton
-                                    sx={{
-                                      ml: openStatus ? 4 : 1,
-                                      transition: "0.2s ease-in-out",
-                                    }}
-                                  >
-                                    <ListItemIcon>{subMenu?.icon}</ListItemIcon>
-                                    <ListItemText primary={subMenu?.label} />
-                                  </ListItemButton>
-                                </NavLink>
-                              </List>
-                            </Collapse>
-                          </React.Fragment>
-                        )
-                    )}
                 </ListItem>
               </NavLink>
             ))}

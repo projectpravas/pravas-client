@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Loader from "../../ui/loader/Loader";
 import routes from "../../shared/routes/AdminRoutes";
 import PackageForm from "../../features/admin/pravas/package-tour";
+import { Box } from "@mui/material";
 
 interface ISidebarRoutesProps {}
 
@@ -14,17 +15,19 @@ const SidebarRoutes: React.FunctionComponent<ISidebarRoutesProps> = (props) => {
           routes.map((route, i) => (
             <Route
               key={route?.path + i}
-              path={route?.path}
+              path={`${route?.path}`}
               element={route?.component}
             >
               {Array.isArray(route?.subMenus) &&
-                route?.subMenus.map((subMenu, i) => (
-                  <Route
-                    key={subMenu?.path + i}
-                    path={`${subMenu?.path}`}
-                    element={subMenu?.component}
-                  />
-                ))}
+                route?.subMenus.map((subMenu, i) => {
+                  return (
+                    <Route
+                      key={subMenu?.path + i}
+                      path={`${subMenu?.path}`}
+                      element={subMenu?.component}
+                    />
+                  );
+                })}
             </Route>
           ))}
       </Routes>
