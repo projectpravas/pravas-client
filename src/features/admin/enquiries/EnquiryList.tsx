@@ -14,21 +14,22 @@ import { errorToast, successToast } from "../../../ui/toast/Toast";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Tooltip from "@mui/material/Tooltip";
 import Container from "@mui/material/Container";
+import EnquiryService from "../../../services/EnquiryService";
 
-interface IUserListProps {
+interface IEnquiriesListProps {
   title: string;
   data: object[];
-  loadUsers: Function;
+  loadEnquiries: Function;
 }
 
-const UserList: React.FunctionComponent<IUserListProps> = ({
+const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
   title,
   data,
-  loadUsers,
+  loadEnquiries,
 }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const role = pathname.includes("users") ? "admin" : "customer";
+  //   const role = pathname.includes("users") ? "admin" : "customer";
 
   //handle delete
   const handleDelete = (id: string) => {
@@ -42,7 +43,7 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result?.isConfirmed) {
-        UserService.deleteUser(id)
+        EnquiryService.deleteEnquiry(id)
           .then((res) => {
             Swal.fire("Deleted!", "Deleted successfully...", "success");
             navigate(``);
@@ -62,16 +63,16 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
   };
 
   // handle add
-  const handleAdd = (role: string) => {
-    navigate(`/secured/add-edit/0/add/${role}`);
-  };
+  //   const handleAdd = (role: string) => {
+  //     navigate(`/secured/add-edit/0/add/${role}`);
+  //   };
 
   // handle edit
-  const handleEdit = (id: string, role: string) => {
-    navigate(`/secured/add-edit/${id}/edit/${role}`);
-  };
+  //   const handleEdit = (id: string, role: string) => {
+  //     navigate(`/secured/add-edit/${id}/edit/${role}`);
+  //   };
 
-  const handleStausAndVerification = (op: string, value: any, user: any) => {
+  const handleStausAndVerification = (op: string, value: any, enquiry: any) => {
     let newValue =
       value == "active"
         ? "inactive"
@@ -87,9 +88,9 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
     op == "status" && fd.append("status", newValue as string);
     // op == "verified" && fd.append("verified", newValue as string);
 
-    UserService.updateUser(user?._id, fd)
+    EnquiryService.updateEnquiry(enquiry?._id, fd)
       .then((res) => {
-        loadUsers();
+        loadEnquiries();
         successToast(
           `${op == "status" ? "Status" : "Verification"} Changed..`,
           2000
@@ -107,15 +108,15 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
   const columns = [
     {
       label: "ID",
-      name: "userId",
+      name: "enquiryId",
       options: {
         filter: false,
         sort: true,
       },
     },
     {
-      label: "Name",
-      name: "name.first",
+      label: "Destinations",
+      name: "destinations",
       options: {
         filter: true,
         sort: true,
@@ -205,9 +206,9 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
           return (
             <Box sx={{ display: "flex" }}>
               <IconButton
-                onClick={() =>
-                  handleEdit(user?._id as string, user?.role || "")
-                }
+              // onClick={() =>
+              //   handleEdit(user?._id as string, user?.role || "")
+              // }
               >
                 <EditIcon style={{ color: "#444" }} />
               </IconButton>
@@ -225,15 +226,15 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
     filterType: "checkbox",
     responsive: "standard",
     enableNestedDataAccess: ".",
-    customToolbar: () => {
-      return (
-        <Tooltip title={`Add ${title.split(" ")[0]}`} placement="top">
-          <IconButton onClick={() => handleAdd(role)}>
-            <PersonAddIcon color="primary" fontSize="large" />
-          </IconButton>
-        </Tooltip>
-      );
-    },
+    // customToolbar: () => {
+    //   return (
+    //     <Tooltip title={`Add ${title.split(" ")[0]}`} placement="top">
+    //       <IconButton onClick={() => handleAdd(role)}>
+    //         <PersonAddIcon color="primary" fontSize="large" />
+    //       </IconButton>
+    //     </Tooltip>
+    //   );
+    // },
   };
   return (
     <Container sx={{ mt: 2 }} disableGutters>
@@ -250,4 +251,4 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
   );
 };
 
-export default UserList;
+export default EnquiriesList;

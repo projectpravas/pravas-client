@@ -4,8 +4,11 @@ import {
   Controller,
   SubmitHandler,
   useFieldArray,
+  useFormState,
 } from "react-hook-form";
 import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+
 import { Button } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -21,6 +24,60 @@ import { AccordionSummary } from "@mui/material";
 import { Typography } from "@mui/material";
 import { AccordionDetails } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddIcon from "@mui/icons-material/Add";
+import ClearIcon from "@mui/icons-material/Clear";
+
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import EnquiryService from "../../../services/EnquiryService";
+import EnquiryModel from "../../../shared/models/enquiryModel";
+import { errorToast, successToast } from "../../../ui/toast/Toast";
+
+const schema = yup
+  .object({
+    destinations: yup.array().of(
+      yup.object().shape({
+        place: yup
+          .string()
+          .required("Place is required")
+          .min(3, "min 3 characters required"),
+      })
+    ),
+    travelDates: yup.object().shape({
+      from: yup.date(),
+      to: yup.date().min(yup.ref("from"), "Nashedi ho kya?"),
+    }),
+
+    travelDuration: yup
+      .number()
+      .typeError("Days must be a number")
+      .required("Days are required")
+      .min(1, "min 1 day required "),
+
+    participants: yup.array().of(
+      yup.object().shape({
+        name: yup
+          .string()
+          .required("Name is required")
+          .min(3, "min 3 characters required"),
+        age: yup
+          .number()
+          .typeError("Age must be a number")
+          .required("Age is required")
+          .min(1, "min value of age is 1 "),
+      })
+    ),
+
+    rooms: yup
+      .number()
+      .typeError("Rooms must be a number")
+      .min(1, "min value of room is 1"),
+    anythingElse: yup
+      .string()
+      .min(3, "min 3 characters required")
+      .max(45, "max 45 characters allowed"),
+  })
+  .required();
 
 interface ICustomTourFormProps {}
 
@@ -39,27 +96,50 @@ interface IFormInput {
   }[];
   hotelCategory: "";
   rooms: number;
-  meals: Array<string>;
+  meals: {
+    breakfast: boolean;
+    lunch: boolean;
+    dinner: boolean;
+  };
   anythingElse: string;
 }
+
+const from = new Date().toISOString().slice(0, 10);
+
+const to = new Date().toISOString().slice(0, 10);
 
 const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   props
 ) => {
-  const { control, handleSubmit, register } = useForm<IFormInput>({
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<EnquiryModel>({
+    mode: "onTouched",
+    resolver: yupResolver(schema),
     defaultValues: {
       destinations: [{ place: "" }],
       travelDates: {
-        from: undefined,
-        to: undefined,
+        from: from,
+        to: to,
       },
-      travelDuration: undefined,
+      travelDuration: 0,
       participants: [{ name: "", age: 0 }],
       hotelCategory: "",
       rooms: 1,
-      meals: [],
+      meals: {
+        breakfast: false,
+        lunch: false,
+        dinner: false,
+      },
       anythingElse: "",
     },
+  });
+
+  const { touchedFields } = useFormState({
+    control,
   });
   //   { fields, append, prepend, remove, swap, move, insert }
   const destinationsFa = useFieldArray({
@@ -72,8 +152,18 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
     name: "participants",
   });
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<EnquiryModel> = (data) => {
     console.log(data);
+    EnquiryService.createEnquiry(data)
+      .then((res) => {
+        const msg = res?.data?.message || "Enquiry Created Successfully";
+        successToast(msg, 2000);
+        control._reset(control._defaultValues);
+      })
+      .catch((err) => {
+        const msg = err?.resonse?.data?.message || "Could not create enquiry";
+        errorToast(msg, 2000);
+      });
   };
   return (
     <>
@@ -94,35 +184,57 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                 {destinationsFa.fields.map((field, index) => (
                   <Grid container spacing={2} key={field.id} marginBottom={2}>
                     <Grid item xs={12} md={2}>
-                      <TextField
-                        fullWidth
-                        size="small"
-                        placeholder="place"
-                        key={field.id} // important to include key with field's id
-                        {...register(`destinations.${index}.place` as const)}
+                      <Controller
+                        name="destinations"
+                        control={control}
+                        render={() => (
+                          <TextField
+                            {...field}
+                            fullWidth
+                            size="small"
+                            placeholder="place"
+                            label="Place"
+                            {...register(
+                              `destinations.${index}.place` as const
+                            )}
+                            error={
+                              touchedFields?.destinations?.[index]?.place &&
+                              errors?.destinations?.[index]?.place?.message
+                                ? true
+                                : false
+                            }
+                            helperText={
+                              touchedFields?.destinations?.[index]?.place &&
+                              errors?.destinations?.[index]?.place?.message
+                                ? errors?.destinations?.[index]?.place?.message
+                                : ""
+                            }
+                          />
+                        )}
                       />
                     </Grid>
 
                     <Grid item xs={12} md={3}>
                       <Grid container spacing={2}>
-                        <Grid item xs={12} md={5}>
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            onClick={() => destinationsFa.append({ place: "" })}
-                          >
-                            Add
-                          </Button>
-                        </Grid>
-                        <Grid item xs={12} md={5}>
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            color="warning"
+                        <Grid item xs={6} md={2}>
+                          <IconButton
+                            disabled={destinationsFa.fields.length == 1}
                             onClick={() => destinationsFa.remove(index)}
                           >
-                            Remove
-                          </Button>
+                            <ClearIcon />
+                          </IconButton>
+                        </Grid>
+                        <Grid item xs={6} md={2}>
+                          {destinationsFa.fields.length == index + 1 && (
+                            <IconButton
+                              color="primary"
+                              onClick={() =>
+                                destinationsFa.append({ place: "" })
+                              }
+                            >
+                              <AddIcon />
+                            </IconButton>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -156,6 +268,19 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       type="date"
                       label="From"
                       {...field}
+                      InputLabelProps={{ shrink: true }}
+                      error={
+                        touchedFields?.travelDates?.from &&
+                        errors?.travelDates?.from?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.travelDates?.from &&
+                        errors?.travelDates?.from?.message
+                          ? errors?.travelDates?.from?.message
+                          : ""
+                      }
                     />
                   )}
                 />
@@ -171,10 +296,26 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       size="small"
                       type="date"
                       label="To"
+                      InputLabelProps={{ shrink: true }}
                       {...field}
+                      error={
+                        touchedFields?.travelDates?.to &&
+                        errors?.travelDates?.to?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.travelDates?.to &&
+                        errors?.travelDates?.to?.message
+                          ? errors?.travelDates?.to?.message
+                          : ""
+                      }
                     />
                   )}
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <Typography>OR</Typography>
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -188,6 +329,18 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       type="text"
                       label="Days"
                       {...field}
+                      error={
+                        touchedFields?.travelDuration &&
+                        errors?.travelDuration?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.travelDuration &&
+                        errors?.travelDuration?.message
+                          ? errors?.travelDuration?.message
+                          : ""
+                      }
                     />
                   )}
                 />
@@ -223,6 +376,18 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                         placeholder="Name"
                         // important to include key with field's id
                         {...register(`participants.${index}.name` as const)}
+                        error={
+                          touchedFields?.participants?.[index]?.name &&
+                          errors?.participants?.[index]?.name?.message
+                            ? true
+                            : false
+                        }
+                        helperText={
+                          touchedFields?.participants?.[index]?.name &&
+                          errors?.participants?.[index]?.name?.message
+                            ? errors?.participants?.[index]?.name?.message
+                            : ""
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} md={3}>
@@ -233,30 +398,41 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                         placeholder="Age"
                         // important to include key with field's id
                         {...register(`participants.${index}.age` as const)}
+                        error={
+                          touchedFields?.participants?.[index]?.age &&
+                          errors?.participants?.[index]?.age?.message
+                            ? true
+                            : false
+                        }
+                        helperText={
+                          touchedFields?.participants?.[index]?.age &&
+                          errors?.participants?.[index]?.age?.message
+                            ? errors?.participants?.[index]?.age?.message
+                            : ""
+                        }
                       />
                     </Grid>
                     <Grid item xs={12} md={3}>
                       <Grid container spacing={2}>
-                        <Grid item xs={12} md={5}>
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            onClick={() =>
-                              participantsFa.append({ name: "", age: 0 })
-                            }
-                          >
-                            Add
-                          </Button>
-                        </Grid>
-                        <Grid item xs={12} md={5}>
-                          <Button
-                            fullWidth
-                            variant="contained"
-                            color="warning"
+                        <Grid item xs={6} md={2}>
+                          <IconButton
+                            disabled={participantsFa.fields.length == 1}
                             onClick={() => participantsFa.remove(index)}
                           >
-                            Remove
-                          </Button>
+                            <ClearIcon />
+                          </IconButton>
+                        </Grid>
+                        <Grid item xs={6} md={2}>
+                          {participantsFa.fields.length == index + 1 && (
+                            <IconButton
+                              color="primary"
+                              onClick={() =>
+                                participantsFa.append({ name: "", age: 0 })
+                              }
+                            >
+                              <AddIcon />
+                            </IconButton>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>
@@ -312,35 +488,50 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                 />
               </Grid>
               <Grid item xs={12} md={4}>
-                <Controller
-                  name="meals"
-                  control={control}
-                  render={({ field }) => (
-                    <FormGroup {...field}>
-                      <FormLabel id="demo-radio-buttons-group-label">
-                        Meals
-                      </FormLabel>
-                      <FormControlLabel
-                        {...register("meals")}
-                        value="breakfast"
-                        control={<Checkbox />}
-                        label="Breakfast"
-                      />
-                      <FormControlLabel
-                        {...register("meals")}
-                        value="lunch"
-                        control={<Checkbox name="meals.lunch" />}
-                        label="Lunch"
-                      />
-                      <FormControlLabel
-                        {...register("meals")}
-                        value="dinner"
-                        control={<Checkbox name="meals.dinner" />}
-                        label="Dinner"
-                      />
-                    </FormGroup>
-                  )}
-                />
+                <FormGroup>
+                  <FormLabel id="demo-radio-buttons-group-label">
+                    Meals
+                  </FormLabel>
+                  <Controller
+                    name="meals.breakfast"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <FormControlLabel
+                          {...field}
+                          control={<Checkbox />}
+                          label="Breakfast"
+                        />
+                      </>
+                    )}
+                  />
+                  <Controller
+                    name="meals.lunch"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <FormControlLabel
+                          {...field}
+                          control={<Checkbox />}
+                          label="Lunch"
+                        />
+                      </>
+                    )}
+                  />
+                  <Controller
+                    name="meals.dinner"
+                    control={control}
+                    render={({ field }) => (
+                      <>
+                        <FormControlLabel
+                          {...field}
+                          control={<Checkbox />}
+                          label="Dinner"
+                        />
+                      </>
+                    )}
+                  />
+                </FormGroup>
               </Grid>
               <Grid item xs={12} md={4}>
                 <Controller
@@ -353,6 +544,16 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       type="text"
                       label="Rooms"
                       {...field}
+                      error={
+                        touchedFields?.rooms && errors?.rooms?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.rooms && errors?.rooms?.message
+                          ? errors?.rooms?.message
+                          : ""
+                      }
                     />
                   )}
                 />
@@ -386,6 +587,18 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       type="text"
                       label="Anything Else"
                       {...field}
+                      error={
+                        touchedFields?.anythingElse &&
+                        errors?.anythingElse?.message
+                          ? true
+                          : false
+                      }
+                      helperText={
+                        touchedFields?.anythingElse &&
+                        errors?.anythingElse?.message
+                          ? errors?.anythingElse?.message
+                          : ""
+                      }
                     />
                   )}
                 />
@@ -403,3 +616,16 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
 };
 
 export default CustomTourForm;
+
+{
+  /* <TextField
+  {...field}
+  fullWidth
+  size="small"
+  placeholder="place"
+  error={!!errors?.destinations}
+  helperText={errors?.destinations && `${errors.destinations?.message}`}
+  key={field.id} // important to include key with field's id
+  {...register(`destinations.${index}.place` as const)}
+/>; */
+}

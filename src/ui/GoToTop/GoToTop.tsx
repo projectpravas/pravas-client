@@ -1,6 +1,6 @@
-import * as React from "react";
+import React from "react";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import { styled } from "@mui/system";
 
 interface IGoToTopProps {}

@@ -7,13 +7,22 @@ import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import CardTravelTwoToneIcon from "@mui/icons-material/CardTravelTwoTone";
+import Enquiries from "../../features/admin/enquiries/Enquiries";
 
-const Tours = lazy(() => import("../../features/admin/tours/Tours"));
+const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
+const TourAndPackageForm = lazy(
+  () => import("../../features/admin/pravas/TourAndPackageForm")
+);
+const Packages = lazy(
+  () => import("../../features/admin/pravas/packages/Packages")
+);
+const Pravas = lazy(() => import("../../features/admin/pravas/Pravas"));
 const Dashboard = lazy(
   () => import("../../features/admin/dashboard/Dashboard")
 );
 const Bookings = lazy(() => import("../../features/admin/bookings/Bookings"));
-const Quotes = lazy(() => import("../../features/admin/quotes/Quotes"));
+const Quotes = lazy(() => import("../../features/admin/enquiries/Enquiries"));
 const Records = lazy(() => import("../../features/admin/records/Records"));
 const Users = lazy(() => import("../../features/admin/users/Users"));
 const UserProfile = lazy(
@@ -46,19 +55,27 @@ export default [
     roles: ["admin", "superAdmin", "customer"],
   },
   {
-    label: "Tours",
-    component: <Tours />,
+    label: "Pravas",
+    component: <Pravas />,
     icon: <TourIcon />,
-    path: "tours",
+    path: "pravas",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin", "customer"],
-    subMenu: [
+    subMenus: [
       {
         label: "Packages",
-        component: "",
-        icon: "",
+        component: <Packages />,
+        icon: <CardTravelTwoToneIcon />,
         path: "packages",
+        showInMenu: true,
+        showInSettings: false,
+      },
+      {
+        label: "Tours",
+        component: <Tours />,
+        icon: <TravelExploreIcon />,
+        path: "tours",
         showInMenu: true,
         showInSettings: false,
       },
@@ -74,10 +91,10 @@ export default [
     roles: ["admin", "superAdmin", "customer"],
   },
   {
-    label: "Quotes",
-    component: <Quotes />,
+    label: "Enquiries",
+    component: <Enquiries />,
     icon: <RequestQuoteIcon />,
-    path: "quotes",
+    path: "enquiries",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin"],
@@ -144,5 +161,21 @@ export default [
     showInMenu: false,
     showInSettings: false,
     role: ["admin", "superAdmin"],
+  },
+  {
+    label: "Packages",
+    component: <Packages />,
+    icon: <CardTravelTwoToneIcon />,
+    path: "pravas/packages",
+    showInMenu: true,
+    showInSettings: false,
+  },
+  {
+    label: "Tours",
+    component: <Tours />,
+    icon: <TravelExploreIcon />,
+    path: "pravas/tours",
+    showInMenu: true,
+    showInSettings: false,
   },
 ];
