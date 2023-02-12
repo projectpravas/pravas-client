@@ -41,7 +41,7 @@ interface TourPlan {
   itinerary?: Array<Itinerary>;
   hotels?: Array<Hotels>;
   includes?: Array<Includes>;
-  excludes?: Array<Excludes>;   
+  excludes?: Array<Excludes>;
   tourNotes?: Array<Notes>;
   _id: false;
 }
@@ -71,6 +71,7 @@ interface TourModel {
   tourPlan?: TourPlan;
   customized?: Boolean;
   tourStatus?: string;
+  packageStatus?: string;
   feedbacks?: Array<Feedbacks>;
 }
 
