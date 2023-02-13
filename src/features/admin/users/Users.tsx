@@ -31,7 +31,7 @@ const Users: React.FunctionComponent<IUsersProps> = (props) => {
 
   useEffect(() => {
     loadUsers();
-  }, []);
+  }, [pathname]);
 
   return (
     <>
