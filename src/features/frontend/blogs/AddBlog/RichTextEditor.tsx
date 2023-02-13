@@ -1,9 +1,10 @@
 import React from "react";
 import JoditEditor from "jodit-react";
+import BolgModel from "../../../../shared/models/blogModel";
 
 interface IRichTextEditorProps {
   setValue: Function;
-  formData: object;
+  formData: BolgModel;
 }
 
 const RichTextEditor: React.FunctionComponent<IRichTextEditorProps> = ({
