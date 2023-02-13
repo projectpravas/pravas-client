@@ -49,13 +49,13 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
      <BlogsHome />
 
      {/* Pravas cards carousel  */}
-      {/* <PravasHome /> */}
+      <PravasHome />
       
-      <Helmet>
+      {/* <Helmet>
         <title>Pravas Tourism</title>
         <meta name="description" content="Pravas Tourism" />
         <meta name="keywords" content="Pravas Tourism" />
-      </Helmet>
+      </Helmet> */}
 
        {/* gallery  */}
       {/* <TourGallery /> */}

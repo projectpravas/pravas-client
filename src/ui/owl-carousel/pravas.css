@@ -1,12 +1,3 @@
- .owl-nav button span {
-    font-size: 40px;
-    padding: 0px 10px;
-    border-radius: "100%";
-    color: black;
-    background-color: rgb(250, 243, 243);
-    
-}
-
 .owl-nav button span :hover{
     font-size: 40px;
     padding: 0px 10px;
@@ -14,8 +5,17 @@
    
 }
 
+.owl-nav button .nav-btn-pravas span{
+    font-size: 40px;
+    padding: 0px 10px;
+    border-radius: "100%";
+    color: black;
+    background-color: rgb(219, 39, 39);
+}
+
 button.owl-prev {
     float: left;
+    color:"blue"
 }
 
 button.owl-next {
@@ -27,13 +27,13 @@ button.owl-next {
     position: absolute;
 }
 
-/* .owl-theme .owl-dots .owl-dot.active span, 
+.owl-theme .owl-dots .owl-dot.active span, 
 .owl-theme .owl-dots .owl-dot:hover span {
     background: #2caae1;
   
-} */
+}
 
-.owl-carousel.owl-theme.owl-loaded.owl-drag {
+.owl-carousel .owl-theme .owl-loaded.owl-drag {
     display: flex;
     justify-content: center;
     align-items: center;

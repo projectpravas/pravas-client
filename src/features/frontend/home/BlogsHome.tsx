@@ -2,7 +2,7 @@ import * as React from 'react';
 import OwlCarousel from 'react-owl-carousel';  
 import 'owl.carousel/dist/assets/owl.carousel.css';  
 import 'owl.carousel/dist/assets/owl.theme.default.css';  
-import './owl.css'; 
+import '../../../ui/owl-carousel/owl.css'; 
 import BlogPost from '../blogs/BlogPost';
 import {data} from "../blogs/BlogData";
 import  Container from '@mui/material/Container';
