@@ -16,7 +16,7 @@ const options = {
   nav: true,
   dots: false,
   autoplay: false,
-  navText: ["Prev", "Next"],
+  // navText: ["Prev", "Next"],
   smartSpeed: 1000,
   responsive: {
       0: {
@@ -39,7 +39,6 @@ const options = {
   },
 };
 
-
 const PravasHome: React.FunctionComponent<IPravasHomeProps> = (props) => {
   const [allPackageCardData, setAllPackageCardData] = React.useState<Array<any>>([]);
 
@@ -54,15 +53,14 @@ const PravasHome: React.FunctionComponent<IPravasHomeProps> = (props) => {
   
   React.useEffect(() => {
     loadPackageData();
-  },[]);
+  },[allPackageCardData]);
 
   return <>
-  <h3>Pravas Home</h3>
   
   <Container >
     <OwlCarousel
   {...options}
-  className="owl-theme owl-carousel"
+  className="owl-theme owl-carousel owl-nav-pravas"
   lazyLoad={true}  
   loop  
   dots={false}

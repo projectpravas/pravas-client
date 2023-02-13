@@ -17,7 +17,6 @@ const options = {
     nav: true,
     dots: false,
     autoplay: false,
-    // navText: ["Prev", "Next"],
     smartSpeed: 1000,
     responsive: {
         0: {
@@ -41,7 +40,6 @@ const options = {
 
 const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
   return <>
-  <h3>Blogs</h3>
   {/* <Grid container mb={8}> */}
           
         <Container><OwlCarousel 

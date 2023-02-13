@@ -9,10 +9,7 @@ import Button from '@mui/material/Button';
 import NativeSelect from '@mui/material/NativeSelect';
 import SearchIcon from '@mui/icons-material/Search';
 interface ISearchBarProps {
-  
 }
-
-
 
 const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
   const data:Array<object> = [
@@ -55,7 +52,6 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
    const loadTours = () => {
     setTours([...tours, ...data]);
    }
-
   //  console.log("state: ", tours);
    
    useEffect(() => {
@@ -64,12 +60,11 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
 
   return <>
 
-  <Grid container  sx={{ minWidth: 120, width:"80%", padding:"1.5% 0 1.5% 0", margin:"0 8% 0 8%",
+  <Grid container sx={{ minWidth: 120, width:"85%", padding:"1.5% 0 1.5% 0", marginX:"7.5%",
    display:"flex", flexDirection:{xs:"column", md:"row"}, justifyContent:"space-around",  borderRadius:"8px",
     position:"absolute", gap:"1rem", backgroundColor:"white",bottom:{ xs:"-50%" ,sm:"-40%", md:'-10%', lg:'-8%'},
     boxShadow:"0 10px 30px 0 rgba(0,0,0,.05)"
-    }}>
-   
+    }}> 
    
   <FormControl  sx={{width:{xs:"100%", md:"30%", lg:"30%"}, }}>
         <InputLabel variant="standard" htmlFor="uncontrolled-native" sx={{lineHeight:"1.86em", fontWeight:400, letterSpacing:"1px", fontSize:"16px", color:"#757783"}}>

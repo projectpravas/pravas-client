@@ -1,4 +1,4 @@
-.owl-nav button span :hover{
+/* .owl-nav button span :hover{
     font-size: 40px;
     padding: 0px 10px;
     background-color: rgb(46, 239, 239);
@@ -43,6 +43,6 @@ button.owl-next {
 }
 .owl-theme .owl-nav [class*="owl-"]:hover {
     background: none;
-    color: #FFF;
+    color: rgb(250, 21, 21);
     text-decoration: none;
-  }
+  } */
