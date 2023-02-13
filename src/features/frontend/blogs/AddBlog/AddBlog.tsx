@@ -230,7 +230,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                           <div
                           // dangerouslySetInnerHTML={{ __html: formData?.richText }}
                           />
-                          {/* <div>{value}</div> */}
+                          {/* <div>{formData?.richText}</div> */}
                         </Grid>
                         <Grid item xs={12}>
                           <TextField
@@ -276,7 +276,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                 fullWidth
                                 label="Focus KeyPhrases"
                                 name="focusKeyphrases"
-                                size="small"
+                                size="medium"
                                 value={keyPhrase}
                                 onChange={(e) => {
                                   handleChange(e);

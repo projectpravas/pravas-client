@@ -3,21 +3,31 @@ import Container from "@mui/material/Container";
 import * as React from "react";
 import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
-import { data } from "./BlogData";
 import { Helmet } from "react-helmet";
 import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
+import BlogService from "../../../services/BlogService";
 
 interface IBlogsProps {}
 
 const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
+  const [data, setData] = React.useState([]);
+  // Pagination
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage] = React.useState(3);
-
   const lastPostIndex = currentPage * postPerPage;
   const firstPostIndex = lastPostIndex - postPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
 
+  // const loadBlogs = () => {
+  //   BlogService.fetchAllBlogs()
+  //     .then((response) => {
+  //       setData(response?.data?.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   return (
     <>
       <Helmet>
