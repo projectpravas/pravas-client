@@ -173,21 +173,4 @@ export default [
     showInSettings: false,
     role: ["admin", "superAdmin"],
   },
-
-  // {
-  //   label: "Packages",
-  //   component: <Packages />,
-  //   icon: <CardTravelTwoToneIcon />,
-  //   path: "pravas/packages",
-  //   showInMenu: true,
-  //   showInSettings: false,
-  // },
-  // {
-  //   label: "Tours",
-  //   component: <Tours />,
-  //   icon: <TravelExploreIcon />,
-  //   path: "pravas/tours",
-  //   showInMenu: true,
-  //   showInSettings: false,
-  // },
 ];
