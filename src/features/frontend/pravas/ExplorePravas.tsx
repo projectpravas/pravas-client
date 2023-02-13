@@ -173,9 +173,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         console.log(err);
       });
   };
-  console.log("tourDetails:", tourDetails);
 
-  console.log("AllPackageWatch:", allPackageWatch);
   React.useEffect(() => {
     loadExplore();
   }, []);
