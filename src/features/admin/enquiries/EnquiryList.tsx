@@ -47,6 +47,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         EnquiryService.deleteEnquiry(id)
           .then((res) => {
             Swal.fire("Deleted!", "Deleted successfully...", "success");
+            loadEnquiries();
             navigate(``);
           })
           .catch((err) => {
@@ -74,24 +75,17 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
   //   };
 
   const handleStausAndVerification = (op: string, value: any, enquiry: any) => {
-    let newValue =
-      value == "open"
-        ? "closed"
-        : value == "closed"
-        ? "open"
-        : value == true
-        ? false
-        : true;
+    let newValue = value == "open" ? "closed" : "open";
 
     //create form data
     const fd = new FormData();
 
-    op == "enquiryStatus" && fd.append("enquiryStatus", newValue as string);
+    // op == "enquiryStatus" && fd.append("enquiryStatus", newValue);
     // op == "verified" && fd.append("verified", newValue as string);
-    console.log(value, newValue);
-    console.log(fd);
+    // console.log(value, newValue);
+    // console.log(typeof fd);
 
-    EnquiryService.updateEnquiry(enquiry?._id, fd)
+    EnquiryService.updateEnquiry(enquiry?._id, { enq: newValue })
       .then((res) => {
         loadEnquiries();
         successToast(
@@ -114,13 +108,14 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
 
   const columns = [
     {
-      label: "Id",
+      label: "enqId",
       name: "enquiryId",
       options: {
         filter: false,
         sort: true,
       },
     },
+
     {
       label: "Destinations",
       name: "",
@@ -132,6 +127,28 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
           const arr: Array<string> = [];
           const destinations: any = enquiry?.destinations?.forEach((v, i) => {
             arr.push(v.place);
+          });
+
+          return (
+            <ol>
+              {Array.isArray(arr) &&
+                arr.map((v, i) => <li key={v + i}>{v}</li>)}
+            </ol>
+          );
+        },
+      },
+    },
+    {
+      label: "Participants",
+      name: "",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRenderLite: (index: number) => {
+          const enquiry: EnquiryModel = data[index];
+          const arr: Array<string> = [];
+          const participants: any = enquiry?.participants?.forEach((v, i) => {
+            arr.push(`${v.name} age:${v.age}`);
           });
 
           return (
@@ -193,30 +210,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         },
       },
     },
-    {
-      label: "Verified",
-      name: "verified",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value: boolean, metaData: any) => {
-          const user = data[metaData.rowIndex];
-          return (
-            <>
-              {
-                <Chip
-                  color={value == true ? "primary" : "warning"}
-                  label={value == true ? "Verified" : "unverified"}
-                  // onClick={() =>
-                  //   handleStausAndVerification("verified", value, user)
-                  // }
-                />
-              }
-            </>
-          );
-        },
-      },
-    },
+
     {
       label: "Actions",
       name: "actions",

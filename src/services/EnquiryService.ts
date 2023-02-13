@@ -6,8 +6,8 @@ class EnquiryService {
     return API.post(endPoints.api.enquiries.create, enq);
   } //createEnquiry
 
-  static updateEnquiry(id: string, enq: FormData | EnquiryModel) {
-    return API.put(endPoints.api.enquiries.update + id, enq);
+  static updateEnquiry(id: string, enq: FormData | object) {
+    return API.put(endPoints.api.enquiries.update + id, { ...enq });
   } //updateEnquiry
 
   static deleteEnquiry(id: string) {

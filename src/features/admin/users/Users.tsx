@@ -6,6 +6,7 @@ import { errorToast } from "../../../ui/toast/Toast";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import UserForm from "./UserForm";
 import UserList from "./UserList";
+import CustomTitle from "../../../ui/title/CustomTitle";
 
 interface IUsersProps {}
 
@@ -35,6 +36,9 @@ const Users: React.FunctionComponent<IUsersProps> = (props) => {
 
   return (
     <>
+      <CustomTitle
+        title={`${pathname.includes("users") ? "Admin" : "Customer"} List`}
+      />
       <UserList
         title={`${pathname.includes("users") ? "Admin" : "Customer"} List`}
         data={users}

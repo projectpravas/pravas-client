@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import EnquiryService from "../../../services/EnquiryService";
+import CustomTitle from "../../../ui/title/CustomTitle";
 import { errorToast } from "../../../ui/toast/Toast";
 import EnquiriesList from "./EnquiryList";
 
@@ -23,11 +24,11 @@ const Enquiries: React.FunctionComponent<IEnquiriesProps> = (props) => {
   React.useEffect(() => {
     loadEnquiries();
   }, []);
-  console.log(enquiries);
+  // console.log(enquiries);
 
   return (
     <>
-      <h1>Enquiries</h1>
+      <CustomTitle title="Enquiries" />
       {/* <Outlet /> */}
       <EnquiriesList
         data={enquiries}

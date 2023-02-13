@@ -155,6 +155,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         },
       },
     },
+
     {
       label: "Status",
       name: "status",
@@ -180,30 +181,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         },
       },
     },
-    {
-      label: "Verified",
-      name: "verified",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value: boolean, metaData: any) => {
-          const tour = data[metaData.rowIndex];
-          return (
-            <>
-              {
-                <Chip
-                  color={value == true ? "primary" : "warning"}
-                  label={value == true ? "Verified" : "unverified"}
-                  onClick={() =>
-                    handleStausAndVerification("verified", value, tour)
-                  }
-                />
-              }
-            </>
-          );
-        },
-      },
-    },
+
     {
       label: "Actions",
       name: "actions",
@@ -245,6 +223,8 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       );
     },
   };
+  // const columns = commonColumns.filter((v, i) => v.name !== "participants");
+
   return (
     <>
       <Container sx={{ mt: 2 }} disableGutters>
