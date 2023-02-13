@@ -57,7 +57,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     <img
                       style={{
                         width: "100%",
-                        height: "100%",
+                        height: 230,
                         borderRadius: 10,
                       }}
                       src={image}

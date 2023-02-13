@@ -2,7 +2,8 @@ export const data = [
   {
     id: 13,
     image:
-      "https://pravasthejourney.com/wp-content/uploads/2023/01/Mount-Abu-580x450.webp",
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/Mount-Abu.webp",
+    // "https://pravasthejourney.com/wp-content/uploads/2023/01/Mount-Abu-580x450.webp",
     largeImage:
       "https://pravasthejourney.com/wp-content/uploads/2023/01/Mount-Abu.webp",
     title: "Mount Abu Summer Festival 2023",
@@ -32,7 +33,8 @@ export const data = [
   {
     id: 1,
     image:
-      "https://pravasthejourney.com/wp-content/uploads/2023/01/River-Rafting-in-Kashmir-580x450.webp",
+      // "https://pravasthejourney.com/wp-content/uploads/2023/01/River-Rafting-in-Kashmir-580x450.webp",
+      "https://pravasthejourney.com/wp-content/uploads/2023/01/River-Rafting-in-Kashmir.webp",
     largeImage:
       "https://pravasthejourney.com/wp-content/uploads/2023/01/River-Rafting-in-Kashmir.webp",
     title: "Places to visit for River Rafting in Kashmir",

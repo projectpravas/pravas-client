@@ -53,16 +53,6 @@ const GoToTop: React.FunctionComponent<IGoToTopProps> = (props) => {
     .top-btn-icon {
       animation: gototop 1.2s linear infinite alternative-reverse;
     }
-
-    @keyframes gototop {
-      0% {
-        transform: translateY(-0.5rem);
-      }
-
-      100% {
-        transform: translateY(1rem);
-      }
-    }
   `;
   return (
     <Wrapper>

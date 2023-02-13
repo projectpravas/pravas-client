@@ -25,7 +25,6 @@ import SidebarMenu from "./SidebarMenu";
 import SidebarRoutes from "./SidebarRoutes";
 import AdminRoutes from "../../shared/routes/AdminRoutes";
 import SecondaryAppbar from "./SecondaryAppbar";
-
 const customTheme = createTheme({
   breakpoints: {
     values: {
@@ -277,7 +276,7 @@ const PersistedSidebar = () => {
             }).includes(pathname.split("/")[2]) && (
               <SecondaryAppbar open={open} />
             )}
-          {/* <Box sx={{ pt: open ? 7 : 8 }}></Box> */}
+          <Box sx={{ pt: open ? 7 : 8 }}></Box>
           <SidebarRoutes />
         </Box>
       </Main>

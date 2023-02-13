@@ -48,7 +48,7 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
               </Grid>
 
               {/* phone */}
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6} md={12}>
                 <Paper
                   elevation={1}
                   sx={{
@@ -123,13 +123,21 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
                           </Typography>
                         </Link>
                         <ClickableLink
-                          sx={{ textDecoration: "none", color: "#757783" }}
+                          sx={{
+                            textDecoration: "none",
+                            color: "#757783",
+                            marginLeft: { md: 3 },
+                          }}
                           href="tel:+9172619 88688"
                         >
                           +91 72619 88688
                         </ClickableLink>
                         <ClickableLink
-                          sx={{ textDecoration: "none", color: "#757783" }}
+                          sx={{
+                            textDecoration: "none",
+                            color: "#757783",
+                            marginLeft: { md: 3 },
+                          }}
                           href="tel:+9172619 88688"
                         >
                           +91 95525 64478
@@ -141,7 +149,7 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
               </Grid>
 
               {/* email */}
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6} md={12}>
                 <Paper
                   elevation={1}
                   sx={{
@@ -193,7 +201,7 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
                         container
                         flexDirection="column"
                         alignItems="center"
-                        spacing={2}
+                        spacing={1}
                       >
                         <ClickableLink
                           sx={{
@@ -212,7 +220,12 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
                           </Typography>
                         </ClickableLink>
                         <ClickableLink
-                          sx={{ textDecoration: "none", color: "#757783" }}
+                          sx={{
+                            textDecoration: "none",
+                            color: "#757783",
+                            wordBreak: "break-all",
+                            marginLeft: { xs: 1, sm: 1, md: 3 },
+                          }}
                           href="mailto:travel@pravasthejourney.com"
                         >
                           travel@pravasthejourney.com

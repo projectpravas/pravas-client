@@ -8,6 +8,7 @@ import PeopleIcon from "@mui/icons-material/People";
 import ChangePasswordIcon from "@mui/icons-material/LockReset";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import CardTravelTwoToneIcon from "@mui/icons-material/CardTravelTwoTone";
+import Enquiries from "../../features/admin/enquiries/Enquiries";
 
 const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
 const TourAndPackageForm = lazy(
@@ -21,7 +22,7 @@ const Dashboard = lazy(
   () => import("../../features/admin/dashboard/Dashboard")
 );
 const Bookings = lazy(() => import("../../features/admin/bookings/Bookings"));
-const Quotes = lazy(() => import("../../features/admin/quotes/Quotes"));
+const Quotes = lazy(() => import("../../features/admin/enquiries/Enquiries"));
 const Records = lazy(() => import("../../features/admin/records/Records"));
 const Users = lazy(() => import("../../features/admin/users/Users"));
 const UserProfile = lazy(
@@ -53,6 +54,7 @@ export default [
     showInSettings: true,
     roles: ["admin", "superAdmin", "customer"],
   },
+
   {
     label: "Pravas",
     component: <Pravas />,
@@ -62,6 +64,16 @@ export default [
     showInSettings: false,
     roles: ["admin", "superAdmin", "customer"],
     subMenus: [
+      {
+        label: "Tour And Package Form",
+        component: <TourAndPackageForm />,
+        icon: <></>,
+        path: ":base/add-edit/:0/:add/:admin",
+        // path: "secured/pravas/packages/add-edit/0/edit/admin",
+        showInMenu: false,
+        showInSettings: false,
+      },
+
       {
         label: "Packages",
         component: <Packages />,
@@ -90,10 +102,10 @@ export default [
     roles: ["admin", "superAdmin", "customer"],
   },
   {
-    label: "Quotes",
-    component: <Quotes />,
+    label: "Enquiries",
+    component: <Enquiries />,
     icon: <RequestQuoteIcon />,
-    path: "quotes",
+    path: "enquiries",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin"],
@@ -161,4 +173,21 @@ export default [
     showInSettings: false,
     role: ["admin", "superAdmin"],
   },
+
+  // {
+  //   label: "Packages",
+  //   component: <Packages />,
+  //   icon: <CardTravelTwoToneIcon />,
+  //   path: "pravas/packages",
+  //   showInMenu: true,
+  //   showInSettings: false,
+  // },
+  // {
+  //   label: "Tours",
+  //   component: <Tours />,
+  //   icon: <TravelExploreIcon />,
+  //   path: "pravas/tours",
+  //   showInMenu: true,
+  //   showInSettings: false,
+  // },
 ];

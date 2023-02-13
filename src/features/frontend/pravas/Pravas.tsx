@@ -25,7 +25,6 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   React.useEffect(() => {
     loadPackages();
   }, []);
-  // console.log("Tours121212:", allPackage);
 
   return (
     <>

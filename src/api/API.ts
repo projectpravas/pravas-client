@@ -1,6 +1,6 @@
 //create axios instance
 import axios from "axios";
-import AuthService from  "../services/AuthService";
+import AuthService from "../services/AuthService";
 import endPoints from "./endpoints";
 
 const API = axios.create({

@@ -19,8 +19,8 @@ class TourService {
     return API.get(endPoints.api.tours.getOne + id);
   } //fetchOneTour
 
-  static fetchAllTours() {
-    return API.get(endPoints.api.tours.getAll);
+  static fetchAllTours(query = "") {
+    return API.get(endPoints.api.tours.getAll + query);
   } //fetchAllTours
 }
 export default TourService;

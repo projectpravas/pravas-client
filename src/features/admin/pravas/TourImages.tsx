@@ -118,7 +118,12 @@ const Images: React.FunctionComponent<IImagesProps> = ({ setImages, imgs }) => {
 
   return (
     <>
-      <Paper sx={{ overflow: "auto", m: 1 }}>
+      <Paper
+        sx={{
+          overflow: "auto",
+          m: 1,
+        }}
+      >
         <Grid container spacing={1} sx={{ p: 1, textAlign: "center" }}>
           <Grid item xs={12}>
             <h4 style={{ margin: 0, textAlign: "left" }}>Images</h4>
