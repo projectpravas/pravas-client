@@ -65,6 +65,7 @@ interface IPackageFormProps {}
 
 interface TourInterface {
   title?: string;
+  packageId?: string;
   tourLocation?: string;
   tourType?: string[];
   price?: string;
@@ -158,6 +159,7 @@ const notesItemObj = { touched: false, note: "" };
 
 const tourItemObj = {
   title: "",
+  packageId: "0",
   tourLocation: "",
   tourType: [],
   price: "",
@@ -388,7 +390,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
   };
 
   const setLocalStorage = (data: any) => {
-    const tourData = {
+    const tourData: TourInterface = {
       title: data?.title,
       tourLocation: data?.tourLocation,
       tourType: data?.tourType,
@@ -398,6 +400,8 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
       maxPersons: data?.maxPersons,
       featured: data?.featured,
     };
+
+    if (data?.packageId) tourData.packageId = data?.packageId;
 
     setTour(tourData);
     setItinerary(data?.tourPlan?.itinerary);
@@ -409,13 +413,17 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
     setExcludes(data?.tourPlan?.excludes);
     setTourNotes(data?.tourPlan?.tourNotes);
 
-    initialTour = { ...initialTour, ...tourData };
+    initialTour = { ...initialTour, ...tourData } as any;
   };
 
   const getOneTour = (id: string) => {
     TourService.fetchOneTour(id)
       .then((res) => {
-        console.log(res);
+        if (category == "tour") {
+          if (res?.data?.data?.category == "package") {
+            res.data.data.packageId = tourId;
+          }
+        }
         setLocalStorage(res?.data?.data);
       })
       .catch((err) => {
@@ -428,6 +436,10 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
 
   //local storage set
   useEffect(() => {
+    if (category == "package") {
+      delete tour?.packageId;
+    }
+
     let itineraryArr = Array.isArray(itinerary)
       ? [...itinerary]
       : [itineraryItemObj];
@@ -486,7 +498,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
   }, [itinerary]);
 
   useEffect(() => {
-    if (operation == "edit") getOneTour(tourId);
+    if (tourId != "0") getOneTour(tourId);
   }, [operation, tourId]);
 
   return (
@@ -496,7 +508,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
         enableReinitialize
         validationSchema={tourYupSchema}
         onSubmit={(values, { resetForm }) => {
-          const tourObj = createFD(images, category);
+          const tourObj = createFD(images, category, tourId);
 
           return;
           TourService.createTour(tourObj)

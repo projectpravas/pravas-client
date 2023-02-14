@@ -56,6 +56,7 @@ interface Feedbacks {
 interface TourModel {
   _id?: string;
   tourId?: number;
+  packageId?: String;
   title?: string;
   category?: string;
   price?: number;

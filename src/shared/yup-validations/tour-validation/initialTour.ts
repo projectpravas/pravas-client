@@ -4,6 +4,7 @@ import TourModel from "../../models/tourModel";
 const defineInitialTour = ({
   has_id = false,
   hasTourId = false,
+  hasPackageId = false,
   hasTitle = false,
   hasCategory = false,
   hasPrice = false,
@@ -46,6 +47,7 @@ const defineInitialTour = ({
 
   if (has_id) initialTour._id = "";
   if (hasTourId) initialTour.tourId = NaN;
+  if (hasPackageId) initialTour.packageId = "0";
   if (hasTitle) initialTour.title = "";
   if (hasCategory) initialTour.category = "";
   if (hasPrice) initialTour.price = 0;

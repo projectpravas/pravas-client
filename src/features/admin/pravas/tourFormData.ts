@@ -2,7 +2,8 @@ import TourModel from "../../../shared/models/tourModel";
 
 export const createFD = (
   images: string[] | any,
-  category: "tour" | "package"
+  category: "tour" | "package",
+  tourId: string
 ) => {
   // get values from the localStorage
   let basicTourData = JSON.parse(localStorage.getItem("basicTourData") as any);
@@ -17,6 +18,11 @@ export const createFD = (
   //  set basicTourData
   basicTourData.images = images;
   basicTourData.category = category;
+  if (category == "tour") {
+    basicTourData.packageId = tourId;
+  } else {
+    delete basicTourData?.packageId;
+  }
   basicTourData.customized = basicTourData?.tourType?.includes("Customize");
 
   // Set Day by day data to state

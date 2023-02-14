@@ -12,6 +12,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Chip } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import NoteAddRoundedIcon from "@mui/icons-material/NoteAddRounded";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import Tooltip from "@mui/material/Tooltip";
 import Container from "@mui/material/Container";
@@ -181,25 +182,60 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       },
     },
     {
-      label: "Verified",
-      name: "verified",
+      label: "Add Tour",
+      name: "addTour",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
         customBodyRender: (value: boolean, metaData: any) => {
-          const tour = data[metaData.rowIndex];
+          const tour: TourModel = data[metaData.rowIndex];
           return (
             <>
               {
                 <Chip
-                  color={value == true ? "primary" : "warning"}
-                  label={value == true ? "Verified" : "unverified"}
-                  onClick={() =>
-                    handleStausAndVerification("verified", value, tour)
+                  color={"primary"}
+                  // color={value == true ? "primary" : "warning"}
+                  label={
+                    // <NoteAddRoundedIcon
+                    //   sx={{ verticalAlign: "middle", p: "2px" }}
+                    // />
+                    "Add Tour"
                   }
+                  onClick={() => {
+                    const path = pathname
+                      .split("/")
+                      .reduce(
+                        (text, value, i, array) =>
+                          text + (i < array.length - 1 ? `/${value}` : `/tours`)
+                      );
+
+                    navigate(`${path}/add-edit/${tour?._id}/add/admin`);
+                  }}
                 />
               }
             </>
+          );
+        },
+      },
+    },
+    {
+      label: "Participants",
+      name: "participants",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRenderLite: (index: number) => {
+          const tour: TourModel = data[index];
+          return (
+            <Box sx={{ display: "flex" }}>
+              <Chip
+                color="secondary"
+                label="participants"
+                onClick={() =>
+                  handleEdit(tour?._id as string, tour?.category || "")
+                }
+              />
+            </Box>
           );
         },
       },
@@ -253,7 +289,11 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       </Button> */}
         <MUIDataTables
           title={title}
-          columns={columns}
+          columns={
+            category == "tour"
+              ? columns?.filter((obj) => obj?.name != "addTour")
+              : columns?.filter((obj) => obj?.name != "participants")
+          }
           data={data}
           options={options}
         />
