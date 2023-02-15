@@ -38,6 +38,7 @@ import {
   TableCell,
 } from "@mui/material";
 import ReviewSection from "./ReviewSection";
+import PackageCarousel from "./PackageCarousel";
 
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({

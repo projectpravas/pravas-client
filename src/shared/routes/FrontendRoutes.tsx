@@ -1,4 +1,6 @@
 import { lazy } from "react";
+import CreatePackageForm from "../../features/admin/pravas/packages/Packages";
+import CustomTourForm from "../../features/frontend/customtourform/CustomTourForm";
 
 const Home = lazy(() => import("../../features/frontend/home/Home"));
 const AboutUs = lazy(() => import("../../features/frontend/about-us/AboutUs"));
@@ -144,7 +146,7 @@ export default [
   {
     label: "Terms And Conditions",
     component: <TermsAndConditions />,
-    path: "t&c",
+    path: "terms-and-conditions",
     showInMenu: false,
     hasAuthenticate: "no",
   },
@@ -162,6 +164,14 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
+  {
+    label: "Create Custom Tour",
+    component: <CustomTourForm />,
+    path: "pravas/custom-tour-form",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+
   {
     label: "Page Not Found",
     component: <PageNotFound />,

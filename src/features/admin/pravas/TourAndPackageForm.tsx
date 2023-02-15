@@ -400,13 +400,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
     };
 
     setTour(tourData);
-
     setItinerary(data?.tourPlan?.itinerary);
 
     // setImages(data?.images);
 
     setHotels(data?.tourPlan?.hotels);
-
     setIncludes(data?.tourPlan?.includes);
     setExcludes(data?.tourPlan?.excludes);
     setTourNotes(data?.tourPlan?.tourNotes);

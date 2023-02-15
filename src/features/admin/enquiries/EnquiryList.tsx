@@ -15,6 +15,7 @@ import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Tooltip from "@mui/material/Tooltip";
 import Container from "@mui/material/Container";
 import EnquiryService from "../../../services/EnquiryService";
+import EnquiryModel from "../../../shared/models/enquiryModel";
 
 interface IEnquiriesListProps {
   title: string;
@@ -28,8 +29,8 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
   loadEnquiries,
 }) => {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-  //   const role = pathname.includes("users") ? "admin" : "customer";
+  //   const { pathname } = useLocation();
+  // const role = pathname.includes("enquiries") ? "admin" : "customer";
 
   //handle delete
   const handleDelete = (id: string) => {
@@ -46,6 +47,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         EnquiryService.deleteEnquiry(id)
           .then((res) => {
             Swal.fire("Deleted!", "Deleted successfully...", "success");
+            loadEnquiries();
             navigate(``);
           })
           .catch((err) => {
@@ -73,58 +75,94 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
   //   };
 
   const handleStausAndVerification = (op: string, value: any, enquiry: any) => {
-    let newValue =
-      value == "active"
-        ? "inactive"
-        : value == "inactive"
-        ? "active"
-        : value == true
-        ? false
-        : true;
+    let newValue = value == "open" ? "closed" : "open";
 
     //create form data
     const fd = new FormData();
 
-    op == "status" && fd.append("status", newValue as string);
+    // op == "enquiryStatus" && fd.append("enquiryStatus", newValue);
     // op == "verified" && fd.append("verified", newValue as string);
+    // console.log(value, newValue);
+    // console.log(typeof fd);
 
-    EnquiryService.updateEnquiry(enquiry?._id, fd)
+    EnquiryService.updateEnquiry(enquiry?._id, { enq: newValue })
       .then((res) => {
         loadEnquiries();
         successToast(
-          `${op == "status" ? "Status" : "Verification"} Changed..`,
+          `${
+            op == "enquiryStatus" ? "enquiryStatus" : "Verification"
+          } Changed..`,
           2000
         );
       })
       .catch((err) => {
         console.error(err);
         errorToast(
-          `${op == "status" ? "Status" : "Verification"} couldn't Changed..`,
-          3000
+          `${
+            op == "enquiryStatus" ? "enquiryStatus" : "Verification"
+          } couldn't Changed..`,
+          2000
         );
       });
   };
 
   const columns = [
     {
-      label: "ID",
+      label: "enqId",
       name: "enquiryId",
       options: {
         filter: false,
         sort: true,
       },
     },
+
     {
       label: "Destinations",
-      name: "destinations",
+      name: "",
       options: {
         filter: true,
         sort: true,
+        customBodyRenderLite: (index: number) => {
+          const enquiry: EnquiryModel = data[index];
+          const arr: Array<string> = [];
+          const destinations: any = enquiry?.destinations?.forEach((v, i) => {
+            arr.push(v.place);
+          });
+
+          return (
+            <ol>
+              {Array.isArray(arr) &&
+                arr.map((v, i) => <li key={v + i}>{v}</li>)}
+            </ol>
+          );
+        },
       },
     },
     {
-      label: "Surname",
-      name: "name.last",
+      label: "Participants",
+      name: "",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRenderLite: (index: number) => {
+          const enquiry: EnquiryModel = data[index];
+          const arr: Array<string> = [];
+          const participants: any = enquiry?.participants?.forEach((v, i) => {
+            arr.push(`${v.name} age:${v.age}`);
+          });
+
+          return (
+            <ol>
+              {Array.isArray(arr) &&
+                arr.map((v, i) => <li key={v + i}>{v}</li>)}
+            </ol>
+          );
+        },
+      },
+    },
+    {
+      label: "Name",
+      name: "contactPersonName",
       options: {
         filter: true,
         sort: true,
@@ -132,7 +170,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
     },
     {
       label: "Mobile",
-      name: "mobile",
+      name: "contactPersonMobile",
       options: {
         filter: true,
         sort: false,
@@ -140,7 +178,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
     },
     {
       label: "Email",
-      name: "email",
+      name: "contactPersonEmail",
       options: {
         filter: true,
         sort: false,
@@ -148,21 +186,22 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
     },
     {
       label: "Status",
-      name: "status",
+      name: "enquiryStatus",
       options: {
         filter: true,
         sort: true,
 
         customBodyRender: (value: string, metaData: any) => {
-          const user = data[metaData.rowIndex];
+          const enquiry = data[metaData.rowIndex];
+
           return (
             <>
               {
                 <Chip
-                  style={{ color: value == "active" ? "green" : "red" }}
-                  label={value == "active" ? "active" : "inactive"}
+                  style={{ color: value == "open" ? "green" : "red" }}
+                  label={value == "open" ? "open" : "closed"}
                   onClick={() =>
-                    handleStausAndVerification("status", value, user)
+                    handleStausAndVerification("enquiryStatus", value, enquiry)
                   }
                 />
               }
@@ -171,30 +210,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         },
       },
     },
-    {
-      label: "Verified",
-      name: "verified",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value: boolean, metaData: any) => {
-          const user = data[metaData.rowIndex];
-          return (
-            <>
-              {
-                <Chip
-                  color={value == true ? "primary" : "warning"}
-                  label={value == true ? "Verified" : "unverified"}
-                  // onClick={() =>
-                  //   handleStausAndVerification("verified", value, user)
-                  // }
-                />
-              }
-            </>
-          );
-        },
-      },
-    },
+
     {
       label: "Actions",
       name: "actions",
@@ -202,17 +218,17 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         filter: true,
         sort: true,
         customBodyRenderLite: (index: number) => {
-          const user: User = data[index];
+          const enquiry: EnquiryModel = data[index];
           return (
             <Box sx={{ display: "flex" }}>
-              <IconButton
+              {/* <IconButton
               // onClick={() =>
               //   handleEdit(user?._id as string, user?.role || "")
               // }
               >
                 <EditIcon style={{ color: "#444" }} />
-              </IconButton>
-              <IconButton onClick={() => handleDelete(user?._id as string)}>
+              </IconButton> */}
+              <IconButton onClick={() => handleDelete(enquiry?._id as string)}>
                 <DeleteIcon color="error" />
               </IconButton>
             </Box>
