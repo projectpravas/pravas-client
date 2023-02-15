@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import "../../../ui/owl-carousel/pravas.css";
@@ -51,7 +51,7 @@ const PravasHome: React.FunctionComponent<IPravasHomeProps> = (props) => {
 
   React.useEffect(() => {
     loadPackageData();
-  }, [allPackageCardData]);
+  }, []);
 
   return (
     <>
