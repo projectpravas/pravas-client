@@ -31,6 +31,7 @@ import EnquiryService from "../../../services/EnquiryService";
 import EnquiryModel from "../../../shared/models/enquiryModel";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import Container from "@mui/material/Container";
+import { useLocation } from "react-router-dom";
 
 const schema = yup
   .object({
@@ -92,38 +93,53 @@ const schema = yup
   })
   .required();
 
-interface ICustomTourFormProps {}
-
-interface IFormInput {
-  destinations: {
-    place: string;
-  }[];
-  travelDates: {
-    from: string;
-    to: string;
-  };
-  travelDuration: number;
-  participants: {
-    name: string;
-    age: number;
-  }[];
-  hotelCategory: "";
-  rooms: number;
-  meals: {
-    breakfast: boolean;
-    lunch: boolean;
-    dinner: boolean;
-  };
-  anythingElse: string;
+interface ICustomTourFormProps {
+  rowData?: EnquiryModel;
 }
 
-const from = new Date().toISOString().slice(0, 10);
+// interface IFormInput {
+//   destinations: {
+//     place: string;
+//   }[];
+//   travelDates: {
+//     from: string;
+//     to: string;
+//   };
+//   travelDuration: number;
+//   participants: {
+//     name: string;
+//     age: number;
+//   }[];
+//   hotelCategory: "";
+//   rooms: number;
+//   meals: {
+//     breakfast: boolean;
+//     lunch: boolean;
+//     dinner: boolean;
+//   };
+//   anythingElse: string;
+// }
 
-const to = new Date().toISOString().slice(0, 10);
+const from = new Date();
+var getYear = from.toLocaleString("default", { year: "numeric" });
+var getMonth = from.toLocaleString("default", { month: "2-digit" });
+var getDay = from.toLocaleString("default", { day: "2-digit" });
+var fromDate = getYear + "/" + getMonth + "/" + getDay;
+
+const to = new Date();
+var getYeart = to.toLocaleString("default", { year: "numeric" });
+var getMontht = to.toLocaleString("default", { month: "2-digit" });
+var getDayt = to.toLocaleString("default", { day: "2-digit" });
+var toDate = getYear + "/" + getMonth + "/" + getDay;
+
+console.log(from, to);
 
 const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   props
 ) => {
+  const { pathname } = useLocation();
+  let prefill = props?.rowData;
+  pathname.includes("enquiries");
   const {
     control,
     handleSubmit,
@@ -132,26 +148,28 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   } = useForm<EnquiryModel>({
     mode: "onTouched",
     resolver: yupResolver(schema),
-    defaultValues: {
-      contactPersonName: "",
-      contactPersonMobile: "",
-      contactPersonEmail: "",
-      destinations: [{ place: "" }],
-      travelDates: {
-        from: from,
-        to: to,
-      },
-      travelDuration: 0,
-      participants: [{ name: "", age: 0 }],
-      hotelCategory: "",
-      rooms: 1,
-      meals: {
-        breakfast: false,
-        lunch: false,
-        dinner: false,
-      },
-      anythingElse: "",
-    },
+    defaultValues: pathname.includes("enquiries")
+      ? prefill
+      : {
+          contactPersonName: "",
+          contactPersonMobile: "",
+          contactPersonEmail: "",
+          destinations: [{ place: "" }],
+          travelDates: {
+            from: fromDate,
+            to: toDate,
+          },
+          travelDuration: 0,
+          participants: [{ name: "", age: 0 }],
+          hotelCategory: "",
+          rooms: 1,
+          meals: {
+            breakfast: false,
+            lunch: false,
+            dinner: false,
+          },
+          anythingElse: "",
+        },
   });
 
   const { touchedFields } = useFormState({
@@ -283,7 +301,13 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       size="small"
                       type="date"
                       label="From"
-                      {...field}
+                      value={
+                        pathname.includes("enquiries")
+                          ? field.value.toString().slice(0, 10)
+                          : field.value
+                      }
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
                       InputLabelProps={{ shrink: true }}
                       error={
                         touchedFields?.travelDates?.from &&
@@ -313,7 +337,13 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       type="date"
                       label="To"
                       InputLabelProps={{ shrink: true }}
-                      {...field}
+                      value={
+                        pathname.includes("enquiries")
+                          ? field.value.toString().split("T")[0]
+                          : field.value
+                      }
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
                       error={
                         touchedFields?.travelDates?.to &&
                         errors?.travelDates?.to?.message
@@ -616,7 +646,9 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                     render={({ field }) => (
                       <>
                         <FormControlLabel
-                          {...field}
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
                           control={<Checkbox />}
                           label="Breakfast"
                         />
@@ -629,7 +661,9 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                     render={({ field }) => (
                       <>
                         <FormControlLabel
-                          {...field}
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
                           control={<Checkbox />}
                           label="Lunch"
                         />
@@ -642,7 +676,9 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                     render={({ field }) => (
                       <>
                         <FormControlLabel
-                          {...field}
+                          value={field.value}
+                          onChange={field.onChange}
+                          onBlur={field.onBlur}
                           control={<Checkbox />}
                           label="Dinner"
                         />

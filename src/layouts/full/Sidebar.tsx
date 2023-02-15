@@ -308,7 +308,7 @@ const Sidebar = () => {
           <Divider />
         </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, overflow: "auto" }}>
         <DrawerHeader
           sx={{
             minHeight: { xs: "40px", md: "46px", lg: "66px" },

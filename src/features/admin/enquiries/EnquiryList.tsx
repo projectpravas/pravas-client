@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef, useRef, useState } from "react";
 import MUIDataTables from "mui-datatables";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -11,11 +11,11 @@ import User from "../../../shared/models/userModel";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Chip } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import Tooltip from "@mui/material/Tooltip";
 import Container from "@mui/material/Container";
 import EnquiryService from "../../../services/EnquiryService";
 import EnquiryModel from "../../../shared/models/enquiryModel";
+import EnqDetails from "./EnqDetails";
 
 interface IEnquiriesListProps {
   title: string;
@@ -31,6 +31,14 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
   const navigate = useNavigate();
   //   const { pathname } = useLocation();
   // const role = pathname.includes("enquiries") ? "admin" : "customer";
+  const [openDialog, setOpenDialog] = useState(false);
+  const [rowData, setRowData] = useState<EnquiryModel>();
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
 
   //handle delete
   const handleDelete = (id: string) => {
@@ -108,11 +116,14 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
 
   const columns = [
     {
-      label: "enqId",
+      label: "Id",
       name: "enquiryId",
       options: {
         filter: false,
         sort: true,
+        customBodyRenderLite: (index: any) => {
+          return <p style={{ textAlign: "center" }}>{index + 1}</p>;
+        },
       },
     },
 
@@ -130,7 +141,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
           });
 
           return (
-            <ol>
+            <ol style={{ textAlign: "justify" }}>
               {Array.isArray(arr) &&
                 arr.map((v, i) => <li key={v + i}>{v}</li>)}
             </ol>
@@ -138,38 +149,44 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         },
       },
     },
-    {
-      label: "Participants",
-      name: "",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRenderLite: (index: number) => {
-          const enquiry: EnquiryModel = data[index];
-          const arr: Array<string> = [];
-          const participants: any = enquiry?.participants?.forEach((v, i) => {
-            arr.push(`${v.name} age:${v.age}`);
-          });
+    // {
+    //   label: "Participants",
+    //   name: "",
+    //   options: {
+    //     filter: true,
+    //     sort: true,
+    //     customBodyRenderLite: (index: number) => {
+    //       const enquiry: EnquiryModel = data[index];
+    //       const arr: Array<string> = [];
+    //       const participants: any = enquiry?.participants?.forEach((v, i) => {
+    //         arr.push(`${v.name} age:${v.age}`);
+    //       });
 
-          return (
-            <ol>
-              {Array.isArray(arr) &&
-                arr.map((v, i) => <li key={v + i}>{v}</li>)}
-            </ol>
-          );
-        },
-      },
-    },
+    //       return (
+    //         <ol style={{ textAlign: "justify" }}>
+    //           {Array.isArray(arr) &&
+    //             arr.map((v, i) => <li key={v + i}>{v}</li>)}
+    //         </ol>
+    //       );
+    //     },
+    //   },
+    // },
     {
       label: "Name",
       name: "contactPersonName",
       options: {
         filter: true,
         sort: true,
+        customBodyRenderLite: (index: any) => {
+          const enquiry: EnquiryModel = data[index];
+          return (
+            <p style={{ textAlign: "center" }}>{enquiry?.contactPersonName}</p>
+          );
+        },
       },
     },
     {
-      label: "Mobile",
+      label: "MOBILE",
       name: "contactPersonMobile",
       options: {
         filter: true,
@@ -177,7 +194,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
       },
     },
     {
-      label: "Email",
+      label: "EMAIL",
       name: "contactPersonEmail",
       options: {
         filter: true,
@@ -195,7 +212,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
           const enquiry = data[metaData.rowIndex];
 
           return (
-            <>
+            <div style={{ textAlign: "center" }}>
               {
                 <Chip
                   style={{ color: value == "open" ? "green" : "red" }}
@@ -205,7 +222,30 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
                   }
                 />
               }
-            </>
+            </div>
+          );
+        },
+      },
+    },
+    {
+      label: "VIEW",
+      name: "",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRenderLite: (index: number) => {
+          const enquiry: EnquiryModel = data[index];
+          return (
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <IconButton
+                onClick={() => {
+                  handleDialogOpen();
+                  setRowData(enquiry);
+                }}
+              >
+                <Chip color="primary" label="view" />
+              </IconButton>
+            </Box>
           );
         },
       },
@@ -220,7 +260,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         customBodyRenderLite: (index: number) => {
           const enquiry: EnquiryModel = data[index];
           return (
-            <Box sx={{ display: "flex" }}>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
               {/* <IconButton
               // onClick={() =>
               //   handleEdit(user?._id as string, user?.role || "")
@@ -242,6 +282,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
     filterType: "checkbox",
     responsive: "standard",
     enableNestedDataAccess: ".",
+    elevation: 2,
     // customToolbar: () => {
     //   return (
     //     <Tooltip title={`Add ${title.split(" ")[0]}`} placement="top">
@@ -262,6 +303,12 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         columns={columns}
         data={data}
         options={options}
+      />
+      <EnqDetails
+        rowData={rowData}
+        openDialog={openDialog}
+        handleDialogOpen={handleDialogOpen}
+        handleDialogClose={handleDialogClose}
       />
     </Container>
   );
