@@ -43,7 +43,7 @@ const CardImageStyle = {
   fontSize: 48,
   transition: "all .5s ease-in-out",
   // boxShadow: "0px 10px 20px 0px rgb(242 85 33 / 30%)",
-  background: "linear-gradient(to left, #f25521 0%, #f9c70a 100%)",
+  background: "#f7a707",
 };
 interface ITopCompProps {}
 
@@ -54,7 +54,7 @@ const TopComp: React.FunctionComponent<ITopCompProps> = (props) => {
         container
         justifyContent="space-evenly"
         spacing={4}
-        sx={{ px: { xs: 0, sm: 3, md: 15 } }}
+        // sx={{ px: { xs: 0, sm: 3, md: 15 } }}
       >
         {/*--------------------------------------------------------- New Bokings */}
         <Grid item xs={12} sm={6} md={3}>
