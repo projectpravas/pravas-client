@@ -1,115 +1,37 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 
 import PravasPackageCard from "./PravasPackageCard";
 import { Helmet } from "react-helmet";
 import TourService from "../../../services/TourService";
+import { Outlet, useNavigate } from "react-router-dom";
 
 interface IPravasProps {}
 
 const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   //---------------- AllDatafetch -------------
   const [allPackage, setAllPackage] = React.useState<Array<any>>([]);
-
-  // const PackegeCard = [
-  //   {
-  //     id: 1,
-  //     heading: "Hampi Badami",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2022/06/Hampi.jpg",
-  //     ],
-  //     price: " ₹15800 / P",
-  //     duration: "5days",
-  //     seatAvability: "15Seat",
-  //   },
-  //   {
-  //     id: 2,
-  //     heading: "Kashmir 4N5D",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2022/09/Kashmir-4n5d.webp",
-  //     ],
-  //     price: " ₹19850 / P",
-  //     duration: "5days",
-  //     seatAvability: "15Seat",
-  //   },
-  //   {
-  //     id: 3,
-  //     heading: "Kerala 5N6D",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2022/05/KeralaP1.jpg",
-  //     ],
-  //     price: " ₹19550 / P",
-  //     duration: "6days",
-  //     seatAvability: "15Seat",
-  //   },
-
-  //   {
-  //     id: 4,
-  //     heading: " Leh Ladakh 6N7D",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2021/09/kashmir.jpg",
-  //     ],
-  //     price: " ₹26800 / P",
-  //     duration: "6days",
-  //     seatAvability: "15Seat",
-  //   },
-  //   {
-  //     id: 5,
-  //     heading: "Leh Ladakh 8N9D",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2022/06/Leh-Ladakh.jpg",
-  //     ],
-  //     price: " ₹34800 / P",
-  //     duration: "9days",
-  //     seatAvability: "14Seat",
-  //   },
-  //   {
-  //     id: 6,
-  //     heading: "Pench",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2022/06/PRLeh.jpg",
-  //     ],
-  //     price: " ₹15850 / P",
-  //     duration: "3days",
-  //     seatAvability: "15Seat",
-  //   },
-  //   {
-  //     id: 7,
-  //     heading: "Rajasthan",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2022/06/PRPench.jpg",
-  //     ],
-  //     price: " ₹24450 / P",
-  //     duration: "7days",
-  //     seatAvability: "15Seat",
-  //   },
-  //   {
-  //     id: 8,
-  //     heading: "Tadoba",
-  //     image: [
-  //       "https://pravasthejourney.com/wp-content/uploads/2022/06/PRTadoba.jpg",
-  //     ],
-  //     price: " ₹24450 / P",
-  //     duration: "7days",
-  //     seatAvability: "15Seat",
-  //   },
-  // ];
+  const navigate = useNavigate();
 
   const loadPackages = () => {
-    // TourService.fetchAllTours()
-    //   .then((response) => {
-    //     setAllPackage(response?.data?.data);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    TourService.fetchAllTours()
+      .then((response) => {
+        setAllPackage(response?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   React.useEffect(() => {
     loadPackages();
   }, []);
-  // console.log("Tours121212:", allPackage);
+
+  const handleClick = () => {
+    navigate("custom-tour-form");
+  };
 
   return (
     <>
@@ -137,6 +59,8 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
               </Grid>
             ))}
         </Grid>
+        <Outlet />
+        <Button onClick={handleClick}>Custom Enquiry</Button>
       </Container>
     </>
   );

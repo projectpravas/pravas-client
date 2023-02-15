@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
@@ -37,6 +37,7 @@ import Fade from "@mui/material/Fade";
 import TourService from "../../../services/TourService";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import { createFD } from "./tourFormData";
+import { useLocation } from "react-router-dom";
 
 const tourTypes = ["Adventure", "Group", "Honeymoon", "Trek", "Customize"];
 
@@ -64,12 +65,16 @@ interface IPackageFormProps {}
 
 interface TourInterface {
   title?: string;
+  tourLocation?: string;
   tourType?: string[];
   price?: string;
   duration?: { days: string; nights: string };
   tourDesc?: string;
   maxPersons?: string;
   featured?: Boolean;
+  tourStatus?: string;
+  packageStatus?: string;
+  category?: string;
 }
 
 interface ItineraryObj {
@@ -107,6 +112,7 @@ interface InotesInterface {
 
 const commnObj = {
   hasTitle: true,
+  hasTourLocation: true,
   hasPrice: true,
   hasDays: true,
   hasFeatured: true,
@@ -152,6 +158,7 @@ const notesItemObj = { touched: false, note: "" };
 
 const tourItemObj = {
   title: "",
+  tourLocation: "",
   tourType: [],
   price: "",
   duration: { days: "", nights: "" },
@@ -164,7 +171,6 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
   props
 ) => {
   const { dragEnter, dragStart, drop } = useDnD();
-  const [days, setDays] = useState(0);
   const [daysArray, setDaysArray] = useState<Array<number>>([]);
   const [dayPlanItems, setDayPlanItems] = useState([itineraryItemObj]);
   const [itinerary, setItinerary] = useState<Array<ItineraryObj>>([
@@ -183,19 +189,20 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
   ]);
   const [tour, setTour] = useState<TourInterface>(tourItemObj);
 
-  const theme = useTheme();
+  const { pathname } = useLocation();
 
-  const setPlanDay = () => {
-    let arr = [...itinerary];
-    daysArray.forEach((v, i) => {
-      arr[i].day = i + 1;
-    });
-    setItinerary([...arr]);
-  };
+  const category: "package" | "tour" = pathname.split("/").includes("packages")
+    ? "package"
+    : "tour";
+
+  const tourId = pathname.split("/")[5];
+  const operation = pathname.split("/")[6];
+
+  const theme = useTheme();
 
   const daysCount = (day: number, itemArr: any) => {
     const arr = [];
-    const dataArr = [];
+    let dataArr = [];
 
     for (let i = 0; i < day; i++) {
       if (i < 30) arr.push(i + 1);
@@ -366,28 +373,58 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
     let excludesData = JSON.parse(localStorage.getItem("excludesData") as any);
     let notesData = JSON.parse(localStorage.getItem("notesData") as any);
 
-    setTour(basicTourData ? basicTourData : tourItemObj);
-    basicTourData?.duration?.days &&
-      daysCount(Number(basicTourData?.duration?.days), itineraryData);
-    setHotels(hotelsData ? hotelsData : hotelItemObj);
-    setIncludes(includesData ? includesData : includesItemObj);
-    setExcludes(excludesData ? excludesData : excludesItemObj);
-    setTourNotes(notesData ? notesData : notesItemObj);
-    // setItinerary(itineraryData ? itineraryData : itineraryItemObj);
-    // setDaysArray(daysArray);
-    // setPlanDay();
+    itineraryData = Array.isArray(itineraryData)
+      ? itineraryData
+      : [itineraryItemObj];
+
+    setTour(basicTourData ? basicTourData : [tourItemObj]);
+    setHotels(hotelsData ? hotelsData : [hotelItemObj]);
+    setIncludes(includesData ? includesData : [includesItemObj]);
+    setExcludes(excludesData ? excludesData : [excludesItemObj]);
+    setTourNotes(notesData ? notesData : [notesItemObj]);
+    daysCount(itineraryData.length, itineraryData);
 
     initialTour = { ...initialTour, ...basicTourData };
   };
 
-  useEffect(() => {
-    daysCount(days, false);
-  }, [days]);
+  const setLocalStorage = (data: any) => {
+    const tourData = {
+      title: data?.title,
+      tourLocation: data?.tourLocation,
+      tourType: data?.tourType,
+      price: data?.price,
+      duration: data?.duration,
+      tourDesc: data?.tourDesc,
+      maxPersons: data?.maxPersons,
+      featured: data?.featured,
+    };
 
-  useEffect(() => {
-    // days reset
-    setPlanDay();
-  }, [daysArray]);
+    setTour(tourData);
+    setItinerary(data?.tourPlan?.itinerary);
+
+    // setImages(data?.images);
+
+    setHotels(data?.tourPlan?.hotels);
+    setIncludes(data?.tourPlan?.includes);
+    setExcludes(data?.tourPlan?.excludes);
+    setTourNotes(data?.tourPlan?.tourNotes);
+
+    initialTour = { ...initialTour, ...tourData };
+  };
+
+  const getOneTour = (id: string) => {
+    TourService.fetchOneTour(id)
+      .then((res) => {
+        console.log(res);
+        setLocalStorage(res?.data?.data);
+      })
+      .catch((err) => {
+        console.error(err);
+        const msg =
+          err?.response?.data?.message || "Tour data couldn't fetched..";
+        errorToast("");
+      });
+  };
 
   //local storage set
   useEffect(() => {
@@ -396,10 +433,19 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
       : [itineraryItemObj];
     let basicTourData: TourInterface = { ...tour };
     let itineraryData: Array<ItineraryObj> = itineraryArr;
-    let hotelsData: Array<IhotelsInterface> = [...hotels];
-    let includesData: Array<IincludesInterface> = [...includes];
-    let excludesData: Array<IexcludesInterface> = [...excludes];
-    let notesData: Array<InotesInterface> = [...tourNotes];
+
+    let hotelsData: Array<IhotelsInterface> = Array.isArray(hotels)
+      ? [...hotels]
+      : [hotels];
+    let includesData: Array<IincludesInterface> = Array.isArray(includes)
+      ? [...includes]
+      : [includes];
+    let excludesData: Array<IexcludesInterface> = Array.isArray(excludes)
+      ? [...excludes]
+      : [excludes];
+    let notesData: Array<InotesInterface> = Array.isArray(tourNotes)
+      ? [...tourNotes]
+      : [tourNotes];
 
     const basicTourDataString = JSON.stringify(basicTourData);
     const itineraryDataString = JSON.stringify(itineraryData);
@@ -439,6 +485,10 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
     setDayPlanItems(result);
   }, [itinerary]);
 
+  useEffect(() => {
+    if (operation == "edit") getOneTour(tourId);
+  }, [operation, tourId]);
+
   return (
     <>
       <Formik
@@ -446,14 +496,14 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
         enableReinitialize
         validationSchema={tourYupSchema}
         onSubmit={(values, { resetForm }) => {
-          const tourObj = createFD(images);
+          const tourObj = createFD(images, category);
 
           return;
           TourService.createTour(tourObj)
             .then((res) => {
               const msg = res?.data?.message || "Package created successfully";
               successToast(msg, 3000);
-
+              return;
               localStorage.setItem("basicTourData", "");
               localStorage.setItem("itineraryData", "");
               localStorage.setItem("hotelsData", "");
@@ -473,6 +523,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
       >
         {({
           values,
+          isValid,
           errors,
           touched,
           handleBlur,
@@ -481,8 +532,6 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
         }) => {
           const durationTouched: any = touched?.duration;
           const durationErrors: any = errors?.duration;
-
-          // console.log(errors, values);
 
           return (
             <form onSubmit={handleSubmit}>
@@ -534,83 +583,33 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                         />
                       </Grid>
                       <Grid item xs={12} md={4}>
-                        <FormControl
-                          size="small"
-                          required
+                        <TextField
                           fullWidth
+                          required
+                          type="text"
+                          size="small"
+                          name="tourLocation"
+                          label="Tour Location"
+                          value={tour?.tourLocation}
+                          onChange={(e: any) => {
+                            handleChange(e);
+                            handleTour(e);
+                          }}
+                          autoComplete="tourLocation"
+                          onBlur={handleBlur}
                           error={
-                            touched?.tourType &&
-                            tour?.tourType &&
-                            tour?.tourType?.length <= 0
+                            touched.tourLocation && errors.tourLocation
                               ? true
                               : false
                           }
-                        >
-                          <InputLabel size="small" id="multiple-chip-label">
-                            Type
-                          </InputLabel>
-                          <Select
-                            required
-                            size="small"
-                            labelId="multiple-chip-label"
-                            id="TourType"
-                            name="tourType"
-                            multiple
-                            value={tour?.tourType || []}
-                            onBlur={handleBlur}
-                            onChange={(e: any) => {
-                              handleChange(e);
-                              handleTour(e);
-                            }}
-                            input={
-                              <OutlinedInput
-                                id="select-multiple-chip"
-                                label="Chip"
-                                size="small"
-                              />
-                            }
-                            renderValue={(selected) => (
-                              <Box
-                                sx={{
-                                  display: "flex",
-                                  flexWrap: "wrap",
-                                  gap: 0.5,
-                                }}
-                              >
-                                {selected.map((value) => (
-                                  <Chip
-                                    size="small"
-                                    key={value}
-                                    label={value}
-                                  />
-                                ))}
-                              </Box>
-                            )}
-                            MenuProps={MenuProps}
-                          >
-                            {tourTypes.map((type) => (
-                              <MenuItem
-                                key={type}
-                                value={type}
-                                style={getStyles(
-                                  type,
-                                  tour?.tourType as string[],
-                                  theme
-                                )}
-                              >
-                                {type}
-                              </MenuItem>
-                            ))}
-                          </Select>
-                          <FormHelperText>
-                            {touched?.tourType &&
-                            tour?.tourType &&
-                            tour?.tourType?.length <= 0
-                              ? "Tour type can't be empty"
-                              : ""}
-                          </FormHelperText>
-                        </FormControl>
+                          helperText={
+                            touched.tourLocation && errors.tourLocation
+                              ? errors.tourLocation
+                              : ""
+                          }
+                        />
                       </Grid>
+
                       <Grid item xs={12} md={4}>
                         <TextField
                           fullWidth
@@ -647,7 +646,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                           inputProps={{ max: 30, min: 0 }}
                           onChange={(e: any) => {
                             handleChange(e);
-                            setDays(Number(e?.target?.value));
+                            daysCount(e?.target?.value, false);
                             handleTour(e);
                           }}
                           autoComplete="duration.days"
@@ -729,6 +728,85 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                       </Grid>
 
                       <Grid item xs={12}>
+                        <FormControl
+                          size="small"
+                          required
+                          fullWidth
+                          error={
+                            touched?.tourType &&
+                            tour?.tourType &&
+                            tour?.tourType?.length <= 0
+                              ? true
+                              : false
+                          }
+                        >
+                          <InputLabel size="small" id="multiple-chip-label">
+                            Type
+                          </InputLabel>
+                          <Select
+                            required
+                            size="small"
+                            labelId="multiple-chip-label"
+                            id="TourType"
+                            name="tourType"
+                            multiple
+                            value={tour?.tourType || []}
+                            onBlur={handleBlur}
+                            onChange={(e: any) => {
+                              handleChange(e);
+                              handleTour(e);
+                            }}
+                            input={
+                              <OutlinedInput
+                                id="select-multiple-chip"
+                                label="Chip"
+                                size="small"
+                              />
+                            }
+                            renderValue={(selected) => (
+                              <Box
+                                sx={{
+                                  display: "flex",
+                                  flexWrap: "wrap",
+                                  gap: 0.5,
+                                }}
+                              >
+                                {selected.map((value) => (
+                                  <Chip
+                                    size="small"
+                                    key={value}
+                                    label={value}
+                                  />
+                                ))}
+                              </Box>
+                            )}
+                            MenuProps={MenuProps}
+                          >
+                            {tourTypes.map((type) => (
+                              <MenuItem
+                                key={type}
+                                value={type}
+                                style={getStyles(
+                                  type,
+                                  tour?.tourType as string[],
+                                  theme
+                                )}
+                              >
+                                {type}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                          <FormHelperText>
+                            {touched?.tourType &&
+                            tour?.tourType &&
+                            tour?.tourType?.length <= 0
+                              ? "Tour type can't be empty"
+                              : ""}
+                          </FormHelperText>
+                        </FormControl>
+                      </Grid>
+
+                      <Grid item xs={12}>
                         <TextField
                           fullWidth
                           required
@@ -759,7 +837,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                 </Accordion>
 
                 {/* Tour Plan Day by day */}
-                <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
+                <Accordion sx={{ marginBottom: 1 }}>
                   <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
@@ -775,153 +853,157 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                         justifyContent: "center",
                       }}
                     >
-                      {daysArray.map((v, i) => (
-                        <Grid
-                          item
-                          xs={12}
-                          md={4}
-                          sx={{ margin: 2 }}
-                          key={v}
-                          draggable
-                          onDragStart={(e) => dragStart(e, i)}
-                          onDragEnter={(e) => dragEnter(e, i)}
-                          onDragEnd={(e) =>
-                            drop(
-                              e,
-                              daysArray,
-                              setDaysArray,
-                              itinerary,
-                              setItinerary
-                            )
-                          }
-                          onDragOver={(e) => e.preventDefault()}
-                        >
-                          <Grid container>
-                            <Paper variant="elevation">
-                              <Grid
-                                item
-                                sx={{ padding: 2, cursor: "grab" }}
-                                xs={12}
-                              >
-                                <Grid container justifyContent="space-between">
-                                  <Typography>Day : {i + 1} </Typography>
-                                  <Tooltip
-                                    TransitionComponent={Fade}
-                                    TransitionProps={{ timeout: 600 }}
-                                    title="Drag to change the card.."
-                                    placement="top"
-                                  >
-                                    <DragIndicatorIcon />
-                                  </Tooltip>
-                                </Grid>
-                                <TextField
-                                  fullWidth
-                                  required
-                                  type="text"
-                                  size="small"
-                                  margin="normal"
-                                  name={`planTitle/${v}`}
-                                  label="Plan Title"
-                                  value={dayPlanItems[i]?.planTitle}
-                                  onChange={handleItinerary}
-                                  autoComplete={`planTitle/${i}`}
-                                  onBlur={(e) => {
-                                    if (!itinerary[v - 1].touched?.title) {
-                                      const arr: any = [...itinerary];
-                                      arr[v - 1].touched.title = true;
-                                      setItinerary([...arr]);
-                                    }
-                                    handleBlur(e);
-                                  }}
-                                  error={
-                                    !dayPlanItems[i]?.planTitle &&
-                                    dayPlanItems[i]?.touched?.title
-                                      ? true
-                                      : false
-                                  }
-                                  helperText={
-                                    !dayPlanItems[i]?.planTitle &&
-                                    dayPlanItems[i]?.touched?.title
-                                      ? `Plan Title is required`
-                                      : ""
-                                  }
-                                />
-
-                                <TextField
-                                  fullWidth
-                                  required
-                                  multiline
-                                  margin="normal"
-                                  minRows={2}
-                                  type="text"
-                                  name={`planDesc/${v}`}
-                                  label="Plan Description"
-                                  value={dayPlanItems[i]?.planDesc}
-                                  onChange={handleItinerary}
-                                  onBlur={(e) => {
-                                    if (!itinerary[v - 1].touched?.desc) {
-                                      const arr: any = [...itinerary];
-                                      arr[v - 1].touched.desc = true;
-                                      setItinerary([...arr]);
-                                    }
-                                    handleBlur(e);
-                                  }}
-                                  error={
-                                    !dayPlanItems[i]?.planDesc &&
-                                    dayPlanItems[i]?.touched?.desc
-                                      ? true
-                                      : false
-                                  }
-                                  helperText={
-                                    !dayPlanItems[i]?.planDesc &&
-                                    dayPlanItems[i]?.touched?.desc
-                                      ? `Plan Description is required`
-                                      : ""
-                                  }
-                                />
-                                <FormGroup
-                                  key={v}
-                                  row
-                                  onClick={(e: any) => handleItinerary(e, v)}
+                      {tour?.duration?.days &&
+                        itinerary.map((v, i) => (
+                          <Grid
+                            item
+                            xs={12}
+                            md={4}
+                            sx={{ margin: 2 }}
+                            key={i + 1}
+                            draggable
+                            onDragStart={(e) => dragStart(e, i)}
+                            onDragEnter={(e) => dragEnter(e, i)}
+                            onDragEnd={(e) =>
+                              drop(
+                                e,
+                                daysArray,
+                                setDaysArray,
+                                itinerary,
+                                setItinerary
+                              )
+                            }
+                            onDragOver={(e) => e.preventDefault()}
+                          >
+                            <Grid container>
+                              <Paper variant="elevation">
+                                <Grid
+                                  item
+                                  sx={{ padding: 2, cursor: "grab" }}
+                                  xs={12}
                                 >
-                                  <FormControlLabel
-                                    key={v}
-                                    control={
-                                      <Checkbox
-                                        name="breakfast"
-                                        checked={
-                                          dayPlanItems[i]?.meals?.breakfast
-                                        }
-                                      />
+                                  <Grid
+                                    container
+                                    justifyContent="space-between"
+                                  >
+                                    <Typography>Day : {i + 1} </Typography>
+                                    <Tooltip
+                                      TransitionComponent={Fade}
+                                      TransitionProps={{ timeout: 600 }}
+                                      title="Drag to change the card.."
+                                      placement="top"
+                                    >
+                                      <DragIndicatorIcon />
+                                    </Tooltip>
+                                  </Grid>
+                                  <TextField
+                                    fullWidth
+                                    required
+                                    type="text"
+                                    size="small"
+                                    margin="normal"
+                                    name={`planTitle/${itinerary[i]?.day}`}
+                                    label="Plan Title"
+                                    value={dayPlanItems[i]?.planTitle}
+                                    onChange={handleItinerary}
+                                    autoComplete={`planTitle/${daysArray[i]}`}
+                                    onBlur={(e) => {
+                                      if (!itinerary[i].touched?.title) {
+                                        const arr: any = [...itinerary];
+                                        arr[i].touched.title = true;
+                                        setItinerary([...arr]);
+                                      }
+                                      handleBlur(e);
+                                    }}
+                                    error={
+                                      !dayPlanItems[i]?.planTitle &&
+                                      dayPlanItems[i]?.touched?.title
+                                        ? true
+                                        : false
                                     }
-                                    label="Breakfast"
-                                  />
-                                  <FormControlLabel
-                                    key={v}
-                                    control={
-                                      <Checkbox
-                                        name="lunch"
-                                        checked={dayPlanItems[i]?.meals?.lunch}
-                                      />
+                                    helperText={
+                                      !dayPlanItems[i]?.planTitle &&
+                                      dayPlanItems[i]?.touched?.title
+                                        ? `Plan Title is required`
+                                        : ""
                                     }
-                                    label="Lunch"
                                   />
-                                  <FormControlLabel
-                                    key={v}
-                                    control={
-                                      <Checkbox
-                                        name="dinner"
-                                        checked={dayPlanItems[i]?.meals?.dinner}
-                                      />
+
+                                  <TextField
+                                    fullWidth
+                                    required
+                                    multiline
+                                    margin="normal"
+                                    minRows={2}
+                                    type="text"
+                                    name={`planDesc/${itinerary[i]?.day}`}
+                                    label="Plan Description"
+                                    value={dayPlanItems[i]?.planDesc}
+                                    onChange={handleItinerary}
+                                    onBlur={(e) => {
+                                      if (!itinerary[i].touched?.desc) {
+                                        const arr: any = [...itinerary];
+                                        arr[i].touched.desc = true;
+                                        setItinerary([...arr]);
+                                      }
+                                      handleBlur(e);
+                                    }}
+                                    error={
+                                      !dayPlanItems[i]?.planDesc &&
+                                      dayPlanItems[i]?.touched?.desc
+                                        ? true
+                                        : false
                                     }
-                                    label="Dinner"
+                                    helperText={
+                                      !dayPlanItems[i]?.planDesc &&
+                                      dayPlanItems[i]?.touched?.desc
+                                        ? `Plan Description is required`
+                                        : ""
+                                    }
                                   />
-                                </FormGroup>
-                              </Grid>
-                            </Paper>
+                                  <FormGroup
+                                    row
+                                    onClick={(e: any) =>
+                                      handleItinerary(e, i + 1)
+                                    }
+                                  >
+                                    <FormControlLabel
+                                      control={
+                                        <Checkbox
+                                          name="breakfast"
+                                          checked={
+                                            itinerary[i]?.meals?.breakfast
+                                          }
+                                        />
+                                      }
+                                      label="Breakfast"
+                                    />
+
+                                    <FormControlLabel
+                                      control={
+                                        <Checkbox
+                                          name="lunch"
+                                          checked={itinerary[i]?.meals?.lunch}
+                                        />
+                                      }
+                                      label="Lunch"
+                                    />
+
+                                    <FormControlLabel
+                                      control={
+                                        <Checkbox
+                                          name="dinner"
+                                          checked={itinerary[i]?.meals?.dinner}
+                                        />
+                                      }
+                                      label="Dinner"
+                                    />
+                                  </FormGroup>
+                                </Grid>
+                              </Paper>
+                            </Grid>
                           </Grid>
-                        </Grid>
-                      ))}
+                        ))}
                     </Grid>
                   </AccordionDetails>
                 </Accordion>
@@ -1405,10 +1487,27 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                   </AccordionDetails>
                 </Accordion>
 
-                <Grid>
-                  <Button variant="outlined" type="submit">
-                    Submit
-                  </Button>
+                <Grid container justifyContent="center" sx={{ m: 2 }}>
+                  <Box
+                    component="span"
+                    sx={{
+                      cursor:
+                        isValid && images?.length > 0
+                          ? "dafault"
+                          : "not-allowed",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      disabled={isValid && images?.length > 0 ? false : true}
+                      sx={{
+                        m: 1,
+                      }}
+                      type="submit"
+                    >
+                      Submit
+                    </Button>
+                  </Box>
                 </Grid>
               </Container>
             </form>

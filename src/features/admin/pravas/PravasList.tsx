@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import UserService from "../../../services/UserService";
 import User from "../../../shared/models/userModel";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Chip } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -25,13 +25,13 @@ interface IPravasListProps {
 }
 
 const PravasList: React.FunctionComponent<IPravasListProps> = ({
-  title,
   data,
   loadTours,
+  title,
 }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const category = pathname.includes("pravas") ? "package" : "tour";
+  const category = pathname.includes("packages") ? "package" : "tour";
 
   //handle delete
   const handleDelete = (id: string) => {
@@ -66,12 +66,11 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
 
   // handle add
   const handleAdd = (category: string) => {
-    navigate(`/secured/add-edit/0/add/${category}`);
+    navigate(`${pathname}/add-edit/0/add/admin`);
   };
-
   // handle edit
   const handleEdit = (id: string, category: string) => {
-    navigate(`/secured/add-edit/${id}/edit/${category}`);
+    navigate(`${pathname}/add-edit/${id}/edit/admin`);
   };
 
   const handleStausAndVerification = (op: string, value: any, tour: any) => {
@@ -148,7 +147,6 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         sort: false,
         customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
           const tour: any = data[rowIndex];
-          console.log(tour);
           return (
             <>
               {tour?.duration?.days} days {tour?.duration?.nights} nights
@@ -157,6 +155,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         },
       },
     },
+
     {
       label: "Status",
       name: "status",
@@ -182,30 +181,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         },
       },
     },
-    {
-      label: "Verified",
-      name: "verified",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value: boolean, metaData: any) => {
-          const tour = data[metaData.rowIndex];
-          return (
-            <>
-              {
-                <Chip
-                  color={value == true ? "primary" : "warning"}
-                  label={value == true ? "Verified" : "unverified"}
-                  onClick={() =>
-                    handleStausAndVerification("verified", value, tour)
-                  }
-                />
-              }
-            </>
-          );
-        },
-      },
-    },
+
     {
       label: "Actions",
       name: "actions",
@@ -247,18 +223,24 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       );
     },
   };
+  // const columns = commonColumns.filter((v, i) => v.name !== "participants");
+
   return (
-    <Container sx={{ mt: 2 }} disableGutters>
-      {/* <Button type="button" variant="contained" sx={{ mb: 1, ml: 2 }}>
+    <>
+      <Container sx={{ mt: 2 }} disableGutters>
+        {/* <Button type="button" variant="contained" sx={{ mb: 1, ml: 2 }}>
         {`Add ${title.split(" ")[0]}`}
       </Button> */}
-      <MUIDataTables
-        title={title}
-        columns={columns}
-        data={data}
-        options={options}
-      />
-    </Container>
+        <MUIDataTables
+          title={title}
+          columns={columns}
+          data={data}
+          options={options}
+        />
+      </Container>
+
+      <Outlet />
+    </>
   );
 };
 

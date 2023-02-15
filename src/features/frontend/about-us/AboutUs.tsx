@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -153,7 +153,7 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
         sx={{ flexWrap: "wrap", bgcolor: "#005d9d" }}
         xs={12}
       >
-        <Grid xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <Item
             sx={{
               backgroundColor: "transparent",
@@ -167,12 +167,12 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
               width="100%"
               height="100%"
             />
-          </Item>{" "}
+          </Item>
           {/*img*/}
         </Grid>
         {/*img*/}
 
-        <Grid xs={12} sm={12} md={6} sx={{ alignContent: "left" }}>
+        <Grid item xs={12} sm={12} md={6} sx={{ alignContent: "left" }}>
           <Item
             sx={{
               backgroundColor: "transparent",

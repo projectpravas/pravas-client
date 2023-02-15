@@ -18,7 +18,7 @@ const BlankLayout: React.FunctionComponent<IBlankLayoutProps> = (props) => {
             routes.map((route, i) => (
               <Route
                 key={route.path + i}
-                path={route?.path}
+                path={`${route?.path}`}
                 element={route?.component}
               />
             ))}

@@ -17,10 +17,52 @@ import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
 import TimerOutlinedIcon from "@mui/icons-material/TimerOutlined";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import { Formik } from "formik";
+import defineInitialBlog from "../../../../shared/yup-validations/blog-validation/initialBlog";
+import defineBlogYupSchema from "../../../../shared/yup-validations/blog-validation/blogYupValidation";
+import BolgModel from "../../../../shared/models/blogModel";
+import { errorToast, successToast } from "../../../../ui/toast/Toast";
+import BlogService from "../../../../services/BlogService";
 
 interface IAddBlogProps {}
 
+interface customTouchedInterface {
+  category?: boolean;
+  keyPhases?: boolean;
+  tags?: boolean;
+}
+
+const commonObj = {
+  hasTitle: true,
+  hasSeoTitle: true,
+  hasMetaDescription: true,
+  hasSlug: true,
+};
+
+const initialBlog = defineInitialBlog({
+  ...commonObj,
+  hasFocusKeyphrases: true,
+  hasRichText: true,
+  hasCategories: true,
+  hasTags: true,
+  hasImage: true,
+});
+const blogSchema = defineBlogYupSchema({ ...commonObj });
+
 const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
+  //  touched state
+  const [customTouched, setCustomTouched] = useState<customTouchedInterface>({
+    category: false,
+    keyPhases: false,
+    tags: false,
+  });
+
+  //  touched state
+  const [customErrors, setCustomErrors] = useState<customTouchedInterface>({
+    category: false,
+    keyPhases: false,
+    tags: false,
+  });
+
   // Image State
   const [product, setProduct] = React.useState("");
   const [previewImage, setPreviewImage] = React.useState("");
@@ -45,7 +87,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
   ]);
 
   // Form Data
-  const [formData, setFormData] = React.useState({
+  const [formData, setFormData] = React.useState<BolgModel>({
     title: "",
     richText: "",
     seoTitle: "",
@@ -73,12 +115,12 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
   const handleCategory = (e: any) => {
     const { name, checked } = e?.target;
 
-    const catArr = formData?.categories;
+    const catArr: any = formData?.categories;
 
     if (checked) {
       !catArr.includes(name as string) && catArr.push(name as string);
     } else {
-      const index = catArr.findIndex((val) => val == name);
+      const index = catArr.findIndex((val: any) => val == name);
 
       index >= 0 && Array.isArray(catArr) && catArr.splice(index, 1);
     }
@@ -163,6 +205,24 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
     }
   };
 
+  const customHandleBlur = (label: "category" | "keyPhases" | "tags") => {
+    if (!customTouched[label]) {
+      setCustomTouched({
+        ...customTouched,
+        [label]: true,
+      });
+      setCustomErrors({
+        ...customErrors,
+        [label]: true,
+      });
+    } else {
+      setCustomErrors({
+        ...customErrors,
+        [label]: false,
+      });
+    }
+  };
+
   return (
     <>
       <Container sx={{ my: 3 }}>
@@ -178,14 +238,43 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
         </Grid>
 
         <Formik
-          initialValues={{}}
-          // validationSchema={{}}
+          initialValues={initialBlog}
+          enableReinitialize
+          validationSchema={blogSchema}
           onSubmit={(values, { resetForm }) => {
             formData.tags = chipValue;
             formData.focusKeyphrases = keyPhraseChipValue?.join(", ");
-            formData.image = previewImage;
 
-            console.log("formData: ", formData);
+            const fd = new FormData();
+
+            if (formData?.title) fd.append("title", formData?.title as string);
+            if (formData?.richText)
+              fd.append("richText", formData?.richText as string);
+            if (formData?.seoTitle)
+              fd.append("seoTitle", formData?.seoTitle as string);
+            if (formData?.metaDescription)
+              fd.append("metaDescription", formData?.metaDescription as string);
+            if (formData?.focusKeyphrases)
+              fd.append("focusKeyphrases", formData?.focusKeyphrases as string);
+            if (formData?.slug) fd.append("slug", formData?.slug as string);
+            if (formData?.categories)
+              fd.append("categories", JSON.stringify(formData?.categories));
+            if (formData?.tags)
+              fd.append("tags", JSON.stringify(formData?.tags));
+            if (formData?.image) fd.append("image", formData?.image as string);
+
+            BlogService.createBlog(fd)
+              .then((res) => {
+                const msg = res?.data?.message || "Blog created successfully..";
+                successToast(msg, 3000);
+                resetForm(initialBlog as any);
+              })
+              .catch((err) => {
+                console.error(err);
+                const msg =
+                  err?.response?.data?.message || "Blog couldn't created..";
+                errorToast(msg, 5000);
+              });
           }}
         >
           {({
@@ -198,7 +287,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
             handleSubmit,
           }) => {
             return (
-              <form>
+              <form onSubmit={handleSubmit}>
                 <Paper elevation={3} sx={{ p: 4 }}>
                   <Grid container spacing={4}>
                     {/* --------------------------------left section-------------------------- */}
@@ -211,13 +300,24 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                             type="text"
                             label="Title"
                             fullWidth
+                            autoFocus
                             value={formData?.title}
                             name="title"
-                            size="medium"
+                            size="small"
+                            required
                             onChange={(e) => {
                               handleChange(e);
                               customHandleChange(e);
                             }}
+                            onBlur={handleBlur}
+                            error={
+                              touched?.title && errors?.title ? true : false
+                            }
+                            helperText={
+                              touched?.title && errors?.title
+                                ? errors?.title
+                                : ""
+                            }
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -230,7 +330,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                           <div
                           // dangerouslySetInnerHTML={{ __html: formData?.richText }}
                           />
-                          <div>{formData?.richText}</div>
+                          {/* <div>{formData?.richText}</div> */}
                         </Grid>
                         <Grid item xs={12}>
                           <TextField
@@ -241,11 +341,23 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                             fullWidth
                             value={formData?.seoTitle}
                             name="seoTitle"
-                            size="medium"
+                            size="small"
+                            required
                             onChange={(e) => {
                               handleChange(e);
                               customHandleChange(e);
                             }}
+                            onBlur={handleBlur}
+                            error={
+                              touched?.seoTitle && errors?.seoTitle
+                                ? true
+                                : false
+                            }
+                            helperText={
+                              touched?.seoTitle && errors?.seoTitle
+                                ? errors?.seoTitle
+                                : ""
+                            }
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -257,13 +369,27 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                             fullWidth
                             value={formData?.metaDescription}
                             name="metaDescription"
-                            size="medium"
+                            size="small"
+                            required
                             multiline
                             rows={2}
                             onChange={(e) => {
                               handleChange(e);
                               customHandleChange(e);
                             }}
+                            onBlur={handleBlur}
+                            error={
+                              touched?.metaDescription &&
+                              errors?.metaDescription
+                                ? true
+                                : false
+                            }
+                            helperText={
+                              touched?.metaDescription &&
+                              errors?.metaDescription
+                                ? errors?.metaDescription
+                                : ""
+                            }
                           />
                         </Grid>
                         <Grid item xs={12}>
@@ -282,6 +408,23 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                   handleChange(e);
                                   customHandleChange(e);
                                 }}
+                                onBlur={() =>
+                                  keyPhraseChipValue?.length <= 0 &&
+                                  keyPhrase == "" &&
+                                  customHandleBlur("keyPhases")
+                                }
+                                error={
+                                  customTouched?.keyPhases &&
+                                  keyPhraseChipValue?.length <= 0
+                                    ? true
+                                    : false
+                                }
+                                helperText={
+                                  keyPhraseChipValue?.length <= 0 &&
+                                  customErrors?.keyPhases
+                                    ? "Focus-key-phrase required"
+                                    : ""
+                                }
                               />
                             </Grid>
                             <Grid item xs={2} md={2} textAlign="center">
@@ -302,8 +445,10 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                   sx={{
                                     m: 1,
                                     mx: "5px",
-                                    backgroundColor: "#f7a61e40",
-                                    color: "#9b3600",
+                                    backgroundColor: "#b3e4e4",
+                                    // backgroundColor: "#f7a61e40",
+                                    color: "#000",
+                                    // color: "#9b3600",
                                   }}
                                   key={chip + i}
                                   label={chip}
@@ -324,11 +469,17 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                             fullWidth
                             value={formData?.slug}
                             name="slug"
-                            size="medium"
+                            size="small"
+                            required
                             onChange={(e) => {
                               handleChange(e);
                               customHandleChange(e);
                             }}
+                            onBlur={handleBlur}
+                            error={touched?.slug && errors?.slug ? true : false}
+                            helperText={
+                              touched?.slug && errors?.slug ? errors?.slug : ""
+                            }
                           />
                         </Grid>
                       </Grid>
@@ -369,6 +520,25 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                       value={cat}
                                       size="small"
                                       onChange={(e) => setCat(e?.target?.value)}
+                                      onBlur={() =>
+                                        formData?.categories &&
+                                        formData?.categories.length <= 0 &&
+                                        customHandleBlur("category")
+                                      }
+                                      error={
+                                        customTouched?.category &&
+                                        formData?.categories &&
+                                        formData?.categories.length <= 0
+                                          ? true
+                                          : false
+                                      }
+                                      helperText={
+                                        formData?.categories &&
+                                        formData?.categories.length <= 0 &&
+                                        customErrors?.category
+                                          ? "Categories are required"
+                                          : ""
+                                      }
                                     />
                                   </Grid>
                                   <Grid item xs={2}>
@@ -449,6 +619,23 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                       handleChange(e);
                                       customHandleChange(e);
                                     }}
+                                    onBlur={() =>
+                                      chipValue?.length <= 0 &&
+                                      item == "" &&
+                                      customHandleBlur("tags")
+                                    }
+                                    error={
+                                      customTouched?.tags &&
+                                      chipValue?.length <= 0
+                                        ? true
+                                        : false
+                                    }
+                                    helperText={
+                                      chipValue?.length <= 0 &&
+                                      customTouched?.tags
+                                        ? "Tags are required"
+                                        : ""
+                                    }
                                   />
                                 </Grid>
                                 <Grid item xs={3} md={3}>
@@ -468,8 +655,10 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                       sx={{
                                         m: 1,
                                         mx: "5px",
-                                        backgroundColor: "#f7a61e40",
-                                        color: "#9b3600",
+                                        backgroundColor: "#b3e4e4",
+                                        // backgroundColor: "#f7a61e40",
+                                        color: "#000",
+                                        // color: "#9b3600",
                                       }}
                                       key={chip + i}
                                       label={chip}
@@ -546,7 +735,13 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                   <input
                                     type="file"
                                     id="image"
-                                    onChange={handleImageChange}
+                                    onChange={(e) => {
+                                      handleImageChange(e);
+                                      const file = e?.target?.files
+                                        ? e?.target?.files[0]
+                                        : "";
+                                      formData.image = file;
+                                    }}
                                     style={{ display: "none" }}
                                   />
                                 </Box>
@@ -558,23 +753,67 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                     </Grid>
                   </Grid>
                   <Grid>
-                    <Button
-                      variant="contained"
-                      type="submit"
-                      size="large"
-                      endIcon={<OpenInBrowserIcon />}
-                      sx={{ backgroundColor: "#27488d", mx: 2 }}
+                    <span
+                      style={{
+                        cursor:
+                          formData?.title != "" &&
+                          keyPhraseChipValue?.length >= 0 &&
+                          formData?.categories &&
+                          formData?.categories?.length >= 0 &&
+                          chipValue?.length >= 0 &&
+                          formData?.image != "" &&
+                          formData?.richText != ""
+                            ? isValid
+                              ? "not-allowed"
+                              : "default"
+                            : "default",
+                      }}
                     >
-                      Publish
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="large"
-                      endIcon={<TimerOutlinedIcon />}
-                      sx={{ backgroundColor: "#f7a71e" }}
-                    >
-                      Schedule
-                    </Button>
+                      <Button
+                        variant="contained"
+                        type="submit"
+                        size="large"
+                        disabled={
+                          formData?.title != "" &&
+                          keyPhraseChipValue?.length >= 0 &&
+                          formData?.categories &&
+                          formData?.categories?.length >= 0 &&
+                          chipValue?.length >= 0 &&
+                          formData?.image != "" &&
+                          formData?.richText != ""
+                            ? isValid
+                              ? false
+                              : true
+                            : true
+                        }
+                        endIcon={<OpenInBrowserIcon />}
+                        sx={{ backgroundColor: "#27488d", mx: 2 }}
+                      >
+                        Publish
+                      </Button>
+                      {/* <Button
+                        variant="contained"
+                        type="submit"
+                        size="large"
+                        disabled={
+                          formData?.title != "" &&
+                          keyPhraseChipValue?.length >= 0 &&
+                          formData?.categories &&
+                          formData?.categories?.length >= 0 &&
+                          chipValue?.length >= 0 &&
+                          formData?.image != "" &&
+                          formData?.richText != ""
+                            ? isValid
+                              ? false
+                              : true
+                            : true
+                        }
+                        endIcon={<TimerOutlinedIcon />}
+                        sx={{ backgroundColor: "#f7a71e" }}
+                      >
+                        Schedule
+                      </Button> */}
+                    </span>
                   </Grid>
                 </Paper>
               </form>

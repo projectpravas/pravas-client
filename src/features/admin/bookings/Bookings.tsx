@@ -1,12 +1,21 @@
-import * as React from "react";
+import React from "react";
 import { Outlet } from "react-router-dom";
+import CustomTitle from "../../../ui/title/CustomTitle";
+
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 interface IBookingsProps {}
 
 const Bookings: React.FunctionComponent<IBookingsProps> = (props) => {
   return (
     <>
-      <h1>Bookings</h1>
+      {/* <h1>Bookings</h1> */}
+      <CustomTitle title="Bookings" />
+
       <Outlet />
     </>
   );

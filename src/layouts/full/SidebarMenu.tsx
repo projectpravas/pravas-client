@@ -57,7 +57,7 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
                       <NavLink
                         to={path}
                         style={({ isActive }) => ({
-                          color: isActive ? "grey" : "black",
+                          color: isActive ? "#f7a707" : "black",
                         })}
                       >
                         {icon}
@@ -66,7 +66,7 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
                     <NavLink
                       to={path}
                       style={({ isActive }) => ({
-                        color: isActive ? "grey" : "black",
+                        color: isActive ? "#27488d" : "black",
                         borderBottom: isActive ? "3px solid #27488d" : "black",
                       })}
                     >

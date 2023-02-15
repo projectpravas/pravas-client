@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -24,6 +24,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import AuthService from "../../../services/AuthService";
 import { addLoggedUser } from "../../../app/slices/AuthSlice";
+import TourService from "../../../services/TourService";
 
 const Link = styled(NLink)({
   textDecoration: "none",
@@ -48,6 +49,17 @@ const Login = () => {
   const [loginChkBox, setLoginChkBox] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [activeElementId, setActiveElementId] = useState("");
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    TourService.fetchAllTours().then((res) => {
+      const arr: any = [];
+      const imgs = res?.data?.data?.forEach((v: any, i: any) =>
+        arr.push(...v.images)
+      );
+      setImages(arr);
+    });
+  }, []);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -60,6 +72,8 @@ const Login = () => {
     event.preventDefault();
   };
 
+  console.log(images);
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main">
@@ -71,7 +85,9 @@ const Login = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: `url(http://localhost:9999/${
+              images[Math.floor(Math.random() * images.length)]
+            })`,
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
