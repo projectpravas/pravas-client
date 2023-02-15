@@ -43,6 +43,7 @@ const renderCustomizedLabel = ({
   );
 };
 
+const onPieEnter = {};
 interface IUsersPieChartProps {}
 
 const UsersPieChart: React.FunctionComponent<IUsersPieChartProps> = (props) => {
@@ -60,6 +61,7 @@ const UsersPieChart: React.FunctionComponent<IUsersPieChartProps> = (props) => {
             outerRadius={120}
             fill="#8884d8"
             dataKey="value"
+            // onMouseEnter={onPieEnter}
           >
             {data.map((entry, index) => (
               <Cell

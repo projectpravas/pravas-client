@@ -230,7 +230,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                           <div
                           // dangerouslySetInnerHTML={{ __html: formData?.richText }}
                           />
-                          {/* <div>{formData?.richText}</div> */}
+                          <div>{formData?.richText}</div>
                         </Grid>
                         <Grid item xs={12}>
                           <TextField
