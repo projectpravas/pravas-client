@@ -16,7 +16,6 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
-// import TableCell from "@mui/material/TableCell";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
@@ -38,6 +37,7 @@ import {
   TableBody,
   TableCell,
 } from "@mui/material";
+import ReviewSection from "./ReviewSection";
 
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
@@ -47,7 +47,6 @@ const DataTab = styled(TableCell)({
   fontSize: "16px",
   textAlign: "center",
 });
-
 // ---ListItems styles=---
 const ItemList = styled(ListItem)({
   display: "list-item",
@@ -56,7 +55,6 @@ const ItemList = styled(ListItem)({
   letterSpacing: "-.2px",
   fontSize: "16px",
 });
-
 // ----Accordi0n typography style----
 const TypoAccordion = styled(ListItem)({
   width: "33%",
@@ -72,14 +70,11 @@ const TypoTourInfo = styled(Typography)({
   fontSize: "15px",
   fontWeight: "bold",
 });
-
 const CarouselStyle = styled(Carousel)({
   width: "90%",
   margin: "auto",
 });
-
 interface IExplorePravasProps {}
-
 interface Iitinerary {
   day: number | string;
   planTitle: string;
@@ -103,7 +98,6 @@ interface Iexclude {
 interface Inote {
   note: string;
 }
-
 interface TourDetails {
   images: string[] | any;
   _id: string;
@@ -122,7 +116,6 @@ interface TourDetails {
     scheduleDate?: string[] | any[];
   };
 }
-
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const { id } = useParams();
   //    -----share button state-------
@@ -150,13 +143,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       label: "Seats",
     },
   ];
-
   //*************tour location table******************** */
   const tableData = tourDetails?.tourPlan?.hotels;
 
   const tourDatesSheDule = tourDetails?.tourPlan?.scheduleDate;
-
-  // const data = [{ SheDule: "26 to 30 Dec 2022", seats: "Full" }];
 
   //**************must watch filter***************
 
@@ -173,9 +163,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         console.log(err);
       });
   };
-  console.log("tourDetails:", tourDetails);
 
-  console.log("AllPackageWatch:", allPackageWatch);
   React.useEffect(() => {
     loadExplore();
   }, []);
@@ -216,13 +204,13 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         </Grid>
       </Grid>
       {/* ************** Heading of Tour *******************    */}
-      <Grid sx={{ backgroundColor: "#FBF6D9" }}>
+      <Grid sx={{ backgroundColor: "#faf5ee" }}>
         <Container>
           <Grid
             container
             spacing={2}
             sx={{
-              backgroundColor: "#FBF6D9",
+              backgroundColor: "#faf5ee",
               borderTopBottom: { xs: "1px solid gray" },
             }}
           >
@@ -869,7 +857,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
+
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",
@@ -881,10 +869,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                         (incList: any, i: number) => (
                           <>
                             <List
-                              key={incList?.include + i}
-                              sx={{ listStyleType: "disc", pl: 2 }}
+                              key={incList?._id + i}
+                              sx={{
+                                listStyleType: "disc",
+                                pl: 2,
+                              }}
                             >
-                              <ItemList>{incList?.include}</ItemList>
+                              <ItemList sx={{ marginBottom: "-25px" }}>
+                                {incList?.include}
+                              </ItemList>
                             </List>
                           </>
                         )
@@ -920,7 +913,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",
@@ -932,10 +924,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                         (excList: any, i: number) => (
                           <>
                             <List
-                              key={excList.exclude}
-                              sx={{ listStyleType: "disc", pl: 2 }}
+                              key={excList.exclude + i}
+                              sx={{
+                                listStyleType: "disc",
+                                pl: 2,
+                              }}
                             >
-                              <ItemList>{excList?.exclude}</ItemList>
+                              <ItemList sx={{ marginBottom: "-25px" }}>
+                                {excList?.exclude}
+                              </ItemList>
                             </List>
                           </>
                         )
@@ -982,10 +979,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                         (noteList: any, i: number) => (
                           <>
                             <List
-                              key={noteList?.note}
-                              sx={{ listStyleType: "disc", pl: 2 }}
+                              key={noteList?.note + i}
+                              sx={{
+                                listStyleType: "disc",
+                                pl: 2,
+                              }}
                             >
-                              <ItemList>{noteList?.note}</ItemList>
+                              <ItemList sx={{ marginBottom: "-25px" }}>
+                                {noteList?.note}
+                              </ItemList>
                             </List>
                           </>
                         )

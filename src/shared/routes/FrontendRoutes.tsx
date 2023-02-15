@@ -9,6 +9,7 @@ const Careers = lazy(() => import("../../ui/footer/Career/Careers"));
 const CareerDetails = lazy(
   () => import("../../ui/footer/Career/CareerDetails")
 );
+const CareerForm = lazy(() => import("../../ui/footer/Career/CareerForm"));
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
 const ExplorePravas = lazy(
   () => import("../../features/frontend/pravas/ExplorePravas")
@@ -104,6 +105,14 @@ export default [
     showInMenu: false,
     hasAuthenticate: "all",
   },
+  {
+    label: "Career ",
+    component: <CareerForm />,
+    path: "careers/:id/form",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+
   {
     label: "Login",
     component: <Login />,
