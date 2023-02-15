@@ -1,0 +1,61 @@
+.owl-nav button span {
+  display: block;
+  height: 48px;
+  width: 48px;
+  border-radius: 48px;
+  font-size: 33px;
+  padding: 0px;
+  color: #000000;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 1px 1.5px 3px 0 rgba(0, 0, 0, 0.14),
+    0 2px 3px 0 rgba(0, 0, 0, 0.19);
+}
+
+button.owl-prev {
+  float: left;
+}
+
+button.owl-next {
+  float: right;
+}
+
+.owl-nav-pravas .owl-nav {
+  width: 95vw;
+  position: absolute;
+  top: 35%;
+}
+
+.owl-nav {
+  width: 95vw;
+  position: absolute;
+  top: 40%;
+}
+
+.owl-nav button :hover {
+  color: #2c5799;
+  background-color: #f0e3e1;
+  border-radius: 100px;
+  transition: 0.35s;
+  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+  background: #2caae1;
+}
+
+.owl-carousel.owl-theme.owl-loaded.owl-drag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.owl-stage-outer {
+  height: 550px;
+}
+
+.owl-theme .owl-nav [class*="owl-"]:hover {
+  background: none;
+  color: #fff;
+  text-decoration: none;
+}

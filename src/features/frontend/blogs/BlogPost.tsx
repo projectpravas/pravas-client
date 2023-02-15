@@ -9,6 +9,7 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
+import { endPoints } from "../../../api";
 
 const ExploreGrid = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -29,6 +30,11 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   desc,
   id,
 }) => {
+  console.log(desc.slice(desc.indexOf("<p"), desc.indexOf("p>")));
+
+  // console.log(desc.indexOf("<p"));
+  // console.log(desc.indexOf("p>"));
+
   return (
     <>
       <Container>
@@ -60,7 +66,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         height: 230,
                         borderRadius: 10,
                       }}
-                      src={image}
+                      src={`${endPoints?.serverBaseURL}/${image}`}
                       alt=""
                     />
                     <Box
@@ -133,10 +139,19 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     {title}
                   </Typography>
                   <Typography
-                    sx={{ color: "#7a7a7a", fontSize: 16, fontWeight: 400 }}
-                  >
-                    {desc}
-                  </Typography>
+                    sx={{
+                      color: "#7a7a7a",
+                      fontSize: 16,
+                      fontWeight: 400,
+                      fontFamily: "inherit",
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: desc.slice(
+                        desc.indexOf("<p"),
+                        desc.indexOf("</p>")
+                      ),
+                    }}
+                  ></Typography>
                 </Grid>
                 {/* ---------------------Divider-------------------- */}
                 <Divider />

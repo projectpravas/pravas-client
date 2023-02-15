@@ -9,6 +9,7 @@ import { Toast } from "./ui/toast/Toast";
 import { Helmet } from "react-helmet";
 import GoToTop from "./ui/GoToTop/GoToTop";
 import "../src/index.css";
+import "./ui/owl-carousel/owl.css";
 
 const App = () => {
   const [hasNetworkOffline, setHasNetworkOffline] = useState(false);
