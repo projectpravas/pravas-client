@@ -38,9 +38,7 @@ import {
   TableBody,
   TableCell,
 } from "@mui/material";
-import PackageCarousel from "./PackageCarousel";
-
-
+import PravasHomeCarousel from "../home/PravasHomeCarousel";
 
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
@@ -1127,10 +1125,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
- 
-       {/* Package Card Carousel  */}
+
+      {/* Package Card Carousel  */}
       <Container>
-       <PackageCarousel />
+        <PravasHomeCarousel />
       </Container>
     </Grid>
   );

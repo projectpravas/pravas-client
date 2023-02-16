@@ -11,13 +11,25 @@ const LineAndPie: React.FunctionComponent<ILineAndPieProps> = (props) => {
 
   return (
     <>
-      <Grid container sx={{ pt: 8 }}>
+      <Grid container sx={{ pt: 8 }} spacing={2}>
         {/* --------------------------------Total Visitors & Total Users Line Chart */}
-        <Grid item xs={12} md={8}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={8}
+          // sx={{ border: "1px solid", boxSizing: "border-box" }}
+        >
           <VisitorsLineChart singleVisitorIndex={singleVisitorIndex} />
         </Grid>
         {/* --------------------------------------------Total Visitors Monthly Chart */}
-        <Grid item xs={12} md={4}>
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={4}
+          // sx={{ border: "1px solid red", boxSizing: "border-box" }}
+        >
           <TrialPieChart setSingleVisitorIndex={setSingleVisitorIndex} />
         </Grid>
       </Grid>

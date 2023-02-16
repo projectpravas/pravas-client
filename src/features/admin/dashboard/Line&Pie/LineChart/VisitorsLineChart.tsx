@@ -36,17 +36,22 @@ const VisitorsLineChart: React.FunctionComponent<IVisitorsLineChartProps> = ({
 
   return (
     <Box
-      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        // border: "1px solid blue",
+      }}
     >
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           width={700}
-          height={300}
+          height={200}
           data={weekData}
           margin={{
             top: 5,
             right: 30,
-            left: 10,
+            left: 1,
             bottom: 5,
           }}
         >
