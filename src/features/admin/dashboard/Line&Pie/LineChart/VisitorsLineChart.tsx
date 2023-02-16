@@ -9,6 +9,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Area,
+  AreaChart,
 } from "recharts";
 import { data } from "../../data";
 
@@ -35,43 +37,50 @@ const VisitorsLineChart: React.FunctionComponent<IVisitorsLineChartProps> = ({
   }, [singleVisitorIndex]);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        // border: "1px solid blue",
-      }}
-    >
+    <Box>
       <ResponsiveContainer width="100%" height={300}>
-        <LineChart
+        <AreaChart
           width={700}
           height={200}
           data={weekData}
           margin={{
-            top: 5,
-            right: 30,
-            left: 1,
-            bottom: 5,
+            top: 25,
+            right: 40,
+            left: 0,
+            bottom: 15,
           }}
         >
+          <defs>
+            <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line
+          <Area
             type="monotone"
             dataKey="totalVisitors"
             stroke="#8884d8"
-            strokeWidth={3}
+            // strokeWidth={3}
+            fillOpacity={2}
+            fill="url(#colorUv)"
           />
-          <Line
+          <Area
             type="monotone"
             dataKey="users"
             stroke="#82ca9d"
-            strokeWidth={3}
+            // strokeWidth={3}
+            fillOpacity={2}
+            fill="url(#colorPv)"
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </Box>
   );

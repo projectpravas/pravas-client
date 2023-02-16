@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import * as React from "react";
 import { ResponsiveContainer } from "recharts";
 import VisitorsLineChart from "./LineChart/VisitorsLineChart";
@@ -11,26 +11,18 @@ const LineAndPie: React.FunctionComponent<ILineAndPieProps> = (props) => {
 
   return (
     <>
-      <Grid container sx={{ pt: 8 }} spacing={2}>
-        {/* --------------------------------Total Visitors & Total Users Line Chart */}
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={8}
-          // sx={{ border: "1px solid", boxSizing: "border-box" }}
-        >
-          <VisitorsLineChart singleVisitorIndex={singleVisitorIndex} />
+      <Grid container sx={{ pt: 6 }} spacing={2} justifyContent="space-between">
+        {/* Total Visitors & Total Users Line Chart */}
+        <Grid item xs={12} md={7}>
+          <Paper sx={{ borderRadius: 2 }}>
+            <VisitorsLineChart singleVisitorIndex={singleVisitorIndex} />
+          </Paper>
         </Grid>
-        {/* --------------------------------------------Total Visitors Monthly Chart */}
-        <Grid
-          item
-          xs={12}
-          sm={6}
-          md={4}
-          // sx={{ border: "1px solid red", boxSizing: "border-box" }}
-        >
-          <TrialPieChart setSingleVisitorIndex={setSingleVisitorIndex} />
+        {/* Total Visitors Monthly Chart */}
+        <Grid item xs={12} md={5}>
+          <Paper sx={{ borderRadius: 2 }}>
+            <TrialPieChart setSingleVisitorIndex={setSingleVisitorIndex} />
+          </Paper>
         </Grid>
       </Grid>
     </>

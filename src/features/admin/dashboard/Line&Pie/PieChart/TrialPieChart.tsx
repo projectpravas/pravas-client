@@ -3,7 +3,21 @@ import * as React from "react";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 import { data } from "../../data";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+// const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = [
+  "#3fc1c0",
+  "#20bac5",
+  "#00b2ca",
+  "#04a6c2",
+  "#0a99da",
+  "#0f80aa",
+  "#16679a",
+  "#1a5b92",
+  "#1c668e",
+  "#1d4e89",
+  "#194376",
+  "#153965",
+];
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -98,16 +112,16 @@ const TrialPieChart: React.FunctionComponent<ITrialPieChartProps> = ({
     <Box
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
-      <ResponsiveContainer width="100%" height={400}>
-        <PieChart width={600} height={400}>
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart width={300} height={100}>
           <Pie
             activeIndex={activeIndex}
             activeShape={renderActiveShape}
             data={data}
-            cx={200}
-            cy={200}
+            cx="50%"
+            cy="50%"
             innerRadius={60}
-            outerRadius={95}
+            outerRadius={85}
             fill="#8884d8"
             paddingAngle={3}
             dataKey="value"
