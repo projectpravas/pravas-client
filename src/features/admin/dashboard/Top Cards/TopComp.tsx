@@ -6,6 +6,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import EmojiEmotionsOutlinedIcon from "@mui/icons-material/EmojiEmotionsOutlined";
 import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import LibraryAddOutlinedIcon from "@mui/icons-material/LibraryAddOutlined";
+import Counter from "./Counter";
 
 const DetailsTypo = styled(Typography)({
   fontSize: 30,
@@ -81,7 +82,9 @@ const TopComp: React.FunctionComponent<ITopCompProps> = (props) => {
             </Grid>
             {/* Details */}
             <Grid item sx={{ pt: "3rem", pb: "1rem" }}>
-              <DetailsTypo>80</DetailsTypo>
+              <DetailsTypo>
+                <Counter end={550} />
+              </DetailsTypo>
               <TypoValue>New Bookings</TypoValue>
             </Grid>
           </Grid>
@@ -111,7 +114,9 @@ const TopComp: React.FunctionComponent<ITopCompProps> = (props) => {
             </Grid>
             {/* Details */}
             <Grid item sx={{ pt: "3rem", pb: "1rem" }}>
-              <DetailsTypo>13</DetailsTypo>
+              <DetailsTypo>
+                <Counter end={13} />
+              </DetailsTypo>
               <TypoValue>Packages</TypoValue>
             </Grid>
           </Grid>
@@ -141,7 +146,9 @@ const TopComp: React.FunctionComponent<ITopCompProps> = (props) => {
             </Grid>
             {/* Details */}
             <Grid item sx={{ pt: "3rem", pb: "1rem" }}>
-              <DetailsTypo>5</DetailsTypo>
+              <DetailsTypo>
+                <Counter end={55} />
+              </DetailsTypo>
               <TypoValue>Customers</TypoValue>
             </Grid>
           </Grid>
@@ -171,7 +178,9 @@ const TopComp: React.FunctionComponent<ITopCompProps> = (props) => {
             </Grid>
             {/* Details */}
             <Grid item sx={{ pt: "3rem", pb: "1rem" }}>
-              <DetailsTypo>27</DetailsTypo>
+              <DetailsTypo>
+                <Counter end={4} />
+              </DetailsTypo>
               <TypoValue>Total Employees</TypoValue>
             </Grid>
           </Grid>
