@@ -1,38 +1,22 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import CustomTitle from "../../../ui/title/CustomTitle";
-import Grid from "@mui/material/Grid";
 import TopComp from "./Top Cards/TopComp";
-
-import VisitorsUsersBarChart from "./BarChart/VisitorsUsersBarChart";
-import UsersPieChart from "./PieChart/UserPieChart";
-import PieChartData from "./PieChart/PieChartData";
-import TrialPieChart from "./PieChart/TrialPieChart";
-import VisitorsLineChart from "./BarChart/VisitorsLineChart";
+import Container from "@mui/material/Container";
+import LineAndPie from "./Line&Pie/LineAndPie";
 
 interface IDashboardProps {}
 
 const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
-  const [singleVisitorIndex, setSingleVisitorIndex] = React.useState(0);
-
-  // console.log("singleVisitorIndex : ", singleVisitorIndex);
-
   return (
     <>
       {/* <h1>Dashboard</h1> */}
       <CustomTitle title="Dashboard" />
       <Outlet />
-      <TopComp />
-      <Grid container>
-        {/* --------------------------------Total Visitors & Total Users Line Chart */}
-        <Grid item xs={12} md={6}>
-          <VisitorsLineChart singleVisitorIndex={singleVisitorIndex} />
-        </Grid>
-        {/* --------------------------------------------Total Visitors Monthly Chart */}
-        <Grid item xs={12} md={6}>
-          <TrialPieChart setSingleVisitorIndex={setSingleVisitorIndex} />
-        </Grid>
-      </Grid>
+      <Container>
+        <TopComp />
+        <LineAndPie />
+      </Container>
     </>
   );
 };

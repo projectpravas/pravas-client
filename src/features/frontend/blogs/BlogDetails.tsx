@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import BlogService from "../../../services/BlogService";
 import { endPoints } from "../../../api";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 
 interface IBlogDetailsProps {}
 
@@ -37,7 +38,7 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
         <title>{singleCareerData?.title}</title>
         <meta name="description" content={singleCareerData?.metaDescription} />
       </Helmet>
-      <Container>
+      <Container sx={{ pt: 8 }}>
         <Grid container>
           {/* image Area  */}
           <Grid item xs={12}>
@@ -47,7 +48,44 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
             />
           </Grid>
           {/* Pravas & category */}
-          <Grid item xs={12}></Grid>
+          <Grid item xs={12}>
+            <Grid container sx={{ justifyContent: "space-between", p: 1 }}>
+              <Grid item>
+                <Grid
+                  container
+                  sx={{
+                    color: "#54595f",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box pr={1}>
+                    <BorderColorOutlinedIcon
+                      fontSize="small"
+                      sx={{ fontSize: "1rem" }}
+                    />
+                  </Box>
+                  <Box>
+                    <Typography sx={{ fontSize: "1rem" }}>Admin</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+              <Grid item>
+                <Grid
+                  container
+                  sx={{
+                    color: "#54595f",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box>
+                    <Typography sx={{ fontSize: "1rem" }}>Category</Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
           {/* Blog Details */}
           <Grid
             item
