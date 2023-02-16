@@ -90,9 +90,8 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
       <FAQ />
 
       {/* **********************Review section right************ */}
-      <Grid sx={{ margin: "10px 0 10px 0" }}>
-        <ReviewSection />
-      </Grid>
+
+      <ReviewSection />
     </>
   );
 };

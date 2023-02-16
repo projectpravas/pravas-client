@@ -38,6 +38,10 @@ import {
   TableCell,
 } from "@mui/material";
 
+const placeholder = [
+  "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg",
+];
+
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
   color: "#5c5e64",
@@ -73,6 +77,7 @@ const CarouselStyle = styled(Carousel)({
   width: "90%",
   margin: "auto",
 });
+
 interface IExplorePravasProps {}
 interface Iitinerary {
   day: number | string;
@@ -124,6 +129,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
+
+  const handleCickChange = () => {
+    setExpanded("panel1");
+  };
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -368,19 +377,38 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <Grid
         sx={{ backgroundColor: "white", borderBottom: "1px solid #faf5ee" }}
       >
-        <Container
+        <Grid
+          container
+          spacing={2}
           sx={{
             height: "100px",
             display: "flex",
             justifyContent: "end",
             alignItems: "center",
-            margin: "auto",
+            marginRight: "10px",
+            width: "100%",
           }}
         >
-          <Grid
-            item
-            sx={{ position: "relative", height: "35px", alignItems: "center" }}
-          >
+          <Grid item>
+            <Button
+              sx={{
+                // bgcolor: "#f0f3f6",
+                color: "white",
+                fontWeight: "700",
+                backgroundColor: "#27488d",
+                fontFamily: "poppins",
+                "&:hover": {
+                  bgcolor: "#27488d",
+                  color: "white",
+                },
+              }}
+              onClick={handleCickChange}
+            >
+              Booking
+            </Button>
+          </Grid>
+          {/* *******************share button******************** */}
+          <Grid item sx={{ position: "relative" }}>
             <Button
               sx={{
                 bgcolor: "#f0f3f6",
@@ -402,17 +430,14 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               <Grid
                 sx={{
                   backgroundColor: "#fff",
-                  height: "200%",
+                  // height: "200%",
                   display: "flex",
                   alignItems: "center",
                   borderRadius: "10px",
-                  marginLeft: 2,
+                  border: "1px solid gray",
+                  marginLeft: "2px",
                   position: "absolute",
-                  top: "-19px",
-                  right: {
-                    lg: "px",
-                    xs: "110px",
-                  },
+                  top: "55px",
                 }}
               >
                 <Link
@@ -446,6 +471,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               </Grid>
             )}
           </Grid>
+
+          {/* *************review button*************************/}
           <Grid item>
             <Button
               sx={{
@@ -464,7 +491,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               Review
             </Button>
           </Grid>
-        </Container>
+        </Grid>
       </Grid>
 
       {/*-*****************-- kashmir description---*************--- */}
@@ -494,6 +521,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
               <div>
                 {/*----*******************- Upcoming tours---*********************- */}
+
                 <Accordion
                   elevation={0}
                   expanded={expanded === "panel1"}
@@ -672,7 +700,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   <AccordionDetails
                     sx={{
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
+
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",
@@ -761,7 +789,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
+
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",

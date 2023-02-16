@@ -24,6 +24,9 @@ import { endPoints } from "../../../api";
 import { duration } from "@mui/material";
 import { number } from "yup";
 
+const placeholder =
+  "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg";
+
 const NLink = styled(Grid)({
   transition: "0.7s ease-in-out",
   "&:hover": {
