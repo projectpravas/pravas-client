@@ -37,12 +37,12 @@ const NLink = styled(Grid)({
 
 interface IPravasPackageCardProps {
   images: string[];
-  _id: string;
-  title: string;
-  tourDesc: string;
-  price: string | number;
-  duration: any;
-  maxPersons: number | string;
+  _id?: string;
+  title?: string;
+  tourDesc?: string;
+  price?: string | number;
+  duration?: any;
+  maxPersons?: number | string;
 }
 
 const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({

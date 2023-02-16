@@ -34,7 +34,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
     loadBlogs();
   }, []);
 
-  console.log("data:   ", data);
+  // console.log("data:   ", data);
 
   return (
     <>
@@ -59,7 +59,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
             justifyContent="space-evenly"
           >
             {Array.isArray(data) &&
-              data.map((blog, i) => (
+              currentPosts.map((blog, i) => (
                 <Grid
                   item
                   xs={12}

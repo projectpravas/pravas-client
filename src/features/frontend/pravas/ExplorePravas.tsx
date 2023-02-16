@@ -37,10 +37,14 @@ import {
   TableBody,
   TableCell,
 } from "@mui/material";
+<<<<<<< HEAD
 
 const placeholder = [
   "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg",
 ];
+=======
+import PravasHomeCarousel from "../home/PravasHomeCarousel";
+>>>>>>> main
 
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
@@ -1155,6 +1159,14 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
+<<<<<<< HEAD
+=======
+
+      {/* Package Card Carousel  */}
+      <Container>
+        <PravasHomeCarousel />
+      </Container>
+>>>>>>> main
     </Grid>
   );
 };

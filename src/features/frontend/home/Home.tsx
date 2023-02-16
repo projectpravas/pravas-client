@@ -3,18 +3,25 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import SearchBar from "./SearchBar";
 import { Helmet } from "react-helmet";
-import BlogPost from "../blogs/BlogPost";
-import { data } from "../blogs/BlogData";
 import BlogsHome from "./BlogsHome";
-import PravasHome from "./PravasHome";
 import TourGallery from "../../../ui/tour-gallary/TourGallary";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { hover } from "@testing-library/user-event/dist/hover";
-import { color } from "@mui/system";
 import { NavLink } from "react-router-dom";
+import PravasHomeCarousel from "./PravasHomeCarousel";
 
 interface IHomeProps {}
+
+const imgZoom = {
+  transform: "scale(1)",
+  overflow: "hidden",
+  transition: "5s",
+  "&:hover": {
+    transform: "scale(1.1)",
+    overflow: "hidden",
+    transition: "5s",
+  },
+};
 
 const seeMore = {
   fontSize: "1.12rem",
@@ -40,11 +47,13 @@ const typohead = {
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
+      {/* head banner */}
       <Grid container sx={{ position: "relative" }}>
         <Grid>
           <img
             src="https://pravasthejourney.com/wp-content/uploads/2022/09/Web-C2.jpg"
             width="100%"
+            height="100%"
             alt="not"
           />
           <Typography
@@ -52,13 +61,13 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
               position: "absolute",
               top: "32%",
               left: "8%",
-              fontSize: "2.8rem",
+              fontSize: { xs: "1.5rem", md: "2.8rem" },
               fontFamily: " cursive",
               fontStyle: "italic",
               color: "white",
               textShadow: "0 0 10px rgb(0 0 0 / 30%)",
-              maxWidth: "1140px",
-              minHeight: "500px",
+              maxWidth: "71.25",
+              minHeight: "31.25",
               fontWeight: 500,
               lineHeight: 1.2,
               letterSpacing: -1,
@@ -66,6 +75,22 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
           >
             Bun ke pravasee <br />
             dekho apna desh!
+          </Typography>
+          <Typography
+            sx={{
+              paddingTop: "4%",
+              lineHeight: "1.86em",
+              letterSpacing: "-.2px",
+              fontSize: "1rem",
+              position: "absolute",
+              top: { xs: "55%", md: "48%" },
+              left: "8%",
+              color: "#fff",
+              textShadow: "0 0 10px rgb(0 0 0 / 30%)",
+              fontWeight: 500,
+            }}
+          >
+            Travel, Be out in Nature and explore..
           </Typography>
         </Grid>
 
@@ -75,15 +100,21 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
       {/* Youtube video section */}
       <Container>
-        <Grid container pt={15} pb={10} spacing={8}>
-          <Grid item xs={12} md={6}>
+        <Grid
+          container
+          sx={{ paddingTop: { xs: 20, sm: 17, md: 15 } }}
+          pt={18}
+          pb={10}
+          spacing={8}
+        >
+          <Grid item xs={12} md={6} sx={imgZoom}>
             <a
               href="https://www.youtube.com/watch?v=NYlnaBkB7RY"
               target="blank"
-              style={{ width: "100%" }}
+              style={{ width: "100%", height: "100%" }}
             >
               <img
-                width="560"
+                width="100%"
                 height="315"
                 src="https://pravasthejourney.com/wp-content/uploads/2022/09/omkar-mulgund.webp"
                 alt="not"
@@ -102,15 +133,19 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
               Experiance
             </Typography>
             <Typography
-              variant="h3"
-              sx={{ fontWeight: 700, color: "#313041", lineHeight: 1.2 }}
+              sx={{
+                fontWeight: 700,
+                color: "#313041",
+                lineHeight: 1.2,
+                fontSize: { xs: "2rem", md: "3rem" },
+              }}
             >
               WORLD OF SMILES.
             </Typography>
             <Typography
               sx={{
                 paddingTop: "2.1rem",
-                paddingBottom: "1.2rem",
+                paddingBottom: { xs: "1.8rem", md: "1.2rem" },
                 lineHeight: "1.86em",
                 color: "#90929b",
                 letterSpacing: ".-2px",
@@ -122,7 +157,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
               can breathe fresh, spend quality time, revives your energy to grow
               further. Yes, you can find all these treasures all-in-one trip.
             </Typography>
-            <NavLink to="/about-us">
+            <NavLink to="/about-us" style={{ textDecoration: "none" }}>
               <Button sx={seeMore}>See More</Button>
             </NavLink>
           </Grid>
@@ -133,16 +168,16 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       <BlogsHome />
 
       {/* Pravas cards carousel  */}
-      <PravasHome />
+      <PravasHomeCarousel />
 
-      {/* <Helmet>
+      <Helmet>
         <title>Pravas Tourism</title>
         <meta name="description" content="Pravas Tourism" />
         <meta name="keywords" content="Pravas Tourism" />
-      </Helmet> */}
+      </Helmet>
 
       {/* gallery  */}
-      {/* <TourGallery /> */}
+      <TourGallery />
     </>
   );
 };
