@@ -1,6 +1,6 @@
 interface TravelDates {
-  from: string;
-  to: string;
+  from: Date | string;
+  to: Date | string;
 }
 
 interface Meals {

@@ -32,6 +32,9 @@ import EnquiryModel from "../../../shared/models/enquiryModel";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import Container from "@mui/material/Container";
 import { useLocation } from "react-router-dom";
+import moment from "moment";
+
+const today = new Date();
 
 const schema = yup
   .object({
@@ -57,21 +60,19 @@ const schema = yup
           .min(3, "min 3 characters required"),
       })
     ),
-    // travelDates: yup.object().shape({
-    //   from: yup.date().min(new Date(Date.now()), "Nashedi ho kya?"),
-    //   to: yup
-    //     .date()
-    //     .min(new Date(Date.now() + 24 * 60 * 60), "Nashedi ho kya?"),
-    //   // to: yup.date().min(yup.ref("from"), "Nashedi ho kya?"),
-    // }),
-    // travelDates: yup.object().shape({
-    //   from: yup
-    //     .string()
-    //     .matches(
-    //       /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/,
-    //       "from date must be a valid date in the format YYYY-MM-DD"
-    //     ),
-    // }),
+    travelDates: yup.object().shape({
+      from: yup
+        .date()
+        .nullable()
+        .min(
+          new Date().toISOString().slice(0, 10),
+          "past dates cannot be used"
+        ),
+      to: yup
+        .date()
+        .nullable()
+        .min(yup.ref("from"), "to date cannot be before from date"),
+    }),
 
     travelDuration: yup
       .number()
@@ -108,29 +109,6 @@ interface ICustomTourFormProps {
   rowData?: EnquiryModel;
 }
 
-// interface IFormInput {
-//   destinations: {
-//     place: string;
-//   }[];
-//   travelDates: {
-//     from: string;
-//     to: string;
-//   };
-//   travelDuration: number;
-//   participants: {
-//     name: string;
-//     age: number;
-//   }[];
-//   hotelCategory: "";
-//   rooms: number;
-//   meals: {
-//     breakfast: boolean;
-//     lunch: boolean;
-//     dinner: boolean;
-//   };
-//   anythingElse: string;
-// }
-
 // const from = new Date();
 // var getYear = from.toLocaleString("default", { year: "numeric" });
 // var getMonth = from.toLocaleString("default", { month: "2-digit" });
@@ -152,6 +130,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   const enqpath = pathname.includes("enquiries");
   let prefill = props?.rowData;
   pathname.includes("enquiries");
+
   const {
     control,
     handleSubmit,
@@ -169,8 +148,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
           contactPersonEmail: "",
           destinations: [{ place: "" }],
           travelDates: {
-            from: "",
-            to: "",
+            from: new Date().toISOString().slice(0, 10),
+            to: new Date().toISOString().slice(0, 10),
           },
           travelDuration: 0,
           participants: [{ name: "", age: 0 }],
@@ -206,7 +185,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
       .then((res) => {
         const msg = res?.data?.message || "Enquiry Created Successfully";
         successToast(msg, 2000);
-        control._reset(control._defaultValues);
+        // control._reset(control._defaultValues);
       })
       .catch((err) => {
         const msg = err?.resonse?.data?.message || "Could not create enquiry";
@@ -321,9 +300,13 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       size="small"
                       type="date"
                       label="From"
-                      value={field.value.toString().split("T")[0]}
+                      value={moment(field.value)
+                        .format("YYYY-MM-DD")
+                        .toString()}
                       onChange={(e) => {
-                        field.onChange(e.target.value);
+                        const newDate = moment(e.target.value).toDate();
+
+                        setValue("travelDates.from", newDate);
                       }}
                       onBlur={field.onBlur}
                       InputLabelProps={{ shrink: true }}
@@ -356,9 +339,13 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       type="date"
                       label="To"
                       InputLabelProps={{ shrink: true }}
-                      value={field.value.toString().split("T")[0]}
+                      value={moment(field.value)
+                        .format("YYYY-MM-DD")
+                        .toString()}
                       onChange={(e) => {
-                        field.onChange(e.target.value);
+                        const newDate = moment(e.target.value).toDate();
+
+                        setValue("travelDates.to", newDate);
                       }}
                       onBlur={field.onBlur}
                       error={
