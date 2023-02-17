@@ -1,11 +1,13 @@
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 import "../../../ui/owl-carousel/owl.css";
 import BlogPost from "../blogs/BlogPost";
-import { data } from "../blogs/BlogData";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import BlogService from "../../../services/BlogService";
 interface IOwlCarouselProps {}
 
 const options = {
@@ -35,6 +37,24 @@ const options = {
 };
 
 const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
+  const [data, setData] = React.useState<Array<any>>([]);
+
+  const loadBlogs = () => {
+    BlogService.fetchAllBlogs()
+      .then((response) => {
+        setData(response?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  React.useEffect(() => {
+    loadBlogs();
+  }, []);
+
+  console.log("dataHome : ", data);
+
   return (
     <>
       {/* <Grid container mb={8}> */}
@@ -59,7 +79,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
                     id={blog?.id}
                     image={blog?.image}
                     title={blog?.title}
-                    desc={blog?.desc}
+                    desc={blog?.richText}
                     key={blog?.id + i}
                   />
                 </Box>

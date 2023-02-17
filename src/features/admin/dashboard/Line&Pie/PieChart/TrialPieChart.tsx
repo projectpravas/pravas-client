@@ -1,8 +1,23 @@
+import { Box } from "@mui/material";
 import * as React from "react";
-import { PieChart, Pie, Sector, Cell } from "recharts";
-import { data } from "../data";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { data } from "../../data";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+// const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = [
+  "#3fc1c0",
+  "#20bac5",
+  "#00b2ca",
+  "#04a6c2",
+  "#0a99da",
+  "#0f80aa",
+  "#16679a",
+  "#1a5b92",
+  "#1c668e",
+  "#1d4e89",
+  "#194376",
+  "#153965",
+];
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -63,7 +78,7 @@ const renderActiveShape = (props: any) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`Total Visitors ${value}`}</text>
+      >{`Total ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -71,7 +86,7 @@ const renderActiveShape = (props: any) => {
         textAnchor={textAnchor}
         fill="#999"
       >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`(${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
@@ -92,31 +107,36 @@ const TrialPieChart: React.FunctionComponent<ITrialPieChartProps> = ({
     },
     [setActiveIndex]
   );
-  // console.log("activeIndex: ", activeIndex);
 
   return (
-    <>
-      <PieChart width={600} height={400}>
-        {/* <PieChart style={{ width: "100%", height: "100%" }}> */}
-        <Pie
-          activeIndex={activeIndex}
-          activeShape={renderActiveShape}
-          data={data}
-          cx={250}
-          cy={200}
-          innerRadius={60}
-          outerRadius={95}
-          fill="#8884d8"
-          paddingAngle={3}
-          dataKey="value"
-          onMouseEnter={onPieEnter}
-        >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-      </PieChart>
-    </>
+    <Box
+      sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+    >
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart width={300} height={100}>
+          <Pie
+            activeIndex={activeIndex}
+            activeShape={renderActiveShape}
+            data={data}
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={85}
+            fill="#8884d8"
+            paddingAngle={3}
+            dataKey="value"
+            onMouseEnter={onPieEnter}
+          >
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </Box>
   );
 };
 

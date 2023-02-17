@@ -9,7 +9,7 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
-import { endPoints } from "../../../api";
+import endPoints from "../../../api/endpoints";
 
 const ExploreGrid = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -66,7 +66,11 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         height: 230,
                         borderRadius: 10,
                       }}
-                      src={`${endPoints?.serverBaseURL}/${image}`}
+                      src={
+                        `${endPoints?.serverBaseURL}/${image}`
+                          ? `${endPoints?.serverBaseURL}/${image}`
+                          : "./placeholder-blogs.png"
+                      }
                       alt=""
                     />
                     <Box
