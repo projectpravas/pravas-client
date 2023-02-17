@@ -57,10 +57,21 @@ const schema = yup
           .min(3, "min 3 characters required"),
       })
     ),
-    travelDates: yup.object().shape({
-      from: yup.date(),
-      to: yup.date().min(yup.ref("from"), "Nashedi ho kya?"),
-    }),
+    // travelDates: yup.object().shape({
+    //   from: yup.date().min(new Date(Date.now()), "Nashedi ho kya?"),
+    //   to: yup
+    //     .date()
+    //     .min(new Date(Date.now() + 24 * 60 * 60), "Nashedi ho kya?"),
+    //   // to: yup.date().min(yup.ref("from"), "Nashedi ho kya?"),
+    // }),
+    // travelDates: yup.object().shape({
+    //   from: yup
+    //     .string()
+    //     .matches(
+    //       /^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/,
+    //       "from date must be a valid date in the format YYYY-MM-DD"
+    //     ),
+    // }),
 
     travelDuration: yup
       .number()
@@ -120,30 +131,32 @@ interface ICustomTourFormProps {
 //   anythingElse: string;
 // }
 
-const from = new Date();
-var getYear = from.toLocaleString("default", { year: "numeric" });
-var getMonth = from.toLocaleString("default", { month: "2-digit" });
-var getDay = from.toLocaleString("default", { day: "2-digit" });
-var fromDate = getYear + "/" + getMonth + "/" + getDay;
+// const from = new Date();
+// var getYear = from.toLocaleString("default", { year: "numeric" });
+// var getMonth = from.toLocaleString("default", { month: "2-digit" });
+// var getDay = from.toLocaleString("default", { day: "2-digit" });
+// var fromDate = getYear + "/" + getMonth + "/" + getDay;
 
-const to = new Date();
-var getYeart = to.toLocaleString("default", { year: "numeric" });
-var getMontht = to.toLocaleString("default", { month: "2-digit" });
-var getDayt = to.toLocaleString("default", { day: "2-digit" });
-var toDate = getYear + "/" + getMonth + "/" + getDay;
+// const to = new Date();
+// var getYeart = to.toLocaleString("default", { year: "numeric" });
+// var getMontht = to.toLocaleString("default", { month: "2-digit" });
+// var getDayt = to.toLocaleString("default", { day: "2-digit" });
+// var toDate = getYear + "/" + getMonth + "/" + getDay;
 
-console.log(from, to);
+// console.log(fromDate, toDate);
 
 const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   props
 ) => {
   const { pathname } = useLocation();
+  const enqpath = pathname.includes("enquiries");
   let prefill = props?.rowData;
   pathname.includes("enquiries");
   const {
     control,
     handleSubmit,
     register,
+    setValue,
     formState: { errors, isValid },
   } = useForm<EnquiryModel>({
     mode: "onTouched",
@@ -156,8 +169,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
           contactPersonEmail: "",
           destinations: [{ place: "" }],
           travelDates: {
-            from: fromDate,
-            to: toDate,
+            from: "",
+            to: "",
           },
           travelDuration: 0,
           participants: [{ name: "", age: 0 }],
@@ -188,6 +201,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
 
   const onSubmit: SubmitHandler<EnquiryModel> = (data) => {
     console.log(data);
+
     EnquiryService.createEnquiry({ ...data, enquiryStatus: "open" })
       .then((res) => {
         const msg = res?.data?.message || "Enquiry Created Successfully";
@@ -224,6 +238,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                         render={() => (
                           <TextField
                             {...field}
+                            inputProps={{ readOnly: enqpath }}
                             fullWidth
                             size="small"
                             placeholder="place"
@@ -252,7 +267,10 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={2}>
                           <IconButton
-                            disabled={destinationsFa.fields.length == 1}
+                            color="error"
+                            disabled={
+                              destinationsFa.fields.length == 1 || enqpath
+                            }
                             onClick={() => destinationsFa.remove(index)}
                           >
                             <ClearIcon />
@@ -262,6 +280,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                           {destinationsFa.fields.length == index + 1 && (
                             <IconButton
                               color="primary"
+                              disabled={enqpath}
                               onClick={() =>
                                 destinationsFa.append({ place: "" })
                               }
@@ -297,16 +316,15 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   render={({ field }) => (
                     <TextField
                       fullWidth
+                      inputProps={{ readOnly: enqpath }}
                       margin="normal"
                       size="small"
                       type="date"
                       label="From"
-                      value={
-                        pathname.includes("enquiries")
-                          ? field.value.toString().slice(0, 10)
-                          : field.value
-                      }
-                      onChange={field.onChange}
+                      value={field.value.toString().split("T")[0]}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
                       onBlur={field.onBlur}
                       InputLabelProps={{ shrink: true }}
                       error={
@@ -331,18 +349,17 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      inputProps={{ readOnly: enqpath }}
                       fullWidth
                       margin="normal"
                       size="small"
                       type="date"
                       label="To"
                       InputLabelProps={{ shrink: true }}
-                      value={
-                        pathname.includes("enquiries")
-                          ? field.value.toString().split("T")[0]
-                          : field.value
-                      }
-                      onChange={field.onChange}
+                      value={field.value.toString().split("T")[0]}
+                      onChange={(e) => {
+                        field.onChange(e.target.value);
+                      }}
                       onBlur={field.onBlur}
                       error={
                         touchedFields?.travelDates?.to &&
@@ -369,6 +386,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      inputProps={{ readOnly: enqpath }}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -416,6 +434,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   >
                     <Grid item xs={12} md={6}>
                       <TextField
+                        inputProps={{ readOnly: enqpath }}
                         fullWidth
                         size="small"
                         label="Name"
@@ -438,6 +457,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                     </Grid>
                     <Grid item xs={12} md={3}>
                       <TextField
+                        inputProps={{ readOnly: enqpath }}
                         fullWidth
                         size="small"
                         label="Age"
@@ -462,7 +482,10 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       <Grid container spacing={2}>
                         <Grid item xs={6} md={2}>
                           <IconButton
-                            disabled={participantsFa.fields.length == 1}
+                            color="error"
+                            disabled={
+                              participantsFa.fields.length == 1 || enqpath
+                            }
                             onClick={() => participantsFa.remove(index)}
                           >
                             <ClearIcon />
@@ -472,6 +495,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                           {participantsFa.fields.length == index + 1 && (
                             <IconButton
                               color="primary"
+                              disabled={enqpath}
                               onClick={() =>
                                 participantsFa.append({ name: "", age: 0 })
                               }
@@ -506,6 +530,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      inputProps={{ readOnly: enqpath }}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -535,6 +560,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      inputProps={{ readOnly: enqpath }}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -565,6 +591,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      inputProps={{ readOnly: enqpath }}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -617,17 +644,17 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                       >
                         <FormControlLabel
                           value="3 star"
-                          control={<Radio />}
+                          control={<Radio disabled={enqpath} />}
                           label="3 star"
                         />
                         <FormControlLabel
                           value="4 star"
-                          control={<Radio />}
+                          control={<Radio disabled={enqpath} />}
                           label="4 star"
                         />
                         <FormControlLabel
                           value="5 star"
-                          control={<Radio />}
+                          control={<Radio disabled={enqpath} />}
                           label="5 star"
                         />
                       </RadioGroup>
@@ -646,10 +673,16 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                     render={({ field }) => (
                       <>
                         <FormControlLabel
+                          {...field}
                           value={field.value}
                           onChange={field.onChange}
                           onBlur={field.onBlur}
-                          control={<Checkbox />}
+                          control={
+                            <Checkbox
+                              disabled={enqpath}
+                              checked={field.value}
+                            />
+                          }
                           label="Breakfast"
                         />
                       </>
@@ -661,10 +694,16 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                     render={({ field }) => (
                       <>
                         <FormControlLabel
+                          {...field}
                           value={field.value}
                           onChange={field.onChange}
                           onBlur={field.onBlur}
-                          control={<Checkbox />}
+                          control={
+                            <Checkbox
+                              disabled={enqpath}
+                              checked={field.value}
+                            />
+                          }
                           label="Lunch"
                         />
                       </>
@@ -679,7 +718,12 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                           value={field.value}
                           onChange={field.onChange}
                           onBlur={field.onBlur}
-                          control={<Checkbox />}
+                          control={
+                            <Checkbox
+                              disabled={enqpath}
+                              checked={field.value}
+                            />
+                          }
                           label="Dinner"
                         />
                       </>
@@ -693,6 +737,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      inputProps={{ readOnly: enqpath }}
                       margin="normal"
                       size="small"
                       type="text"
@@ -734,6 +779,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
+                      inputProps={{ readOnly: enqpath }}
                       fullWidth
                       multiline
                       minRows={5}
@@ -761,30 +807,21 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
           </AccordionDetails>
         </Accordion>
 
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={!isValid ? true : false}
-          sx={{ marginTop: 2, marginBottom: 2 }}
-        >
-          Submit
-        </Button>
+        {!pathname.includes("enquiries") ? (
+          <Button
+            type="submit"
+            variant="contained"
+            disabled={!isValid ? true : false}
+            sx={{ marginTop: 2, marginBottom: 2 }}
+          >
+            Submit
+          </Button>
+        ) : (
+          ""
+        )}
       </form>
     </Container>
   );
 };
 
 export default CustomTourForm;
-
-{
-  /* <TextField
-  {...field}
-  fullWidth
-  size="small"
-  placeholder="place"
-  error={!!errors?.destinations}
-  helperText={errors?.destinations && `${errors.destinations?.message}`}
-  key={field.id} // important to include key with field's id
-  {...register(`destinations.${index}.place` as const)}
-/>; */
-}

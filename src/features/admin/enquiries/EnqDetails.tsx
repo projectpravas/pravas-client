@@ -8,6 +8,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CustomTourForm from "../../frontend/customtourform/CustomTourForm";
 import EnquiryModel from "../../../shared/models/enquiryModel";
+import { Grid, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 
 interface IEnqDetailsProps {
   openDialog: boolean;
@@ -29,17 +31,21 @@ const EnqDetails: React.FunctionComponent<IEnqDetailsProps> = (props) => {
 
   return (
     <div>
-      <Button variant="outlined">Open form dialog</Button>
       <Dialog open={props.openDialog} maxWidth="md">
-        <DialogTitle>Enquiry Details</DialogTitle>
+        <Grid container justifyContent="space-between">
+          <Grid item>
+            <DialogTitle>Enquiry Details</DialogTitle>
+          </Grid>
+          <Grid item>
+            <IconButton onClick={() => props.handleDialogClose()}>
+              <CloseIcon fontSize="large" color="error" />
+            </IconButton>
+          </Grid>
+        </Grid>
+
         <DialogContent>
           <CustomTourForm rowData={props?.rowData} />
         </DialogContent>
-        <DialogActions>
-          <Button variant="contained" onClick={() => props.handleDialogClose()}>
-            Close
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

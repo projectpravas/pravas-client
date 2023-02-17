@@ -116,19 +116,19 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
 
   const columns = [
     {
-      label: "Id",
+      label: "ID",
       name: "enquiryId",
       options: {
         filter: false,
         sort: true,
         customBodyRenderLite: (index: any) => {
-          return <p style={{ textAlign: "center" }}>{index + 1}</p>;
+          return <p>{index + 1}</p>;
         },
       },
     },
 
     {
-      label: "Destinations",
+      label: "DESTINATIONS",
       name: "",
       options: {
         filter: true,
@@ -141,7 +141,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
           });
 
           return (
-            <ol style={{ textAlign: "justify" }}>
+            <ol>
               {Array.isArray(arr) &&
                 arr.map((v, i) => <li key={v + i}>{v}</li>)}
             </ol>
@@ -172,16 +172,14 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
     //   },
     // },
     {
-      label: "Name",
+      label: "NAME",
       name: "contactPersonName",
       options: {
         filter: true,
         sort: true,
         customBodyRenderLite: (index: any) => {
           const enquiry: EnquiryModel = data[index];
-          return (
-            <p style={{ textAlign: "center" }}>{enquiry?.contactPersonName}</p>
-          );
+          return <p>{enquiry?.contactPersonName}</p>;
         },
       },
     },
@@ -202,7 +200,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
       },
     },
     {
-      label: "Status",
+      label: "STATUS",
       name: "enquiryStatus",
       options: {
         filter: true,
@@ -212,7 +210,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
           const enquiry = data[metaData.rowIndex];
 
           return (
-            <div style={{ textAlign: "center" }}>
+            <div>
               {
                 <Chip
                   style={{ color: value == "open" ? "green" : "red" }}
@@ -236,7 +234,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         customBodyRenderLite: (index: number) => {
           const enquiry: EnquiryModel = data[index];
           return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box>
               <IconButton
                 onClick={() => {
                   handleDialogOpen();
@@ -252,7 +250,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
     },
 
     {
-      label: "Actions",
+      label: "ACTION",
       name: "actions",
       options: {
         filter: true,
@@ -260,7 +258,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
         customBodyRenderLite: (index: number) => {
           const enquiry: EnquiryModel = data[index];
           return (
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <Box>
               {/* <IconButton
               // onClick={() =>
               //   handleEdit(user?._id as string, user?.role || "")
@@ -279,7 +277,7 @@ const EnquiriesList: React.FunctionComponent<IEnquiriesListProps> = ({
   ];
 
   const options: object = {
-    filterType: "checkbox",
+    filterType: "dropdown",
     responsive: "standard",
     enableNestedDataAccess: ".",
     elevation: 2,
