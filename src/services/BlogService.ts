@@ -23,8 +23,8 @@ class BlogService {
     return API.get(endPoints.api.blog.getOne + id);
   } //fetchOneBlog
 
-  static fetchAllBlogs(query: string): Promise<AxiosResponse> {
-    return API.get(endPoints.api.blog.getAll + query);
+  static fetchAllBlogs(query = ""): Promise<AxiosResponse> {
+    return API.get(endPoints.api.blog.getAll);
   } //fetchAllBlogs
 }
 export default BlogService;

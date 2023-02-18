@@ -1,21 +1,21 @@
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
-import "../../../ui/owl-carousel/pravas.css";
-import TourService from "../../../services/TourService";
+import "../../../ui/owl-carousel/owl.css";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
 import PravasPackageCard from "../pravas/PravasPackageCard";
-interface IPravasHomeProps {}
+import TourService from "../../../services/TourService";
+import { NavLink } from "react-router-dom";
+interface IPravasHomeCarouselProps {}
 
 const options = {
+  lazyLoad: true,
+  loop: true,
+  autoplay: false,
+  autoplayHoverPause: true,
   margin: 30,
   responsiveClass: true,
   nav: true,
   dots: false,
-  autoplay: false,
-  // navText: ["Prev", "Next"],
   smartSpeed: 1000,
   responsive: {
     0: {
@@ -36,7 +36,9 @@ const options = {
   },
 };
 
-const PravasHome: React.FunctionComponent<IPravasHomeProps> = (props) => {
+const PravasHomeCarousel: React.FunctionComponent<
+  IPravasHomeCarouselProps
+> = ({}) => {
   const [allPackageCardData, setAllPackageCardData] = React.useState<
     Array<any>
   >([]);
@@ -45,40 +47,32 @@ const PravasHome: React.FunctionComponent<IPravasHomeProps> = (props) => {
     TourService.fetchAllTours().then((response) => {
       console.log("loadPackages", response?.data?.data);
       let packages = response?.data?.data;
-      setAllPackageCardData([...allPackageCardData, ...packages]);
+      setAllPackageCardData(packages);
     });
   };
 
   React.useEffect(() => {
     loadPackageData();
   }, []);
-
+  console.log(allPackageCardData);
   return (
     <>
       <Container>
         <OwlCarousel
-          {...options}
           className="owl-theme owl-carousel owl-nav-pravas"
-          lazyLoad={true}
-          loop
-          dots={false}
-          nav={true}
-          autoplay={false}
-          autoplayHoverPause={true}
-          margin={8}
+          {...options}
         >
           {Array.isArray(allPackageCardData) &&
-            allPackageCardData.map((packageCardDetials, i) => {
+            allPackageCardData.map((v, i) => {
               return (
-                <Box>
-                  <PravasPackageCard
-                    {...packageCardDetials}
-                    _id={packageCardDetials?._id}
-                    images={packageCardDetials?.images}
-                    title={packageCardDetials?.title}
-                    key={packageCardDetials?._id + i}
-                  />
-                </Box>
+                <>
+                  <NavLink
+                    style={{ textDecoration: "none" }}
+                    to={`/pravas/explore/${v?._id}`}
+                  >
+                    <PravasPackageCard key={v?._id + i} {...v} />
+                  </NavLink>
+                </>
               );
             })}
         </OwlCarousel>
@@ -87,4 +81,4 @@ const PravasHome: React.FunctionComponent<IPravasHomeProps> = (props) => {
   );
 };
 
-export default PravasHome;
+export default PravasHomeCarousel;
