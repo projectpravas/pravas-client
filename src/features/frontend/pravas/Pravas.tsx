@@ -1,19 +1,22 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
+import Button from "@mui/material/Button";
 
 import PravasPackageCard from "./PravasPackageCard";
 import { Helmet } from "react-helmet";
 import TourService from "../../../services/TourService";
+import { Outlet, useNavigate } from "react-router-dom";
 
 interface IPravasProps {}
 
 const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   //---------------- AllDatafetch -------------
   const [allPackage, setAllPackage] = React.useState<Array<any>>([]);
+  const navigate = useNavigate();
 
   const loadPackages = () => {
-    TourService.fetchAllTours()
+    TourService.fetchAllTours(`?category=package`)
       .then((response) => {
         setAllPackage(response?.data?.data);
       })
@@ -25,6 +28,10 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   React.useEffect(() => {
     loadPackages();
   }, []);
+
+  const handleClick = () => {
+    navigate("custom-tour-form");
+  };
 
   return (
     <>
@@ -52,6 +59,8 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
               </Grid>
             ))}
         </Grid>
+        <Outlet />
+        <Button onClick={handleClick}>Custom Enquiry</Button>
       </Container>
     </>
   );

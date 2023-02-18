@@ -1,0 +1,48 @@
+/* .owl-nav button span :hover{
+    font-size: 40px;
+    padding: 0px 10px;
+    background-color: rgb(46, 239, 239);
+   
+}
+
+.owl-nav button .nav-btn-pravas span{
+    font-size: 40px;
+    padding: 0px 10px;
+    border-radius: "100%";
+    color: black;
+    background-color: rgb(219, 39, 39);
+}
+
+button.owl-prev {
+    float: left;
+    color:"blue"
+}
+
+button.owl-next {
+    float: right;
+}
+
+.owl-nav {
+    width: 100vw;
+    position: absolute;
+}
+
+.owl-theme .owl-dots .owl-dot.active span, 
+.owl-theme .owl-dots .owl-dot:hover span {
+    background: #2caae1;
+  
+}
+
+.owl-carousel .owl-theme .owl-loaded.owl-drag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.owl-stage-outer {
+    height: 550px;
+}
+.owl-theme .owl-nav [class*="owl-"]:hover {
+    background: none;
+    color: rgb(250, 21, 21);
+    text-decoration: none;
+  } */

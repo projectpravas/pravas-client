@@ -38,6 +38,7 @@ import {
   TableBody,
   TableCell,
 } from "@mui/material";
+import PackageCarousel from "./PackageCarousel";
 
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
@@ -132,6 +133,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
+
+  const [sheduleDates, setSheduleDates] = useState([]);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -1123,6 +1126,11 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             </Paper>
           </Grid>
         </Grid>
+      </Container>
+
+      {/* Package Card Carousel  */}
+      <Container>
+        <PackageCarousel />
       </Container>
     </Grid>
   );

@@ -2,12 +2,12 @@ import { API, endPoints } from "../api/index";
 import EnquiryModel from "../shared/models/enquiryModel";
 
 class EnquiryService {
-  static createEnquiry(enq: EnquiryModel | FormData) {
+  static createEnquiry(enq: FormData | EnquiryModel) {
     return API.post(endPoints.api.enquiries.create, enq);
   } //createEnquiry
 
-  static updateEnquiry(id: string, enq: EnquiryModel | FormData) {
-    return API.put(endPoints.api.enquiries.update + id, enq);
+  static updateEnquiry(id: string, enq: FormData | object) {
+    return API.put(endPoints.api.enquiries.update + id, { ...enq });
   } //updateEnquiry
 
   static deleteEnquiry(id: string) {

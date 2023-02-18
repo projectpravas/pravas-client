@@ -24,6 +24,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import UserService from "../../../services/UserService";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
+import TourService from "../../../services/TourService";
 
 const Link = styled(NLink)({
   textDecoration: "none",
@@ -56,6 +57,17 @@ const Register = () => {
   const [activeElementId, setActiveElementId] = useState("");
   const [signUpCheckbox, setSignUpCheckbox] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    TourService.fetchAllTours().then((res) => {
+      const arr: any = [];
+      const imgs = res?.data?.data?.forEach((v: any, i: any) =>
+        arr.push(...v.images)
+      );
+      setImages(arr);
+    });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -114,7 +126,9 @@ const Register = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: `url(http://localhost:9999/${
+              images[Math.floor(Math.random() * images.length)]
+            })`,
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"

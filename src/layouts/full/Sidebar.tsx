@@ -283,6 +283,14 @@ const Sidebar = () => {
             <DrawerHeader
               sx={{ minHeight: { xs: "64px", md: "70px", lg: "90px" } }}
             >
+              <Grid container padding={1}>
+                <NavLink to="/home">
+                  <img
+                    src="/PTSM-LOGO.png"
+                    style={{ width: "100%", height: "auto" }}
+                  />
+                </NavLink>
+              </Grid>
               <IconButton onClick={handleDrawerClose} sx={{ mr: 1 }}>
                 {theme.direction === "rtl" ? (
                   <ChevronRightIcon />

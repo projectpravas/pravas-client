@@ -80,6 +80,7 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
         : value == true
         ? false
         : true;
+    console.log(value, newValue);
 
     //create form data
     const fd = new FormData();

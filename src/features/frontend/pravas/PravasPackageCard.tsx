@@ -23,6 +23,7 @@ import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import { endPoints } from "../../../api";
 import { duration } from "@mui/material";
 import { number } from "yup";
+import { SrvRecord } from "dns";
 
 const NLink = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -37,6 +38,7 @@ interface IPravasPackageCardProps {
   _id: string;
   title: string;
   tourDesc: string;
+  // tourDate:string;
   price: string | number;
   duration: any;
   maxPersons: number | string;
@@ -46,6 +48,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
   images,
   _id,
   title,
+  // tourplan,
   tourDesc,
   price,
   duration,
@@ -238,7 +241,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
             </Card>
           </Grid>
           <Grid item sx={{ position: "absolute", top: "8%", right: "10%" }}>
-            <Link to="">
+            <Link to="#">
               <FavoriteBorderOutlinedIcon
                 sx={{
                   color: "#ffffff",
