@@ -187,6 +187,43 @@ export default [
         includeTour: "All applicable Taxes",
       },
     ],
+    include: [
+      {
+        includeTour:
+          "Accommodation on twin/triple sharing basis (as per booking)",
+      },
+      {
+        includeTour: "Meals - Breakfast and Dinner (as per itinerary)",
+      },
+      {
+        includeTour: "All travelling / transfers and sightseeing exactly as",
+      },
+      {
+        includeTour: "per the itinerary",
+      },
+      {
+        includeTour: "Entry fees (if mentioned in your bookings)",
+      },
+      {
+        includeTour: "Srinagar Airport Pick up and Drop",
+      },
+      {
+        includeTour: "Tour Leader/Manager",
+      },
+      {
+        includeTour: "Well trained driver",
+      },
+      {
+        includeTour: "Toll, Parking charges for vehicle",
+      },
+      {
+        includeTour:
+          "Assistance in Air ticket/ Railway ticket bookings for tour dates.",
+      },
+      {
+        includeTour: "All applicable Taxes",
+      },
+    ],
     exclude: [
       {
         excludeTour: "Flight / Train / Bus Ticket",
