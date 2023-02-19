@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import React, { useState, useEffect } from "react";
 import {
   LineChart,
@@ -14,7 +14,7 @@ import {
 } from "recharts";
 import { data } from "../../data";
 
-interface IVisitorsLineChartProps {
+interface IVisitorsAreaChartProps {
   singleVisitorIndex: any;
 }
 interface IWeekData {
@@ -23,7 +23,7 @@ interface IWeekData {
   users: number;
 }
 
-const VisitorsLineChart: React.FunctionComponent<IVisitorsLineChartProps> = ({
+const VisitorsAreaChart: React.FunctionComponent<IVisitorsAreaChartProps> = ({
   singleVisitorIndex,
 }) => {
   const [weekData, setWeekData] = useState<Array<IWeekData>>(data[0].weeks);
@@ -38,7 +38,7 @@ const VisitorsLineChart: React.FunctionComponent<IVisitorsLineChartProps> = ({
 
   return (
     <Box>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={270}>
         <AreaChart
           width={700}
           height={200}
@@ -86,4 +86,4 @@ const VisitorsLineChart: React.FunctionComponent<IVisitorsLineChartProps> = ({
   );
 };
 
-export default VisitorsLineChart;
+export default VisitorsAreaChart;
