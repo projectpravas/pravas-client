@@ -176,7 +176,7 @@ export default [
   {
     label: "Page Not Found",
     component: <PageNotFound />,
-    path: "*",
+    path: "/*",
     showInMenu: false,
     hasAuthenticate: "no",
   },

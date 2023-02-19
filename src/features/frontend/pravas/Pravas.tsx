@@ -7,6 +7,7 @@ import PravasPackageCard from "./PravasPackageCard";
 import { Helmet } from "react-helmet";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Typography from "@mui/material/Typography";
 
@@ -62,6 +63,7 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
             ))}
         </Grid>
       </Container>
+      <StartFromTop />
 
       {/* *******************customize tour***************** */}
       <Outlet />

@@ -23,7 +23,7 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
@@ -37,6 +37,7 @@ import {
   TableCell,
 } from "@mui/material";
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 
 import MustWatchcard from "./MustWatchCard";
@@ -150,6 +151,7 @@ interface TourDetails {
 }
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const { id } = useParams();
+
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
   // -----Accordion ------
@@ -1135,6 +1137,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <Container>
         <PravasHomeCarousel />
       </Container>
+      <StartFromTop />
     </Grid>
   );
 };
