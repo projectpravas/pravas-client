@@ -1,5 +1,4 @@
 import { lazy } from "react";
-import CreatePackageForm from "../../features/admin/pravas/packages/Packages";
 import CustomTourForm from "../../features/frontend/customtourform/CustomTourForm";
 
 const Home = lazy(() => import("../../features/frontend/home/Home"));
