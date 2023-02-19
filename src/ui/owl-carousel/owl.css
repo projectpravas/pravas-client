@@ -9,6 +9,7 @@
   background-color: rgb(255, 255, 255);
   box-shadow: 1px 1.5px 3px 0 rgba(0, 0, 0, 0.14),
     0 2px 3px 0 rgba(0, 0, 0, 0.19);
+  /* display: none; */
 }
 
 button.owl-prev {
@@ -58,4 +59,17 @@ button.owl-next {
   background: none;
   color: #fff;
   text-decoration: none;
+}
+
+/************* image carousel*********** */
+
+.owl-nav-explore {
+  position: "relative";
+  /* background-color: red; */
+  /* width: 100vw; */
+  height: 270px;
+}
+
+.owl-nav-explore .owl-stage-outer {
+  height: 100%;
 }

@@ -110,22 +110,48 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
         >
           {/* / ------------------image -area----- / */}
           <Grid item>
-            <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-              <CardMedia
-                sx={{ borderRadius: "15px" }}
-                component="img"
-                src={`${endPoints?.serverBaseURL}/${images[0]}`}
-                alt={title}
-              />
-            </CardActionArea>
+            <NavLink
+              to={`explore/${_id}`}
+              style={{
+                textDecoration: "none",
+                color: "#2c5799",
+                fontWeight: "bold",
+              }}
+            >
+              <CardActionArea sx={{ width: "90%", margin: "auto" }}>
+                <CardMedia
+                  sx={{ borderRadius: "15px" }}
+                  component="img"
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = "placeholder-blogs.png";
+                  }}
+                  src={
+                    images.length !== 0
+                      ? `${endPoints?.serverBaseURL}/${images[0]}`
+                      : `/placeholder-blogs.png`
+                  }
+                  alt={title}
+                />
+              </CardActionArea>
+            </NavLink>
           </Grid>
           {/*----------- heading----------- */}
           <Grid item>
             <Grid container>
               <Grid item xs={8}>
-                <Typography variant="h5" sx={typoHead}>
-                  {title}
-                </Typography>
+                <NavLink
+                  to={`explore/${_id}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "#2c5799",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <Typography variant="h5" sx={typoHead}>
+                    {title}
+                  </Typography>
+                </NavLink>
 
                 <Typography sx={{ display: "flex", p: 2 }}>
                   <span

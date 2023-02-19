@@ -45,7 +45,7 @@ const PravasHomeCarousel: React.FunctionComponent<
 
   const loadPackageData = () => {
     TourService.fetchAllTours().then((response) => {
-      console.log("loadPackages", response?.data?.data);
+      // console.log("loadPackages", response?.data?.data);
       let packages = response?.data?.data;
       setAllPackageCardData(packages);
     });
@@ -54,7 +54,7 @@ const PravasHomeCarousel: React.FunctionComponent<
   React.useEffect(() => {
     loadPackageData();
   }, []);
-  console.log(allPackageCardData);
+  console.log("allPackageCardData", allPackageCardData);
   return (
     <>
       <Container>

@@ -19,7 +19,6 @@ import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
-import MUIDataTable from "mui-datatables";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
@@ -37,14 +36,39 @@ import {
   TableBody,
   TableCell,
 } from "@mui/material";
-<<<<<<< HEAD
-
-const placeholder = [
-  "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg",
-];
-=======
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
->>>>>>> main
+import OwlCarousel from "react-owl-carousel";
+
+import MustWatchcard from "./MustWatchCard";
+
+const options = {
+  lazyLoad: true,
+  loop: true,
+  autoplay: true,
+  autoplayHoverPause: true,
+  margin: 0,
+  responsiveClass: true,
+  nav: true,
+  dots: false,
+  smartSpeed: 1000,
+  responsive: {
+    0: {
+      items: 1,
+    },
+    400: {
+      items: 1,
+    },
+    600: {
+      items: 2,
+    },
+    700: {
+      items: 2,
+    },
+    1000: {
+      items: 3,
+    },
+  },
+};
 
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
@@ -163,13 +187,13 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   //**************must watch filter***************
 
   const loadExplore = () => {
-    TourService.fetchAllTours()
+    TourService.fetchOneTour(id as string)
 
       .then((response) => {
-        const result: TourDetails[] = response?.data?.data;
+        setTourDetails(response?.data?.data);
         setAllPackageWatch(response?.data?.data);
-        const tourObj = result.find((obj) => obj?._id == id);
-        if (tourObj) setTourDetails(tourObj);
+        // const tourObj = result.find((obj) => obj?._id == id);
+        // if (tourObj) setTourDetails(tourObj);
       })
       .catch((err) => {
         console.log(err);
@@ -189,7 +213,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       </Helmet>
 
       {/* slides of karshmir image */}
-      <Grid container style={{ backgroundColor: "#eee" }}>
+      {/* <Grid container style={{ backgroundColor: "#eee" }}>
         <Grid item xs={12} md={6} lg={3}>
           <img
             style={{ width: "100%", height: "100%" }}
@@ -214,7 +238,29 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
           />
         </Grid>
-      </Grid>
+      </Grid> */}
+
+      <OwlCarousel className=" owl-nav-explore" {...options}>
+        <Grid item>
+          <img
+            style={{ height: "275px" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[0]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "275px" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[1]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "275px" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
+          />
+        </Grid>
+      </OwlCarousel>
+
       {/* ************** Heading of Tour *******************    */}
       <Grid sx={{ backgroundColor: "#faf5ee" }}>
         <Container>
@@ -1079,94 +1125,16 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               </Box>
             </Paper>
             {/*************************must Watch************************ */}
-            <Paper
-              elevation={0}
-              sx={{
-                border: "1px solid #faf5ee ",
-                borderRadius: "10px",
-                marginTop: "20px",
-              }}
-            >
-              <Container sx={{ marginTop: "15px" }}>
-                <Typography
-                  sx={{
-                    fontFamily: "poppins",
-                    color: "#313041",
 
-                    fontSize: "20px",
-                    fontWeight: "700",
-                    marginLeft: "20px",
-                  }}
-                >
-                  Must Watch
-                </Typography>
-              </Container>
-
-              {Array.isArray(allPackageWatch) &&
-                allPackageWatch.map((mustWatchcard, i) => (
-                  <Container
-                    key={mustWatchcard.id + i}
-                    sx={{ borderBottom: "1px  solid #faf5ee" }}
-                  >
-                    <Grid container sx={{ marginLeft: "20px" }}>
-                      <Grid
-                        sx={{
-                          display: "flex",
-                          my: 2,
-                        }}
-                      >
-                        <img
-                          style={{ width: "35%", borderRadius: "10px" }}
-                          src={`${endPoints?.serverBaseURL}/${mustWatchcard?.images[0]}`}
-                        />
-
-                        <Grid sx={{ ml: 2 }}>
-                          <Typography
-                            sx={{
-                              color: "#2C5799",
-                              fontSize: "16px",
-                              fontWeight: "800",
-                              fontFamily: "poppins",
-                            }}
-                          >
-                            {mustWatchcard?.title}
-                          </Typography>
-                          <Typography sx={{ display: "flex", mt: 1 }}>
-                            <span
-                              style={{
-                                color: "#97978F",
-                                fontWeight: "700",
-                              }}
-                            >
-                              From
-                            </span>
-                            <span
-                              style={{
-                                marginLeft: "10px",
-                                color: "#2C5799",
-                                fontWeight: "700",
-                              }}
-                            >
-                              {`₹${mustWatchcard?.price}`}
-                            </span>
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Container>
-                ))}
-            </Paper>
+            <MustWatchcard />
           </Grid>
         </Grid>
       </Container>
-<<<<<<< HEAD
-=======
 
       {/* Package Card Carousel  */}
       <Container>
         <PravasHomeCarousel />
       </Container>
->>>>>>> main
     </Grid>
   );
 };
