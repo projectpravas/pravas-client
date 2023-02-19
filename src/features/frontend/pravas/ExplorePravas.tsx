@@ -159,12 +159,11 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
+  const [sheduleDates, setSheduleDates] = useState([]);
 
   const handleCickChange = () => {
     setExpanded("panel1");
   };
-
-  const [sheduleDates, setSheduleDates] = useState([]);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
