@@ -23,5 +23,9 @@ class UserService {
   static fetchAllUsers(query: string): Promise<AxiosResponse> {
     return API.get(endPoints.api.users.getAll + query);
   } //fetchAllUsers
+
+  static isValidIds(arr: string[]): Promise<AxiosResponse> {
+    return API.post(endPoints.api.users.checkIds, arr);
+  } //isvalidIds
 }
 export default UserService;

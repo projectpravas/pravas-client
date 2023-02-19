@@ -1,7 +1,7 @@
 import BookingService from "../../services/BookingService";
 
-let customersId;
-let toursId;
+let customersId: string;
+let toursId: string;
 
 const handleOpenRazorPay = (data: any) => {
   const options = {
@@ -27,9 +27,11 @@ const handleOpenRazorPay = (data: any) => {
     //   email: "gaurav.kumar@example.com",
     //   contact: "9000090000",
     // },
-    // notes: {
-    //   address: "Razorpay Corporate Office",
-    // },
+    notes: {
+      customerId: customersId,
+      tourId: toursId,
+      paymentTime: Date.now(),
+    },
     // theme: {
     //   color: "#3399cc",
     // },

@@ -13,6 +13,7 @@ interface TourYupSchemaInterface {
   hasMaxPersons?: boolean;
   hasParticipants?: boolean;
   hasTourLocation?: boolean;
+  hasTourDate?: boolean;
   hasFeatured?: boolean;
   hasImages?: boolean;
   hasScheduleDate?: boolean;
@@ -46,6 +47,7 @@ const defineTourYupSchema = ({
   hasTourType = false,
   hasTourDesc = false,
   hasTourInfo = false,
+  hasTourDate = false,
   hasMaxPersons = false,
   hasParticipants = false,
   hasTourLocation = false,
@@ -85,6 +87,11 @@ const defineTourYupSchema = ({
     tourSchemaObj.tourId = yup.number().required("Tour-Id is required");
   if (hasTitle)
     tourSchemaObj.title = yup.string().required("Title is required");
+  if (hasTourDate)
+    tourSchemaObj.tourDate = yup
+      .date()
+      .required("Tour Date is required")
+      .min(new Date(Date.now()), "Date couldn't be less than today");
   if (hasCategory)
     tourSchemaObj.category = yup.string().required("Category is required");
   if (hasPrice)
