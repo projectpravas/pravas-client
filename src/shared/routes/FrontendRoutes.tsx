@@ -1,5 +1,4 @@
 import { lazy } from "react";
-import CreatePackageForm from "../../features/admin/pravas/packages/Packages";
 import CustomTourForm from "../../features/frontend/customtourform/CustomTourForm";
 
 const Home = lazy(() => import("../../features/frontend/home/Home"));
@@ -11,6 +10,7 @@ const Careers = lazy(() => import("../../ui/footer/Career/Careers"));
 const CareerDetails = lazy(
   () => import("../../ui/footer/Career/CareerDetails")
 );
+const CareerForm = lazy(() => import("../../ui/footer/Career/CareerForm"));
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
 const ExplorePravas = lazy(
   () => import("../../features/frontend/pravas/ExplorePravas")
@@ -116,6 +116,14 @@ export default [
     hasAuthenticate: "all",
   },
   {
+    label: "Career ",
+    component: <CareerForm />,
+    path: "careers/:id/form",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+
+  {
     label: "Login",
     component: <Login />,
     path: "login",
@@ -174,7 +182,7 @@ export default [
   {
     label: "Page Not Found",
     component: <PageNotFound />,
-    path: "*",
+    path: "/*",
     showInMenu: false,
     hasAuthenticate: "no",
   },

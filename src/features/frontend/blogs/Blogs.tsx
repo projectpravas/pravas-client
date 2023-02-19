@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
 import BlogService from "../../../services/BlogService";
+import ReviewSection from "../pravas/ReviewSection";
 
 interface IBlogsProps {}
 
@@ -88,6 +89,10 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
       </Container>
       <AddBlog />
       <FAQ />
+
+      {/* **********************Review section right************ */}
+
+      <ReviewSection />
     </>
   );
 };

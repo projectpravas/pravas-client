@@ -1,10 +1,10 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import OwlCarousel from "react-owl-carousel";
 import "../../../ui/owl-carousel/owl.css";
 import Container from "@mui/material/Container";
 import PravasPackageCard from "../pravas/PravasPackageCard";
 import TourService from "../../../services/TourService";
-import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 interface IPravasHomeCarouselProps {}
 
 const options = {
@@ -38,23 +38,26 @@ const options = {
 
 const PravasHomeCarousel: React.FunctionComponent<
   IPravasHomeCarouselProps
-> = ({}) => {
-  const [allPackageCardData, setAllPackageCardData] = React.useState<
-    Array<any>
-  >([]);
+> = () => {
+  const navigate = useNavigate();
+  const [allPackageCardData, setAllPackageCardData] = useState<Array<any>>([]);
 
   const loadPackageData = () => {
     TourService.fetchAllTours().then((response) => {
-      console.log("loadPackages", response?.data?.data);
+      // console.log("loadPackages", response?.data?.data);
       let packages = response?.data?.data;
       setAllPackageCardData(packages);
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     loadPackageData();
   }, []);
-  console.log(allPackageCardData);
+
+  const HandleNagigation = (path: string) => {
+    navigate(path);
+  };
+  // console.log(allPackageCardData);
   return (
     <>
       <Container>
@@ -65,14 +68,13 @@ const PravasHomeCarousel: React.FunctionComponent<
           {Array.isArray(allPackageCardData) &&
             allPackageCardData.map((v, i) => {
               return (
-                <>
-                  <NavLink
-                    style={{ textDecoration: "none" }}
-                    to={`/pravas/explore/${v?._id}`}
-                  >
-                    <PravasPackageCard key={v?._id + i} {...v} />
-                  </NavLink>
-                </>
+                <div
+                  onClick={() => {
+                    HandleNagigation(`/pravas/explore/${v?._id}`);
+                  }}
+                >
+                  <PravasPackageCard key={v?._id + i} {...v} />
+                </div>
               );
             })}
         </OwlCarousel>

@@ -42,7 +42,7 @@ const GoToTop: React.FunctionComponent<IGoToTopProps> = (props) => {
       border-radius: 50%;
       position: fixed;
       bottom: 3rem;
-      right: 3rem;
+      right: 0rem;
       z-index: 999;
       display: flex;
       justify-content: center;
