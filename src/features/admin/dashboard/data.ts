@@ -3,10 +3,10 @@ export const data = [
     name: "Jan",
     value: 400,
     weeks: [
-      { name: "week 1", totalVisitors: 130, users: 8 },
-      { name: "week 2", totalVisitors: 170, users: 78 },
-      { name: "week 3", totalVisitors: 47, users: 15 },
-      { name: "week 4", totalVisitors: 53, users: 3 },
+      { name: "1", totalVisitors: 130, users: 8 },
+      { name: "2", totalVisitors: 170, users: 78 },
+      { name: "3", totalVisitors: 47, users: 15 },
+      { name: "4", totalVisitors: 53, users: 3 },
     ],
   },
   {
