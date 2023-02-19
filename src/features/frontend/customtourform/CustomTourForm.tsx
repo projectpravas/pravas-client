@@ -217,7 +217,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                         render={() => (
                           <TextField
                             {...field}
-                            inputProps={{ readOnly: enqpath }}
+                            // inputProps={{ readOnly: enqpath }}
+                            disabled={enqpath}
                             fullWidth
                             size="small"
                             placeholder="place"
@@ -295,7 +296,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   render={({ field }) => (
                     <TextField
                       fullWidth
-                      inputProps={{ readOnly: enqpath }}
+                      disabled={enqpath}
+                      // inputProps={{ readOnly: enqpath }}
                       margin="normal"
                       size="small"
                       type="date"
@@ -332,8 +334,9 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      inputProps={{ readOnly: enqpath }}
+                      // inputProps={{ readOnly: enqpath }}
                       fullWidth
+                      disabled={enqpath}
                       margin="normal"
                       size="small"
                       type="date"
@@ -373,7 +376,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      inputProps={{ readOnly: enqpath }}
+                      // inputProps={{ readOnly: enqpath }}
+                      disabled={enqpath}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -421,7 +425,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   >
                     <Grid item xs={12} md={6}>
                       <TextField
-                        inputProps={{ readOnly: enqpath }}
+                        // inputProps={{ readOnly: enqpath }}
+                        disabled={enqpath}
                         fullWidth
                         size="small"
                         label="Name"
@@ -444,7 +449,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                     </Grid>
                     <Grid item xs={12} md={3}>
                       <TextField
-                        inputProps={{ readOnly: enqpath }}
+                        // inputProps={{ readOnly: enqpath }}
+                        disabled={enqpath}
                         fullWidth
                         size="small"
                         label="Age"
@@ -517,7 +523,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      inputProps={{ readOnly: enqpath }}
+                      // inputProps={{ readOnly: enqpath }}
+                      disabled={enqpath}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -547,7 +554,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      inputProps={{ readOnly: enqpath }}
+                      // inputProps={{ readOnly: enqpath }}
+                      disabled={enqpath}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -578,7 +586,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      inputProps={{ readOnly: enqpath }}
+                      // inputProps={{ readOnly: enqpath }}
+                      disabled={enqpath}
                       fullWidth
                       margin="normal"
                       size="small"
@@ -724,7 +733,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      inputProps={{ readOnly: enqpath }}
+                      // inputProps={{ readOnly: enqpath }}
+                      disabled={enqpath}
                       margin="normal"
                       size="small"
                       type="text"
@@ -766,7 +776,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      inputProps={{ readOnly: enqpath }}
+                      // inputProps={{ readOnly: enqpath }}
+                      disabled={enqpath}
                       fullWidth
                       multiline
                       minRows={5}
