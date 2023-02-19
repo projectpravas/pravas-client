@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import * as React from "react";
 import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 import { data } from "../../data";
@@ -92,11 +92,11 @@ const renderActiveShape = (props: any) => {
   );
 };
 
-interface ITrialPieChartProps {
+interface IVisitorsPieChartProps {
   setSingleVisitorIndex: any;
 }
 
-const TrialPieChart: React.FunctionComponent<ITrialPieChartProps> = ({
+const VisitorsPieChart: React.FunctionComponent<IVisitorsPieChartProps> = ({
   setSingleVisitorIndex,
 }) => {
   const [activeIndex, setActiveIndex] = React.useState(0);
@@ -112,7 +112,7 @@ const TrialPieChart: React.FunctionComponent<ITrialPieChartProps> = ({
     <Box
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={270}>
         <PieChart width={300} height={100}>
           <Pie
             activeIndex={activeIndex}
@@ -140,4 +140,4 @@ const TrialPieChart: React.FunctionComponent<ITrialPieChartProps> = ({
   );
 };
 
-export default TrialPieChart;
+export default VisitorsPieChart;
