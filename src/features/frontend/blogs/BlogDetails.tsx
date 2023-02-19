@@ -8,6 +8,9 @@ import { Helmet } from "react-helmet";
 import BlogService from "../../../services/BlogService";
 import { endPoints } from "../../../api";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import { IconButton } from "@mui/material";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useNavigate } from "react-router-dom";
 
 interface IBlogDetailsProps {}
 
@@ -29,12 +32,22 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
     loadBlogs();
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Helmet>
         <title>{data?.title}</title>
         <meta name="description" content={data?.metaDescription} />
       </Helmet>
+      <IconButton
+        size="small"
+        style={{ color: "#000" }}
+        onClick={() => navigate(-1)}
+      >
+        <ArrowBackIosNewIcon color="inherit" />
+        Back
+      </IconButton>
       <Container sx={{ pt: 8 }}>
         <Grid container>
           {/* image Area  */}
@@ -77,7 +90,9 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
                   }}
                 >
                   <Box>
-                    <Typography sx={{ fontSize: "1rem" }}>
+                    <Typography
+                      sx={{ fontSize: "1rem", textTransform: "capitalize" }}
+                    >
                       {data?.categories.toString()}
                     </Typography>
                   </Box>

@@ -34,8 +34,6 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
     loadBlogs();
   }, []);
 
-  console.log("data:   ", data);
-
   return (
     <>
       <Helmet>

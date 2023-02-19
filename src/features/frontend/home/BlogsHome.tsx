@@ -53,8 +53,6 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
     loadBlogs();
   }, []);
 
-  console.log("dataHome : ", data);
-
   return (
     <>
       {/* <Grid container mb={8}> */}
