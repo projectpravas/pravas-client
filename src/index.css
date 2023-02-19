@@ -17,7 +17,6 @@ code {
   display: none;
 }
 
-
 .hideScrollbar {
   /* height: 200px; */
   overflow-y: auto;
@@ -29,6 +28,7 @@ code {
 
 .hideScrollbar::-webkit-scrollbar {
   display: none;
+}
 
 .blog-post-line-clamp-p {
   display: -webkit-box;
