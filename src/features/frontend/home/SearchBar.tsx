@@ -4,68 +4,173 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Stack from "@mui/material/Stack";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import { Theme, useTheme } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import NativeSelect from "@mui/material/NativeSelect";
 import SearchIcon from "@mui/icons-material/Search";
 import TourService from "../../../services/TourService";
+import { errorToast } from "../../../ui/toast/Toast";
+import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+const searchButton = {
+  fontWeight: 600,
+  fontSize: "1.1em",
+  backgroundColor: "#2c5799",
+  border: "2px solid #2c5799",
+  borderRadius: "8px",
+  padding: "0px 20px",
+  letterSpacing: 2,
+  ":hover": {
+    backgroundColor: "#fff",
+    color: "#2c5799",
+    border: "2px solid #2c5799",
+  },
+};
 interface ISearchBarProps {}
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name: string, destination: string[], theme: Theme) {
+  return {
+    fontWeight:
+      destination.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
-  // const data: Array<object> = [
-  //   {
-  //     id: 1,
-  //     name: "Hampi",
-  //     desc: "Hampi (Hampe) is a village and temple town recognized as a UNESCO World Heritage Site,listed as the Group of Monuments at Hampi, in northern Karnataka, India.",
-  //     ActivityType: {
-  //       type1: "honeyMoon",
-  //       type2: "Adventure",
-  //       type3: "trek",
-  //     },
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Kashmir",
-  //     desc: "Kashmir (Hampe) is a village and temple town recognized as a UNESCO World Heritage Site,listed as the Group of Monuments at Hampi, in northern Karnataka, India.",
-  //     ActivityType: {
-  //       type1: "Adventure",
-  //       type2: "trek",
-  //     },
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Kerela",
-  //     desc: "Kerela (Hampe) is a village and temple town recognized as a UNESCO World Heritage Site,listed as the Group of Monuments at Hampi, in northern Karnataka, India.",
-  //     ActivityType: {
-  //       type1: "Group",
-  //     },
-  //   },
-  // ];
+  const [allTours, setAllTours] = React.useState<Array<any>>([]);
+  const [allActivity, setAllActivity] = React.useState<Array<any>>([]);
+  const [destination, setDestionation] = React.useState<string[]>([]);
+  const [activity, setActivity] = React.useState<string[]>([]);
+  const theme = useTheme();
+  const [tours, setTours] = React.useState<object[]>([{}]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  // const [age, setAge] = React.useState("");
-  const [tours, setTours] = React.useState<Array<any>>([]);
+  const navigate = useNavigate();
 
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setAge(event.target.value as string);
-  // };
+  const handleNavigateChange = (path: string) => {
+    navigate(path);
+  };
 
-  // const loadTours = () => {
-  //   setTours([...tours, ...data]);
-  // };
-  //  console.log("state: ", tours);
-
-  const loadTours = () => {
+  const loadAllTours = () => {
     TourService.fetchAllTours().then((response) => {
-      console.log("tour data api", response.data);
-      setTours(response?.data?.data);
+      setAllTours(response?.data?.data);
     });
   };
 
-  useEffect(() => {
-    loadTours();
-  }, []);
+  const loadAllTourTypes = () => {
+    let uniqueTourType = new Set();
 
-  console.log("tours: ", tours);
+    Array.isArray(allTours) &&
+      allTours.map((item) => {
+        // console.log("item tourtype: ", item?.tourType);
+        if (item?.category === "package") {
+          for (var i in item?.tourType) {
+            // console.log("i---------------->", item?.tourType[i]);
+            uniqueTourType.add(item?.tourType[i]);
+          }
+          // console.log("tour value---------------->", uniqueTourType);
+        }
+      });
+    const ActivityType = [...uniqueTourType];
+    setAllActivity(ActivityType);
+
+    // console.log("array-------------------------->", ActivityType);
+  };
+
+  useEffect(() => {
+    loadAllTours();
+  }, []);
+  useEffect(() => {
+    loadAllTourTypes();
+  }, [allTours]);
+
+  const handleDestinationChange = (
+    event: SelectChangeEvent<typeof destination>
+  ) => {
+    const {
+      target: { value, name = "tourLocation" },
+    } = event;
+
+    let paramValue = searchParams.getAll(name);
+    console.log("paramV", paramValue);
+    // if (!paramValue?.includes("name")) {
+    //   paramValue = paramValue?.split("&") + "_" + value;
+    // }
+    // setSearchParams({ tourLocation: value });
+
+    // console.log("event", event);
+
+    // let paramValue1 = searchParams.getAll(name);
+
+    // paramValue = paramValue + "_" + value;
+
+    setSearchParams({ ...searchParams, [name]: value });
+    setDestionation(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  const handleActivityChange = (event: SelectChangeEvent<typeof activity>) => {
+    const {
+      target: { value, name = "tourType" },
+    } = event;
+    // let paramAct = searchParams.get(name);
+    // console.log("paramAct", paramAct);
+
+    // setSearchParams(searchParams);
+    setActivity(
+      // On autofill we get a stringified value.
+      typeof value === "string" ? value.split(",") : value
+    );
+  };
+
+  // const handleFilterChange = (event: any, name: any, value: any) => {
+  //   console.log("event fil", event);
+  //   let x = destination.map((item) => {
+  //     return searchParams.get(item);
+  //   });
+  //   console.log("paramV", x);
+  // };
+
+  // console.log("search", searchParams);
+  // ?tourLocation=Leh+Ladakh+8N9D&tourType=Adventure
+
+  // const loadTours = () => {
+  //   TourService.fetchAllTours()
+  //     .then((res) => {
+  //       setTours(res?.data?.data);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //       const msg = err?.response?.data?.message || "Try Again..";
+  //       errorToast(msg, 5000);
+  //     });
+  // };
+
+  // console.log("Activity", activity);
+  // console.log("des", destination);
+  // console.log("all tours", allTours);
+
+  // console.log("api des", tours);
+
+  // React.useEffect(() => {
+  //   loadTours();
+  // }, []);
 
   return (
     <>
@@ -87,107 +192,65 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
           boxShadow: "0 10px 30px 0 rgba(0,0,0,.05)",
         }}
       >
-        <FormControl sx={{ width: { xs: "100%", md: "30%", lg: "30%" } }}>
-          <InputLabel
-            variant="standard"
-            htmlFor="uncontrolled-native"
-            sx={{
-              lineHeight: "1.86em",
-              fontWeight: 400,
-              letterSpacing: "1px",
-              fontSize: "16px",
-              color: "#757783",
-            }}
+        <FormControl sx={{ m: 1, width: { xs: "100%", md: "30%", lg: "30%" } }}>
+          <InputLabel id="demo-multiple-name-label">Destinations</InputLabel>
+          <Select
+            labelId="demo-multiple-name-label"
+            id="demo-multiple-name"
+            multiple
+            value={destination}
+            onChange={handleDestinationChange}
+            // onChange={(e) => setSearchParams({ destination: e?.target?.value })}
+            input={<OutlinedInput label="Destionations" />}
+            MenuProps={MenuProps}
           >
-            Where are you going?
-          </InputLabel>
-          <NativeSelect
-          //   defaultValue={0}
-          // inputProps={{
-          //   name: "age",
-          //   id: "uncontrolled-native",
-          // }}
-          >
-            <option>-- Destinations --</option>
-
-            {Array.isArray(tours) &&
-              tours.map((item, i) => {
-                return (
-                  <option
-                    style={{ textAlign: "left", paddingLeft: "2%" }}
-                    key={item?._id}
-                  >
-                    {item?.title}
-                  </option>
-                );
-              })}
-          </NativeSelect>
+            {allTours.map((tour, i) => (
+              <MenuItem
+                key={tour.title + i}
+                value={tour?.title}
+                style={getStyles(tour, destination, theme)}
+                // onChange={(e) =>
+                //   setSearchParams({ tourLocation: e?.target?.value })
+                // }
+              >
+                {tour?.title}
+              </MenuItem>
+            ))}
+          </Select>
         </FormControl>
 
-        <FormControl sx={{ width: { xs: "100%", md: "30%", lg: "30%" } }}>
-          <InputLabel
-            variant="standard"
-            htmlFor="uncontrolled-native"
-            sx={{
-              lineHeight: "1.86em",
-              fontWeight: 400,
-              letterSpacing: "1px",
-              fontSize: "16px",
-              color: "#757783",
-            }}
+        <FormControl sx={{ m: 1, width: { xs: "100%", md: "30%", lg: "30%" } }}>
+          <InputLabel id="demo-multiple-name-label">Activities</InputLabel>
+          <Select
+            labelId="demo-multiple-name-label"
+            id="demo-multiple-name"
+            value={activity}
+            onChange={handleActivityChange}
+            input={<OutlinedInput label="Activities" />}
+            MenuProps={MenuProps}
           >
-            Activity Type
-          </InputLabel>
-          <NativeSelect
-          // defaultValue={0}
-          // inputProps={{
-          //   name: "age",
-          //   id: "uncontrolled-native",
-          // }}
-          >
-            <option value={0}>-- Tour Type --</option>
-            <option value={10}>Hampi</option>
-            {/* {
-            Array.isArray(tours) && tours.map((item, i) => {
-             return <option key={item?.ActivityType + i}> {item?.ActivityType?.type1}</option>
-              
-            }) 
-          } */}
-          </NativeSelect>
+            {allActivity.map((act, i) => (
+              <MenuItem
+                key={act + i}
+                value={act}
+                style={getStyles(act, activity, theme)}
+                // onChange={(e) => handleFilterChange(e, "tourLocation", act)}
+              >
+                {act}
+              </MenuItem>
+            ))}
+          </Select>
         </FormControl>
 
-        <Stack spacing={2} direction="row" sx={{ position: "relative" }}>
-          <Button
-            variant="contained"
-            sx={{
-              width: { xs: "100%", md: "10rem" },
-              fontWeight: 600,
-              fontSize: "1.1em",
-              backgroundColor: "#2c5799",
-              letterSpacing: 2,
-              padding: {
-                xs: "2% 3% 2% 10%",
-                sm: "2% 6% 2% 10%",
-                md: "2% 8% 2% 20%",
-                lg: "2% 8% 2% 20%",
-              },
-            }}
-          >
-            Search
-          </Button>
-          <SearchIcon
-            sx={{
-              position: "absolute",
-              color: "#fff",
-              fontSize: "1.2rem",
-              stroke: "white",
-              strokeWidth: 0,
-              top: { xs: "14%", sm: "20%", md: "28%", lg: "28%" },
-              left: { xs: "30%", sm: "39%", md: "2.5%", lg: "4%" },
-              cursor: "pointer",
-            }}
-          />
-        </Stack>
+        <Button
+          variant="contained"
+          size="small"
+          startIcon={<SearchIcon />}
+          sx={searchButton}
+          onClick={() => handleNavigateChange("/pravas")}
+        >
+          Search
+        </Button>
       </Grid>
     </>
   );

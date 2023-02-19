@@ -7,7 +7,7 @@ import PravasPackageCard from "./PravasPackageCard";
 import { Helmet } from "react-helmet";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
-
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 interface IPravasProps {}
 
 const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
@@ -62,6 +62,7 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
         <Outlet />
         <Button onClick={handleClick}>Custom Enquiry</Button>
       </Container>
+      <StartFromTop />
     </>
   );
 };

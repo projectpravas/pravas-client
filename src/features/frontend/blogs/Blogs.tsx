@@ -7,7 +7,7 @@ import { data } from "./BlogData";
 import { Helmet } from "react-helmet";
 import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
-
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 interface IBlogsProps {}
 
 const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
@@ -70,6 +70,9 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
       </Container>
       <AddBlog />
       <FAQ />
+
+      {/* loads page from top  */}
+      <StartFromTop />
     </>
   );
 };

@@ -7,6 +7,9 @@ import Typography from "@mui/material/Typography";
 import { CardMedia } from "@mui/material";
 import { Helmet } from "react-helmet";
 import { Container } from "@mui/system";
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
+import OwlCarousel from "react-owl-carousel";
+import "../../../ui/owl-carousel/owl.css";
 interface IAboutUsProps {}
 
 const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
@@ -70,6 +73,34 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
     fontSize: "16px",
   };
 
+  const options = {
+    lazyLoad: true,
+    loop: true,
+    autoplay: false,
+    autoplayHoverPause: true,
+    margin: 30,
+    responsiveClass: true,
+    nav: true,
+    dots: false,
+    smartSpeed: 1000,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 1,
+      },
+      600: {
+        items: 2,
+      },
+      700: {
+        items: 2,
+      },
+      1000: {
+        items: 2,
+      },
+    },
+  };
   return (
     <>
       <Helmet>
@@ -280,6 +311,7 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
         </Grid>
       </Container>
       {/*Vision*/}
+
       <Container>
         <Grid container sx={{ flexWrap: "wrap", minWidth: "xs" }}>
           <Box
@@ -287,7 +319,7 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
               height: "70%",
               width: "100%",
               alignItems: "center",
-              padding: "6%",
+              // padding: "6%",
             }}
           >
             <Typography
@@ -307,36 +339,44 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
             <Item
               sx={{
                 display: "flex",
-                justifyContent: "space-evenly",
+                justifyContent: "center",
                 bgcolor: "transparent",
               }}
             >
-              <MyCard>
-                <CardMedia
-                  component="img"
-                  height="250rem"
-                  image="https://pravasthejourney.com/wp-content/uploads/2022/06/Akshay.jpg"
-                  alt="green iguana"
-                />
-                <Typography sx={typoName}>Akshay</Typography>
-                <Typography sx={typePosition}>DIRECTOR</Typography>
-              </MyCard>
+              <OwlCarousel
+                className="owl-theme owl-carousel owl-nav-pravas"
+                {...options}
+              >
+                <MyCard>
+                  <CardMedia
+                    component="img"
+                    height="250rem"
+                    image="https://pravasthejourney.com/wp-content/uploads/2022/06/Akshay.jpg"
+                    alt="green iguana"
+                  />
+                  <Typography sx={typoName}>Akshay</Typography>
+                  <Typography sx={typePosition}>DIRECTOR</Typography>
+                </MyCard>
 
-              <MyCard>
-                <CardMedia
-                  component="img"
-                  height="250rem"
-                  image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
-                  alt="green iguana"
-                />
-                <Typography sx={typoName}>Asha</Typography>
-                <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
-              </MyCard>
+                <MyCard>
+                  <CardMedia
+                    component="img"
+                    height="250rem"
+                    image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
+                    alt="green iguana"
+                  />
+                  <Typography sx={typoName}>Asha</Typography>
+                  <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
+                </MyCard>
+              </OwlCarousel>
             </Item>
           </Box>
         </Grid>
       </Container>
       {/*team*/}
+
+      {/* loads page from top  */}
+      <StartFromTop />
     </>
   );
 };
