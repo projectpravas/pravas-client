@@ -19,7 +19,7 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   const navigate = useNavigate();
 
   const loadPackages = () => {
-    TourService.fetchAllTours()
+    TourService.fetchAllTours(`?category=package`)
       .then((response) => {
         setAllPackage(response?.data?.data);
       })

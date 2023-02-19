@@ -23,6 +23,7 @@ import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import { endPoints } from "../../../api";
 import { duration } from "@mui/material";
 import { number } from "yup";
+import { SrvRecord } from "dns";
 
 const placeholder =
   "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg";
@@ -49,6 +50,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
   images,
   _id,
   title,
+  // tourplan,
   tourDesc,
   price,
   duration,
@@ -267,7 +269,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
             </Card>
           </Grid>
           <Grid item sx={{ position: "absolute", top: "8%", right: "10%" }}>
-            <Link to="">
+            <Link to="#">
               <FavoriteBorderOutlinedIcon
                 sx={{
                   color: "#ffffff",
