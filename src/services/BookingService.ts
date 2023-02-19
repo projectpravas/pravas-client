@@ -9,5 +9,13 @@ class BookingService {
   static verifyOrder(idObj: any) {
     return API.post(endPoints.api.bookingOrders.verify, idObj);
   } //verifyOrder
+
+  static getPaymentHistory(queryObj: {
+    from: string | Date;
+    to: string | Date;
+    last: string | number;
+  }) {
+    return API.post(endPoints.api.bookingOrders.getPaymentHistory, queryObj);
+  } //verifyOrder
 }
 export default BookingService;

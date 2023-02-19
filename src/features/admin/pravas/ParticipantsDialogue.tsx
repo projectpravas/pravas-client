@@ -69,9 +69,13 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
   handleDialogue,
 }) => {
   const [fetchedParticipants, setFetchedParticipants] = useState<string[]>([]);
+  const [ids, setIds] = useState<string[]>([]);
+  const [fetchedNames, setfetchedNames] = useState<string[]>([]);
+  const [maxAllowedParticipants, setMaxAllowedParticipants] = useState(0);
   const [participants, setParticipants] = useState<any[]>([""]);
   const [touched, setTouched] = useState({ mob: false });
   const [mobile, setMobile] = useState("");
+  const [fieldFocused, setFieldFocused] = useState(false);
 
   const [searchResult, setSearchResult] = useState<any[]>([]);
 
@@ -81,41 +85,102 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
     const { name, value } = e?.target;
-    const arr = [...fetchedParticipants];
-    arr[i] = value;
+    const idNameArr = fetchedParticipants.map((val) => val.split("/")[0]);
+    const paymentMethodArr = fetchedParticipants.map(
+      (value) => value.split("/")[1]
+    );
+
+    idNameArr[i] = value;
+    const arr = [];
+
+    for (let j = 0; j < fetchedParticipants.length; j++) {
+      arr.push(
+        `${idNameArr[j]}/${
+          paymentMethodArr[j] ? paymentMethodArr[j] : "offline"
+        }`
+      );
+    }
 
     setFetchedParticipants(arr);
   };
 
-  const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e?.target;
-    if (mobile?.length > 3) getUsers(value);
-    if (mobile?.length == 9) {
-      setTouched({ ...touched, mob: false });
-    }
-    setMobile(value);
-  };
-
-  const getUsers = (mob: number | string) => {
-    console.log(mob);
-
-    UserService.fetchAllUsers(`?mobile=${mob}`)
+  const setValidNames = (arr: string[]) => {
+    UserService.isValidIds(arr)
       .then((res) => {
-        console.log(res);
+        const resArr: string[] = [];
+        res?.data?.data?.map((val: any) => {
+          if (typeof val === "object") {
+            resArr.push(`${val?.name?.first} ${val?.name?.last}`);
+          } else {
+            resArr.push(val);
+          }
+        });
+        setfetchedNames(resArr);
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
+  const getUsers = (mob: number | string) => {
+    UserService.fetchAllUsers(`?mobile=${mob}`)
+      .then((res) => {
+        const arr = fetchedParticipants;
+        const result = res?.data?.data;
+        const index = res?.data?.data?.find((obj: any, i: any) => {
+          if (arr.includes(obj?._id)) return i;
+        });
+        result.splice(index, 1);
+
+        setSearchResult(result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e?.target;
+    if (mobile?.length > 1) getUsers(value);
+    else if (value == "") {
+      setSearchResult([]);
+    }
+    setMobile(value);
+  };
+
   const addBtnHandleChange = () => {
     setFetchedParticipants([...fetchedParticipants, ""]);
+  };
+
+  const addParticipantsFromDb = async (userObj: any) => {
+    const arr = participants;
+
+    const userIdExist = arr?.find(
+      (obj) => obj?.id?.split("/")[0] == userObj?._id
+    )?.id;
+
+    if (!userIdExist && maxAllowedParticipants > fetchedParticipants?.length) {
+      setFetchedParticipants([
+        ...fetchedParticipants,
+        `${userObj?._id}/offline`,
+      ]);
+
+      const idsArr = ids;
+      idsArr.push(userObj?._id);
+      setIds(idsArr);
+    }
   };
 
   useEffect(() => {
     TourService.fetchOneTour(values?.id)
       .then((res) => {
+        setMaxAllowedParticipants(Number(res?.data?.data?.maxPersons));
         setFetchedParticipants(res?.data?.data?.participants);
+        const idNamesArr = res?.data?.data?.participants.map(
+          (val: any) => val.split("/")[0]
+        );
+        // setIds(idNamesArr);
+        setValidNames(idNamesArr);
       })
       .catch((err) => {
         console.error(err);
@@ -127,12 +192,34 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
     const arr =
       Array.isArray(fetchedParticipants) && fetchedParticipants?.length > 0
         ? fetchedParticipants?.map((val) => {
-            return { name: val };
+            return { id: val };
           })
-        : [{ name: "" }];
+        : [{ id: "" }];
 
     setParticipants(arr);
-  }, [fetchedParticipants]);
+
+    const idsArr = [];
+
+    for (let i = 0; i < fetchedParticipants.length; i++) {
+      // if (fetchedParticipants[i].split("/")[1] == "offline") {
+      //   const resArr = fetchedNames;
+      //   resArr.splice(i, 1, `${fetchedParticipants[i]}`);
+      //   setfetchedNames(resArr);
+      // }
+      idsArr.push(fetchedParticipants[i].split("/")[0]);
+    }
+
+    // setIds(idsArr);
+    // setValidNames(idsArr);
+  }, [fetchedParticipants, ids]);
+
+  // useEffect(() => {
+  //   setValidNames(ids);
+  // }, [ids]);
+
+  // useEffect(() => {
+  //   setValidNames(ids);
+  // }, [ids]);
 
   return (
     <Box sx={{ maxWidth: "70%" }}>
@@ -147,36 +234,143 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
         >
           Add Participants
         </BootstrapDialogTitle>
-        <DialogContent dividers>
+        <DialogContent dividers className="hideScrollbar">
           {/* // Add participant from db */}
           <Grid container>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <TextField
                 size="small"
                 type="text"
-                // autoFocus
                 name="mobile"
                 label="Serach"
                 placeholder="Search By Mobile Number"
                 value={mobile}
+                disabled={
+                  maxAllowedParticipants > fetchedParticipants?.length
+                    ? false
+                    : true
+                }
                 inputProps={{
                   min: 0,
                 }}
                 onBlur={() =>
-                  mobile?.length != 10 && setTouched({ ...touched, mob: true })
+                  !touched?.mob && setTouched({ ...touched, mob: true })
                 }
                 onChange={handleMobileChange}
-                error={touched?.mob && !Number.isNaN(mobile) ? true : false}
+                error={
+                  touched?.mob && mobile?.length > 10 && !Number.isNaN(mobile)
+                    ? true
+                    : false
+                }
                 helperText={
-                  touched?.mob && !Number.isNaN(mobile) ? "Invalid Input" : ""
+                  touched?.mob && mobile?.length > 10 && !Number.isNaN(mobile)
+                    ? "Invalid Input"
+                    : ""
                 }
               />
             </Grid>
-            <Grid>
-              <ul>
-                <li></li>
-              </ul>
-              {/* <Button onClick={"method"}>Add</Button> */}
+            <Grid item xs={12}>
+              <Box
+                className="hideScrollbar"
+                style={{
+                  maxHeight: "200px",
+                }}
+                sx={{
+                  mt: { xs: 1, sm: 2 },
+                  border: "1px solid #000",
+                }}
+              >
+                <table
+                  style={{
+                    width: "100%",
+                    borderSpacing: "0px",
+                    margin: "0px",
+                  }}
+                >
+                  <tr style={{ fontWeight: 100 }}>
+                    <th
+                      style={{
+                        border: "1px solid gray",
+                        padding: "4px 0",
+                        fontWeight: 100,
+                      }}
+                    >
+                      Name
+                    </th>
+                    <th
+                      style={{
+                        border: "1px solid gray",
+                        padding: "4px 0",
+                        width: "40%",
+                        fontWeight: 100,
+                      }}
+                    >
+                      Email
+                    </th>
+                    <th
+                      style={{
+                        border: "1px solid gray",
+                        padding: "4px 0",
+                        width: "20%",
+                        fontWeight: 100,
+                      }}
+                    >
+                      Add
+                    </th>
+                  </tr>
+                  {Array.isArray(searchResult) &&
+                    maxAllowedParticipants > fetchedParticipants?.length &&
+                    searchResult.map((obj: any, i: number) => {
+                      return (
+                        <tr
+                          key={obj?._id}
+                          style={{
+                            border: "1px solid gray",
+                            padding: "5px",
+                          }}
+                        >
+                          <td
+                            style={{
+                              border: "1px solid gray",
+                              padding: "5px 15px",
+                              fontSize: "0.91em",
+                            }}
+                          >
+                            {`${obj.name?.first} ${obj.name?.last}`}
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid gray",
+                              padding: "5px 15px",
+                              fontSize: "0.9em",
+                            }}
+                          >
+                            {obj?.email}
+                          </td>
+                          <td
+                            style={{
+                              border: "1px solid gray",
+                              padding: "5px 15px",
+                            }}
+                          >
+                            <IconButton
+                              color="primary"
+                              onClick={() => addParticipantsFromDb(obj)}
+                              disabled={
+                                maxAllowedParticipants >
+                                fetchedParticipants?.length
+                                  ? ids.includes(obj?._id)
+                                  : true
+                              }
+                            >
+                              <AddIcon />
+                            </IconButton>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </table>
+              </Box>
             </Grid>
           </Grid>
           <Box>
@@ -217,7 +411,18 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
                               name={`participant-${index + 1}`}
                               id="participants"
                               label={`participant-${index + 1}`}
-                              value={fetchedParticipants[index]}
+                              InputLabelProps={{
+                                shrink:
+                                  fetchedParticipants[index] != "" ||
+                                  fieldFocused,
+                              }}
+                              onFocus={() => setFieldFocused(true)}
+                              onBlur={() => setFieldFocused(false)}
+                              disabled={
+                                fetchedParticipants[index]?.split("/")[1] ==
+                                "online"
+                              }
+                              value={fetchedNames[index]?.split("/")[0]}
                               onChange={(e: any) => {
                                 handleChange(e, index);
                               }}
@@ -248,14 +453,20 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
                               >
                                 <IconButton
                                   color="warning"
-                                  disabled={participants?.length == 1}
-                                  onClick={() =>
+                                  disabled={
+                                    fetchedParticipants[index]?.split("/")[1] ==
+                                      "online" || participants?.length == 1
+                                  }
+                                  onClick={() => {
                                     setFetchedParticipants(
                                       fetchedParticipants.filter(
                                         (v, i) => i != index
                                       )
-                                    )
-                                  }
+                                    );
+                                    setfetchedNames(
+                                      fetchedNames.filter((v, i) => i != index)
+                                    );
+                                  }}
                                 >
                                   <ClearIcon />
                                 </IconButton>
@@ -268,12 +479,12 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
                                   sx={{ textAlign: "center" }}
                                 >
                                   <IconButton
+                                    disabled={
+                                      maxAllowedParticipants <= index + 1
+                                        ? true
+                                        : false
+                                    }
                                     color="primary"
-                                    // onClick={() => {
-                                    //   const arr: any = fetchedParticipants;
-                                    //   arr.push({ name: "" });
-                                    //   setFetchedParticipants(arr);
-                                    // }}
                                     onClick={addBtnHandleChange}
                                   >
                                     <AddIcon />
