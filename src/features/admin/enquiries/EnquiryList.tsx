@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 import UserService from "../../../services/UserService";
 import User from "../../../shared/models/userModel";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Chip } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import Tooltip from "@mui/material/Tooltip";

@@ -202,7 +202,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
   React.useEffect(() => {
     loadExplore();
-  }, []);
+  }, [id]);
 
   return (
     <Grid>

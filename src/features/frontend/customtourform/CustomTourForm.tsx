@@ -194,7 +194,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   };
   return (
     <Container>
-      <h2>Custom Tour</h2>
+      <h3>Custom Tour</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Destinations */}
         <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
@@ -210,7 +210,7 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
               <Grid item xs={12}>
                 {destinationsFa.fields.map((field, index) => (
                   <Grid container spacing={2} key={field.id} marginBottom={2}>
-                    <Grid item xs={12} md={2}>
+                    <Grid item xs={12} md={3}>
                       <Controller
                         name="destinations"
                         control={control}

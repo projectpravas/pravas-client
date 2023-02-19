@@ -10,6 +10,8 @@ import CustomTourForm from "../../frontend/customtourform/CustomTourForm";
 import EnquiryModel from "../../../shared/models/enquiryModel";
 import { Grid, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import PrintIcon from "@mui/icons-material/Print";
+import { Link } from "react-router-dom";
 
 interface IEnqDetailsProps {
   openDialog: boolean;
@@ -19,24 +21,22 @@ interface IEnqDetailsProps {
 }
 
 const EnqDetails: React.FunctionComponent<IEnqDetailsProps> = (props) => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleDialogOpen = () => {
-    setOpen(props.openDialog);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
-    <div>
-      <Dialog open={props.openDialog} maxWidth="md">
+    <div style={{ width: "100%" }}>
+      <Dialog open={props.openDialog} maxWidth="md" fullWidth>
         <Grid container justifyContent="space-between">
           <Grid item>
             <DialogTitle>Enquiry Details</DialogTitle>
           </Grid>
           <Grid item>
+            <IconButton>
+              <PrintIcon
+                onClick={() => window.print()}
+                fontSize="large"
+                color="primary"
+              />
+            </IconButton>
+
             <IconButton onClick={() => props.handleDialogClose()}>
               <CloseIcon fontSize="large" color="error" />
             </IconButton>
