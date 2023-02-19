@@ -10,6 +10,11 @@ import { Helmet } from "react-helmet";
 import GoToTop from "./ui/GoToTop/GoToTop";
 import "./ui/owl-carousel/owl.css";
 
+const theme = createTheme({
+  typography: {
+    fontFamily: "'Poppins','Roboto',sans-serif",
+  },
+});
 const App = () => {
   const [hasNetworkOffline, setHasNetworkOffline] = useState(false);
 
@@ -25,22 +30,24 @@ const App = () => {
     checkConnections();
   }, []);
   return (
-    <div className="App">
-      <Helmet>
-        <title>Pravas Tourism</title>
-        <meta name="description" content="pravas tourism" />
-        <meta name="keywords" content="Tours & Travel" />
-      </Helmet>
-      <Network show={hasNetworkOffline} />
-      <Toast />
-      <span id="recaptcha-container"></span>
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <Helmet>
+          <title>Pravas Tourism</title>
+          <meta name="description" content="pravas tourism" />
+          <meta name="keywords" content="Tours & Travel" />
+        </Helmet>
+        <Network show={hasNetworkOffline} />
+        <Toast />
+        <span id="recaptcha-container"></span>
 
-      <Routes>
-        <Route path="/*" element={<BlankLayout />} />
-        <Route path="secured/*" element={<FullLayout />} />
-      </Routes>
-      <GoToTop />
-    </div>
+        <Routes>
+          <Route path="/*" element={<BlankLayout />} />
+          <Route path="secured/*" element={<FullLayout />} />
+        </Routes>
+        <GoToTop />
+      </div>
+    </ThemeProvider>
   );
 };
 

@@ -30,7 +30,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   desc,
   id,
 }) => {
-  console.log(desc.slice(desc.indexOf("<p"), desc.indexOf("p>")));
+  // console.log(desc.slice(desc.indexOf("<p"), desc.indexOf("p>")));
 
   // console.log(desc.indexOf("<p"));
   // console.log(desc.indexOf("p>"));
