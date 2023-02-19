@@ -3,20 +3,38 @@ import Container from "@mui/material/Container";
 import * as React from "react";
 import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
-import { data } from "./BlogData";
 import { Helmet } from "react-helmet";
 import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
-import StartFromTop from "../../../ui/GoToTop/StartFromTop";
+import BlogService from "../../../services/BlogService";
+import ReviewSection from "../pravas/ReviewSection";
+
 interface IBlogsProps {}
 
 const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
+  const [data, setData] = React.useState<Array<any>>([]);
+  // Pagination
   const [currentPage, setCurrentPage] = React.useState(1);
   const [postPerPage] = React.useState(3);
-
   const lastPostIndex = currentPage * postPerPage;
   const firstPostIndex = lastPostIndex - postPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
+
+  const loadBlogs = () => {
+    BlogService.fetchAllBlogs()
+      .then((response) => {
+        setData(response?.data?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  React.useEffect(() => {
+    loadBlogs();
+  }, []);
+
+  // console.log("data:   ", data);
 
   return (
     <>
@@ -40,7 +58,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
             paddingY={6}
             justifyContent="space-evenly"
           >
-            {Array.isArray(currentPosts) &&
+            {Array.isArray(data) &&
               currentPosts.map((blog, i) => (
                 <Grid
                   item
@@ -51,10 +69,10 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
                   sx={{ pt: 3 }}
                 >
                   <BlogPost
-                    id={blog?.id}
-                    image={blog?.largeImage}
+                    id={blog?._id}
+                    image={blog?.image}
                     title={blog?.title}
-                    desc={blog?.desc}
+                    desc={blog?.richText}
                   />
                 </Grid>
               ))}
@@ -71,8 +89,9 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
       <AddBlog />
       <FAQ />
 
-      {/* loads page from top  */}
-      <StartFromTop />
+      {/* **********************Review section right************ */}
+
+      <ReviewSection />
     </>
   );
 };
