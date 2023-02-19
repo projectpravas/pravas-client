@@ -11,6 +11,7 @@ const Careers = lazy(() => import("../../ui/footer/Career/Careers"));
 const CareerDetails = lazy(
   () => import("../../ui/footer/Career/CareerDetails")
 );
+const CareerForm = lazy(() => import("../../ui/footer/Career/CareerForm"));
 const Pravas = lazy(() => import("../../features/frontend/pravas/Pravas"));
 const ExplorePravas = lazy(
   () => import("../../features/frontend/pravas/ExplorePravas")
@@ -31,8 +32,10 @@ const CancellationPolicy = lazy(
   () => import("../../ui/footer/CancellationPolicy")
 );
 const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
-const TermsAndConditions = lazy(() => import("../../ui/404/PageNotFound"));
-const PageNotFound = lazy(() => import("../../ui/footer/TermsAndConditions"));
+const TermsAndConditions = lazy(
+  () => import("../../ui/footer/TermsAndConditions")
+);
+const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 
 export default [
   {
@@ -106,6 +109,14 @@ export default [
     showInMenu: false,
     hasAuthenticate: "all",
   },
+  {
+    label: "Career ",
+    component: <CareerForm />,
+    path: "careers/:id/form",
+    showInMenu: false,
+    hasAuthenticate: "all",
+  },
+
   {
     label: "Login",
     component: <Login />,

@@ -16,11 +16,9 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
-// import TableCell from "@mui/material/TableCell";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
-import MUIDataTable from "mui-datatables";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
@@ -39,6 +37,38 @@ import {
   TableCell,
 } from "@mui/material";
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
+import OwlCarousel from "react-owl-carousel";
+
+import MustWatchcard from "./MustWatchCard";
+
+const options = {
+  lazyLoad: true,
+  loop: true,
+  autoplay: true,
+  autoplayHoverPause: true,
+  margin: 0,
+  responsiveClass: true,
+  nav: true,
+  dots: false,
+  smartSpeed: 1000,
+  responsive: {
+    0: {
+      items: 1,
+    },
+    400: {
+      items: 1,
+    },
+    600: {
+      items: 2,
+    },
+    700: {
+      items: 2,
+    },
+    1000: {
+      items: 3,
+    },
+  },
+};
 
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
@@ -48,7 +78,6 @@ const DataTab = styled(TableCell)({
   fontSize: "16px",
   textAlign: "center",
 });
-
 // ---ListItems styles=---
 const ItemList = styled(ListItem)({
   display: "list-item",
@@ -57,7 +86,6 @@ const ItemList = styled(ListItem)({
   letterSpacing: "-.2px",
   fontSize: "16px",
 });
-
 // ----Accordi0n typography style----
 const TypoAccordion = styled(ListItem)({
   width: "33%",
@@ -73,14 +101,12 @@ const TypoTourInfo = styled(Typography)({
   fontSize: "15px",
   fontWeight: "bold",
 });
-
 const CarouselStyle = styled(Carousel)({
   width: "90%",
   margin: "auto",
 });
 
 interface IExplorePravasProps {}
-
 interface Iitinerary {
   day: number | string;
   planTitle: string;
@@ -104,7 +130,6 @@ interface Iexclude {
 interface Inote {
   note: string;
 }
-
 interface TourDetails {
   images: string[] | any;
   _id: string;
@@ -123,7 +148,6 @@ interface TourDetails {
     scheduleDate?: string[] | any[];
   };
 }
-
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const { id } = useParams();
   //    -----share button state-------
@@ -133,6 +157,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
+
+  const handleCickChange = () => {
+    setExpanded("panel1");
+  };
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
@@ -151,24 +179,21 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       label: "Seats",
     },
   ];
-
   //*************tour location table******************** */
   const tableData = tourDetails?.tourPlan?.hotels;
 
   const tourDatesSheDule = tourDetails?.tourPlan?.scheduleDate;
 
-  // const data = [{ SheDule: "26 to 30 Dec 2022", seats: "Full" }];
-
   //**************must watch filter***************
 
   const loadExplore = () => {
-    TourService.fetchAllTours()
+    TourService.fetchOneTour(id as string)
 
       .then((response) => {
-        const result: TourDetails[] = response?.data?.data;
+        setTourDetails(response?.data?.data);
         setAllPackageWatch(response?.data?.data);
-        const tourObj = result.find((obj) => obj?._id == id);
-        if (tourObj) setTourDetails(tourObj);
+        // const tourObj = result.find((obj) => obj?._id == id);
+        // if (tourObj) setTourDetails(tourObj);
       })
       .catch((err) => {
         console.log(err);
@@ -188,7 +213,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       </Helmet>
 
       {/* slides of karshmir image */}
-      <Grid container style={{ backgroundColor: "#eee" }}>
+      {/* <Grid container style={{ backgroundColor: "#eee" }}>
         <Grid item xs={12} md={6} lg={3}>
           <img
             style={{ width: "100%", height: "100%" }}
@@ -213,15 +238,37 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
           />
         </Grid>
-      </Grid>
+      </Grid> */}
+
+      <OwlCarousel className=" owl-nav-explore" {...options}>
+        <Grid item>
+          <img
+            style={{ height: "275px" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[0]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "275px" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[1]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "275px" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
+          />
+        </Grid>
+      </OwlCarousel>
+
       {/* ************** Heading of Tour *******************    */}
-      <Grid sx={{ backgroundColor: "#FBF6D9" }}>
+      <Grid sx={{ backgroundColor: "#faf5ee" }}>
         <Container>
           <Grid
             container
             spacing={2}
             sx={{
-              backgroundColor: "#FBF6D9",
+              backgroundColor: "#faf5ee",
               borderTopBottom: { xs: "1px solid gray" },
             }}
           >
@@ -380,19 +427,38 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <Grid
         sx={{ backgroundColor: "white", borderBottom: "1px solid #faf5ee" }}
       >
-        <Container
+        <Grid
+          container
+          spacing={2}
           sx={{
             height: "100px",
             display: "flex",
             justifyContent: "end",
             alignItems: "center",
-            margin: "auto",
+            marginRight: "10px",
+            width: "100%",
           }}
         >
-          <Grid
-            item
-            sx={{ position: "relative", height: "35px", alignItems: "center" }}
-          >
+          <Grid item>
+            <Button
+              sx={{
+                // bgcolor: "#f0f3f6",
+                color: "white",
+                fontWeight: "700",
+                backgroundColor: "#27488d",
+                fontFamily: "poppins",
+                "&:hover": {
+                  bgcolor: "#27488d",
+                  color: "white",
+                },
+              }}
+              onClick={handleCickChange}
+            >
+              Booking
+            </Button>
+          </Grid>
+          {/* *******************share button******************** */}
+          <Grid item sx={{ position: "relative" }}>
             <Button
               sx={{
                 bgcolor: "#f0f3f6",
@@ -414,17 +480,14 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               <Grid
                 sx={{
                   backgroundColor: "#fff",
-                  height: "200%",
+                  // height: "200%",
                   display: "flex",
                   alignItems: "center",
                   borderRadius: "10px",
-                  marginLeft: 2,
+                  border: "1px solid gray",
+                  marginLeft: "2px",
                   position: "absolute",
-                  top: "-19px",
-                  right: {
-                    lg: "px",
-                    xs: "110px",
-                  },
+                  top: "55px",
                 }}
               >
                 <Link
@@ -458,6 +521,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               </Grid>
             )}
           </Grid>
+
+          {/* *************review button*************************/}
           <Grid item>
             <Button
               sx={{
@@ -476,7 +541,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               Review
             </Button>
           </Grid>
-        </Container>
+        </Grid>
       </Grid>
 
       {/*-*****************-- kashmir description---*************--- */}
@@ -506,6 +571,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
               <div>
                 {/*----*******************- Upcoming tours---*********************- */}
+
                 <Accordion
                   elevation={0}
                   expanded={expanded === "panel1"}
@@ -684,7 +750,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   <AccordionDetails
                     sx={{
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
+
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",
@@ -773,7 +839,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
+
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",
@@ -868,7 +934,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
+
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",
@@ -880,10 +946,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                         (incList: any, i: number) => (
                           <>
                             <List
-                              key={incList?.include + i}
-                              sx={{ listStyleType: "disc", pl: 2 }}
+                              key={incList?._id + i}
+                              sx={{
+                                listStyleType: "disc",
+                                pl: 2,
+                              }}
                             >
-                              <ItemList>{incList?.include}</ItemList>
+                              <ItemList sx={{ marginBottom: "-25px" }}>
+                                {incList?.include}
+                              </ItemList>
                             </List>
                           </>
                         )
@@ -919,7 +990,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     sx={{
                       color: "#5c5e64",
                       backgroundColor: "white",
-                      // borderBottom: "1px  solid #ddd",
                       border: "1px  solid #faf5ee",
                       borderTop: "none",
                       borderBottomLeftRadius: "10px",
@@ -931,10 +1001,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                         (excList: any, i: number) => (
                           <>
                             <List
-                              key={excList.exclude}
-                              sx={{ listStyleType: "disc", pl: 2 }}
+                              key={excList.exclude + i}
+                              sx={{
+                                listStyleType: "disc",
+                                pl: 2,
+                              }}
                             >
-                              <ItemList>{excList?.exclude}</ItemList>
+                              <ItemList sx={{ marginBottom: "-25px" }}>
+                                {excList?.exclude}
+                              </ItemList>
                             </List>
                           </>
                         )
@@ -981,10 +1056,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                         (noteList: any, i: number) => (
                           <>
                             <List
-                              key={noteList?.note}
-                              sx={{ listStyleType: "disc", pl: 2 }}
+                              key={noteList?.note + i}
+                              sx={{
+                                listStyleType: "disc",
+                                pl: 2,
+                              }}
                             >
-                              <ItemList>{noteList?.note}</ItemList>
+                              <ItemList sx={{ marginBottom: "-25px" }}>
+                                {noteList?.note}
+                              </ItemList>
                             </List>
                           </>
                         )
@@ -1045,83 +1125,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               </Box>
             </Paper>
             {/*************************must Watch************************ */}
-            <Paper
-              elevation={0}
-              sx={{
-                border: "1px solid #faf5ee ",
-                borderRadius: "10px",
-                marginTop: "20px",
-              }}
-            >
-              <Container sx={{ marginTop: "15px" }}>
-                <Typography
-                  sx={{
-                    fontFamily: "poppins",
-                    color: "#313041",
 
-                    fontSize: "20px",
-                    fontWeight: "700",
-                    marginLeft: "20px",
-                  }}
-                >
-                  Must Watch
-                </Typography>
-              </Container>
-
-              {Array.isArray(allPackageWatch) &&
-                allPackageWatch.map((mustWatchcard, i) => (
-                  <Container
-                    key={mustWatchcard.id + i}
-                    sx={{ borderBottom: "1px  solid #faf5ee" }}
-                  >
-                    <Grid container sx={{ marginLeft: "20px" }}>
-                      <Grid
-                        sx={{
-                          display: "flex",
-                          my: 2,
-                        }}
-                      >
-                        <img
-                          style={{ width: "35%", borderRadius: "10px" }}
-                          src={`${endPoints?.serverBaseURL}/${mustWatchcard?.images[0]}`}
-                        />
-
-                        <Grid sx={{ ml: 2 }}>
-                          <Typography
-                            sx={{
-                              color: "#2C5799",
-                              fontSize: "16px",
-                              fontWeight: "800",
-                              fontFamily: "poppins",
-                            }}
-                          >
-                            {mustWatchcard?.title}
-                          </Typography>
-                          <Typography sx={{ display: "flex", mt: 1 }}>
-                            <span
-                              style={{
-                                color: "#97978F",
-                                fontWeight: "700",
-                              }}
-                            >
-                              From
-                            </span>
-                            <span
-                              style={{
-                                marginLeft: "10px",
-                                color: "#2C5799",
-                                fontWeight: "700",
-                              }}
-                            >
-                              {`₹${mustWatchcard?.price}`}
-                            </span>
-                          </Typography>
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                  </Container>
-                ))}
-            </Paper>
+            <MustWatchcard />
           </Grid>
         </Grid>
       </Container>

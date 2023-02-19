@@ -13,7 +13,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { styled } from "@mui/system";
 import { careerDetails } from "./CareerData";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
 const DescTypo = styled(Typography)({
   fontSize: "0.9em",
@@ -105,12 +105,14 @@ const CareerDetails: React.FunctionComponent<ICareerDetailsProps> = (props) => {
                   spacing={2}
                 >
                   <Grid item xs={12}>
-                    <Button
-                      variant="contained"
-                      startIcon={<ForwardToInboxOutlinedIcon />}
-                    >
-                      Apply Now
-                    </Button>
+                    <NavLink to="form">
+                      <Button
+                        variant="contained"
+                        startIcon={<ForwardToInboxOutlinedIcon />}
+                      >
+                        Apply Now
+                      </Button>
+                    </NavLink>
                   </Grid>
                   <Grid item xs={12} sx={{ pb: 2 }}>
                     <Button variant="outlined" endIcon={<ShareOutlinedIcon />}>
