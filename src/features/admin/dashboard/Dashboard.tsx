@@ -5,6 +5,7 @@ import TopComp from "./Top Cards/TopComp";
 import Container from "@mui/material/Container";
 import LineAndPie from "./Line&Pie/LineAndPie";
 import TotalBlogsTours from "./TotalBlogs-Tours/TotalBlogsTours";
+import TotalBlogsNew from "./NewDesignTotalBlogs-Tours/TotalBlogsNew";
 
 interface IDashboardProps {}
 
@@ -16,7 +17,8 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
       <Container>
         <TopComp />
         <LineAndPie />
-        <TotalBlogsTours />
+        {/* <TotalBlogsTours /> */}
+        <TotalBlogsNew />
       </Container>
     </>
   );
