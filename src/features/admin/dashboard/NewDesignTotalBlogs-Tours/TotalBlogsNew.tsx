@@ -3,6 +3,7 @@ import * as React from "react";
 import Counter from "../../../../ui/Counter/Counter";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import { styled } from "@mui/system";
+import { NavLink } from "react-router-dom";
 
 const ArrowAnimStyle = {
   color: "#fff",
@@ -15,10 +16,6 @@ const ArrowAnimStyle = {
 const GridCardStyle = {
   p: 2.5,
   borderRadius: 2,
-  // boxShadow: "0px 0px 3px 0px rgb(0 0 0 / 20%)",
-  // "&:hover": {
-  //   boxShadow: "0px 25px 50px 0px rgb(0 0 0 / 10%)",
-  // },
 };
 
 const DetailsTypo = styled(Typography)({
@@ -56,11 +53,11 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
                 <TypoValue>Total Blogs</TypoValue>
               </Grid>
               {/* page link Arrow */}
-              <Link href="#" sx={{ textDecoration: "none" }}>
+              <NavLink to="/blogs">
                 <Grid item sx={ArrowAnimStyle}>
                   <ArrowOutwardRoundedIcon fontSize="large" />
                 </Grid>
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </Grid>
@@ -82,11 +79,11 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
                 <TypoValue>Total Tours</TypoValue>
               </Grid>
               {/* page link Arrow */}
-              <Link href="#" sx={{ textDecoration: "none" }}>
+              <NavLink to="/pravas">
                 <Grid item sx={ArrowAnimStyle}>
                   <ArrowOutwardRoundedIcon fontSize="large" />
                 </Grid>
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </Grid>
