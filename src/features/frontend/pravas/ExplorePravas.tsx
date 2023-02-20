@@ -153,9 +153,8 @@ interface TourDetails {
   };
 }
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
-  const { id } = useParams()
- 
-
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
@@ -1148,8 +1147,83 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <PravasHomeCarousel />
       </Container>
       <StartFromTop />
+      <Outlet />
+      <Grid
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <Container
+          sx={{
+            padding: "60px",
 
-
+            borderRadius: "20px",
+            boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
+          }}
+        >
+          <Grid
+            container
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItem: "center",
+              alignContent: "center",
+            }}
+          >
+            <Grid item xs={12} md={6} lg={8}>
+              <Typography
+                sx={{
+                  fontFamily: "Lato",
+                  fontSize: "36px",
+                  fontWeight: 700,
+                  paddingBottom: "10px",
+                }}
+              >
+                Customize Your<span style={{ color: "#09b2a0" }}> Tour</span>
+              </Typography>
+              <Typography sx={{ lineHeight: "24px" }}>
+                You can plan your customized tour as well!. fill the form, we
+                will get back to you!
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography>
+                <Button
+                  sx={{
+                    color: "white",
+                    padding: "15px 50px",
+                    fontWeight: "700",
+                    backgroundColor: "#005D9D",
+                    fontFamily: "poppins",
+                    "&:hover": {
+                      bgcolor: "#27488d",
+                      color: "white",
+                    },
+                  }}
+                  onClick={handleClick}
+                >
+                  CUSTOMIZE
+                  <ArrowRightAltIcon
+                    sx={{ "&:hover": { color: "white" }, color: "white" }}
+                  />
+                </Button>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
     </Grid>
   );
 };
