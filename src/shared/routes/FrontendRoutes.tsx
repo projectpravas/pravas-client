@@ -179,6 +179,14 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
+
+  {
+    label: "Create Custom Tour",
+    component: <CustomTourForm />,
+    path: "pravas/explore/custom-tour-form",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
   {
     label: "Page Not Found",
     component: <PageNotFound />,
