@@ -1225,6 +1225,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       </Grid>
       <StartFromTop />
       <StartFromTop />
+      <StartFromTop />
     </Grid>
   );
 };

@@ -1,16 +1,3 @@
-import * as React from "react";
-
-interface ITotalBlogsNewProps {}
-
-const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
-  return (
-    <>
-      <h2>New Design</h2>
-    </>
-  );
-};
-
-export default TotalBlogsNew;
 import { Grid, Link, Paper, Typography } from "@mui/material";
 import * as React from "react";
 import Counter from "../../../../ui/Counter/Counter";

@@ -20,7 +20,6 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
 
   const loadBlogs = () => {
     BlogService.fetchOneBlog(id as string)
-
       .then((response) => {
         setData(response?.data?.data);
       })
@@ -91,7 +90,11 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
                   }}
                 >
                   <Box>
-                    <Typography sx={{ fontSize: "1rem" }}>Category</Typography>
+                    <Typography
+                      sx={{ fontSize: "1rem", textTransform: "capitalize" }}
+                    >
+                      {data?.categories.toString()}
+                    </Typography>
                   </Box>
                 </Grid>
               </Grid>
