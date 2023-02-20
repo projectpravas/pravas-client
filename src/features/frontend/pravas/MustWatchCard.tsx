@@ -10,12 +10,7 @@ import endpoints from "../../../api/endpoints";
 interface IMustWatchCardProps {}
 
 const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
-  const [allPackageWatch, setAllPackageWatch] = React.useState({
-    images: "",
-    title: "",
-    id: "",
-    price: "",
-  });
+  const [allPackageWatch, setAllPackageWatch] = React.useState<Array<any>>([]);
 
   const loadWatchCard = () => {
     TourService.fetchAllTours()
@@ -33,6 +28,7 @@ const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
   React.useEffect(() => {
     loadWatchCard();
   }, []);
+
   return (
     <>
       <Grid>
@@ -60,58 +56,65 @@ const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
           </Container>
 
           {Array.isArray(allPackageWatch) &&
-            allPackageWatch.map((watchCard: any, i: number) => (
-              <Container
-                key={watchCard.id + i}
-                sx={{ borderBottom: "1px  solid #faf5ee" }}
-              >
-                <Grid container sx={{ marginLeft: "20px" }}>
-                  <Grid
-                    sx={{
-                      display: "flex",
-                      my: 2,
-                    }}
-                  >
-                    <img
-                      style={{ width: "35%", borderRadius: "10px" }}
-                      src={`${endpoints?.serverBaseURL}/${watchCard?.images[0]}`}
-                    />
+            allPackageWatch
+              .filter(
+                (v, i) =>
+                  v.category == "package" &&
+                  v.packageStatus == "active" &&
+                  v.featured == true
+              )
+              .map((watchCard: any, i: number) => (
+                <Container
+                  key={watchCard.id + i}
+                  sx={{ borderBottom: "1px  solid #faf5ee" }}
+                >
+                  <Grid container sx={{ marginLeft: "20px" }}>
+                    <Grid
+                      sx={{
+                        display: "flex",
+                        my: 2,
+                      }}
+                    >
+                      <img
+                        style={{ width: "35%", borderRadius: "10px" }}
+                        src={`${endpoints?.serverBaseURL}/${watchCard?.images[0]}`}
+                      />
 
-                    <Grid sx={{ ml: 2 }}>
-                      <Typography
-                        sx={{
-                          color: "#2C5799",
-                          fontSize: "16px",
-                          fontWeight: "800",
-                          fontFamily: "poppins",
-                        }}
-                      >
-                        {watchCard?.title}
-                      </Typography>
-                      <Typography sx={{ display: "flex", mt: 1 }}>
-                        <span
-                          style={{
-                            color: "#97978F",
-                            fontWeight: "700",
-                          }}
-                        >
-                          From
-                        </span>
-                        <span
-                          style={{
-                            marginLeft: "10px",
+                      <Grid sx={{ ml: 2 }}>
+                        <Typography
+                          sx={{
                             color: "#2C5799",
-                            fontWeight: "700",
+                            fontSize: "16px",
+                            fontWeight: "800",
+                            fontFamily: "poppins",
                           }}
                         >
-                          {`₹${watchCard?.price}`}
-                        </span>
-                      </Typography>
+                          {watchCard?.title}
+                        </Typography>
+                        <Typography sx={{ display: "flex", mt: 1 }}>
+                          <span
+                            style={{
+                              color: "#97978F",
+                              fontWeight: "700",
+                            }}
+                          >
+                            From
+                          </span>
+                          <span
+                            style={{
+                              marginLeft: "10px",
+                              color: "#2C5799",
+                              fontWeight: "700",
+                            }}
+                          >
+                            {`₹${watchCard?.price}`}
+                          </span>
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </Container>
-            ))}
+                </Container>
+              ))}
         </Paper>
       </Grid>
     </>

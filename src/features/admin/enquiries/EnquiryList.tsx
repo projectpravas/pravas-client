@@ -1,13 +1,9 @@
 import React, { createRef, useRef, useState } from "react";
 import MUIDataTables from "mui-datatables";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
-import UserService from "../../../services/UserService";
-import User from "../../../shared/models/userModel";
 import { useNavigate } from "react-router-dom";
 import { Chip } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";

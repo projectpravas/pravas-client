@@ -23,11 +23,14 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+
 import {
   Table,
   TableHead,
@@ -150,7 +153,9 @@ interface TourDetails {
   };
 }
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
-  const { id } = useParams();
+  const { id } = useParams()
+ 
+
 
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
@@ -169,6 +174,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
+
+  const handleClick = () => {
+    navigate("/pravas/explore/custom-tour-form");
+  };
 
   // -------upcoming tour  info-----
 
@@ -1139,6 +1148,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <PravasHomeCarousel />
       </Container>
       <StartFromTop />
+
+
     </Grid>
   );
 };
