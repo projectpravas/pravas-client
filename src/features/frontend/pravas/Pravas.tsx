@@ -10,18 +10,22 @@ import { Outlet, useNavigate } from "react-router-dom";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Typography from "@mui/material/Typography";
-
+import SearchBar from "../home/SearchBar";
+import { useSearchParams } from "react-router-dom";
 interface IPravasProps {}
 
 const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   //---------------- AllDatafetch -------------
   const [allPackage, setAllPackage] = React.useState<Array<any>>([]);
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const loadPackages = () => {
-    TourService.fetchAllTours()
+  let paramValue = searchParams.toString();
+  const loadPackages = (paramValue = "") => {
+    TourService.fetchAllTours(`?category=package&${paramValue}`)
       .then((response) => {
         setAllPackage(response?.data?.data);
+        console.log("Sudhir res", response?.data?.data);
       })
       .catch((err) => {
         console.log(err);
@@ -29,15 +33,25 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   };
 
   React.useEffect(() => {
-    loadPackages();
-  }, []);
+    loadPackages(paramValue);
+  }, [searchParams]);
 
   const handleClick = () => {
     navigate("custom-tour-form");
   };
 
+  console.log("sP", searchParams.toString());
+
   return (
     <>
+      {/* <Container
+        sx={{
+          marginTop: "3%",
+        }}
+      >
+        <SearchBar />
+      </Container> */}
+
       <Helmet>
         <title>Pravas Tours</title>
         <meta name="description" content="Pravas Tourism" />

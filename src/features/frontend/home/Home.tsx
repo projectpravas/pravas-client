@@ -95,7 +95,14 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         </Grid>
 
         {/* Search Bar  */}
-        <SearchBar />
+        <Container
+          sx={{
+            position: "absolute",
+            bottom: { xs: "-85%", sm: "-40%", md: "-10%", lg: "-8%" },
+          }}
+        >
+          <SearchBar />
+        </Container>
       </Grid>
 
       {/* Youtube video section */}
