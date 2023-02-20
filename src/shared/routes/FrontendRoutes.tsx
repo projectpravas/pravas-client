@@ -31,10 +31,10 @@ const CancellationPolicy = lazy(
   () => import("../../ui/footer/CancellationPolicy")
 );
 const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
+const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 const TermsAndConditions = lazy(
   () => import("../../ui/footer/TermsAndConditions")
 );
-const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 
 export default [
   {
@@ -84,6 +84,13 @@ export default [
     label: "Blog Details",
     component: <BlogDetails />,
     path: "blogs/:id",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Blog Details",
+    component: <BlogDetails />,
+    path: "home/:id",
     showInMenu: false,
     hasAuthenticate: "no",
   },
@@ -179,11 +186,10 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
-
   {
     label: "Page Not Found",
     component: <PageNotFound />,
-    path: "*",
+    path: "/*",
     showInMenu: false,
     hasAuthenticate: "no",
   },

@@ -7,6 +7,7 @@ import PravasPackageCard from "./PravasPackageCard";
 import { Helmet } from "react-helmet";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Typography from "@mui/material/Typography";
 
@@ -18,7 +19,7 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   const navigate = useNavigate();
 
   const loadPackages = () => {
-    TourService.fetchAllTours()
+    TourService.fetchAllTours(`?category=package`)
       .then((response) => {
         setAllPackage(response?.data?.data);
       })
@@ -46,7 +47,10 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
         <Grid container marginY={10}>
           {Array.isArray(allPackage) &&
             allPackage
-              .filter((v, i) => v.category == "package")
+              .filter(
+                (v, i) =>
+                  v.category === "package" && v.packageStatus === "active"
+              )
               .map((packageCardDetials, i) => (
                 <Grid
                   item
@@ -64,6 +68,7 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
               ))}
         </Grid>
       </Container>
+      <StartFromTop />
 
       {/* *******************customize tour***************** */}
       <Outlet />

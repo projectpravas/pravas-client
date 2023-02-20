@@ -23,7 +23,7 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
@@ -39,6 +39,7 @@ import {
   TableCell,
 } from "@mui/material";
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 
 import MustWatchcard from "./MustWatchCard";
@@ -153,6 +154,7 @@ interface TourDetails {
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
   // -----Accordion ------
@@ -160,6 +162,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
+  const [sheduleDates, setSheduleDates] = useState([]);
 
   const handleCickChange = () => {
     setExpanded("panel1");
@@ -1220,6 +1223,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Container>
       </Grid>
+      <StartFromTop />
     </Grid>
   );
 };

@@ -9,17 +9,17 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 import PravasHomeCarousel from "./PravasHomeCarousel";
-
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 interface IHomeProps {}
 
 const imgZoom = {
-  transform: "scale(1)",
   overflow: "hidden",
+  transform: "scale(1)",
   transition: "5s",
   "&:hover": {
     transform: "scale(1.1)",
     overflow: "hidden",
-    transition: "5s",
+    transition: "5s ease-in-out",
   },
 };
 
@@ -48,7 +48,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
       {/* head banner */}
-      <Grid container sx={{ position: "relative" }}>
+      <Grid container minWidth="300px" sx={{ position: "relative" }}>
         <Grid>
           <img
             src="https://pravasthejourney.com/wp-content/uploads/2022/09/Web-C2.jpg"
@@ -111,11 +111,10 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
             <a
               href="https://www.youtube.com/watch?v=NYlnaBkB7RY"
               target="blank"
-              style={{ width: "100%", height: "100%" }}
+              style={{ width: "100%", height: "415px" }}
             >
               <img
                 width="100%"
-                height="315"
                 src="https://pravasthejourney.com/wp-content/uploads/2022/09/omkar-mulgund.webp"
                 alt="not"
               />
@@ -178,6 +177,9 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
       {/* gallery  */}
       <TourGallery />
+
+      {/* render from top  */}
+      <StartFromTop />
     </>
   );
 };

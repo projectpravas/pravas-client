@@ -12,11 +12,11 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 interface IBlogDetailsProps {}
 
 const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
-  const [data, setData] = React.useState<Array<any>>([]);
+  const [data, setData] = React.useState<any>();
   const { id } = useParams();
 
   const loadBlogs = () => {
-    BlogService.fetchAllBlogs()
+    BlogService.fetchOneBlog(id as string)
       .then((response) => {
         setData(response?.data?.data);
       })
@@ -29,21 +29,18 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
     loadBlogs();
   }, []);
 
-  const singleCareerData = data.find((obj) => obj?._id == id);
-  console.log("singleCareerData ", singleCareerData);
-
   return (
     <>
       <Helmet>
-        <title>{singleCareerData?.title}</title>
-        <meta name="description" content={singleCareerData?.metaDescription} />
+        <title>{data?.title}</title>
+        <meta name="description" content={data?.metaDescription} />
       </Helmet>
       <Container sx={{ pt: 8 }}>
         <Grid container>
           {/* image Area  */}
           <Grid item xs={12}>
             <img
-              src={`${endPoints?.serverBaseURL}/${singleCareerData?.image}`}
+              src={`${endPoints?.serverBaseURL}/${data?.image}`}
               style={{ width: "100%", height: "100%" }}
             />
           </Grid>
@@ -80,7 +77,9 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
                   }}
                 >
                   <Box>
-                    <Typography sx={{ fontSize: "1rem" }}>Category</Typography>
+                    <Typography sx={{ fontSize: "1rem" }}>
+                      {data?.categories.toString()}
+                    </Typography>
                   </Box>
                 </Grid>
               </Grid>
@@ -91,7 +90,7 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
             item
             sx={{ fontFamily: "inherit" }}
             xs={12}
-            dangerouslySetInnerHTML={{ __html: singleCareerData?.richText }}
+            dangerouslySetInnerHTML={{ __html: data?.richText }}
           ></Grid>
         </Grid>
       </Container>

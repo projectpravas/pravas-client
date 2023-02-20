@@ -10,12 +10,7 @@ import endpoints from "../../../api/endpoints";
 interface IMustWatchCardProps {}
 
 const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
-  const [allPackageWatch, setAllPackageWatch] = React.useState({
-    images: "",
-    title: "",
-    id: "",
-    price: "",
-  });
+  const [allPackageWatch, setAllPackageWatch] = React.useState<Array<any>>([]);
 
   const loadWatchCard = () => {
     TourService.fetchAllTours()
@@ -33,6 +28,7 @@ const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
   React.useEffect(() => {
     loadWatchCard();
   }, []);
+
   return (
     <>
       <Grid>
@@ -61,7 +57,12 @@ const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
 
           {Array.isArray(allPackageWatch) &&
             allPackageWatch
-              .filter((v, i) => v.category == "package")
+              .filter(
+                (v, i) =>
+                  v.category == "package" &&
+                  v.packageStatus == "active" &&
+                  v.featured == true
+              )
               .map((watchCard: any, i: number) => (
                 <Container
                   key={watchCard.id + i}
