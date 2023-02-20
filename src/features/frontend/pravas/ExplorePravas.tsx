@@ -23,7 +23,7 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
@@ -1223,6 +1223,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Container>
       </Grid>
+      <StartFromTop />
       <StartFromTop />
     </Grid>
   );

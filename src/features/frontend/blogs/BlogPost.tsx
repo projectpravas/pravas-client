@@ -120,7 +120,12 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       }}
                     >
                       <Box>
-                        <Typography sx={{ fontSize: "0.9rem" }}>
+                        <Typography
+                          sx={{
+                            fontSize: "0.9rem",
+                            textTransform: "capitalize",
+                          }}
+                        >
                           {category[0]}
                         </Typography>
                       </Box>
@@ -128,7 +133,15 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                   </Grid>
                 </Grid>
                 {/* -----------------Title & Description-------------------- */}
-                <Grid sx={{ p: 1 }}>
+                <Grid
+                  sx={{
+                    p: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    minHeight: 152,
+                  }}
+                >
                   <Typography
                     className="blog-post-line-clamp-title"
                     sx={{
