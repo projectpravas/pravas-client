@@ -179,6 +179,7 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
+
   {
     label: "Create Custom Tour",
     component: <CustomTourForm />,

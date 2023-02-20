@@ -23,6 +23,7 @@ import { endPoints } from "../../../api";
 import { duration } from "@mui/material";
 import { number } from "yup";
 import { SrvRecord } from "dns";
+
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -33,6 +34,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     padding: "0 4px",
   },
 }));
+
 
 const placeholder =
   "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg";
