@@ -1145,6 +1145,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <Container>
         <PravasHomeCarousel />
       </Container>
+      <StartFromTop />
       {/* *******************customize tour***************** */}
       <Outlet />
       <Grid
