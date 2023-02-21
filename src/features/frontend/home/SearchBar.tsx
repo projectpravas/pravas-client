@@ -59,21 +59,33 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
     tourType: [],
   });
 
-  const navigate = useNavigate();
-  const handleNavigateChange = () => {
-    navigate(`/pravas`);
-    // changeSearchParams(key, value);
-  };
-
   const loadAllTours = () => {
     TourService.fetchAllTours().then((response) => {
       setAllTours(response?.data?.data);
+
+      // let uniqueTourLocation = new Set();
+      // let tourLocations = response?.data?.data;
+
+      // Array.isArray(tourLocations) &&
+      //   tourLocations.map((singleLocation) => {
+      //     // console.log("tourLocation map ", singleLocation?.tourLocation);
+
+      // if (singleLocation?.category === "package") {
+      //   for (var i in singleLocation?.tourLocation) {
+      //     uniqueTourLocation.add(singleLocation?.tourLocation);
+      //   }
+      // }
+      //   });
+      // console.log("uni", uniqueTourLocation);
+
+      // const tourLocation = [...uniqueTourLocation];
+      // setAllTours(tourLocation);
     });
   };
+  // console.log("all tours ", allTours);
 
   const loadAllTourTypes = () => {
     let uniqueTourType = new Set();
-
     Array.isArray(allTours) &&
       allTours.map((item) => {
         if (item?.category === "package") {
@@ -94,16 +106,18 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
     loadAllTourTypes();
   }, [allTours]);
 
+  console.log("activty state", allActivity);
   // change search params
-
   const changeSearchParams = (key: string, value: string) => {
     searchParams.set(key, value);
     setSearchParams(searchParams);
     console.log("searchParams", searchParams);
   };
 
+  const navigate = useNavigate();
   const handleClickChange = () => {
     changeSearchParams("tourLocation", filterState.tourLocation as any);
+
     changeSearchParams("tourType", filterState.tourType as any);
 
     navigate(`/pravas?${searchParams}`);
@@ -125,7 +139,16 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
     // console.log("name fil", name);
     // console.log("value fil", value);
   };
-  // console.log("state T", allTours);
+  console.log(
+    "state T",
+    Array.from(
+      new Set(
+        allTours
+          .filter((item) => item?.category == "package")
+          .map((obj) => obj?.tourLocation)
+      )
+    )
+  );
   // console.log("state A", allActivity);
 
   return (
@@ -141,10 +164,8 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
           flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-around",
           borderRadius: "8px",
-
           gap: "1rem",
           backgroundColor: "white",
-
           boxShadow: "0 10px 30px 0 rgba(0,0,0,.05)",
         }}
       >
@@ -155,19 +176,25 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
             id="tourLocation"
             name="tourLocation"
             // multiple
-            value={filterState.tourLocation}
+            value={filterState?.tourLocation}
             onChange={handleChange}
             input={<OutlinedInput label="Destionations" />}
             MenuProps={MenuProps}
           >
-            <MenuItem value="all">Destinaions</MenuItem>
-            {allTours.map((tour, i) => (
+            <MenuItem value="all">All Destinaions</MenuItem>
+            {Array.from(
+              new Set(
+                allTours
+                  .filter((item) => item?.category == "package")
+                  .map((obj) => obj?.tourLocation)
+              )
+            ).map((location, i) => (
               <MenuItem
-                key={tour.tourLocation + i}
-                value={tour?.tourLocation}
-                style={getStyles(tour, filterState.tourLocation, theme)}
+                key={location + i}
+                value={location}
+                style={getStyles(location, filterState.tourLocation, theme)}
               >
-                {tour?.tourLocation}
+                {location}
               </MenuItem>
             ))}
           </Select>
@@ -185,7 +212,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
             input={<OutlinedInput label="Activities" />}
             MenuProps={MenuProps}
           >
-            <MenuItem value="all">Activities</MenuItem>
+            <MenuItem value="all">All Activities</MenuItem>
             {allActivity.map((act, i) => (
               <MenuItem
                 key={act + i}

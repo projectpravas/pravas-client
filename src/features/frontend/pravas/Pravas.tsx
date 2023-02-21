@@ -25,12 +25,23 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
     TourService.fetchAllTours(`?category=package&${paramValue}`)
       .then((response) => {
         setAllPackage(response?.data?.data);
-        console.log("Sudhir res", response?.data?.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  console.log("sP", searchParams.toString());
+  if (
+    searchParams.toString() === "tourLocation=all&tourType=all" ||
+    searchParams.toString() === "tourLocation=&tourType=all" ||
+    searchParams.toString() === "tourLocation=all&tourType="
+  ) {
+    console.log("yess");
+    paramValue = "";
+  } else {
+    console.log("no....");
+  }
 
   React.useEffect(() => {
     loadPackages(paramValue);
@@ -40,17 +51,21 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
     navigate("custom-tour-form");
   };
 
-  console.log("sP", searchParams.toString());
+  console.log("all Packages", allPackage);
 
   return (
     <>
-      {/* <Container
+      <Container
         sx={{
           marginTop: "3%",
         }}
       >
         <SearchBar />
-      </Container> */}
+      </Container>
+
+      {allPackage.length === 0 && (
+        <h1 style={{ textAlign: "center" }}>Not Available</h1>
+      )}
 
       <Helmet>
         <title>Pravas Tours</title>
@@ -91,7 +106,6 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
         <Container
           sx={{
             padding: "60px",
-
             borderRadius: "20px",
             boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
           }}
