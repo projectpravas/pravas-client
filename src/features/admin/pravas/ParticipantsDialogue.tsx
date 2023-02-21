@@ -15,6 +15,9 @@ import TextField from "@mui/material/TextField";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
 import UserService from "../../../services/UserService";
+import Swal from "sweetalert2";
+import { errorToast, successToast } from "../../../ui/toast/Toast";
+import TourModel from "../../../shared/models/tourModel";
 
 interface IPaerticipantsDialogue {
   values: {
@@ -22,6 +25,7 @@ interface IPaerticipantsDialogue {
     id: string;
   };
   handleDialogue: Function;
+  status: string;
 }
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -67,17 +71,20 @@ function BootstrapDialogTitle(props: DialogTitleProps) {
 const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
   values,
   handleDialogue,
+  status,
 }) => {
   const [fetchedParticipants, setFetchedParticipants] = useState<string[]>([]);
   const [ids, setIds] = useState<string[]>([]);
-  const [fetchedNames, setfetchedNames] = useState<string[]>([]);
+  const [fetchedNames, setfetchedNames] = useState<any[]>([]);
   const [maxAllowedParticipants, setMaxAllowedParticipants] = useState(0);
-  const [participants, setParticipants] = useState<any[]>([""]);
+  const [participants, setParticipants] = useState<any[]>([]);
   const [touched, setTouched] = useState({ mob: false });
   const [mobile, setMobile] = useState("");
   const [fieldFocused, setFieldFocused] = useState(false);
+  const [editForm, setEditForm] = useState(false);
 
   const [searchResult, setSearchResult] = useState<any[]>([]);
+  const [tourDetails, setTourDetails] = useState<TourModel>();
 
   const handleClose = () => {
     handleDialogue({ ...values, flag: false });
@@ -85,37 +92,19 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, i: number) => {
     const { name, value } = e?.target;
-    const idNameArr = fetchedParticipants.map((val) => val.split("/")[0]);
-    const paymentMethodArr = fetchedParticipants.map(
-      (value) => value.split("/")[1]
-    );
 
-    idNameArr[i] = value;
-    const arr = [];
-
-    for (let j = 0; j < fetchedParticipants.length; j++) {
-      arr.push(
-        `${idNameArr[j]}/${
-          paymentMethodArr[j] ? paymentMethodArr[j] : "offline"
-        }`
-      );
-    }
-
-    setFetchedParticipants(arr);
+    const newArr = [...participants];
+    newArr.splice(i, 1, {
+      id: `${value}/${participants[i]?.id?.split("/")[1]}`,
+    });
+    setParticipants(newArr);
   };
 
   const setValidNames = (arr: string[]) => {
     UserService.isValidIds(arr)
       .then((res) => {
-        const resArr: string[] = [];
-        res?.data?.data?.map((val: any) => {
-          if (typeof val === "object") {
-            resArr.push(`${val?.name?.first} ${val?.name?.last}`);
-          } else {
-            resArr.push(val);
-          }
-        });
-        setfetchedNames(resArr);
+        const data = res?.data?.data;
+        setfetchedNames(data);
       })
       .catch((err) => {
         console.error(err);
@@ -123,36 +112,42 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
   };
 
   const getUsers = (mob: number | string) => {
-    UserService.fetchAllUsers(`?mobile=${mob}`)
-      .then((res) => {
-        const arr = fetchedParticipants;
-        const result = res?.data?.data;
-        const index = res?.data?.data?.find((obj: any, i: any) => {
-          if (arr.includes(obj?._id)) return i;
-        });
-        result.splice(index, 1);
+    mob
+      ? UserService.fetchAllUsers(`?mobile=${mob}`)
+          .then((res) => {
+            const arr = fetchedParticipants;
+            const result = res?.data?.data;
+            const index = res?.data?.data?.find((obj: any, i: any) => {
+              if (arr.includes(obj?._id)) return i;
+            });
+            result.splice(index, 1);
 
-        setSearchResult(result);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+            setSearchResult(result);
+          })
+          .catch((err) => {
+            console.error(err);
+          })
+      : setSearchResult([]);
   };
 
   const handleMobileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e?.target;
     if (mobile?.length > 1) getUsers(value);
-    else if (value == "") {
+    else if (!value) {
       setSearchResult([]);
     }
+    console.log(value);
+
     setMobile(value);
   };
 
   const addBtnHandleChange = () => {
-    setFetchedParticipants([...fetchedParticipants, ""]);
+    setParticipants([...participants, { id: "/offline" }]);
+    setfetchedNames([...fetchedNames, ""]);
+    setIds([...ids, ""]);
   };
 
-  const addParticipantsFromDb = async (userObj: any) => {
+  const addParticipantsFromDb = (userObj: any) => {
     const arr = participants;
 
     const userIdExist = arr?.find(
@@ -160,26 +155,86 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
     )?.id;
 
     if (!userIdExist && maxAllowedParticipants > fetchedParticipants?.length) {
-      setFetchedParticipants([
-        ...fetchedParticipants,
-        `${userObj?._id}/offline`,
-      ]);
+      UserService.addRemoveTourId({
+        userId: userObj?._id,
+        op: "add",
+        tourId: values?.id,
+      })
+        .then((res) => {
+          setParticipants([
+            ...participants,
+            { id: `${userObj?._id}/offline/added` },
+          ]);
 
-      const idsArr = ids;
-      idsArr.push(userObj?._id);
-      setIds(idsArr);
+          const idsArr = ids;
+          idsArr.push(userObj?._id);
+          setIds(idsArr);
+
+          setfetchedNames([...fetchedNames, userObj]);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
+  const handleDelete = (index: string | number) => {
+    Swal.fire({
+      target: document.getElementById(
+        "participant-modal-dialog"
+      ) as unknown as string,
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (typeof fetchedNames[Number(index)] === "object") {
+          UserService.addRemoveTourId({
+            userId: fetchedNames[Number(index)]?._id,
+            op: "remove",
+            tourId: values?.id,
+          })
+            .then((res) => {
+              setParticipants(participants.filter((v, i) => i != index));
+              setfetchedNames(fetchedNames.filter((v, i) => i != index));
+              setIds(ids.filter((v, i) => i != index));
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        } else {
+          setParticipants(participants.filter((v, i) => i != index));
+          setfetchedNames(fetchedNames.filter((v, i) => i != index));
+          setIds(ids.filter((v, i) => i != index));
+        }
+      }
+    });
+  };
+
   useEffect(() => {
+    setEditForm(status == "upcoming" ? true : false);
     TourService.fetchOneTour(values?.id)
       .then((res) => {
+        setTourDetails(res?.data?.data);
         setMaxAllowedParticipants(Number(res?.data?.data?.maxPersons));
-        setFetchedParticipants(res?.data?.data?.participants);
         const idNamesArr = res?.data?.data?.participants.map(
           (val: any) => val.split("/")[0]
         );
-        // setIds(idNamesArr);
+        const arr =
+          Array.isArray(res?.data?.data?.participants) &&
+          res?.data?.data?.participants?.length > 0
+            ? res?.data?.data?.participants?.map((val: any) => {
+                return { id: val };
+              })
+            : [{ id: "" }];
+
+        setParticipants(arr);
+        setIds(idNamesArr);
         setValidNames(idNamesArr);
       })
       .catch((err) => {
@@ -188,42 +243,37 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
   }, []);
 
   useEffect(() => {
-    if (fetchedParticipants?.length == 0) fetchedParticipants.push("");
+    if (participants?.length == 0) participants.push({ id: "" });
+
     const arr =
-      Array.isArray(fetchedParticipants) && fetchedParticipants?.length > 0
-        ? fetchedParticipants?.map((val) => {
-            return { id: val };
+      Array.isArray(participants) && participants?.length > 0
+        ? participants?.map((val) => {
+            return val?.id;
           })
-        : [{ id: "" }];
+        : [""];
 
-    setParticipants(arr);
+    setFetchedParticipants(arr);
+  }, [participants]);
 
-    const idsArr = [];
-
-    for (let i = 0; i < fetchedParticipants.length; i++) {
-      // if (fetchedParticipants[i].split("/")[1] == "offline") {
-      //   const resArr = fetchedNames;
-      //   resArr.splice(i, 1, `${fetchedParticipants[i]}`);
-      //   setfetchedNames(resArr);
-      // }
-      idsArr.push(fetchedParticipants[i].split("/")[0]);
+  useEffect(() => {
+    if (!editForm) {
+      const idNamesArr = fetchedParticipants.map(
+        (val: any) => val.split("/")[0]
+      );
+      setValidNames(idNamesArr);
     }
+  }, [editForm]);
 
-    // setIds(idsArr);
-    // setValidNames(idsArr);
-  }, [fetchedParticipants, ids]);
-
-  // useEffect(() => {
-  //   setValidNames(ids);
-  // }, [ids]);
-
-  // useEffect(() => {
-  //   setValidNames(ids);
-  // }, [ids]);
+  useEffect(() => {
+    setParticipants(participants);
+  }, [fetchedNames]);
 
   return (
-    <Box sx={{ maxWidth: "70%" }}>
+    <Box>
       <BootstrapDialog
+        maxWidth="md"
+        fullWidth
+        id="participant-modal-dialog"
         onClose={handleClose}
         aria-labelledby="participants-dialog-title"
         open={values?.flag}
@@ -232,279 +282,359 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
           id="participants-dialog-title"
           onClose={handleClose}
         >
-          Add Participants
+          <Grid container justifyContent="center">
+            <Grid item xs={4} sx={{ textAlign: "start" }}>
+              Tour Name :-
+              <span
+                style={{ fontSize: "0.9em" }}
+              >{` ${tourDetails?.title}`}</span>
+            </Grid>
+            <Grid item xs={4}>
+              {editForm ? "Add Participants" : "Tour Participants"}
+            </Grid>
+            <Grid item xs={4}>
+              start Date :-{" "}
+              <span
+                style={{ fontSize: "0.9em" }}
+              >{` ${tourDetails?.tourDate}`}</span>
+            </Grid>
+          </Grid>
         </BootstrapDialogTitle>
         <DialogContent dividers className="hideScrollbar">
           {/* // Add participant from db */}
           <Grid container>
-            <Grid item xs={12}>
-              <TextField
-                size="small"
-                type="text"
-                name="mobile"
-                label="Serach"
-                placeholder="Search By Mobile Number"
-                value={mobile}
-                disabled={
-                  maxAllowedParticipants > fetchedParticipants?.length
-                    ? false
-                    : true
-                }
-                inputProps={{
-                  min: 0,
-                }}
-                onBlur={() =>
-                  !touched?.mob && setTouched({ ...touched, mob: true })
-                }
-                onChange={handleMobileChange}
-                error={
-                  touched?.mob && mobile?.length > 10 && !Number.isNaN(mobile)
-                    ? true
-                    : false
-                }
-                helperText={
-                  touched?.mob && mobile?.length > 10 && !Number.isNaN(mobile)
-                    ? "Invalid Input"
-                    : ""
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                className="hideScrollbar"
-                style={{
-                  maxHeight: "200px",
-                }}
-                sx={{
-                  mt: { xs: 1, sm: 2 },
-                  border: "1px solid #000",
-                }}
-              >
-                <table
+            {editForm ? (
+              <Grid item xs={12}>
+                <TextField
+                  size="small"
+                  type="text"
+                  name="mobile"
+                  label="Find Participant"
+                  placeholder="Search By Mobile Number"
+                  value={mobile}
+                  disabled={
+                    maxAllowedParticipants > fetchedParticipants?.length
+                      ? false
+                      : true
+                  }
+                  inputProps={{
+                    min: 0,
+                  }}
+                  onBlur={() =>
+                    !touched?.mob && setTouched({ ...touched, mob: true })
+                  }
+                  onChange={handleMobileChange}
+                  error={
+                    touched?.mob && mobile?.length > 10 && !Number.isNaN(mobile)
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    touched?.mob && mobile?.length > 10 && !Number.isNaN(mobile)
+                      ? "Invalid Input"
+                      : ""
+                  }
+                />
+              </Grid>
+            ) : null}
+
+            {(editForm
+              ? searchResult?.length > 0 &&
+                participants?.length < maxAllowedParticipants &&
+                mobile
+              : fetchedNames?.length > 0) && (
+              <Grid item xs={12}>
+                <Box
+                  className="hideScrollbar"
                   style={{
-                    width: "100%",
-                    borderSpacing: "0px",
-                    margin: "0px",
+                    maxHeight: editForm ? "200px" : "none",
+                  }}
+                  sx={{
+                    mt: { xs: 1, sm: 2 },
+                    border: "1px solid #000",
                   }}
                 >
-                  <tr style={{ fontWeight: 100 }}>
-                    <th
-                      style={{
-                        border: "1px solid gray",
-                        padding: "4px 0",
-                        fontWeight: 100,
-                      }}
-                    >
-                      Name
-                    </th>
-                    <th
-                      style={{
-                        border: "1px solid gray",
-                        padding: "4px 0",
-                        width: "40%",
-                        fontWeight: 100,
-                      }}
-                    >
-                      Email
-                    </th>
-                    <th
-                      style={{
-                        border: "1px solid gray",
-                        padding: "4px 0",
-                        width: "20%",
-                        fontWeight: 100,
-                      }}
-                    >
-                      Add
-                    </th>
-                  </tr>
-                  {Array.isArray(searchResult) &&
-                    maxAllowedParticipants > fetchedParticipants?.length &&
-                    searchResult.map((obj: any, i: number) => {
-                      return (
-                        <tr
-                          key={obj?._id}
+                  <table
+                    style={{
+                      width: "100%",
+                      borderSpacing: "0px",
+                      margin: "0px",
+                    }}
+                  >
+                    <tr style={{ fontWeight: 100 }}>
+                      <th
+                        style={{
+                          border: "1px solid gray",
+                          padding: "4px 0",
+                          fontWeight: 100,
+                        }}
+                      >
+                        Name
+                      </th>
+                      {!editForm ? (
+                        <th
                           style={{
                             border: "1px solid gray",
-                            padding: "5px",
+                            padding: "4px 0",
+                            fontWeight: 100,
                           }}
                         >
-                          <td
-                            style={{
-                              border: "1px solid gray",
-                              padding: "5px 15px",
-                              fontSize: "0.91em",
-                            }}
-                          >
-                            {`${obj.name?.first} ${obj.name?.last}`}
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid gray",
-                              padding: "5px 15px",
-                              fontSize: "0.9em",
-                            }}
-                          >
-                            {obj?.email}
-                          </td>
-                          <td
-                            style={{
-                              border: "1px solid gray",
-                              padding: "5px 15px",
-                            }}
-                          >
-                            <IconButton
-                              color="primary"
-                              onClick={() => addParticipantsFromDb(obj)}
-                              disabled={
-                                maxAllowedParticipants >
-                                fetchedParticipants?.length
-                                  ? ids.includes(obj?._id)
-                                  : true
-                              }
+                          Mobile
+                        </th>
+                      ) : null}
+                      <th
+                        style={{
+                          border: "1px solid gray",
+                          padding: "4px 0",
+                          width: "40%",
+                          fontWeight: 100,
+                        }}
+                      >
+                        Email
+                      </th>
+                      <th
+                        style={{
+                          border: "1px solid gray",
+                          padding: "4px 0",
+                          width: "20%",
+                          fontWeight: 100,
+                        }}
+                      >
+                        {editForm ? "Add" : "Booking Mode"}
+                      </th>
+                    </tr>
+                    {Array.isArray(editForm ? searchResult : fetchedNames) &&
+                      (editForm
+                        ? maxAllowedParticipants > fetchedParticipants?.length
+                        : true) &&
+                      (editForm ? searchResult : fetchedNames).map(
+                        (obj: any, i: number) => {
+                          return (
+                            <tr
+                              key={obj?._id ? obj?._id : obj + i}
+                              style={{
+                                border: "1px solid gray",
+                                padding: "5px",
+                              }}
                             >
-                              <AddIcon />
-                            </IconButton>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                </table>
-              </Box>
-            </Grid>
+                              <td
+                                style={{
+                                  border: "1px solid gray",
+                                  padding: "5px 15px",
+                                  fontSize: "0.91em",
+                                }}
+                              >
+                                {obj?._id
+                                  ? `${obj.name?.first} ${obj.name?.last}`
+                                  : obj}
+                              </td>
+                              {!editForm ? (
+                                <td
+                                  style={{
+                                    border: "1px solid gray",
+                                    padding: "5px 15px",
+                                    fontSize: "0.91em",
+                                  }}
+                                >
+                                  {obj?._id ? obj?.mobile : "-"}
+                                </td>
+                              ) : null}
+                              <td
+                                style={{
+                                  border: "1px solid gray",
+                                  padding: "5px 15px",
+                                  fontSize: "0.91em",
+                                }}
+                              >
+                                {obj?._id ? obj?.email : "-"}
+                              </td>
+                              <td
+                                style={{
+                                  border: "1px solid gray",
+                                  padding: "5px 15px",
+                                  textTransform: !editForm
+                                    ? "capitalize"
+                                    : "none",
+                                }}
+                              >
+                                {editForm ? (
+                                  <IconButton
+                                    color="primary"
+                                    onClick={() => addParticipantsFromDb(obj)}
+                                    disabled={
+                                      maxAllowedParticipants >
+                                      fetchedParticipants?.length
+                                        ? ids.includes(obj?._id)
+                                        : true
+                                    }
+                                  >
+                                    <AddIcon />
+                                  </IconButton>
+                                ) : (
+                                  fetchedParticipants[i]?.split("/")[1]
+                                )}
+                              </td>
+                            </tr>
+                          );
+                        }
+                      )}
+                  </table>
+                </Box>
+              </Grid>
+            )}
           </Grid>
-          <Box>
-            <form
-              onSubmit={(e) => {
-                e?.preventDefault();
-                console.log(fetchedParticipants);
-              }}
-            >
-              <Grid
-                sx={{
-                  p: 2,
-                  display: { xs: "block", sm: "grid" },
-                  gridTemplateColumns:
-                    participants?.length == 1 ? "1fr 100%" : "1fr 50%",
+
+          {editForm ? (
+            <Box>
+              <form
+                onSubmit={(e) => {
+                  e?.preventDefault();
+                  setEditForm(false);
+
+                  console.log(fetchedParticipants);
+
+                  TourService.updateTour(values?.id, {
+                    participants: fetchedParticipants,
+                  })
+                    .then((res) => {
+                      console.log(res);
+                      successToast("Participants added successfully", 3000);
+                    })
+                    .catch((err) => {
+                      console.error(err);
+                      errorToast("COuldn't added participants", 5000);
+                    });
                 }}
               >
-                <>
-                  {Array.isArray(participants) &&
-                    participants?.map((participant, index) => (
-                      <React.Fragment key={participant + index}>
-                        <Grid
-                          justifyContent="space-evenly"
-                          sx={{
-                            display: "flex",
-                            width:
-                              Number(participants?.length) == 1
-                                ? "300px"
-                                : "auto",
-                          }}
-                        >
-                          <Grid item xs={9} sx={{ width: { xs: "80%" }, p: 2 }}>
-                            <TextField
-                              key={index}
-                              fullWidth
-                              required
-                              size="small"
-                              name={`participant-${index + 1}`}
-                              id="participants"
-                              label={`participant-${index + 1}`}
-                              InputLabelProps={{
-                                shrink:
-                                  fetchedParticipants[index] != "" ||
-                                  fieldFocused,
-                              }}
-                              onFocus={() => setFieldFocused(true)}
-                              onBlur={() => setFieldFocused(false)}
-                              disabled={
-                                fetchedParticipants[index]?.split("/")[1] ==
-                                "online"
-                              }
-                              value={fetchedNames[index]?.split("/")[0]}
-                              onChange={(e: any) => {
-                                handleChange(e, index);
-                              }}
-                            />
-                          </Grid>
-
+                <Grid
+                  sx={{
+                    p: 2,
+                    display: { xs: "block", sm: "grid" },
+                    gridTemplateColumns:
+                      participants?.length == 1 ? "1fr 100%" : "1fr 50%",
+                  }}
+                >
+                  <>
+                    {Array.isArray(participants) &&
+                      participants?.map((participant, index) => (
+                        <React.Fragment key={participant + index}>
                           <Grid
-                            item
-                            xs={3}
+                            justifyContent="space-evenly"
                             sx={{
-                              py: 2,
-                              maxWidth: "140px",
-                              width: { xs: "10%", md: "20%" },
+                              display: "flex",
+                              width:
+                                Number(participants?.length) == 1
+                                  ? "300px"
+                                  : "auto",
                             }}
                           >
                             <Grid
-                              container
-                              justifyContent={"start"}
-                              flexWrap="nowrap"
+                              item
+                              xs={9}
+                              sx={{ width: { xs: "80%" }, p: 2 }}
+                            >
+                              <TextField
+                                key={index}
+                                fullWidth
+                                required
+                                size="small"
+                                name={`participant-${index + 1}`}
+                                id="participants"
+                                label={`participant-${index + 1}`}
+                                InputLabelProps={{
+                                  shrink:
+                                    fetchedParticipants[index] != "" ||
+                                    fieldFocused,
+                                }}
+                                onFocus={() => setFieldFocused(true)}
+                                onBlur={() => setFieldFocused(false)}
+                                disabled={
+                                  fetchedParticipants[index]?.split("/")[1] ==
+                                    "online" ||
+                                  fetchedParticipants[index]?.split("/")[2] ==
+                                    "added"
+                                }
+                                value={
+                                  typeof fetchedNames[index] === "object"
+                                    ? `${fetchedNames[index]?.name?.first} ${fetchedNames[index]?.name?.last}`
+                                    : participant?.id?.split("/")[0]
+                                }
+                                onChange={(e: any) => {
+                                  handleChange(e, index);
+                                }}
+                              />
+                            </Grid>
+
+                            <Grid
+                              item
+                              xs={3}
+                              sx={{
+                                py: 2,
+                                maxWidth: "140px",
+                                width: { xs: "10%", md: "20%" },
+                              }}
                             >
                               <Grid
-                                item
-                                xs={12}
-                                md={5}
-                                sx={{
-                                  textAlign: "start",
-                                }}
+                                container
+                                justifyContent={"start"}
+                                flexWrap="nowrap"
                               >
-                                <IconButton
-                                  color="warning"
-                                  disabled={
-                                    fetchedParticipants[index]?.split("/")[1] ==
-                                      "online" || participants?.length == 1
-                                  }
-                                  onClick={() => {
-                                    setFetchedParticipants(
-                                      fetchedParticipants.filter(
-                                        (v, i) => i != index
-                                      )
-                                    );
-                                    setfetchedNames(
-                                      fetchedNames.filter((v, i) => i != index)
-                                    );
-                                  }}
-                                >
-                                  <ClearIcon />
-                                </IconButton>
-                              </Grid>
-                              {participants?.length == index + 1 && (
                                 <Grid
                                   item
                                   xs={12}
                                   md={5}
-                                  sx={{ textAlign: "center" }}
+                                  sx={{
+                                    textAlign: "start",
+                                  }}
                                 >
                                   <IconButton
+                                    color="warning"
                                     disabled={
-                                      maxAllowedParticipants <= index + 1
-                                        ? true
-                                        : false
+                                      fetchedParticipants[index]?.split(
+                                        "/"
+                                      )[1] == "online" ||
+                                      participants?.length == 1
                                     }
-                                    color="primary"
-                                    onClick={addBtnHandleChange}
+                                    onClick={() => handleDelete(index)}
                                   >
-                                    <AddIcon />
+                                    <ClearIcon />
                                   </IconButton>
                                 </Grid>
-                              )}
+                                {participants?.length == index + 1 && (
+                                  <Grid
+                                    item
+                                    xs={12}
+                                    md={5}
+                                    sx={{ textAlign: "center" }}
+                                  >
+                                    <IconButton
+                                      disabled={
+                                        maxAllowedParticipants <= index + 1
+                                          ? true
+                                          : false
+                                      }
+                                      color="primary"
+                                      onClick={addBtnHandleChange}
+                                    >
+                                      <AddIcon />
+                                    </IconButton>
+                                  </Grid>
+                                )}
+                              </Grid>
                             </Grid>
                           </Grid>
-                        </Grid>
-                      </React.Fragment>
-                    ))}
-                </>
-              </Grid>
-              <Grid item xs={12} sx={{ textAlign: "center" }}>
-                <Button type="submit" variant="contained">
-                  Submit Participants
-                </Button>
-              </Grid>
-            </form>
-          </Box>
+                        </React.Fragment>
+                      ))}
+                  </>
+                </Grid>
+                <Grid item xs={12} sx={{ textAlign: "center" }}>
+                  <Button type="submit" variant="contained">
+                    Submit Participants
+                  </Button>
+                </Grid>
+              </form>
+            </Box>
+          ) : null}
         </DialogContent>
       </BootstrapDialog>
     </Box>

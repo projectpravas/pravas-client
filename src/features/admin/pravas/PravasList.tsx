@@ -35,6 +35,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
     flag: false,
     id: "0",
   });
+  const [dialogTourStatus, setDialogTourStatus] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const category = pathname.includes("packages") ? "package" : "tour";
@@ -266,6 +267,8 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               : lastDate < new Date()
               ? "completed"
               : "ongoing";
+
+          setDialogTourStatus(statusVal);
           return (
             <>
               {
@@ -447,6 +450,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
           <ParticipantsDialogue
             values={showDialogue}
             handleDialogue={setShowDialogue}
+            status={dialogTourStatus}
           />
         )}
         <MUIDataTables
