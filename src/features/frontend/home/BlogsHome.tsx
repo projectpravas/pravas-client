@@ -53,8 +53,6 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
     loadBlogs();
   }, []);
 
-  console.log("dataHome : ", data);
-
   return (
     <>
       {/* <Grid container mb={8}> */}
@@ -76,11 +74,12 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
               return (
                 <Box sx={{ mx: -2 }}>
                   <BlogPost
-                    id={blog?.id}
+                    id={blog?._id}
                     image={blog?.image}
                     title={blog?.title}
                     desc={blog?.richText}
                     key={blog?.id + i}
+                    category={blog?.categories}
                   />
                 </Box>
               );

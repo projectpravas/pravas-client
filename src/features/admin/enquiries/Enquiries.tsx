@@ -1,5 +1,5 @@
+import { Grid } from "@mui/material";
 import * as React from "react";
-import { Outlet } from "react-router-dom";
 import EnquiryService from "../../../services/EnquiryService";
 import CustomTitle from "../../../ui/title/CustomTitle";
 import { errorToast } from "../../../ui/toast/Toast";
@@ -27,15 +27,16 @@ const Enquiries: React.FunctionComponent<IEnquiriesProps> = (props) => {
   // console.log(enquiries);
 
   return (
-    <>
+    <Grid container>
       <CustomTitle title="Enquiries" />
       {/* <Outlet /> */}
+
       <EnquiriesList
         data={enquiries}
         loadEnquiries={loadEnquiries}
         title="Enquiry List"
       />
-    </>
+    </Grid>
   );
 };
 

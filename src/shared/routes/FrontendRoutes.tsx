@@ -1,5 +1,4 @@
 import { lazy } from "react";
-import CreatePackageForm from "../../features/admin/pravas/packages/Packages";
 import CustomTourForm from "../../features/frontend/customtourform/CustomTourForm";
 
 const Home = lazy(() => import("../../features/frontend/home/Home"));
@@ -32,10 +31,10 @@ const CancellationPolicy = lazy(
   () => import("../../ui/footer/CancellationPolicy")
 );
 const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
+const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 const TermsAndConditions = lazy(
   () => import("../../ui/footer/TermsAndConditions")
 );
-const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 
 export default [
   {
@@ -85,6 +84,13 @@ export default [
     label: "Blog Details",
     component: <BlogDetails />,
     path: "blogs/:id",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
+    label: "Blog Details",
+    component: <BlogDetails />,
+    path: "home/:id",
     showInMenu: false,
     hasAuthenticate: "no",
   },
@@ -175,9 +181,16 @@ export default [
   },
 
   {
+    label: "Create Custom Tour",
+    component: <CustomTourForm />,
+    path: "pravas/explore/custom-tour-form",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
+  {
     label: "Page Not Found",
     component: <PageNotFound />,
-    path: "*",
+    path: "/*",
     showInMenu: false,
     hasAuthenticate: "no",
   },

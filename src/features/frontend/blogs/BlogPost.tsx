@@ -23,18 +23,15 @@ interface IBlogPostProps {
   title: string;
   desc: string;
   id: number | any;
+  category: any;
 }
 const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   image,
   title,
   desc,
   id,
+  category,
 }) => {
-  // console.log(desc.slice(desc.indexOf("<p"), desc.indexOf("p>")));
-
-  // console.log(desc.indexOf("<p"));
-  // console.log(desc.indexOf("p>"));
-
   return (
     <>
       <Container>
@@ -123,16 +120,30 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       }}
                     >
                       <Box>
-                        <Typography sx={{ fontSize: "0.9rem" }}>
-                          Category
+                        <Typography
+                          sx={{
+                            fontSize: "0.9rem",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          {category[0]}
                         </Typography>
                       </Box>
                     </Grid>
                   </Grid>
                 </Grid>
                 {/* -----------------Title & Description-------------------- */}
-                <Grid sx={{ p: 1 }}>
+                <Grid
+                  sx={{
+                    p: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    minHeight: 152,
+                  }}
+                >
                   <Typography
+                    className="blog-post-line-clamp-title"
                     sx={{
                       color: "#005d9d",
                       fontSize: 19,
@@ -143,6 +154,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     {title}
                   </Typography>
                   <Typography
+                    className="blog-post-line-clamp-p"
                     sx={{
                       color: "#7a7a7a",
                       fontSize: 16,

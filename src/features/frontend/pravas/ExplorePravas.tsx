@@ -23,11 +23,14 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-import { NavLink } from "react-router-dom";
+
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+
 import {
   Table,
   TableHead,
@@ -37,6 +40,7 @@ import {
   TableCell,
 } from "@mui/material";
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 
 import MustWatchcard from "./MustWatchCard";
@@ -150,6 +154,8 @@ interface TourDetails {
 }
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
   // -----Accordion ------
@@ -157,6 +163,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
+  const [sheduleDates, setSheduleDates] = useState([]);
 
   const handleCickChange = () => {
     setExpanded("panel1");
@@ -166,6 +173,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
+
+  const handleClick = () => {
+    navigate("/pravas/explore/custom-tour-form");
+  };
 
   // -------upcoming tour  info-----
 
@@ -202,7 +213,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
   React.useEffect(() => {
     loadExplore();
-  }, []);
+  }, [id]);
 
   return (
     <Grid>
@@ -1135,6 +1146,84 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <Container>
         <PravasHomeCarousel />
       </Container>
+      <StartFromTop />
+      <Outlet />
+      <Grid
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <Container
+          sx={{
+            padding: "60px",
+
+            borderRadius: "20px",
+            boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
+          }}
+        >
+          <Grid
+            container
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItem: "center",
+              alignContent: "center",
+            }}
+          >
+            <Grid item xs={12} md={6} lg={8}>
+              <Typography
+                sx={{
+                  fontFamily: "Lato",
+                  fontSize: "36px",
+                  fontWeight: 700,
+                  paddingBottom: "10px",
+                }}
+              >
+                Customize Your<span style={{ color: "#09b2a0" }}> Tour</span>
+              </Typography>
+              <Typography sx={{ lineHeight: "24px" }}>
+                You can plan your customized tour as well!. fill the form, we
+                will get back to you!
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              lg={4}
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Typography>
+                <Button
+                  sx={{
+                    color: "white",
+                    padding: "15px 50px",
+                    fontWeight: "700",
+                    backgroundColor: "#005D9D",
+                    fontFamily: "poppins",
+                    "&:hover": {
+                      bgcolor: "#27488d",
+                      color: "white",
+                    },
+                  }}
+                  onClick={handleClick}
+                >
+                  CUSTOMIZE
+                  <ArrowRightAltIcon
+                    sx={{ "&:hover": { color: "white" }, color: "white" }}
+                  />
+                </Button>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
     </Grid>
   );
 };

@@ -7,6 +7,7 @@ export default {
       delete: "/users/",
       getOne: "/users/",
       getAll: "/users",
+      checkIds: "/users/isvalidId",
     },
     tours: {
       create: "/tours",
@@ -43,6 +44,7 @@ export default {
     bookingOrders: {
       bookNow: "/bookingOrders/create-order",
       verify: "/bookingOrders/verify-order",
+      getPaymentHistory: "/bookingOrders/payment-history",
     },
   },
 };
