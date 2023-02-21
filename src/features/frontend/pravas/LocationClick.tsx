@@ -73,12 +73,17 @@ interface ILocationClickProps {
 const LocationClick: React.FunctionComponent<ILocationClickProps> = ({
   items,
 }) => {
+  console.log(items);
+
   return (
     <Grid sx={{ display: "flex" }}>
       <Carousel sx={{ width: "700px" }}>
         {items?.map((image, i) => (
           <Box key={i}>
-            <img style={{ width: "700px", height: "550px" }} src={image} />
+            <img
+              style={{ width: "700px", height: "550px" }}
+              src={`http://localhost:9999/${image}`}
+            />
           </Box>
         ))}
       </Carousel>

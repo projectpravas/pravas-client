@@ -1,8 +1,8 @@
-import { Grid, Paper } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 import * as React from "react";
-import { ResponsiveContainer } from "recharts";
-import VisitorsLineChart from "./LineChart/VisitorsLineChart";
-import TrialPieChart from "./PieChart/TrialPieChart";
+import VisitorsLineChart from "./AreaChart/VisitorsAreaChart";
+import TrialPieChart from "./PieChart/VisitorsPieChart";
 
 interface ILineAndPieProps {}
 
@@ -11,7 +11,7 @@ const LineAndPie: React.FunctionComponent<ILineAndPieProps> = (props) => {
 
   return (
     <>
-      <Grid container sx={{ pt: 6 }} spacing={2} justifyContent="space-between">
+      <Grid container sx={{ pt: 2 }} spacing={2} justifyContent="space-between">
         {/* Total Visitors & Total Users Line Chart */}
         <Grid item xs={12} md={7}>
           <Paper sx={{ borderRadius: 2 }}>

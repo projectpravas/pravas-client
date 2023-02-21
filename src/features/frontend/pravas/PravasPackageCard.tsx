@@ -17,13 +17,24 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 
 import { Link, Routes, Route, NavLink } from "react-router-dom";
 
-import { styled } from "@mui/system";
 import LocationClick from "./LocationClick";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import { endPoints } from "../../../api";
 import { duration } from "@mui/material";
 import { number } from "yup";
 import { SrvRecord } from "dns";
+
+import Badge, { BadgeProps } from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: 6,
+    top: 12,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
+
 
 const placeholder =
   "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg";
@@ -182,11 +193,13 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                 }}
               >
                 <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
-                  <IconButton onClick={handleClickOpen}>
-                    <CameraAltOutlinedIcon />
-                  </IconButton>
+                  <StyledBadge badgeContent={images.length} color="primary">
+                    <IconButton onClick={handleClickOpen}>
+                      <CameraAltOutlinedIcon />
+                    </IconButton>
+                  </StyledBadge>
                   <Dialog open={open} onClose={handleClose}>
-                    <LocationClick items={items} />
+                    <LocationClick items={images} />
                   </Dialog>
                 </Typography>
               </Grid>
