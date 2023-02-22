@@ -16,19 +16,58 @@ import TextField from "@mui/material/TextField";
 import { Box, Typography } from "@mui/material";
 import Rating from "@mui/material/Rating";
 import Stack from "@mui/material/Stack";
+import TourService from "../../../services/TourService";
+import { useLocation, useParams } from "react-router";
+import { selectLoggedUser } from "../../../app/slices/AuthSlice";
+import { useSelector } from "react-redux";
+import UserModel from "../../../shared/models/userModel";
+import TourModel from "../../../shared/models/tourModel";
+import { errorToast, successToast } from "../../../ui/toast/Toast";
+import LoginWindow from "../../../ui/loginwindow/LoginWindow";
 
-const ReviewSection = () => {
-  const [singleReview, setSingleReview] = React.useState<any>([""]);
+interface IReviewSectionProps {}
+
+const ReviewSection: React.FC<IReviewSectionProps> = () => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const loggedUser: UserModel = useSelector(selectLoggedUser);
+  const { id } = useParams();
+
+  // console.log(loggedUser);
+
+  const [singleReview, setSingleReview] = React.useState({
+    pravasiId: loggedUser._id,
+    name: `${loggedUser?.name?.first} ${loggedUser?.name?.last}`,
+    rating: 0,
+    liked: false,
+    comment: "",
+    date: new Date(),
+  });
 
   const handleChange = (e: any) => {
     const { name, value } = e?.target;
     setSingleReview({ ...singleReview, [name]: value });
   };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
     console.log("singleReview:", singleReview);
     // console.log("user:", user);
+
+    loggedUser?._id
+      ? id &&
+        TourService.updateReview(id, singleReview)
+          .then((res) => {
+            successToast("review submitted..", 2000);
+          })
+          .catch((err) => {
+            console.log(err);
+            errorToast("could not add review..", 2000);
+          })
+      : setOpen(true);
   };
 
   return (
@@ -44,37 +83,42 @@ const ReviewSection = () => {
                 fontFamily: "poppins",
               }}
             >
-              Add a Comment
+              Add Tour Review or Feedback if any
             </Typography>
           </Grid>
           <Grid item sx={{ marginTop: "20px" }}>
             <Stack spacing={1}>
               <Rating
-                name="feedback"
-                defaultValue={2.5}
-                precision={0.5}
-                value={singleReview?.rating}
+                name="rating"
+                defaultValue={0}
+                precision={1}
+                // value={singleReview?.rating}
                 onChange={handleChange}
               />
             </Stack>
           </Grid>
 
-          <TextField
-            sx={{
-              backgroundColor: "#faf5ee",
-              color: "#c4c0ba ",
-              width: "100%",
-              fontSize: "16px",
-              fontFamily: "poppins",
-              my: 2,
-            }}
-            placeholder="Your Name * "
-            name="fullName"
-            value={singleReview?.fillName}
-            onChange={handleChange}
-          />
+          {!loggedUser._id && (
+            <TextField
+              sx={{
+                backgroundColor: "#faf5ee",
+                color: "#c4c0ba ",
+                width: "100%",
+                fontSize: "16px",
+                fontFamily: "poppins",
+                my: 2,
+              }}
+              placeholder="Your Name * "
+              name="name"
+              size="small"
+              // value={setSingleReview.}
+              onChange={handleChange}
+            />
+          )}
 
-          <Textarea
+          <TextField
+            multiline
+            minRows={4}
             style={{
               backgroundColor: "#faf5ee",
               width: "99.5%",
@@ -86,8 +130,8 @@ const ReviewSection = () => {
               paddingTop: "10px",
             }}
             placeholder="  Write Your Comment *"
-            name="message"
-            value={singleReview?.message}
+            name="comment"
+            // value={singleReview?.message}
             onChange={handleChange}
           />
 
@@ -106,6 +150,11 @@ const ReviewSection = () => {
             Submit
           </Button>
         </form>
+        <LoginWindow
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          open={open}
+        />
       </Container>
     </>
   );

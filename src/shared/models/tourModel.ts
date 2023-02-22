@@ -48,9 +48,11 @@ interface TourPlan {
 
 interface Feedbacks {
   pravasiId?: string;
+  name?: string;
+  rating?: number;
   liked?: Boolean;
   comment?: string;
-  _id: false;
+  date?: Date;
 }
 
 interface TourModel {
