@@ -1,4 +1,4 @@
-interface BolgModel {
+interface BlogModel {
   _id?: string;
   blogId?: Number;
   title?: String;
@@ -13,4 +13,4 @@ interface BolgModel {
   blogStatus?: Boolean;
 }
 
-export default BolgModel;
+export default BlogModel;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, Route, Routes, useLocation } from "react-router-dom";
 import TourService from "../../../services/TourService";
 import { errorToast } from "../../../ui/toast/Toast";

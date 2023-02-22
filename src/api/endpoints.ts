@@ -8,6 +8,7 @@ export default {
       getOne: "/users/",
       getAll: "/users",
       checkIds: "/users/isvalidId",
+      addRemoveTourId: "/users/add-remove-tourId",
     },
     tours: {
       create: "/tours",
@@ -15,6 +16,7 @@ export default {
       delete: "/tours/",
       getOne: "/tours/",
       getAll: "/tours",
+      getUpcoming: "/tours/upcoming-tours/",
       updateReview: "/review/",
     },
 

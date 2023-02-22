@@ -13,10 +13,15 @@ const handleOpenRazorPay = (data: any) => {
     image: "/PTSM-LOGO.png",
     order_id: data?.id,
     handler: (response: any) => {
-      BookingService.verifyOrder(response)
+      BookingService.verifyOrder({
+        ...response,
+        tourId: toursId,
+        customerId: customersId,
+      })
+
         .then((res) => {
           /// successfull payment
-          console.log(true);
+          console.log("verify", res);
         })
         .catch((err) => {
           console.error(err);
@@ -50,14 +55,19 @@ const handleOpenRazorPay = (data: any) => {
 const handlePayment = (amount: string, customerId: string, tourId: string) => {
   customersId = customerId;
   toursId = tourId;
-  BookingService.createOrder(amount)
-    .then((result) => {
-      // on order creation open RazorPay interface
-      handleOpenRazorPay(result?.data?.data);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  console.log("hi", amount, customerId, tourId);
+
+  if (!amount || !customerId || !tourId) return false;
+
+  if (customerId)
+    BookingService.createOrder(amount)
+      .then((result) => {
+        // on order creation open RazorPay interface
+        handleOpenRazorPay(result?.data?.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 };
 
 export default handlePayment;

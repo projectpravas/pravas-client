@@ -26,5 +26,9 @@ class TourService {
   static updateReview(id: string, review: TourModel | FormData | Object) {
     return API.put(endPoints.api.tours.updateReview + id, review);
   } //updateTour
+
+  static fetchUpcomingTours(packageId = "0") {
+    return API.get(endPoints.api.tours.getUpcoming + packageId);
+  } //fetchAllTours
 }
 export default TourService;

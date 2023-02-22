@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
@@ -24,12 +24,20 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
 
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Navigate,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import handlePayment from "../../../shared/razor-pay/razorPay-payment";
+import UserModel from "../../../shared/models/userModel";
 
 import {
   Table,
@@ -45,6 +53,10 @@ import OwlCarousel from "react-owl-carousel";
 
 import MustWatchcard from "./MustWatchCard";
 import ReviewSection from "./ReviewSection";
+import TourModel from "../../../shared/models/tourModel";
+import { useSelector } from "react-redux";
+import { selectLoggedUser } from "../../../app/slices/AuthSlice";
+import { errorToast } from "../../../ui/toast/Toast";
 
 const options = {
   lazyLoad: true,
@@ -156,6 +168,10 @@ interface TourDetails {
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const currentLoggedUser: UserModel = useSelector(
+    selectLoggedUser
+  ) as UserModel;
+  const bookingRef = useRef<any>(null);
 
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
@@ -164,9 +180,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
-  const [sheduleDates, setSheduleDates] = useState([]);
+  const [bookingDates, setBookingDates] = useState<TourModel[]>([]);
 
-  const handleCickChange = () => {
+  const handleClickChange = () => {
     setExpanded("panel1");
   };
 
@@ -194,8 +210,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   //*************tour location table******************** */
   const tableData = tourDetails?.tourPlan?.hotels;
 
-  const tourDatesSheDule = tourDetails?.tourPlan?.scheduleDate;
-
   //**************must watch filter***************
 
   const loadExplore = () => {
@@ -212,9 +226,55 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       });
   };
 
+  const handleBooking = (price: string, customerId: string, tourId: string) => {
+    if (!price || !tourId) return errorToast("Failed... Try Again...", 3000);
+    if (!customerId) return errorToast("Login First for booking...", 3000);
+
+    price && customerId && tourId && handlePayment(price, customerId, tourId);
+  };
+
+  const fetchUpcomingTours = () => {
+    TourService.fetchUpcomingTours(id)
+      .then((res) => {
+        const result: TourModel[] = res?.data?.data ? res?.data?.data : [];
+        Array.isArray(result) &&
+          result.sort((p1: TourModel, p2: TourModel) =>
+            new Date(p1?.tourDate as string) < new Date(p2?.tourDate as string)
+              ? -1
+              : new Date(p1?.tourDate as string) >
+                new Date(p2?.tourDate as string)
+              ? 1
+              : 0
+          );
+
+        setBookingDates(result);
+      })
+      .catch((err) => console.error(err));
+  };
+
   React.useEffect(() => {
     loadExplore();
+    fetchUpcomingTours();
   }, [id]);
+
+  // useEffect(() => {
+  //   TourService.fetchUpcomingTours(id)
+  //     .then((res) => {
+  //       const result: TourModel[] = res?.data?.data ? res?.data?.data : [];
+  //       Array.isArray(result) &&
+  //         result.sort((p1: TourModel, p2: TourModel) =>
+  //           new Date(p1?.tourDate as string) < new Date(p2?.tourDate as string)
+  //             ? -1
+  //             : new Date(p1?.tourDate as string) >
+  //               new Date(p2?.tourDate as string)
+  //             ? 1
+  //             : 0
+  //         );
+
+  //       setBookingDates(result);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }, []);
 
   return (
     <Grid>
@@ -452,22 +512,26 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           }}
         >
           <Grid item>
-            <Button
-              sx={{
-                // bgcolor: "#f0f3f6",
-                color: "white",
-                fontWeight: "700",
-                backgroundColor: "#27488d",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
+            <a href="#booking-table" style={{ textDecoration: "none" }}>
+              <Button
+                sx={{
+                  // bgcolor: "#f0f3f6",
                   color: "white",
-                },
-              }}
-              onClick={handleCickChange}
-            >
-              Booking
-            </Button>
+                  fontWeight: "700",
+                  backgroundColor: "#27488d",
+                  fontFamily: "poppins",
+                  "&:hover": {
+                    bgcolor: "#27488d",
+                    color: "white",
+                  },
+                }}
+                onClick={() => {
+                  handleClickChange();
+                }}
+              >
+                Booking
+              </Button>
+            </a>
           </Grid>
           {/* *******************share button******************** */}
           <Grid item sx={{ position: "relative" }}>
@@ -628,7 +692,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       borderBottomRightRadius: "10px",
                     }}
                   >
-                    <TableContainer>
+                    <TableContainer id="booking-table">
                       <Table sx={{ border: "1px solid gray" }}>
                         <TableHead>
                           <TableRow>
@@ -662,54 +726,76 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                             </DataTab>
                           </TableRow>
                         </TableHead>
-                        <TableBody>
-                          {Array.isArray(tourDatesSheDule) &&
-                          tourDatesSheDule?.length > 0 ? (
-                            tourDatesSheDule.map(
-                              (shedDate: string | any, i: number) => (
-                                <TableRow
-                                  key={shedDate.id + i}
+                        <TableBody ref={bookingRef}>
+                          {Array.isArray(bookingDates) &&
+                          bookingDates?.length > 0 ? (
+                            bookingDates.map((obj: string | any, i: number) => (
+                              <TableRow
+                                key={obj._id + i}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <DataTab component="th" scope="row">
+                                  {i + 1}
+                                </DataTab>
+                                <DataTab align="right">{obj?.title}</DataTab>
+                                <DataTab align="right">
+                                  {new Intl.DateTimeFormat("en-IN").format(
+                                    new Date(
+                                      new Date(`${obj?.tourDate}`).setDate(
+                                        new Date(`${obj?.tourDate}`).getDate()
+                                      )
+                                    )
+                                  )}
+                                </DataTab>
+                                <DataTab align="right">
+                                  {new Intl.DateTimeFormat("en-IN").format(
+                                    new Date(
+                                      new Date(`${obj?.tourDate}`).setDate(
+                                        new Date(`${obj?.tourDate}`).getDate() +
+                                          Number(`${obj?.duration?.days}`)
+                                      )
+                                    )
+                                  )}
+                                </DataTab>
+                                <DataTab
+                                  align="right"
                                   sx={{
                                     "&:last-child td, &:last-child th": {
                                       border: 0,
                                     },
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                   }}
                                 >
-                                  <DataTab component="th" scope="row">
-                                    {shedDate?.srNo}
-                                  </DataTab>
-                                  <DataTab align="right">
-                                    {shedDate?.tourName}
-                                  </DataTab>
-                                  <DataTab align="right">
-                                    {shedDate?.tourDates}
-                                  </DataTab>
-                                  <DataTab
-                                    align="right"
+                                  <Button
+                                    variant="contained"
+                                    // disabled={
+                                    //   currentLoggedUser?._id ? false : true
+                                    // }
                                     sx={{
-                                      "&:last-child td, &:last-child th": {
-                                        border: 0,
-                                      },
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center",
+                                      bgcolor: "#2c5799",
+                                      color: "white",
+                                      borderRadius: "15px",
+                                      fontSize: "12px",
                                     }}
+                                    onClick={() =>
+                                      handleBooking(
+                                        obj?.price,
+                                        currentLoggedUser?._id as string,
+                                        obj?._id
+                                      )
+                                    }
                                   >
-                                    <Button
-                                      variant="contained"
-                                      sx={{
-                                        bgcolor: "#2c5799",
-                                        color: "white",
-                                        borderRadius: "15px",
-                                        fontSize: "12px",
-                                      }}
-                                    >
-                                      Booking
-                                    </Button>
-                                  </DataTab>
-                                </TableRow>
-                              )
-                            )
+                                    Booking
+                                  </Button>
+                                </DataTab>
+                              </TableRow>
+                            ))
                           ) : (
                             <TableRow
                               sx={{
