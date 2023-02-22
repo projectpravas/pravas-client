@@ -52,6 +52,7 @@ import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 
 import MustWatchcard from "./MustWatchCard";
+import ReviewSection from "./ReviewSection";
 import TourModel from "../../../shared/models/tourModel";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
@@ -1193,7 +1194,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     </Typography>
                   </Box>
                   <Box sx={{ marginLeft: "10px" }}>
-                    <TypoTourInfo>Max Gauests</TypoTourInfo>
+                    <TypoTourInfo>Max Guests</TypoTourInfo>
                     <TypoTourInfo>15</TypoTourInfo>
                   </Box>
                 </Grid>
@@ -1227,13 +1228,14 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
-
+      <ReviewSection />
       {/* Package Card Carousel  */}
       <Container>
         <PravasHomeCarousel />
       </Container>
       <StartFromTop />
       <Outlet />
+
       <Grid
         sx={{
           display: "flex",

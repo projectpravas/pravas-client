@@ -17,6 +17,7 @@ export default {
       getOne: "/tours/",
       getAll: "/tours",
       getUpcoming: "/tours/upcoming-tours/",
+      updateReview: "/review/",
     },
 
     auth: {
