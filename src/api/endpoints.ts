@@ -15,6 +15,7 @@ export default {
       delete: "/tours/",
       getOne: "/tours/",
       getAll: "/tours",
+      updateReview: "/review/",
     },
 
     auth: {
