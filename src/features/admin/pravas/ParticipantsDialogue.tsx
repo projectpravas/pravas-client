@@ -18,6 +18,7 @@ import UserService from "../../../services/UserService";
 import Swal from "sweetalert2";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import TourModel from "../../../shared/models/tourModel";
+import LocalPrintshopIcon from "@mui/icons-material/LocalPrintshop";
 
 interface IPaerticipantsDialogue {
   values: {
@@ -283,28 +284,52 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
           onClose={handleClose}
         >
           <Grid container justifyContent="center">
-            <Grid item xs={4} sx={{ textAlign: "start" }}>
-              Tour Name :-
+            <Grid
+              item
+              xs={12}
+              sm={4}
+              sx={{ textAlign: { xs: "center", sm: "start" } }}
+            >
+              Tour Name :
               <span
                 style={{ fontSize: "0.9em" }}
-              >{` ${tourDetails?.title}`}</span>
+              >{`  ${tourDetails?.title}`}</span>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} sm={4}>
               {editForm ? "Add Participants" : "Tour Participants"}
             </Grid>
-            <Grid item xs={4}>
-              start Date :-{" "}
-              <span
-                style={{ fontSize: "0.9em" }}
-              >{` ${tourDetails?.tourDate}`}</span>
+            <Grid item xs={12} sm={4}>
+              {`${"start Date :"} `}
+              <span style={{ fontSize: "0.9em" }}>
+                {new Intl.DateTimeFormat("en-IN").format(
+                  new Date(
+                    `${
+                      tourDetails?.tourDate ? tourDetails?.tourDate : new Date()
+                    }`
+                  )
+                )}
+              </span>
             </Grid>
           </Grid>
         </BootstrapDialogTitle>
-        <DialogContent dividers className="hideScrollbar">
+        <DialogContent
+          sx={{ position: "relative" }}
+          dividers
+          className="hideScrollbar"
+        >
           {/* // Add participant from db */}
           <Grid container>
+            {!editForm && (
+              <IconButton
+                sx={{ position: "absolute", top: 1, right: 2 }}
+                color="primary"
+                onClick={() => window.print()}
+              >
+                <LocalPrintshopIcon />
+              </IconButton>
+            )}
             {editForm ? (
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{ mt: !editForm ? 2 : 0 }}>
                 <TextField
                   size="small"
                   type="text"
@@ -492,7 +517,7 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
                   setEditForm(false);
 
                   console.log(fetchedParticipants);
-
+                  return;
                   TourService.updateTour(values?.id, {
                     participants: fetchedParticipants,
                   })

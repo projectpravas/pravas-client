@@ -130,6 +130,24 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       },
     },
     {
+      label: "Tour Date",
+      name: "tourDate",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          const tour: any = data[dataIndex];
+          return (
+            <>
+              {new Intl.DateTimeFormat("en-IN").format(
+                tour?.tourDate ? new Date(`${tour?.tourDate}`) : new Date()
+              )}
+            </>
+          );
+        },
+      },
+    },
+    {
       label: category == "package" ? "Max Persons" : "Available Seat",
       name: "maxPersons",
       options: {
@@ -268,7 +286,6 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               ? "completed"
               : "ongoing";
 
-          setDialogTourStatus(statusVal);
           return (
             <>
               {
@@ -373,6 +390,20 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         sort: false,
         customBodyRenderLite: (index: number) => {
           const tour: TourModel = data[index];
+          const lastDate = new Date(
+            new Date(`${tour?.tourDate}`).setDate(
+              new Date(`${tour?.tourDate}`).getDate() +
+                Number(`${tour?.duration?.days}`)
+            )
+          );
+          const statusVal =
+            tour?.category == "tour" &&
+            new Date(`${tour?.tourDate}`) > new Date()
+              ? "upcoming"
+              : lastDate < new Date()
+              ? "completed"
+              : "ongoing";
+
           return (
             <Box sx={{ display: "flex" }}>
               <Chip
@@ -391,6 +422,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
                 variant="outlined"
                 onClick={() => {
                   setShowDialogue({ flag: true, id: tour?._id as string });
+                  setDialogTourStatus(statusVal);
                 }}
               />
             </Box>
@@ -457,8 +489,12 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
           title={title}
           columns={
             category == "tour"
-              ? (columns?.filter((obj) => obj?.name != "addTour") as any)
-              : (columns?.filter((obj) => obj?.name != "participants") as any)
+              ? (columns?.filter(
+                  (obj) => !["addTour", "price"].includes(obj?.name)
+                ) as any)
+              : (columns?.filter(
+                  (obj) => !["participants", "tourDate"].includes(obj?.name)
+                ) as any)
           }
           data={data}
           options={options}

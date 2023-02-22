@@ -567,7 +567,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
         onSubmit={(values, { resetForm }) => {
           const tourObj = createFD(images, category, tourId);
 
-          tourId == "0"
+          operation == "add"
             ? TourService.createTour(tourObj)
                 .then((res) => {
                   const msg =
@@ -662,6 +662,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Basic Tour Details</Typography>
                   </AccordionSummary>
@@ -669,7 +670,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     <Grid
                       container
                       spacing={2}
-                      sx={{ justifyContent: "center" }}
+                      sx={{ justifyContent: "center", backgroundColor: "#fff" }}
                     >
                       <Grid item xs={12} md={4}>
                         <TextField
@@ -986,6 +987,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Daywise Tour Plan</Typography>
                   </AccordionSummary>
@@ -997,6 +999,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                         justifyContent: "space-evenly",
                         mx: 0,
                         width: "100%",
+                        backgroundColor: "#fff",
                       }}
                     >
                       {tour?.duration?.days &&
@@ -1167,10 +1170,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Hotels</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(hotels) &&
@@ -1309,10 +1313,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Included</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(includes) &&
@@ -1422,10 +1427,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Excluded</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(excludes) &&
@@ -1535,10 +1541,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Notes</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(tourNotes) &&

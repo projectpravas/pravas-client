@@ -22,5 +22,9 @@ class TourService {
   static fetchAllTours(query = "") {
     return API.get(endPoints.api.tours.getAll + query);
   } //fetchAllTours
+
+  static fetchUpcomingTours(packageId = "0") {
+    return API.get(endPoints.api.tours.getUpcoming + packageId);
+  } //fetchAllTours
 }
 export default TourService;
