@@ -15,7 +15,7 @@ interface IHomeProps {}
 const imgZoom = {
   overflow: "hidden",
   transform: "scale(1)",
-  transition: "5s",
+  transition: "2s",
   "&:hover": {
     transform: "scale(1.1)",
     overflow: "hidden",
@@ -48,10 +48,15 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
       {/* head banner */}
-      <Grid container minWidth="300px" sx={{ position: "relative" }}>
-        <Grid>
+      <Grid
+        container
+        minWidth="300px"
+        sx={{ position: "relative", justifyContent: "center" }}
+      >
+        <Grid sx={{ height: { xs: "300px", md: "100%" } }}>
           <img
-            src="https://pravasthejourney.com/wp-content/uploads/2022/09/Web-C2.jpg"
+            src="./banner-2.webp"
+            style={{ objectFit: "cover" }}
             width="100%"
             height="100%"
             alt="not"
@@ -78,7 +83,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
           </Typography>
           <Typography
             sx={{
-              paddingTop: "4%",
+              // paddingTop: "2%",
               lineHeight: "1.86em",
               letterSpacing: "-.2px",
               fontSize: "1rem",
@@ -93,15 +98,17 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
             Travel, Be out in Nature and explore..
           </Typography>
         </Grid>
-
         {/* Search Bar  */}
         <Container
           sx={{
+            mx: "center",
             position: "absolute",
-            bottom: { xs: "-85%", sm: "-40%", md: "-10%", lg: "-8%" },
+            bottom: { xs: "-7rem", md: "-2.3rem" },
           }}
         >
-          <SearchBar />
+          <Grid>
+            <SearchBar />
+          </Grid>
         </Container>
       </Grid>
 
@@ -109,7 +116,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       <Container>
         <Grid
           container
-          sx={{ paddingTop: { xs: 20, sm: 17, md: 15 } }}
+          sx={{ paddingTop: { xs: 20, sm: 28, md: 15 } }}
           pt={18}
           pb={10}
           spacing={8}

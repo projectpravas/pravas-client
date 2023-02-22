@@ -14,13 +14,14 @@ import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const searchButton = {
-  fontWeight: 600,
+  fontWeight: 500,
   fontSize: "1.1em",
   backgroundColor: "#2c5799",
   border: "2px solid #2c5799",
   borderRadius: "8px",
   padding: "0px 20px",
   letterSpacing: 2,
+  width: "100%",
   ":hover": {
     backgroundColor: "#fff",
     color: "#2c5799",
@@ -62,27 +63,8 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
   const loadAllTours = () => {
     TourService.fetchAllTours().then((response) => {
       setAllTours(response?.data?.data);
-
-      // let uniqueTourLocation = new Set();
-      // let tourLocations = response?.data?.data;
-
-      // Array.isArray(tourLocations) &&
-      //   tourLocations.map((singleLocation) => {
-      //     // console.log("tourLocation map ", singleLocation?.tourLocation);
-
-      // if (singleLocation?.category === "package") {
-      //   for (var i in singleLocation?.tourLocation) {
-      //     uniqueTourLocation.add(singleLocation?.tourLocation);
-      //   }
-      // }
-      //   });
-      // console.log("uni", uniqueTourLocation);
-
-      // const tourLocation = [...uniqueTourLocation];
-      // setAllTours(tourLocation);
     });
   };
-  // console.log("all tours ", allTours);
 
   const loadAllTourTypes = () => {
     let uniqueTourType = new Set();
@@ -153,87 +135,159 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
 
   return (
     <>
-      <Grid
-        container
-        sx={{
-          minWidth: 120,
-          width: "85%",
-          padding: "1.5% 3% 1.5% 3%",
-          marginX: "7.5%",
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          justifyContent: "space-around",
-          borderRadius: "8px",
-          gap: "1rem",
-          backgroundColor: "white",
-          boxShadow: "0 10px 30px 0 rgba(0,0,0,.05)",
-        }}
-      >
-        <FormControl sx={{ m: 1, width: { xs: "100%", md: "30%", lg: "30%" } }}>
-          <InputLabel id="tourLocation">Destinations</InputLabel>
-          <Select
-            labelId="tourLocation"
-            id="tourLocation"
-            name="tourLocation"
-            // multiple
-            value={filterState?.tourLocation}
-            onChange={handleChange}
-            input={<OutlinedInput label="Destionations" />}
-            MenuProps={MenuProps}
-          >
-            <MenuItem value="all">All Destinaions</MenuItem>
-            {Array.from(
-              new Set(
-                allTours
-                  .filter((item) => item?.category == "package")
-                  .map((obj) => obj?.tourLocation)
-              )
-            ).map((location, i) => (
-              <MenuItem
-                key={location + i}
-                value={location}
-                style={getStyles(location, filterState.tourLocation, theme)}
-              >
-                {location}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <FormControl sx={{ m: 1, width: { xs: "100%", md: "30%", lg: "30%" } }}>
-          <InputLabel id="tourType">Activities</InputLabel>
-          <Select
-            labelId="tourType"
-            id="tourType"
-            name="tourType"
-            // multiple
-            value={filterState.tourType}
-            onChange={handleChange}
-            input={<OutlinedInput label="Activities" />}
-            MenuProps={MenuProps}
-          >
-            <MenuItem value="all">All Activities</MenuItem>
-            {allActivity.map((act, i) => (
-              <MenuItem
-                key={act + i}
-                value={act}
-                style={getStyles(act, filterState.tourType, theme)}
-              >
-                {act}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <Button
-          variant="contained"
-          size="small"
-          startIcon={<SearchIcon />}
-          sx={searchButton}
-          onClick={() => handleClickChange()}
+      <Grid>
+        <Grid
+          container
+          rowSpacing={{ xs: 2, md: 0 }}
+          justifyContent={{ xs: "center", md: "space-evenly" }}
+          alignItems="center"
+          sx={{
+            minWidth: 120,
+            py: 2,
+            borderRadius: "8px",
+            backgroundColor: { xs: "white", md: "transparent" },
+            boxShadow: "3px 5px 20px 1px rgb(0 0 0 / 23%)",
+            backdropFilter: "blur(50px)",
+          }}
         >
-          Search
-        </Button>
+          {/* Tour Location  */}
+          <Grid item xs={12} md={4}>
+            <Grid
+              container
+              justifyContent={{ xs: "center", md: "space-around" }}
+            >
+              {/* location Icon  */}
+              <Grid item xs={2}>
+                <Grid sx={{ height: { xs: "34px", md: "35px" } }}>
+                  <img
+                    style={{ color: "red" }}
+                    src="./Destination-icon.svg"
+                    width="100%"
+                    height="100%"
+                    alt=""
+                  />
+                </Grid>
+              </Grid>
+              {/* location Input field  */}
+              <Grid item xs={9} sx={{ width: "100%" }}>
+                <FormControl
+                  sx={{
+                    width: "100%",
+                    m: 0,
+                    p: 0,
+                    flexDirection: "row",
+                  }}
+                >
+                  <InputLabel size="small" id="tourLocation">
+                    Destinations
+                  </InputLabel>
+                  <Select
+                    size="small"
+                    fullWidth
+                    labelId="tourLocation"
+                    id="tourLocation"
+                    name="tourLocation"
+                    // value={filterState?.tourLocation}
+                    onChange={handleChange}
+                    input={<OutlinedInput label="Destionations" />}
+                    MenuProps={MenuProps}
+                  >
+                    <MenuItem value="all">All Destinaions</MenuItem>
+                    {Array.from(
+                      new Set(
+                        allTours
+                          .filter((item) => item?.category == "package")
+                          .map((obj) => obj?.tourLocation)
+                      )
+                    ).map((location, i) => (
+                      <MenuItem
+                        key={location + i}
+                        value={location}
+                        style={getStyles(
+                          location,
+                          filterState.tourLocation,
+                          theme
+                        )}
+                      >
+                        {location}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          {/* Tour type */}
+          <Grid item xs={12} md={4}>
+            <Grid
+              container
+              justifyContent={{ xs: "center", md: "space-around" }}
+            >
+              {/* Type Icon  */}
+              <Grid item xs={2}>
+                <Grid sx={{ height: { xs: "34px", md: "35px" } }}>
+                  <img
+                    src="./Tour-type.svg"
+                    width="100%"
+                    height="100%"
+                    alt=""
+                  />
+                </Grid>
+              </Grid>
+              {/* Type Input Field  */}
+              <Grid item xs={9} sx={{ width: "100%" }}>
+                <FormControl
+                  sx={{
+                    width: "100%",
+                    m: 0,
+                    p: 0,
+                    flexDirection: "row",
+                  }}
+                >
+                  <InputLabel size="small" id="tourType">
+                    Activities
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    size="small"
+                    labelId="tourType"
+                    id="tourType"
+                    name="tourType"
+                    // value={filterState.tourType}
+                    onChange={handleChange}
+                    input={<OutlinedInput label="Activities" />}
+                    MenuProps={MenuProps}
+                  >
+                    <MenuItem value="all">All Activities</MenuItem>
+                    {allActivity.map((act, i) => (
+                      <MenuItem
+                        key={act + i}
+                        value={act}
+                        style={getStyles(act, filterState.tourType, theme)}
+                      >
+                        {act}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          {/* Button  */}
+          <Grid item xs={4} md={2} sx={{ justifyContent: "space-around" }}>
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<SearchIcon />}
+              sx={{ ...searchButton, maxWidth: "150px" }}
+              onClick={() => handleClickChange()}
+            >
+              Search
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
     </>
   );

@@ -96,7 +96,13 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
 
   return (
     <Container>
-      <Grid container sx={{ fontFamily: "Poppins" }}>
+      <Grid
+        container
+        sx={{
+          fontFamily: "Poppins",
+          justifyContent: { xs: "center", sm: "left" },
+        }}
+      >
         <Card
           sx={{
             padding: "15px 0px 15px 0px",
