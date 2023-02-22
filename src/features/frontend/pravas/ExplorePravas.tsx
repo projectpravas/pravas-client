@@ -25,7 +25,7 @@ import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
 
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";

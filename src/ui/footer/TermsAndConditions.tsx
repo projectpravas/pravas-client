@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import ListItem from "@mui/material/ListItem";
 import styled from "@emotion/styled";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 interface ITermsAndConditionsProps {}
 
 const ListUl = styled(ListItem)({
@@ -27,6 +27,7 @@ const TermsAndConditions: React.FunctionComponent<ITermsAndConditionsProps> = (
         <title>Terms And Conditions</title>
         <meta name="description" content="Terms And Conditions" />
         <meta name="keywords" content="Terms And Conditions" />
+        <link rel="canonical" href="/terms-and-conditions" />
       </Helmet>
       <Grid sx={{ margin: { xs: "12% 0 18% 0", md: "6% 0% 10% 0" } }}>
         <Typography

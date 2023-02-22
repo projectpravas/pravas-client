@@ -34,15 +34,22 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
 }) => {
   return (
     <>
-      <Container>
-        <Grid container sx={{ pt: 2 }}>
-          <Paper
-            elevation={1}
-            sx={{
-              borderRadius: 5,
-              backgroundColor: "white",
-              "&:hover": { boxShadow: "0px 0px 30px -5px rgb(0 0 0 / 50%)" },
-            }}
+      <Grid container sx={{ pt: 2, px: 2 }}>
+        <Paper
+          elevation={1}
+          sx={{
+            borderRadius: 5,
+            backgroundColor: "white",
+            transition: "0.8s ease-in-out",
+            "&:hover": {
+              boxShadow: "0px 0px 20px -5px rgb(0 0 0 / 50%)",
+              transform: "translateY(-5px)",
+            },
+          }}
+        >
+          <NavLink
+            to={`${id}`}
+            style={{ textDecoration: "none", color: "black" }}
           >
             <Grid container sx={{ p: 2, pb: 1.2 }} xs={12}>
               <Grid
@@ -62,6 +69,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         width: "100%",
                         height: 230,
                         borderRadius: 10,
+                        objectFit: "cover",
                       }}
                       src={
                         `${endPoints?.serverBaseURL}/${image}`
@@ -173,30 +181,25 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                 <Divider />
                 {/* -------------------Read More----------------------- */}
 
-                <NavLink
-                  to={`${id}`}
-                  style={{ textDecoration: "none", color: "black" }}
+                <ExploreGrid
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "#005d9d",
+                    pt: 1,
+                    cursor: "pointer",
+                  }}
                 >
-                  <ExploreGrid
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      color: "#005d9d",
-                      pt: 1,
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Typography sx={{ p: 1, fontSize: 15, fontWeight: 900 }}>
-                      Explore
-                    </Typography>
-                    <EastIcon />
-                  </ExploreGrid>
-                </NavLink>
+                  <Typography sx={{ p: 1, fontSize: 15, fontWeight: 900 }}>
+                    Explore
+                  </Typography>
+                  <EastIcon />
+                </ExploreGrid>
               </Grid>
             </Grid>
-          </Paper>
-        </Grid>
-      </Container>
+          </NavLink>
+        </Paper>
+      </Grid>
     </>
   );
 };

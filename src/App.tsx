@@ -6,7 +6,7 @@ import { createTheme, ThemeProvider } from "@mui/material";
 import "../src/index.css";
 import Network from "./ui/connections/Network";
 import { Toast } from "./ui/toast/Toast";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import GoToTop from "./ui/GoToTop/GoToTop";
 import "./ui/owl-carousel/owl.css";
 

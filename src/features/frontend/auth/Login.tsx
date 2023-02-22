@@ -25,6 +25,7 @@ import { errorToast, successToast } from "../../../ui/toast/Toast";
 import AuthService from "../../../services/AuthService";
 import { addLoggedUser } from "../../../app/slices/AuthSlice";
 import TourService from "../../../services/TourService";
+import { Helmet } from "react-helmet-async";
 
 const Link = styled(NLink)({
   textDecoration: "none",
@@ -75,208 +76,227 @@ const Login = () => {
   console.log(images);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main">
-        <CssBaseline />
+    <>
+      <Helmet>
+        <title>Login To Pravas Tourism</title>
+        <meta name="description" content="Login to Pravas Tourism" />
+        <meta name="keywords" content="Login to Pravas Tourism" />
+        <link rel="canonical" href="/login" />
+      </Helmet>
+      <ThemeProvider theme={theme}>
+        <Grid container component="main">
+          <CssBaseline />
 
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: `url(http://localhost:9999/${
-              images[Math.floor(Math.random() * images.length)]
-            })`,
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={1} square>
-          <Formik
-            initialValues={initialUser}
-            enableReinitialize
-            validationSchema={loginValidation}
-            onSubmit={(values, { resetForm }) => {
-              AuthService.userLogin(values)
-                .then((res) => {
-                  const aToken = res?.headers["x-accesstoken"] as string;
-                  const rToken = res?.headers["x-refreshtoken"] as string;
-
-                  sessionStorage.setItem("aToken", aToken);
-                  sessionStorage.setItem("rToken", rToken);
-
-                  const message = res?.data?.message || "Login Succesfull :-)";
-                  successToast(message, 3000);
-                  setLoginChkBox(false);
-                  dispatch(addLoggedUser(res?.data?.data));
-                  resetForm({});
-                  navigate("/secured");
-                })
-                .catch((err) => {
-                  resetForm({
-                    values: {
-                      email: values.email,
-                      password: "",
-                    },
-                  });
-                  setLoginChkBox(false);
-                  const message =
-                    err?.response?.data?.message ||
-                    "Incorrect Email or User not Avialiable";
-                  errorToast(message, 5000);
-                });
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
+            sx={{
+              backgroundImage: `url(http://localhost:9999/${
+                images[Math.floor(Math.random() * images.length)]
+              })`,
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
+          />
+
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={1}
+            square
           >
-            {({
-              values,
-              errors,
-              isValid,
-              touched,
-              handleBlur,
-              handleChange,
-              handleSubmit,
-            }) => {
-              return (
-                <form onSubmit={handleSubmit}>
-                  <Box
-                    sx={{
-                      my: 8,
-                      mx: 4,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                      <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                      Sign in
-                    </Typography>
-                    <Box sx={{ mt: 1 }}>
-                      <Grid>
-                        <TextField
-                          margin="normal"
-                          required
-                          fullWidth
-                          id="email"
-                          label="Email Address"
-                          name="email"
-                          autoComplete="email"
-                          autoFocus
-                          size="small"
-                          value={values.email}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          error={touched.email && errors.email ? true : false}
-                          helperText={
-                            touched.email && errors.email ? errors.email : ""
-                          }
-                        />
-                      </Grid>
-                      <Grid>
-                        <TextField
-                          required
-                          fullWidth
-                          margin="normal"
-                          name="password"
-                          label="Password"
-                          id="password"
-                          size="small"
-                          autoComplete="new-password"
-                          value={values?.password}
-                          onChange={handleChange}
-                          onFocus={() => setActiveElementId("password")}
-                          onBlur={(e) => {
-                            handleBlur(e);
-                            setActiveElementId("");
-                          }}
-                          type={showPassword ? "text" : "password"}
-                          InputLabelProps={{
-                            shrink:
-                              activeElementId == "password"
-                                ? true
-                                : values?.password?.length != 0
-                                ? true
-                                : false,
-                          }}
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment
-                                position="end"
-                                sx={{ order: 2, mr: "1em" }}
-                              >
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowPassword}
-                                  onMouseDown={handleMouseDownPassword}
-                                  edge="end"
-                                >
-                                  {showPassword ? (
-                                    <VisibilityOff />
-                                  ) : (
-                                    <Visibility />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          }}
-                          error={
-                            touched?.password && errors?.password ? true : false
-                          }
-                          helperText={
-                            touched?.password && errors?.password
-                              ? errors?.password
-                              : ""
-                          }
-                        />
-                      </Grid>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            value="remember"
-                            color="primary"
-                            onChange={() => setLoginChkBox(!loginChkBox)}
-                            checked={loginChkBox}
+            <Formik
+              initialValues={initialUser}
+              enableReinitialize
+              validationSchema={loginValidation}
+              onSubmit={(values, { resetForm }) => {
+                AuthService.userLogin(values)
+                  .then((res) => {
+                    const aToken = res?.headers["x-accesstoken"] as string;
+                    const rToken = res?.headers["x-refreshtoken"] as string;
+
+                    sessionStorage.setItem("aToken", aToken);
+                    sessionStorage.setItem("rToken", rToken);
+
+                    const message =
+                      res?.data?.message || "Login Succesfull :-)";
+                    successToast(message, 3000);
+                    setLoginChkBox(false);
+                    dispatch(addLoggedUser(res?.data?.data));
+                    resetForm({});
+                    navigate("/secured");
+                  })
+                  .catch((err) => {
+                    resetForm({
+                      values: {
+                        email: values.email,
+                        password: "",
+                      },
+                    });
+                    setLoginChkBox(false);
+                    const message =
+                      err?.response?.data?.message ||
+                      "Incorrect Email or User not Avialiable";
+                    errorToast(message, 5000);
+                  });
+              }}
+            >
+              {({
+                values,
+                errors,
+                isValid,
+                touched,
+                handleBlur,
+                handleChange,
+                handleSubmit,
+              }) => {
+                return (
+                  <form onSubmit={handleSubmit}>
+                    <Box
+                      sx={{
+                        my: 8,
+                        mx: 4,
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                        <LockOutlinedIcon />
+                      </Avatar>
+                      <Typography component="h1" variant="h5">
+                        Sign in
+                      </Typography>
+                      <Box sx={{ mt: 1 }}>
+                        <Grid>
+                          <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                            size="small"
+                            value={values.email}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            error={touched.email && errors.email ? true : false}
+                            helperText={
+                              touched.email && errors.email ? errors.email : ""
+                            }
                           />
-                        }
-                        label="Remember me"
-                      />
-                      <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        disabled={isValid ? false : true}
-                      >
-                        Sign In
-                      </Button>
-                      <Grid container>
-                        <Grid item xs={6}>
-                          <Link to={"/reset-password"}>Forgot password?</Link>
                         </Grid>
-                        <Grid item xs={6}>
-                          <Link to={"/register"}>
-                            {"Don't have an account? Sign Up"}
-                          </Link>
+                        <Grid>
+                          <TextField
+                            required
+                            fullWidth
+                            margin="normal"
+                            name="password"
+                            label="Password"
+                            id="password"
+                            size="small"
+                            autoComplete="new-password"
+                            value={values?.password}
+                            onChange={handleChange}
+                            onFocus={() => setActiveElementId("password")}
+                            onBlur={(e) => {
+                              handleBlur(e);
+                              setActiveElementId("");
+                            }}
+                            type={showPassword ? "text" : "password"}
+                            InputLabelProps={{
+                              shrink:
+                                activeElementId == "password"
+                                  ? true
+                                  : values?.password?.length != 0
+                                  ? true
+                                  : false,
+                            }}
+                            InputProps={{
+                              startAdornment: (
+                                <InputAdornment
+                                  position="end"
+                                  sx={{ order: 2, mr: "1em" }}
+                                >
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                  >
+                                    {showPassword ? (
+                                      <VisibilityOff />
+                                    ) : (
+                                      <Visibility />
+                                    )}
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            }}
+                            error={
+                              touched?.password && errors?.password
+                                ? true
+                                : false
+                            }
+                            helperText={
+                              touched?.password && errors?.password
+                                ? errors?.password
+                                : ""
+                            }
+                          />
                         </Grid>
-                      </Grid>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              value="remember"
+                              color="primary"
+                              onChange={() => setLoginChkBox(!loginChkBox)}
+                              checked={loginChkBox}
+                            />
+                          }
+                          label="Remember me"
+                        />
+                        <Button
+                          type="submit"
+                          fullWidth
+                          variant="contained"
+                          sx={{ mt: 3, mb: 2 }}
+                          disabled={isValid ? false : true}
+                        >
+                          Sign In
+                        </Button>
+                        <Grid container>
+                          <Grid item xs={6}>
+                            <Link to={"/reset-password"}>Forgot password?</Link>
+                          </Grid>
+                          <Grid item xs={6}>
+                            <Link to={"/register"}>
+                              {"Don't have an account? Sign Up"}
+                            </Link>
+                          </Grid>
+                        </Grid>
+                      </Box>
                     </Box>
-                  </Box>
-                </form>
-              );
-            }}
-          </Formik>
+                  </form>
+                );
+              }}
+            </Formik>
+          </Grid>
         </Grid>
-      </Grid>
-    </ThemeProvider>
+      </ThemeProvider>
+    </>
   );
 };
 export default Login;

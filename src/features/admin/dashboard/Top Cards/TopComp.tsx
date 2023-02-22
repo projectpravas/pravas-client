@@ -139,34 +139,6 @@ const TopComp: React.FunctionComponent<ITopCompProps> = (props) => {
             </Grid>
           </Grid>
         </Grid>
-        {/* -----------------------------------------------------------Employees */}
-        <Grid item xs={12} sm={6} md={2}>
-          <Grid
-            container
-            sx={{
-              ...CardWrapperStyle,
-            }}
-          >
-            {/* Image area */}
-            <Grid
-              item
-              sx={{
-                ...CardImageStyle,
-              }}
-            >
-              <Box sx={{ textAlign: "center" }}>
-                <BadgeOutlinedIcon fontSize="inherit" />
-              </Box>
-            </Grid>
-            {/* Details */}
-            <Grid item sx={{ pt: "2.5rem", pb: "1rem" }}>
-              <DetailsTypo>
-                <Counter end={4} />
-              </DetailsTypo>
-              <TypoValue>Total Employees</TypoValue>
-            </Grid>
-          </Grid>
-        </Grid>
         {/* -----------------------------------------------------------Developers */}
         <Grid item xs={12} sm={6} md={2}>
           <Grid
