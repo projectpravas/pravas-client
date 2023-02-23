@@ -11,6 +11,9 @@ import CardTravelTwoToneIcon from "@mui/icons-material/CardTravelTwoTone";
 import Enquiries from "../../features/admin/enquiries/Enquiries";
 
 const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
+const MyTours = lazy(
+  () => import("../../features/admin/pravas/my-tours/Mytours")
+);
 const TourAndPackageForm = lazy(
   () => import("../../features/admin/pravas/TourAndPackageForm")
 );
@@ -43,7 +46,7 @@ export default [
     path: "",
     showInMenu: false,
     showInSettings: false,
-    roles: ["admin", "superAdmin", "customer"],
+    roles: ["admin", "superAdmin"],
   },
   {
     label: "Dashboard",
@@ -51,8 +54,8 @@ export default [
     icon: <DashboardCustomizeIcon />,
     path: "dashboard",
     showInMenu: true,
-    showInSettings: true,
-    roles: ["admin", "superAdmin", "customer"],
+    showInSettings: false,
+    roles: ["admin", "superAdmin"],
   },
 
   {
@@ -69,9 +72,9 @@ export default [
         component: <TourAndPackageForm />,
         icon: <></>,
         path: ":base/add-edit/:0/:add/:admin",
-        // path: "secured/pravas/packages/add-edit/0/edit/admin",
         showInMenu: false,
         showInSettings: false,
+        roles: ["admin", "superAdmin"],
       },
 
       {
@@ -81,6 +84,7 @@ export default [
         path: "packages",
         showInMenu: true,
         showInSettings: false,
+        roles: ["admin", "superAdmin"],
       },
       {
         label: "Tours",
@@ -89,6 +93,16 @@ export default [
         path: "tours",
         showInMenu: true,
         showInSettings: false,
+        roles: ["admin", "superAdmin"],
+      },
+      {
+        label: "My Tours",
+        component: <MyTours />,
+        icon: <TravelExploreIcon />,
+        path: "my-tours",
+        showInMenu: true,
+        showInSettings: false,
+        roles: ["admin", "superAdmin", "customer"],
       },
     ],
   },
@@ -155,15 +169,7 @@ export default [
     showInSettings: true,
     role: ["admin", "superAdmin", "customer"],
   },
-  {
-    label: "Account",
-    component: <h1> Add account component in admin routes </h1>,
-    icon: <PeopleIcon />,
-    path: "accounts",
-    showInMenu: false,
-    showInSettings: true,
-    role: ["admin", "superAdmin", "customer"],
-  },
+
   {
     label: "Add Edit User",
     component: <AddEditUser />,

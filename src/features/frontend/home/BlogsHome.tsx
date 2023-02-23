@@ -8,6 +8,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import BlogService from "../../../services/BlogService";
+import { useNavigate } from "react-router-dom";
 interface IOwlCarouselProps {}
 
 const options = {
@@ -38,6 +39,8 @@ const options = {
 
 const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
   const [data, setData] = React.useState<Array<any>>([]);
+
+  const navigate = useNavigate();
 
   const loadBlogs = () => {
     BlogService.fetchAllBlogs()
@@ -72,16 +75,19 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
           {Array.isArray(data) &&
             data?.map((blog, i) => {
               return (
-                <Box sx={{ mx: -2 }}>
+                <div
+                  style={{ margin: "0 -2" }}
+                  onClick={() => navigate(`/blogs/${blog?._id}`)}
+                >
                   <BlogPost
                     id={blog?._id}
                     image={blog?.image}
                     title={blog?.title}
                     desc={blog?.richText}
-                    key={blog?.id + i}
+                    key={blog?._id + i}
                     category={blog?.categories}
                   />
-                </Box>
+                </div>
               );
             })}
         </OwlCarousel>{" "}
