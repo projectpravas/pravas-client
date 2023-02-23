@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -12,8 +12,7 @@ import Link from "@mui/material/Link";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -57,6 +56,7 @@ import TourModel from "../../../shared/models/tourModel";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import { errorToast } from "../../../ui/toast/Toast";
+import ShareButtonBooking from "./ShareButtonBooking";
 
 const options = {
   lazyLoad: true,
@@ -257,25 +257,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     fetchUpcomingTours();
   }, [id]);
 
-  // useEffect(() => {
-  //   TourService.fetchUpcomingTours(id)
-  //     .then((res) => {
-  //       const result: TourModel[] = res?.data?.data ? res?.data?.data : [];
-  //       Array.isArray(result) &&
-  //         result.sort((p1: TourModel, p2: TourModel) =>
-  //           new Date(p1?.tourDate as string) < new Date(p2?.tourDate as string)
-  //             ? -1
-  //             : new Date(p1?.tourDate as string) >
-  //               new Date(p2?.tourDate as string)
-  //             ? 1
-  //             : 0
-  //         );
-
-  //       setBookingDates(result);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, []);
-
   return (
     <Grid>
       <Helmet>
@@ -284,33 +265,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <meta name="keywords" content={tourDetails?.tourDesc} />
       </Helmet>
 
-      {/* slides of karshmir image */}
-      {/* <Grid container style={{ backgroundColor: "#eee" }}>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[0]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[1]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
-          />
-        </Grid>
-      </Grid> */}
+      {/* *******************slides of karshmir image ********************/}
 
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
@@ -534,68 +489,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             </a>
           </Grid>
           {/* *******************share button******************** */}
-          <Grid item sx={{ position: "relative" }}>
-            <Button
-              sx={{
-                bgcolor: "#f0f3f6",
-                color: "#838590",
-                fontWeight: "700",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
-                  color: "white",
-                },
-              }}
-              onClick={() => setVisible(!visible)}
-            >
-              <NearMeOutlinedIcon />
-              {visible ? "Share" : "  Share"}
-            </Button>
 
-            {visible && (
-              <Grid
-                sx={{
-                  backgroundColor: "#fff",
-                  // height: "200%",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "10px",
-                  border: "1px solid gray",
-                  marginLeft: "2px",
-                  position: "absolute",
-                  top: "55px",
-                }}
-              >
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://twitter.com/share?text=Kashmir+4N5D&amp;url=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F"
-                  target="_blank"
-                >
-                  <TwitterIcon sx={{ fontSize: "200%" }} />
-                </Link>
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;p[title]=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  <FacebookIcon sx={{ fontSize: "200%" }} />
-                </Link>
-                <Link
-                  sx={{ padding: "10px", fontWeight: "200" }}
-                  href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;p[title]=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  {"t"}
-                </Link>
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;title=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  <LinkedInIcon style={{ fontSize: "200%" }} />
-                </Link>
-              </Grid>
-            )}
+          <Grid item sx={{ position: "relative" }}>
+            <ShareButtonBooking />
           </Grid>
 
           {/* *************review button*************************/}
@@ -1231,7 +1127,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <ReviewSection />
       {/* Package Card Carousel  */}
       <Container>
-        <PravasHomeCarousel />
+        {/* <PravasHomeCarousel /> */}
+
+        {/* <ReviewCarousel /> */}
       </Container>
       <StartFromTop />
       <Outlet />
@@ -1240,12 +1138,13 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         sx={{
           display: "flex",
           alignItems: "center",
-          marginBottom: "20px",
+          marginY: "20px",
         }}
       >
         <Container
           sx={{
-            padding: "60px",
+            padding: "20px",
+            width: "70%",
 
             borderRadius: "20px",
             boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
@@ -1255,35 +1154,41 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             container
             sx={{
               display: "flex",
-              justifyContent: "space-between",
-              alignItem: "center",
-              alignContent: "center",
+
+              justifyContent: "space-evenly",
             }}
           >
-            <Grid item xs={12} md={6} lg={8}>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              lg={9}
+              sx={{ paddingRight: "20px", marginBottom: { xs: "20px" } }}
+            >
               <Typography
                 sx={{
                   fontFamily: "Lato",
-                  fontSize: "36px",
+                  fontSize: "2rem",
                   fontWeight: 700,
-                  paddingBottom: "10px",
                 }}
               >
-                Customize Your<span style={{ color: "#09b2a0" }}> Tour</span>
+                Customize Your<span style={{ color: "#27488d" }}> Tour</span>
               </Typography>
               <Typography sx={{ lineHeight: "24px" }}>
-                You can plan your customized tour as well!. fill the form, we
-                will get back to you!
+                You can plan your customized tour as well!.
+              </Typography>
+              <Typography sx={{ lineHeight: "24px" }}>
+                fill the form, we will get back to you!
               </Typography>
             </Grid>
             <Grid
               item
               xs={12}
-              md={6}
-              lg={4}
+              md={4}
+              lg={3}
               sx={{
                 display: "flex",
-                justifyContent: "center",
+
                 alignItems: "center",
               }}
             >
