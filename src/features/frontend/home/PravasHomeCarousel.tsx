@@ -62,7 +62,7 @@ const PravasHomeCarousel: React.FunctionComponent<
     <>
       <Container>
         <OwlCarousel
-          className="owl-theme owl-carousel owl-nav-pravas"
+          className="owl-theme owl-carousel owl-nav-pravas "
           {...options}
         >
           {Array.isArray(allPackageCardData) &&

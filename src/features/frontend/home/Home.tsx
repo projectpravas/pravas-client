@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 import PravasHomeCarousel from "./PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
+import ReviewCarousel from "./ReviewCarousel";
 import BookingSteps from "./Booking-steps/BookingSteps";
 interface IHomeProps {}
 
@@ -175,6 +176,16 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
       {/* Pravas cards carousel  */}
       <PravasHomeCarousel />
+
+      {/****************Review Carousel**************/}
+
+      <ReviewCarousel />
+
+      <Helmet>
+        <title>Pravas Tourism</title>
+        <meta name="description" content="Pravas Tourism" />
+        <meta name="keywords" content="Pravas Tourism" />
+      </Helmet>
 
       {/* gallery  */}
       <TourGallery />

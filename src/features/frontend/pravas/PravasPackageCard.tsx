@@ -2,21 +2,18 @@ import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
-
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { Link, Routes, Route, NavLink } from "react-router-dom";
-
 import LocationClick from "./LocationClick";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import { endPoints } from "../../../api";
@@ -26,6 +23,7 @@ import { SrvRecord } from "dns";
 
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
+
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: 6,
@@ -34,10 +32,6 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     padding: "0 4px",
   },
 }));
-
-
-const placeholder =
-  "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg";
 
 const NLink = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -177,7 +171,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                     From
                   </span>
                   <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    {price}
+                    ₹{price}
                   </span>
                 </Typography>
               </Grid>
