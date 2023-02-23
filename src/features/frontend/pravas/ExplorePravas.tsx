@@ -56,6 +56,7 @@ import TourModel from "../../../shared/models/tourModel";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import { errorToast } from "../../../ui/toast/Toast";
+import ShareButtonBooking from "./ShareButtonBooking";
 
 const options = {
   lazyLoad: true,
@@ -255,25 +256,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     loadExplore();
     fetchUpcomingTours();
   }, [id]);
-
-  // useEffect(() => {
-  //   TourService.fetchUpcomingTours(id)
-  //     .then((res) => {
-  //       const result: TourModel[] = res?.data?.data ? res?.data?.data : [];
-  //       Array.isArray(result) &&
-  //         result.sort((p1: TourModel, p2: TourModel) =>
-  //           new Date(p1?.tourDate as string) < new Date(p2?.tourDate as string)
-  //             ? -1
-  //             : new Date(p1?.tourDate as string) >
-  //               new Date(p2?.tourDate as string)
-  //             ? 1
-  //             : 0
-  //         );
-
-  //       setBookingDates(result);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }, []);
 
   return (
     <Grid>
@@ -507,72 +489,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             </a>
           </Grid>
           {/* *******************share button******************** */}
-          {/* <Grid item sx={{ position: "relative" }}>
-            <Button
-              sx={{
-                bgcolor: "#f0f3f6",
-                color: "#838590",
-                fontWeight: "700",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
-                  color: "white",
-                },
-              }}
-              onClick={() => setVisible(!visible)}
-            >
-              <NearMeOutlinedIcon />
-              {visible ? "Share" : "  Share"}
-            </Button>
-
-            {visible && (
-              <Grid
-                sx={{
-                  backgroundColor: "#fff",
-                  // height: "200%",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "10px",
-                  border: "1px solid gray",
-                  marginLeft: "2px",
-                  position: "absolute",
-                  top: "55px",
-                }}
-              >
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://twitter.com/share?text=Kashmir+4N5D&amp;url=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F"
-                  target="_blank"
-                >
-                  <TwitterIcon sx={{ fontSize: "200%" }} />
-                </Link>
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;p[title]=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  <FacebookIcon sx={{ fontSize: "200%" }} />
-                </Link>
-                <Link
-                  sx={{ padding: "10px", fontWeight: "200" }}
-                  href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;p[title]=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  {"t"}
-                </Link>
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;title=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  <LinkedInIcon style={{ fontSize: "200%" }} />
-                </Link>
-              </Grid>
-            )}
-          </Grid> */}
 
           <Grid item sx={{ position: "relative" }}>
-            {/* <ShareButton /> */}
+            <ShareButtonBooking />
           </Grid>
 
           {/* *************review button*************************/}

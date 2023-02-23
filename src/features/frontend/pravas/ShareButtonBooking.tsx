@@ -30,9 +30,11 @@ const style = {
   p: 4,
 };
 
-interface IShareButtonProps {}
+interface IShareButtonBookingProps {}
 
-const ShareButton: React.FunctionComponent<IShareButtonProps> = (props) => {
+const ShareButtonBooking: React.FunctionComponent<IShareButtonBookingProps> = (
+  props
+) => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -173,4 +175,4 @@ const ShareButton: React.FunctionComponent<IShareButtonProps> = (props) => {
   );
 };
 
-export default ShareButton;
+export default ShareButtonBooking;
