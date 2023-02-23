@@ -41,7 +41,7 @@ const MenuProps = {
   },
 };
 
-function getStyles(name: string, filterState: string[], theme: Theme) {
+function getStyles(name: string, filterState: string, theme: Theme) {
   return {
     fontWeight:
       filterState.indexOf(name) === -1
@@ -56,8 +56,8 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
   const theme = useTheme();
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterState, setFilterState] = React.useState({
-    tourLocation: [],
-    tourType: [],
+    tourLocation: "",
+    tourType: "",
   });
 
   const loadAllTours = () => {
@@ -88,50 +88,50 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
     loadAllTourTypes();
   }, [allTours]);
 
-  console.log("activty state", allActivity);
+  // console.log("filter State", filterState);
+  // console.log("activty state", allActivity);
+
   // change search params
   const changeSearchParams = (key: string, value: string) => {
     searchParams.set(key, value);
     setSearchParams(searchParams);
-    console.log("searchParams", searchParams);
+    // console.log("searchParams", searchParams);
   };
 
   const navigate = useNavigate();
   const handleClickChange = () => {
-    changeSearchParams("tourLocation", filterState.tourLocation as any);
+    filterState.tourLocation &&
+      changeSearchParams("tourLocation", filterState.tourLocation as any);
 
-    changeSearchParams("tourType", filterState.tourType as any);
+    filterState.tourType &&
+      changeSearchParams("tourType", filterState.tourType as any);
 
     navigate(`/pravas?${searchParams}`);
   };
-  console.log("filter State", filterState);
 
   const handleChange = (event: SelectChangeEvent) => {
     const { name, value } = event.target;
-    setFilterState((state) =>
-      // On autofill we get a stringified value.
-      // typeof value === "string" ? value.split(",") : value,
-      ({
-        ...state,
-        [name]: value,
-      })
-    );
-    // changeSearchParams(name, value);
-    // console.log("event fil", event);
-    // console.log("name fil", name);
-    // console.log("value fil", value);
+    setFilterState((state) => ({
+      ...state,
+      [name]: value,
+    }));
   };
-  console.log(
-    "state T",
-    Array.from(
-      new Set(
-        allTours
-          .filter((item) => item?.category == "package")
-          .map((obj) => obj?.tourLocation)
-      )
-    )
-  );
+  // console.log(
+  //   "state T",
+  //   Array.from(
+  //     new Set(
+  //       allTours
+  //         .filter((item) => item?.category == "package")
+  //         .map((obj) => obj?.tourLocation)
+  //     )
+  //   )
+  // );
+
   // console.log("state A", allActivity);
+
+  const handleResetChange = () => {
+    setFilterState({ tourLocation: "", tourType: "" });
+  };
 
   return (
     <>
@@ -147,7 +147,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
             borderRadius: "8px",
             backgroundColor: { xs: "white", md: "transparent" },
             boxShadow: "3px 5px 20px 1px rgb(0 0 0 / 23%)",
-            backdropFilter: "blur(50px)",
+            backdropFilter: "blur(60px)",
           }}
         >
           {/* Tour Location  */}
@@ -187,12 +187,16 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
                     labelId="tourLocation"
                     id="tourLocation"
                     name="tourLocation"
-                    // value={filterState?.tourLocation}
+                    // multiple
+                    value={filterState?.tourLocation}
                     onChange={handleChange}
                     input={<OutlinedInput label="Destionations" />}
                     MenuProps={MenuProps}
                   >
                     <MenuItem value="all">All Destinaions</MenuItem>
+                    {/* <MenuItem value="all" onClick={handleResetChange}>
+                      none
+                    </MenuItem> */}
                     {Array.from(
                       new Set(
                         allTours
@@ -254,6 +258,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
                     labelId="tourType"
                     id="tourType"
                     name="tourType"
+                    // multiple
                     // value={filterState.tourType}
                     onChange={handleChange}
                     input={<OutlinedInput label="Activities" />}

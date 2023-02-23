@@ -20,8 +20,6 @@ class TourService {
   } //fetchOneTour
 
   static fetchAllTours(query = "") {
-    console.log("service", query);
-
     return API.get(endPoints.api.tours.getAll + query);
   } //fetchAllTours
 }

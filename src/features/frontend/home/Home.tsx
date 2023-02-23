@@ -88,7 +88,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
               letterSpacing: "-.2px",
               fontSize: "1rem",
               position: "absolute",
-              top: { xs: "55%", md: "48%" },
+              top: { xs: "55%", md: "60%" },
               left: "8%",
               color: "#fff",
               textShadow: "0 0 10px rgb(0 0 0 / 30%)",
