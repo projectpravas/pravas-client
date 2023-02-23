@@ -2,30 +2,36 @@ import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
 import CardActionArea from "@mui/material/CardActionArea";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Dialog from "@mui/material/Dialog";
-
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import AddAPhotoOutlinedIcon from "@mui/icons-material/AddAPhotoOutlined";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { Link, Routes, Route, NavLink } from "react-router-dom";
-
-import { styled } from "@mui/system";
 import LocationClick from "./LocationClick";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import { endPoints } from "../../../api";
 import { duration } from "@mui/material";
 import { number } from "yup";
+import { SrvRecord } from "dns";
 
-const placeholder =
-  "https://www.shutterstock.com/image-vector/your-media-placeholder-simulate-photo-600w-2116176059.jpg";
+import Badge, { BadgeProps } from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+
+const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: 6,
+    top: 12,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 const NLink = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -49,6 +55,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
   images,
   _id,
   title,
+  // tourplan,
   tourDesc,
   price,
   duration,
@@ -170,7 +177,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                     From
                   </span>
                   <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    {price}
+                    ₹{price}
                   </span>
                 </Typography>
               </Grid>
@@ -186,11 +193,13 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                 }}
               >
                 <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
-                  <IconButton onClick={handleClickOpen}>
-                    <CameraAltOutlinedIcon />
-                  </IconButton>
+                  <StyledBadge badgeContent={images.length} color="primary">
+                    <IconButton onClick={handleClickOpen}>
+                      <CameraAltOutlinedIcon />
+                    </IconButton>
+                  </StyledBadge>
                   <Dialog open={open} onClose={handleClose}>
-                    <LocationClick items={items} />
+                    <LocationClick items={images} />
                   </Dialog>
                 </Typography>
               </Grid>
@@ -273,7 +282,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
             </Card>
           </Grid>
           <Grid item sx={{ position: "absolute", top: "8%", right: "10%" }}>
-            <Link to="">
+            <Link to="#">
               <FavoriteBorderOutlinedIcon
                 sx={{
                   color: "#ffffff",

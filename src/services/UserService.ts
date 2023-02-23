@@ -1,7 +1,14 @@
 import { AxiosResponse } from "axios";
+import { Interface } from "readline";
 import "../api/index";
 import { API, endPoints } from "../api/index";
 import User from "../shared/models/userModel";
+
+interface ITourModifyingObj {
+  userId: string;
+  op: string;
+  tourId: string;
+}
 
 class UserService {
   static createUser(user: FormData | User): Promise<AxiosResponse> {
@@ -23,5 +30,13 @@ class UserService {
   static fetchAllUsers(query: string): Promise<AxiosResponse> {
     return API.get(endPoints.api.users.getAll + query);
   } //fetchAllUsers
+
+  static isValidIds(arr: string[]): Promise<AxiosResponse> {
+    return API.post(endPoints.api.users.checkIds, arr);
+  } //isvalidIds
+
+  static addRemoveTourId(obj: ITourModifyingObj): Promise<AxiosResponse> {
+    return API.post(endPoints.api.users.addRemoveTourId, obj);
+  } //addRemoveTourId
 }
 export default UserService;

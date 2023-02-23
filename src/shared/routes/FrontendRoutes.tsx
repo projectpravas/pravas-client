@@ -31,10 +31,10 @@ const CancellationPolicy = lazy(
   () => import("../../ui/footer/CancellationPolicy")
 );
 const PrivacyPolicy = lazy(() => import("../../ui/footer/PrivacyPolicy"));
+const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 const TermsAndConditions = lazy(
   () => import("../../ui/footer/TermsAndConditions")
 );
-const PageNotFound = lazy(() => import("../../ui/404/PageNotFound"));
 
 export default [
   {
@@ -87,6 +87,7 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
+
   {
     label: "Contact Us",
     component: <ContactUs />,
@@ -173,6 +174,13 @@ export default [
     hasAuthenticate: "no",
   },
 
+  {
+    label: "Create Custom Tour",
+    component: <CustomTourForm />,
+    path: "pravas/explore/custom-tour-form",
+    showInMenu: false,
+    hasAuthenticate: "no",
+  },
   {
     label: "Page Not Found",
     component: <PageNotFound />,

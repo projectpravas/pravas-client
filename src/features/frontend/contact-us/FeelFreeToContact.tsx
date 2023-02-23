@@ -76,7 +76,7 @@ const FeelFreeToContact: React.FunctionComponent<IFeelFreeToContactProps> = (
                       item
                       xs={12}
                       md={3}
-                      sx={{ marginBottom: { xs: 2, md: 0 } }}
+                      sx={{ marginBottom: { xs: 3, md: 0 } }}
                     >
                       <Link
                         sx={{

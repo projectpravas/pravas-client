@@ -2,7 +2,8 @@ import TourModel from "../../../shared/models/tourModel";
 
 export const createFD = (
   images: string[] | any,
-  category: "tour" | "package"
+  category: "tour" | "package",
+  tourId: string
 ) => {
   // get values from the localStorage
   let basicTourData = JSON.parse(localStorage.getItem("basicTourData") as any);
@@ -17,6 +18,14 @@ export const createFD = (
   //  set basicTourData
   basicTourData.images = images;
   basicTourData.category = category;
+  if (category == "package") basicTourData.packageStatus = "active";
+  if (category == "tour") {
+    basicTourData.packageId = tourId;
+  } else {
+    delete basicTourData?.packageId;
+    delete basicTourData?.tourDate;
+  }
+
   basicTourData.customized = basicTourData?.tourType?.includes("Customize");
 
   // Set Day by day data to state
@@ -122,9 +131,13 @@ export const createFD = (
   //append data Fields
   tourObj?.title && fd.append("title", tourObj?.title);
   tourObj?.category && fd.append("category", tourObj?.category);
+  tourObj?.packageStatus && fd.append("packageStatus", tourObj?.packageStatus);
   tourObj?.price && fd.append("price", tourObj?.price as any);
   tourObj?.customized && fd.append("customized", tourObj?.customized as any);
   tourObj?.tourStatus && fd.append("tourStatus", tourObj?.tourStatus as any);
+
+  tourObj?.tourDate && fd.append("tourDate", tourObj?.tourDate as string);
+  tourObj?.packageId && fd.append("packageId", tourObj?.packageId as string);
 
   if (tourObj?.duration) {
     fd.append("duration", JSON.stringify(tourObj?.duration) as string);

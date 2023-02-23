@@ -1,9 +1,10 @@
-import React from "react";
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import React, { ReactNode, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import TourService from "../../../services/TourService";
+import UserModel from "../../../shared/models/userModel";
 import { errorToast } from "../../../ui/toast/Toast";
-import Packages from "../pravas/packages/Packages";
-import PravasList from "./PravasList";
 
 interface IPravasProps {}
 
@@ -13,9 +14,17 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   const showPravas =
     pathname.split("/")[pathname.split("/").length - 1] == "pravas";
 
+  const navPath =
+    pathname.split("/")[pathname.split("/").length - 1] == "pravas"
+      ? "tours"
+      : pathname.split("/")[pathname.split("/").length - 1];
+
+  const navigate = useNavigate();
+  const currentLoggedUser: UserModel = useSelector(selectLoggedUser);
+
   const loadTours = () => {
     TourService.fetchAllTours(
-      `?category=${pathname.includes("pravas") ? "package" : "tour"}`
+      `?category=${pathname.includes("pravas") ? "package" : "package"}`
     )
       .then((res) => {
         setTours(res?.data?.data);
@@ -31,12 +40,15 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
     loadTours();
   }, []);
 
+  useEffect(() => {
+    if (showPravas) navigate(`${navPath}`);
+  }, [navPath]);
   return (
-    <div style={{ marginTop: showPravas ? "48px" : "" }}>
-      {showPravas && <h2>Pravas Dashboard here</h2>}
-
-      <Outlet />
-    </div>
+    <React.Fragment>
+      <div style={{ marginTop: showPravas ? "48px" : "" }}>
+        <Outlet />
+      </div>
+    </React.Fragment>
   );
 };
 

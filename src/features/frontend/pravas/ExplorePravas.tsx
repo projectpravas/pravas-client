@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -12,8 +12,7 @@ import Link from "@mui/material/Link";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -23,11 +22,22 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+
+import {
+  Navigate,
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import handlePayment from "../../../shared/razor-pay/razorPay-payment";
+import UserModel from "../../../shared/models/userModel";
+
 import {
   Table,
   TableHead,
@@ -41,6 +51,16 @@ import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 
 import MustWatchcard from "./MustWatchCard";
+import ReviewSection from "./ReviewSection";
+import TourModel from "../../../shared/models/tourModel";
+import { useSelector } from "react-redux";
+import { selectLoggedUser } from "../../../app/slices/AuthSlice";
+import { errorToast } from "../../../ui/toast/Toast";
+
+import LoginWindow from "../../../ui/loginwindow/LoginWindow";
+
+import ShareButtonBooking from "./ShareButtonBooking";
+
 
 const options = {
   lazyLoad: true,
@@ -151,6 +171,10 @@ interface TourDetails {
 }
 const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const { id } = useParams();
+  const navigate = useNavigate();
+  const currentLoggedUser: UserModel = useSelector(
+    selectLoggedUser
+  ) as UserModel;
 
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
@@ -159,8 +183,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [tourDetails, setTourDetails] = useState<TourDetails>();
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
+  const [bookingDates, setBookingDates] = useState<TourModel[]>([]);
+  const [openLoginWindowStatus, setOpenLoginWindowStatus] = useState(false);
 
-  const handleCickChange = () => {
+  const handleClickChange = () => {
     setExpanded("panel1");
   };
 
@@ -168,6 +194,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
+
+  const handleClick = () => {
+    navigate("/pravas/explore/custom-tour-form");
+  };
 
   // -------upcoming tour  info-----
 
@@ -183,8 +213,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   ];
   //*************tour location table******************** */
   const tableData = tourDetails?.tourPlan?.hotels;
-
-  const tourDatesSheDule = tourDetails?.tourPlan?.scheduleDate;
 
   //**************must watch filter***************
 
@@ -202,8 +230,46 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       });
   };
 
+  const handleLoginOpen = () => {
+    setOpenLoginWindowStatus(true);
+  };
+
+  const handleLoginClose = () => {
+    setOpenLoginWindowStatus(false);
+  };
+
+  const handleBooking = (price: string, customerId: string, tourId: string) => {
+    if (!price || !tourId) return errorToast("Failed... Try Again...", 3000);
+    if (!customerId) {
+      handleLoginOpen();
+      return;
+    }
+
+    price && customerId && tourId && handlePayment(price, customerId, tourId);
+  };
+
+  const fetchUpcomingTours = () => {
+    TourService.fetchUpcomingTours(id)
+      .then((res) => {
+        const result: TourModel[] = res?.data?.data ? res?.data?.data : [];
+        Array.isArray(result) &&
+          result.sort((p1: TourModel, p2: TourModel) =>
+            new Date(p1?.tourDate as string) < new Date(p2?.tourDate as string)
+              ? -1
+              : new Date(p1?.tourDate as string) >
+                new Date(p2?.tourDate as string)
+              ? 1
+              : 0
+          );
+
+        setBookingDates(result);
+      })
+      .catch((err) => console.error(err));
+  };
+
   React.useEffect(() => {
     loadExplore();
+    fetchUpcomingTours();
   }, [id]);
 
   return (
@@ -241,6 +307,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           />
         </Grid>
       </Grid> */}
+      <LoginWindow
+        open={openLoginWindowStatus}
+        handleOpen={handleLoginOpen}
+        handleClose={handleLoginClose}
+      />
+=======
+
+      {/* *******************slides of karshmir image ********************/}
+
 
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
@@ -262,7 +337,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           />
         </Grid>
       </OwlCarousel>
-
       {/* ************** Heading of Tour *******************    */}
       <Grid sx={{ backgroundColor: "#faf5ee" }}>
         <Container>
@@ -424,7 +498,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Container>
       </Grid>
-
       {/* ----**************--share and review-------****************---- */}
       <Grid
         sx={{ backgroundColor: "white", borderBottom: "1px solid #faf5ee" }}
@@ -442,86 +515,31 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           }}
         >
           <Grid item>
-            <Button
-              sx={{
-                // bgcolor: "#f0f3f6",
-                color: "white",
-                fontWeight: "700",
-                backgroundColor: "#27488d",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
-                  color: "white",
-                },
-              }}
-              onClick={handleCickChange}
-            >
-              Booking
-            </Button>
-          </Grid>
-          {/* *******************share button******************** */}
-          <Grid item sx={{ position: "relative" }}>
-            <Button
-              sx={{
-                bgcolor: "#f0f3f6",
-                color: "#838590",
-                fontWeight: "700",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
-                  color: "white",
-                },
-              }}
-              onClick={() => setVisible(!visible)}
-            >
-              <NearMeOutlinedIcon />
-              {visible ? "Share" : "  Share"}
-            </Button>
-
-            {visible && (
-              <Grid
+            <a href="#booking-table" style={{ textDecoration: "none" }}>
+              <Button
                 sx={{
-                  backgroundColor: "#fff",
-                  // height: "200%",
-                  display: "flex",
-                  alignItems: "center",
-                  borderRadius: "10px",
-                  border: "1px solid gray",
-                  marginLeft: "2px",
-                  position: "absolute",
-                  top: "55px",
+                  // bgcolor: "#f0f3f6",
+                  color: "white",
+                  fontWeight: "700",
+                  backgroundColor: "#27488d",
+                  fontFamily: "poppins",
+                  "&:hover": {
+                    bgcolor: "#27488d",
+                    color: "white",
+                  },
+                }}
+                onClick={() => {
+                  handleClickChange();
                 }}
               >
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://twitter.com/share?text=Kashmir+4N5D&amp;url=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F"
-                  target="_blank"
-                >
-                  <TwitterIcon sx={{ fontSize: "200%" }} />
-                </Link>
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;p[title]=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  <FacebookIcon sx={{ fontSize: "200%" }} />
-                </Link>
-                <Link
-                  sx={{ padding: "10px", fontWeight: "200" }}
-                  href="http://www.facebook.com/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;p[title]=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  {"t"}
-                </Link>
-                <Link
-                  sx={{ padding: "10px" }}
-                  href="http://linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fpravasthejourney.com%2Fbooking%2Fkashmir-4n5d%2F&amp;title=Kashmir+4N5D"
-                  target="_blank"
-                >
-                  <LinkedInIcon style={{ fontSize: "200%" }} />
-                </Link>
-              </Grid>
-            )}
+                Booking
+              </Button>
+            </a>
+          </Grid>
+          {/* *******************share button******************** */}
+
+          <Grid item sx={{ position: "relative" }}>
+            <ShareButtonBooking />
           </Grid>
 
           {/* *************review button*************************/}
@@ -545,7 +563,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Grid>
-
       {/*-*****************-- kashmir description---*************--- */}
       <Container>
         <Grid container spacing={2}>
@@ -618,7 +635,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       borderBottomRightRadius: "10px",
                     }}
                   >
-                    <TableContainer>
+                    <TableContainer id="booking-table">
                       <Table sx={{ border: "1px solid gray" }}>
                         <TableHead>
                           <TableRow>
@@ -653,53 +670,75 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {Array.isArray(tourDatesSheDule) &&
-                          tourDatesSheDule?.length > 0 ? (
-                            tourDatesSheDule.map(
-                              (shedDate: string | any, i: number) => (
-                                <TableRow
-                                  key={shedDate.id + i}
+                          {Array.isArray(bookingDates) &&
+                          bookingDates?.length > 0 ? (
+                            bookingDates.map((obj: string | any, i: number) => (
+                              <TableRow
+                                key={obj._id + i}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <DataTab component="th" scope="row">
+                                  {i + 1}
+                                </DataTab>
+                                <DataTab align="right">{obj?.title}</DataTab>
+                                <DataTab align="right">
+                                  {new Intl.DateTimeFormat("en-IN").format(
+                                    new Date(
+                                      new Date(`${obj?.tourDate}`).setDate(
+                                        new Date(`${obj?.tourDate}`).getDate()
+                                      )
+                                    )
+                                  )}
+                                </DataTab>
+                                <DataTab align="right">
+                                  {new Intl.DateTimeFormat("en-IN").format(
+                                    new Date(
+                                      new Date(`${obj?.tourDate}`).setDate(
+                                        new Date(`${obj?.tourDate}`).getDate() +
+                                          Number(`${obj?.duration?.days}`)
+                                      )
+                                    )
+                                  )}
+                                </DataTab>
+                                <DataTab
+                                  align="right"
                                   sx={{
                                     "&:last-child td, &:last-child th": {
                                       border: 0,
                                     },
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
                                   }}
                                 >
-                                  <DataTab component="th" scope="row">
-                                    {shedDate?.srNo}
-                                  </DataTab>
-                                  <DataTab align="right">
-                                    {shedDate?.tourName}
-                                  </DataTab>
-                                  <DataTab align="right">
-                                    {shedDate?.tourDates}
-                                  </DataTab>
-                                  <DataTab
-                                    align="right"
+                                  <Button
+                                    variant="contained"
+                                    // disabled={
+                                    //   currentLoggedUser?._id ? false : true
+                                    // }
                                     sx={{
-                                      "&:last-child td, &:last-child th": {
-                                        border: 0,
-                                      },
-                                      display: "flex",
-                                      justifyContent: "center",
-                                      alignItems: "center",
+                                      bgcolor: "#2c5799",
+                                      color: "white",
+                                      borderRadius: "15px",
+                                      fontSize: "12px",
                                     }}
+                                    onClick={() =>
+                                      handleBooking(
+                                        obj?.price,
+                                        currentLoggedUser?._id as string,
+                                        obj?._id
+                                      )
+                                    }
                                   >
-                                    <Button
-                                      variant="contained"
-                                      sx={{
-                                        bgcolor: "#2c5799",
-                                        color: "white",
-                                        borderRadius: "15px",
-                                        fontSize: "12px",
-                                      }}
-                                    >
-                                      Booking
-                                    </Button>
-                                  </DataTab>
-                                </TableRow>
-                              )
-                            )
+                                    Booking
+                                  </Button>
+                                </DataTab>
+                              </TableRow>
+                            ))
                           ) : (
                             <TableRow
                               sx={{
@@ -1098,7 +1137,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     </Typography>
                   </Box>
                   <Box sx={{ marginLeft: "10px" }}>
-                    <TypoTourInfo>Max Gauests</TypoTourInfo>
+                    <TypoTourInfo>Max Guests</TypoTourInfo>
                     <TypoTourInfo>15</TypoTourInfo>
                   </Box>
                 </Grid>
@@ -1132,12 +1171,98 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
-
+      <ReviewSection />
       {/* Package Card Carousel  */}
       <Container>
-        <PravasHomeCarousel />
+        {/* <PravasHomeCarousel /> */}
+
+        {/* <ReviewCarousel /> */}
       </Container>
       <StartFromTop />
+      <Outlet />
+      <Grid
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          marginY: "20px",
+        }}
+      >
+        <Container
+          sx={{
+            padding: "20px",
+            width: "70%",
+
+            borderRadius: "20px",
+            boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
+          }}
+        >
+          <Grid
+            container
+            sx={{
+              display: "flex",
+
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Grid
+              item
+              xs={12}
+              md={8}
+              lg={9}
+              sx={{ paddingRight: "20px", marginBottom: { xs: "20px" } }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: "Lato",
+                  fontSize: "2rem",
+                  fontWeight: 700,
+                }}
+              >
+                Customize Your<span style={{ color: "#27488d" }}> Tour</span>
+              </Typography>
+              <Typography sx={{ lineHeight: "24px" }}>
+                You can plan your customized tour as well!.
+              </Typography>
+              <Typography sx={{ lineHeight: "24px" }}>
+                fill the form, we will get back to you!
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={4}
+              lg={3}
+              sx={{
+                display: "flex",
+
+                alignItems: "center",
+              }}
+            >
+              <Typography>
+                <Button
+                  sx={{
+                    color: "white",
+                    padding: "15px 50px",
+                    fontWeight: "700",
+                    backgroundColor: "#005D9D",
+                    fontFamily: "poppins",
+                    "&:hover": {
+                      bgcolor: "#27488d",
+                      color: "white",
+                    },
+                  }}
+                  onClick={handleClick}
+                >
+                  CUSTOMIZE
+                  <ArrowRightAltIcon
+                    sx={{ "&:hover": { color: "white" }, color: "white" }}
+                  />
+                </Button>
+              </Typography>
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
     </Grid>
   );
 };

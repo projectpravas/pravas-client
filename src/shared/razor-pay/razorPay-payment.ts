@@ -1,7 +1,7 @@
 import BookingService from "../../services/BookingService";
 
-let customersId;
-let toursId;
+let customersId: string;
+let toursId: string;
 
 const handleOpenRazorPay = (data: any) => {
   const options = {
@@ -13,10 +13,15 @@ const handleOpenRazorPay = (data: any) => {
     image: "/PTSM-LOGO.png",
     order_id: data?.id,
     handler: (response: any) => {
-      BookingService.verifyOrder(response)
+      BookingService.verifyOrder({
+        ...response,
+        tourId: toursId,
+        customerId: customersId,
+      })
+
         .then((res) => {
           /// successfull payment
-          console.log(true);
+          return res;
         })
         .catch((err) => {
           console.error(err);
@@ -27,9 +32,11 @@ const handleOpenRazorPay = (data: any) => {
     //   email: "gaurav.kumar@example.com",
     //   contact: "9000090000",
     // },
-    // notes: {
-    //   address: "Razorpay Corporate Office",
-    // },
+    notes: {
+      customerId: customersId,
+      tourId: toursId,
+      paymentTime: Date.now(),
+    },
     // theme: {
     //   color: "#3399cc",
     // },
@@ -48,14 +55,18 @@ const handleOpenRazorPay = (data: any) => {
 const handlePayment = (amount: string, customerId: string, tourId: string) => {
   customersId = customerId;
   toursId = tourId;
-  BookingService.createOrder(amount)
-    .then((result) => {
-      // on order creation open RazorPay interface
-      handleOpenRazorPay(result?.data?.data);
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+
+  if (!amount || !customerId || !tourId) return false;
+
+  if (customerId)
+    BookingService.createOrder(amount)
+      .then((result) => {
+        // on order creation open RazorPay interface
+        handleOpenRazorPay(result?.data?.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 };
 
 export default handlePayment;

@@ -109,20 +109,6 @@ interface ICustomTourFormProps {
   rowData?: EnquiryModel;
 }
 
-// const from = new Date();
-// var getYear = from.toLocaleString("default", { year: "numeric" });
-// var getMonth = from.toLocaleString("default", { month: "2-digit" });
-// var getDay = from.toLocaleString("default", { day: "2-digit" });
-// var fromDate = getYear + "/" + getMonth + "/" + getDay;
-
-// const to = new Date();
-// var getYeart = to.toLocaleString("default", { year: "numeric" });
-// var getMontht = to.toLocaleString("default", { month: "2-digit" });
-// var getDayt = to.toLocaleString("default", { day: "2-digit" });
-// var toDate = getYear + "/" + getMonth + "/" + getDay;
-
-// console.log(fromDate, toDate);
-
 const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
   props
 ) => {

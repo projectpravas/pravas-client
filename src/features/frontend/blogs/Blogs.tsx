@@ -34,8 +34,6 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
     loadBlogs();
   }, []);
 
-  // console.log("data:   ", data);
-
   return (
     <>
       <Helmet>
@@ -73,6 +71,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
                     image={blog?.image}
                     title={blog?.title}
                     desc={blog?.richText}
+                    category={blog?.categories}
                   />
                 </Grid>
               ))}

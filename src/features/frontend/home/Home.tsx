@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import { NavLink } from "react-router-dom";
 import PravasHomeCarousel from "./PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
+import ReviewCarousel from "./ReviewCarousel";
 interface IHomeProps {}
 
 const imgZoom = {
@@ -182,6 +183,10 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
       {/* Pravas cards carousel  */}
       <PravasHomeCarousel />
+
+      {/****************Review Carousel**************/}
+
+      <ReviewCarousel />
 
       <Helmet>
         <title>Pravas Tourism</title>

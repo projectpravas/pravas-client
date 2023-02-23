@@ -65,11 +65,13 @@ interface IPackageFormProps {}
 
 interface TourInterface {
   title?: string;
+  packageId?: string;
   tourLocation?: string;
   tourType?: string[];
   price?: string;
   duration?: { days: string; nights: string };
   tourDesc?: string;
+  tourDate?: string;
   maxPersons?: string;
   featured?: Boolean;
   tourStatus?: string;
@@ -134,10 +136,6 @@ let initialTour = defineInitialTour({
   hasTourNotes: true,
 });
 
-const tourYupSchema = defineTourYupSchema({
-  ...commnObj,
-});
-
 const itineraryItemObj = {
   touched: { title: false, desc: false },
   day: 0,
@@ -158,7 +156,9 @@ const notesItemObj = { touched: false, note: "" };
 
 const tourItemObj = {
   title: "",
+  packageId: "0",
   tourLocation: "",
+  tourDate: "",
   tourType: [],
   price: "",
   duration: { days: "", nights: "" },
@@ -188,12 +188,18 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
     notesItemObj,
   ]);
   const [tour, setTour] = useState<TourInterface>(tourItemObj);
+  const [fetchedData, setFetchedData] = useState();
 
   const { pathname } = useLocation();
 
   const category: "package" | "tour" = pathname.split("/").includes("packages")
     ? "package"
     : "tour";
+
+  let tourYupSchema = defineTourYupSchema({
+    ...commnObj,
+    hasTourDate: category == "tour" ? true : false,
+  });
 
   const tourId = pathname.split("/")[5];
   const operation = pathname.split("/")[6];
@@ -388,7 +394,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
   };
 
   const setLocalStorage = (data: any) => {
-    const tourData = {
+    const tourData: TourInterface = {
       title: data?.title,
       tourLocation: data?.tourLocation,
       tourType: data?.tourType,
@@ -399,8 +405,36 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
       featured: data?.featured,
     };
 
+    if (data?.packageId) tourData.packageId = data?.packageId;
+    if (data?.tourDate) tourData.tourDate = data?.tourDate;
+
     setTour(tourData);
-    setItinerary(data?.tourPlan?.itinerary);
+
+    // set itinerary Data
+    let itineraryResult: any = [];
+    let day = 1;
+
+    for (let obj of data?.tourPlan?.itinerary) {
+      const title = `planTitle/${day}`;
+      const desc = `planDesc/${day}`;
+      const dayplan: any = {
+        touched: { title: false, desc: false },
+      };
+      Object.entries(obj).forEach(([key, value]) => {
+        if (key.includes("planTitle")) {
+          dayplan[title] = value as string;
+        } else if (key.includes("planDesc")) {
+          dayplan[desc] = value as string;
+        } else if (key.includes("meals")) {
+          dayplan.meals = value as string;
+        } else if (key.includes("day")) {
+          dayplan.day = day as number;
+        }
+      });
+      itineraryResult = [...itineraryResult, dayplan];
+      day++;
+    }
+    setItinerary(itineraryResult);
 
     // setImages(data?.images);
 
@@ -409,13 +443,18 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
     setExcludes(data?.tourPlan?.excludes);
     setTourNotes(data?.tourPlan?.tourNotes);
 
-    initialTour = { ...initialTour, ...tourData };
+    initialTour = { ...initialTour, ...tourData } as any;
   };
 
   const getOneTour = (id: string) => {
     TourService.fetchOneTour(id)
       .then((res) => {
-        console.log(res);
+        if (category == "tour") {
+          if (res?.data?.data?.category == "package") {
+            res.data.data.packageId = tourId;
+            res.data.data.tourDate = new Date();
+          }
+        }
         setLocalStorage(res?.data?.data);
       })
       .catch((err) => {
@@ -426,59 +465,87 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
       });
   };
 
-  //local storage set
+  ////////////// local storage set///////////////////
+
+  useEffect(() => {
+    if (category == "package") {
+      delete tour?.packageId;
+    }
+    let basicTourData: TourInterface = { ...tour };
+
+    const basicTourDataString = JSON.stringify(basicTourData);
+
+    if (JSON.stringify(tourItemObj) != basicTourDataString)
+      localStorage.setItem("basicTourData", basicTourDataString);
+  }, [tour]);
+
   useEffect(() => {
     let itineraryArr = Array.isArray(itinerary)
       ? [...itinerary]
       : [itineraryItemObj];
-    let basicTourData: TourInterface = { ...tour };
-    let itineraryData: Array<ItineraryObj> = itineraryArr;
 
+    let itineraryData: Array<ItineraryObj> = itineraryArr;
+    const itineraryDataString = JSON.stringify(itineraryData);
+
+    if (JSON.stringify(itineraryItemObj) != itineraryDataString)
+      localStorage.setItem("itineraryData", itineraryDataString);
+  }, [itinerary]);
+
+  useEffect(() => {
     let hotelsData: Array<IhotelsInterface> = Array.isArray(hotels)
       ? [...hotels]
       : [hotels];
+
+    const hotelsDataString = JSON.stringify(hotelsData);
+
+    if (
+      JSON.stringify(hotelItemObj) != hotelsDataString &&
+      hotelsData[0]?.city != ""
+    )
+      localStorage.setItem("hotelsData", hotelsDataString);
+  }, [hotels]);
+
+  useEffect(() => {
     let includesData: Array<IincludesInterface> = Array.isArray(includes)
       ? [...includes]
       : [includes];
+
+    const includesDataString = JSON.stringify(includesData);
+
+    if (
+      JSON.stringify(includesItemObj) != includesDataString &&
+      includesData[0]?.include != ""
+    )
+      localStorage.setItem("includesData", includesDataString);
+  }, [includes]);
+
+  useEffect(() => {
     let excludesData: Array<IexcludesInterface> = Array.isArray(excludes)
       ? [...excludes]
       : [excludes];
+
+    const excludesDataString = JSON.stringify(excludesData);
+
+    if (
+      JSON.stringify(excludesItemObj) != excludesDataString &&
+      excludesData[0]?.exclude != ""
+    )
+      localStorage.setItem("excludesData", excludesDataString);
+  }, [excludes]);
+
+  useEffect(() => {
     let notesData: Array<InotesInterface> = Array.isArray(tourNotes)
       ? [...tourNotes]
       : [tourNotes];
 
-    const basicTourDataString = JSON.stringify(basicTourData);
-    const itineraryDataString = JSON.stringify(itineraryData);
-    const hotelsDataString = JSON.stringify(hotelsData);
-    const includesDataString = JSON.stringify(includesData);
-    const excludesDataString = JSON.stringify(excludesData);
     const notesDataString = JSON.stringify(notesData);
 
-    if (JSON.stringify(tourItemObj) != basicTourDataString)
-      localStorage.setItem("basicTourData", basicTourDataString);
-    if (JSON.stringify(itineraryItemObj) != itineraryDataString)
-      localStorage.setItem("itineraryData", itineraryDataString);
-    if (
-      JSON.stringify(hotelItemObj) != hotelsDataString &&
-      hotelsData[0].city != ""
-    )
-      localStorage.setItem("hotelsData", hotelsDataString);
-    if (
-      JSON.stringify(includesItemObj) != includesDataString &&
-      includesData[0].include != ""
-    )
-      localStorage.setItem("includesData", includesDataString);
-    if (
-      JSON.stringify(excludesItemObj) != excludesDataString &&
-      excludesData[0].exclude != ""
-    )
-      localStorage.setItem("excludesData", excludesDataString);
     if (
       JSON.stringify(notesItemObj) != notesDataString &&
-      notesData[0].note != ""
+      notesData[0]?.note != ""
     )
       localStorage.setItem("notesData", notesDataString);
-  }, [tour, itinerary, hotels, includes, excludes, tourNotes]);
+  }, [tourNotes]);
 
   useEffect(() => {
     const result = cleanItineraryData();
@@ -486,8 +553,10 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
   }, [itinerary]);
 
   useEffect(() => {
-    if (operation == "edit") getOneTour(tourId);
-  }, [operation, tourId]);
+    if (tourId != "0") getOneTour(tourId);
+  }, [tourId]);
+
+  ////////////// local storage set///////////////////
 
   return (
     <>
@@ -496,29 +565,63 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
         enableReinitialize
         validationSchema={tourYupSchema}
         onSubmit={(values, { resetForm }) => {
-          const tourObj = createFD(images, category);
+          const tourObj = createFD(images, category, tourId);
 
-          return;
-          TourService.createTour(tourObj)
-            .then((res) => {
-              const msg = res?.data?.message || "Package created successfully";
-              successToast(msg, 3000);
-              return;
-              localStorage.setItem("basicTourData", "");
-              localStorage.setItem("itineraryData", "");
-              localStorage.setItem("hotelsData", "");
-              localStorage.setItem("includesData", "");
-              localStorage.setItem("excludesData", "");
-              localStorage.setItem("notesData", "");
-              resetForm({});
-            })
-            .catch((err) => {
-              console.error(err);
-              const msg =
-                err?.response?.data?.message ||
-                "Package couldn't created successfully";
-              errorToast(msg);
-            });
+          operation == "add"
+            ? TourService.createTour(tourObj)
+                .then((res) => {
+                  const msg =
+                    res?.data?.message ||
+                    `${
+                      category == "package" ? "Package" : "Tour"
+                    } created successfully`;
+                  successToast(msg, 3000);
+
+                  localStorage.removeItem("basicTourData");
+                  localStorage.removeItem("itineraryData");
+                  localStorage.removeItem("daywisePlan");
+                  localStorage.removeItem("hotelsData");
+                  localStorage.removeItem("includesData");
+                  localStorage.removeItem("excludesData");
+                  localStorage.removeItem("notesData");
+                  resetForm({});
+                })
+                .catch((err) => {
+                  console.error(err);
+                  const msg =
+                    err?.response?.data?.message ||
+                    `${
+                      category == "package" ? "Package" : "Tour"
+                    } couldn't created successfully`;
+                  errorToast(msg);
+                })
+            : TourService.updateTour(tourId, tourObj)
+                .then((res) => {
+                  const msg =
+                    res?.data?.message ||
+                    `${
+                      category == "package" ? "Package" : "Tour"
+                    } updated successfully`;
+                  successToast(msg, 3000);
+
+                  localStorage.removeItem("basicTourData");
+                  localStorage.removeItem("itineraryData");
+                  localStorage.removeItem("daywisePlan");
+                  localStorage.removeItem("hotelsData");
+                  localStorage.removeItem("includesData");
+                  localStorage.removeItem("excludesData");
+                  localStorage.removeItem("notesData");
+                  resetForm({});
+                })
+                .catch((err) => {
+                  console.error(err);
+                  const msg =
+                    err?.response?.data?.message ||
+                    `${
+                      category == "package" ? "Package" : "Tour"
+                    } couldn't updated successfully`;
+                  errorToast(msg);
+                });
         }}
       >
         {({
@@ -535,7 +638,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
 
           return (
             <form onSubmit={handleSubmit}>
-              <Container>
+              <Box>
                 <Grid container justifyContent="end">
                   <Grid>
                     <Button variant="contained" onClick={handleDraft}>
@@ -543,7 +646,15 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     </Button>
                   </Grid>
                 </Grid>
-                <Images setImages={setImages} imgs={images} />
+                {category == "tour" &&
+                new Date(
+                  new Date(`${tour?.tourDate}`).setDate(
+                    new Date(`${tour?.tourDate}`).getDate() +
+                      Number(`${tour?.duration?.days}`)
+                  )
+                ) > new Date() ? null : (
+                  <Images setImages={setImages} imgs={images} />
+                )}
 
                 {/* //Basic tour plan */}
                 <Accordion defaultExpanded sx={{ marginBottom: 1 }}>
@@ -551,6 +662,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Basic Tour Details</Typography>
                   </AccordionSummary>
@@ -558,7 +670,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     <Grid
                       container
                       spacing={2}
-                      sx={{ justifyContent: "center" }}
+                      sx={{ justifyContent: "center", backgroundColor: "#fff" }}
                     >
                       <Grid item xs={12} md={4}>
                         <TextField
@@ -727,11 +839,44 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                         />
                       </Grid>
 
-                      <Grid item xs={12}>
+                      {category == "tour" && (
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            size="small"
+                            fullWidth
+                            required
+                            id="tourDate"
+                            type="date"
+                            label="Tour Date"
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            name="tourDate"
+                            value={tour?.tourDate?.toString().split("T")[0]}
+                            onBlur={handleBlur}
+                            onChange={(e: any) => {
+                              handleChange(e);
+                              handleTour(e);
+                            }}
+                            error={
+                              touched?.tourDate && errors?.tourDate
+                                ? true
+                                : false
+                            }
+                            helperText={
+                              touched?.tourDate && errors?.tourDate
+                                ? errors?.tourDate
+                                : ""
+                            }
+                          />
+                        </Grid>
+                      )}
+
+                      <Grid item xs={12} md={category == "tour" ? 6 : 12}>
                         <FormControl
                           size="small"
-                          required
                           fullWidth
+                          required
                           error={
                             touched?.tourType &&
                             tour?.tourType &&
@@ -842,15 +987,19 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Daywise Tour Plan</Typography>
                   </AccordionSummary>
                   <AccordionDetails>
                     <Grid
                       container
-                      spacing={1}
+                      spacing={2}
                       sx={{
-                        justifyContent: "center",
+                        justifyContent: "space-evenly",
+                        mx: 0,
+                        width: "100%",
+                        backgroundColor: "#fff",
                       }}
                     >
                       {tour?.duration?.days &&
@@ -858,8 +1007,8 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                           <Grid
                             item
                             xs={12}
-                            md={4}
-                            sx={{ margin: 2 }}
+                            md={6}
+                            sx={{ padding: 1 }}
                             key={i + 1}
                             draggable
                             onDragStart={(e) => dragStart(e, i)}
@@ -875,8 +1024,14 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                             }
                             onDragOver={(e) => e.preventDefault()}
                           >
-                            <Grid container>
-                              <Paper variant="elevation">
+                            <Grid container justifyContent="space-evenly">
+                              <Paper
+                                variant="elevation"
+                                sx={{
+                                  width: "100%",
+                                  p: 2,
+                                }}
+                              >
                                 <Grid
                                   item
                                   sx={{ padding: 2, cursor: "grab" }}
@@ -1015,10 +1170,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Hotels</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(hotels) &&
@@ -1157,10 +1313,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Included</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(includes) &&
@@ -1270,10 +1427,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Excluded</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(excludes) &&
@@ -1383,10 +1541,11 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
+                    sx={{ backgroundColor: "#faf5ee" }}
                   >
                     <Typography>Notes</Typography>
                   </AccordionSummary>
-                  <AccordionDetails>
+                  <AccordionDetails sx={{ backgroundColor: "#fff" }}>
                     <Grid container spacing={2}>
                       <>
                         {Array.isArray(tourNotes) &&
@@ -1492,14 +1651,26 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     component="span"
                     sx={{
                       cursor:
-                        isValid && images?.length > 0
-                          ? "dafault"
+                        category == "package"
+                          ? isValid && images?.length > 0
+                            ? "dafault"
+                            : "not-allowed"
+                          : isValid
+                          ? "default"
                           : "not-allowed",
                     }}
                   >
                     <Button
                       variant="contained"
-                      disabled={isValid && images?.length > 0 ? false : true}
+                      disabled={
+                        category == "package"
+                          ? isValid && images?.length > 0
+                            ? false
+                            : true
+                          : isValid
+                          ? false
+                          : true
+                      }
                       sx={{
                         m: 1,
                       }}
@@ -1509,7 +1680,7 @@ const TourAndPackageForm: React.FunctionComponent<IPackageFormProps> = (
                     </Button>
                   </Box>
                 </Grid>
-              </Container>
+              </Box>
             </form>
           );
         }}

@@ -82,21 +82,26 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
               sx={{ justifyContent: { xs: "center" } }}
             >
               {Array.isArray(allPackage) &&
-                allPackage.map((packageCardDetials, i) => (
-                  <Grid
-                    item
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    sx={{
-                      marginTop: "15px",
-                      marginBottom: "15px",
-                    }}
-                    key={packageCardDetials?._id}
-                  >
-                    <PravasPackageCard {...packageCardDetials} />
-                  </Grid>
-                ))}
+                allPackage
+                  .filter(
+                    (v, i) =>
+                      v.category === "package" && v.packageStatus === "active"
+                  )
+                  .map((packageCardDetials, i) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      sx={{
+                        marginTop: "15px",
+                        marginBottom: "15px",
+                      }}
+                      key={packageCardDetials?._id}
+                    >
+                      <PravasPackageCard {...packageCardDetials} />
+                    </Grid>
+                  ))}
             </Grid>
           </Container>
           <StartFromTop />
@@ -142,9 +147,8 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
                 <span style={{ color: "#09b2a0" }}> Tour</span>
               </Typography>
               <Typography sx={{ lineHeight: "24px" }}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. text of the printing and typesetting industry. text of
-                the printing and typesetting industry.
+                You can plan your customized tour as well!. fill the form, we
+                will get back to you!
               </Typography>
             </Grid>
             <Grid
