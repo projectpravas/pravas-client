@@ -35,6 +35,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
     flag: false,
     id: "0",
   });
+  const [dialogTourStatus, setDialogTourStatus] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const category = pathname.includes("packages") ? "package" : "tour";
@@ -126,6 +127,24 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       options: {
         filter: true,
         sort: true,
+      },
+    },
+    {
+      label: "Tour Date",
+      name: "tourDate",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          const tour: any = data[dataIndex];
+          return (
+            <>
+              {new Intl.DateTimeFormat("en-IN").format(
+                tour?.tourDate ? new Date(`${tour?.tourDate}`) : new Date()
+              )}
+            </>
+          );
+        },
       },
     },
     {
@@ -266,6 +285,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               : lastDate < new Date()
               ? "completed"
               : "ongoing";
+
           return (
             <>
               {
@@ -370,6 +390,20 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         sort: false,
         customBodyRenderLite: (index: number) => {
           const tour: TourModel = data[index];
+          const lastDate = new Date(
+            new Date(`${tour?.tourDate}`).setDate(
+              new Date(`${tour?.tourDate}`).getDate() +
+                Number(`${tour?.duration?.days}`)
+            )
+          );
+          const statusVal =
+            tour?.category == "tour" &&
+            new Date(`${tour?.tourDate}`) > new Date()
+              ? "upcoming"
+              : lastDate < new Date()
+              ? "completed"
+              : "ongoing";
+
           return (
             <Box sx={{ display: "flex" }}>
               <Chip
@@ -388,6 +422,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
                 variant="outlined"
                 onClick={() => {
                   setShowDialogue({ flag: true, id: tour?._id as string });
+                  setDialogTourStatus(statusVal);
                 }}
               />
             </Box>
@@ -447,14 +482,19 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
           <ParticipantsDialogue
             values={showDialogue}
             handleDialogue={setShowDialogue}
+            status={dialogTourStatus}
           />
         )}
         <MUIDataTables
           title={title}
           columns={
             category == "tour"
-              ? (columns?.filter((obj) => obj?.name != "addTour") as any)
-              : (columns?.filter((obj) => obj?.name != "participants") as any)
+              ? (columns?.filter(
+                  (obj) => !["addTour", "price"].includes(obj?.name)
+                ) as any)
+              : (columns?.filter(
+                  (obj) => !["participants", "tourDate"].includes(obj?.name)
+                ) as any)
           }
           data={data}
           options={options}

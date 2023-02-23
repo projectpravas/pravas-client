@@ -7,7 +7,7 @@ class TourService {
     return API.post(endPoints.api.tours.create, tour);
   } //createTour
 
-  static updateTour(id: string, tour: TourModel | FormData) {
+  static updateTour(id: string, tour: TourModel | FormData | Object) {
     return API.put(endPoints.api.tours.update + id, tour);
   } //updateTour
 
@@ -21,6 +21,14 @@ class TourService {
 
   static fetchAllTours(query = "") {
     return API.get(endPoints.api.tours.getAll + query);
+  } //fetchAllTours
+
+  static updateReview(id: string, review: TourModel | FormData | Object) {
+    return API.put(endPoints.api.tours.updateReview + id, review);
+  } //updateTour
+
+  static fetchUpcomingTours(packageId = "0") {
+    return API.get(endPoints.api.tours.getUpcoming + packageId);
   } //fetchAllTours
 }
 export default TourService;
