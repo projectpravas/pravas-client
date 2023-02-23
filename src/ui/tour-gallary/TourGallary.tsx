@@ -4,8 +4,8 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-
 import data from "../../features/frontend/pravas/data";
+
 import { Container, Grid } from "@mui/material";
 
 interface IImageGallaryProps {
@@ -15,7 +15,7 @@ interface IImageGallaryProps {
 }
 
 const reqdata: any = [];
-data.map((v, i) => reqdata.push(...v.image));
+data.map((v: any, i: number) => reqdata.push(...v.image));
 
 const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
   id,
@@ -32,7 +32,7 @@ const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
 
   const gallary_filter = (itemHead: any) => {
     const filterData: any = data.filter((item: any) => {
-      if (item.heading == itemHead) setImages([...item.image]);
+      if (item.heading === itemHead) setImages([...item.image]);
     });
   };
 
@@ -56,7 +56,7 @@ const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
       <ImageList cols={5} gap={0}>
         {Array.isArray(images) &&
           images.map((item, i) => (
-            <ImageListItem key={item.image}>
+            <ImageListItem key={item.image + i}>
               <img
                 src={`${item}?w=248&fit=crop&auto=format`}
                 srcSet={`${item}?w=248&fit=crop&auto=format&dpr=2 5x`}
