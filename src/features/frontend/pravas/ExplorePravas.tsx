@@ -30,7 +30,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
@@ -60,7 +60,8 @@ import { errorToast } from "../../../ui/toast/Toast";
 import LoginWindow from "../../../ui/loginwindow/LoginWindow";
 
 import ShareButtonBooking from "./ShareButtonBooking";
-
+import ReviewCarousel from "../home/ReviewCarousel";
+import ExploreReviewCarousal from "./Review-carousal/ExploreReviewCarousal";
 
 const options = {
   lazyLoad: true,
@@ -160,6 +161,7 @@ interface TourDetails {
   duration: any;
   maxPersons: number | string;
   tourType: string[];
+  feedbacks: string[];
   tourPlan?: {
     itinerary: Iitinerary[];
     hotels?: Ihotel[] | any;
@@ -185,6 +187,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
   const [bookingDates, setBookingDates] = useState<TourModel[]>([]);
   const [openLoginWindowStatus, setOpenLoginWindowStatus] = useState(false);
+
+  console.log("tourDetails: ", tourDetails);
 
   const handleClickChange = () => {
     setExpanded("panel1");
@@ -279,7 +283,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <meta name="description" content={tourDetails?.tourDesc} />
         <meta name="keywords" content={tourDetails?.tourDesc} />
       </Helmet>
-
       {/* slides of karshmir image */}
       {/* <Grid container style={{ backgroundColor: "#eee" }}>
         <Grid item xs={12} md={6} lg={3}>
@@ -312,11 +315,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         handleOpen={handleLoginOpen}
         handleClose={handleLoginClose}
       />
-=======
-
+      =======
       {/* *******************slides of karshmir image ********************/}
-
-
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
           <img
@@ -1180,6 +1180,11 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       </Container>
       <StartFromTop />
       <Outlet />
+      {/* ------------------------------------------------------------Reviews Carousal */}
+      <Container>
+        <ExploreReviewCarousal data={tourDetails?.feedbacks as any} />
+      </Container>
+      {/* -------------------------------------------------------------Customize Tour  */}
       <Grid
         sx={{
           display: "flex",

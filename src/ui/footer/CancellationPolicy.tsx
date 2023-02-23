@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
 import TableCancellationPolicy from "./TableCancellationPolicy";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 const ListUl = styled(ListItem)({
   display: "list-item",
@@ -31,6 +31,7 @@ const CancellationPolicy: React.FunctionComponent<ICancellationPolicyProps> = (
         <title>Cancelation Policy</title>
         <meta name="description" content="Cancelation Policy" />
         <meta name="keywords" content="Cancelation Policy" />
+        <link rel="canonical" href="/cancellation-policy" />
       </Helmet>
       <Grid mt={5} mb={14}>
         <Typography

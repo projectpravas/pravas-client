@@ -7,7 +7,9 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import { Box, Container, Grid } from "@mui/material";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 
 const faqImages = [
   {
@@ -82,7 +84,7 @@ const FAQ = () => {
   return (
     <Container>
       <Grid container spacing={2}>
-        {/* Accordion Area */}
+        {/* ----------------------------------------------------------Accordion Area */}
         <Grid item xs={12} sm={6} md={6}>
           <Accordion
             expanded={expanded === "panel1"}
@@ -165,7 +167,7 @@ const FAQ = () => {
             </AccordionDetails>
           </Accordion>
         </Grid>
-        {/* Image Area */}
+        {/* --------------------------------------------------------------Image Area */}
         <Grid item xs={12} sm={6} md={6}>
           <Box sx={{ height: 300 }}>
             <img

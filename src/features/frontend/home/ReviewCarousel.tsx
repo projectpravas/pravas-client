@@ -20,7 +20,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import OwlCarousel from "react-owl-carousel";
 import "../../../ui/owl-carousel/owl.css";
-import { ResponsiveContainer } from "recharts";
 
 const options = {
   lazyLoad: true,
@@ -53,127 +52,68 @@ const options = {
 
 interface IReviewCarouselProps {}
 
-const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = (
-  props
-) => {
+const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
   return (
     <>
       <Container>
         <OwlCarousel
-          className=" owl-stage-review owl-nav MuiPaper-root "
+          className="owl-stage-review owl-nav MuiPaper-root"
           {...options}
           autoPlay={true}
         >
-          <Box sx={{ padding: "10px" }}>
-            <Card>
-              <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    AB
-                  </Avatar>
-                }
-                title={
-                  <Typography
-                    sx={{
-                      fontWeight: " 700",
-                      fontSize: "15px",
-                      color: "#444",
-                      fontFamily: "Open sans",
-                    }}
-                  >
-                    Abhi Gujar
-                  </Typography>
-                }
-                subheader={
-                  <Typography
-                    sx={{ color: "#444", opacity: ".5", fontSize: "12px" }}
-                  >
-                    September 14, 2016
-                  </Typography>
-                }
-                action={
-                  <CardMedia
-                    component="img"
-                    style={{
-                      width: "25px",
-                      margin: "10px 20px 0 0",
-                    }}
-                    image="https://cdn.trustindex.io/assets/platform/Google/icon.svg"
-                    alt="Paella dish"
-                  />
-                }
-              />
-
-              <CardContent>
+          <Card>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                  AB
+                </Avatar>
+              }
+              title={
                 <Typography
                   sx={{
-                    lineHeight: "16px",
-                    fontSize: "13px",
-                    fontStyle: "normal",
+                    fontWeight: " 700",
+                    fontSize: "15px",
+                    color: "#444",
+                    fontFamily: "Open sans",
                   }}
                 >
-                  This impressive paella is a perfect party dish and a fun meal
-                  to cook together with your guests. Add 1 cup of frozen peas
-                  along with the mussels, if you like.
+                  Abhi Gujar
                 </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-          <Box sx={{ padding: "10px" }}>
-            <Card>
-              <CardHeader
-                avatar={
-                  <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    AB
-                  </Avatar>
-                }
-                title={
-                  <Typography
-                    sx={{
-                      fontWeight: " 700",
-                      fontSize: "15px",
-                      color: "#444",
-                      fontFamily: "Open sans",
-                    }}
-                  >
-                    Abhi Gujar
-                  </Typography>
-                }
-                subheader={
-                  <Typography
-                    sx={{ color: "#444", opacity: ".5", fontSize: "12px" }}
-                  >
-                    September 14, 2016
-                  </Typography>
-                }
-                action={
-                  <CardMedia
-                    component="img"
-                    style={{
-                      width: "25px",
-                      margin: "10px 20px 0 0",
-                    }}
-                    image="https://cdn.trustindex.io/assets/platform/Google/icon.svg"
-                    alt="Paella dish"
-                  />
-                }
-              />
-
-              <CardContent>
+              }
+              subheader={
                 <Typography
-                  sx={{
-                    lineHeight: "16px",
-                    fontSize: "13px",
-                    fontStyle: "normal",
-                  }}
+                  sx={{ color: "#444", opacity: ".5", fontSize: "12px" }}
                 >
-                  This impressive paella is a perfect party dish and a fun meal
-                  to cook together with your guests. Add 1 cup of frozen peas
-                  along with the mussels, if you like.
+                  September 14, 2016
                 </Typography>
-              </CardContent>
-            </Card>
-          </Box>
+              }
+              // action={
+              //   <CardMedia
+              //     component="img"
+              //     style={{
+              //       width: "25px",
+              //       margin: "10px 20px 0 0",
+              //     }}
+              //     image="https://cdn.trustindex.io/assets/platform/Google/icon.svg"
+              //     alt="Paella dish"
+              //   />
+              // }
+            />
+
+            <CardContent>
+              <Typography
+                sx={{
+                  lineHeight: "16px",
+                  fontSize: "13px",
+                  fontStyle: "normal",
+                }}
+              >
+                This impressive paella is a perfect party dish and a fun meal to
+                cook together with your guests. Add 1 cup of frozen peas along
+                with the mussels, if you like.
+              </Typography>
+            </CardContent>
+          </Card>
         </OwlCarousel>
       </Container>
     </>
