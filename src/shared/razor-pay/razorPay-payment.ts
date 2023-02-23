@@ -21,7 +21,7 @@ const handleOpenRazorPay = (data: any) => {
 
         .then((res) => {
           /// successfull payment
-          console.log("verify", res);
+          return res;
         })
         .catch((err) => {
           console.error(err);
@@ -55,7 +55,6 @@ const handleOpenRazorPay = (data: any) => {
 const handlePayment = (amount: string, customerId: string, tourId: string) => {
   customersId = customerId;
   toursId = tourId;
-  console.log("hi", amount, customerId, tourId);
 
   if (!amount || !customerId || !tourId) return false;
 

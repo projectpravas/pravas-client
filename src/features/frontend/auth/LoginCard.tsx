@@ -80,7 +80,12 @@ const LoginCard: React.FunctionComponent<ILoginCardProps> = (props) => {
               setLoginChkBox(false);
               dispatch(addLoggedUser(res?.data?.data));
               resetForm({});
-              defaultLogin && navigate("/secured");
+              defaultLogin &&
+                navigate(
+                  res?.data?.data?.role != "customer"
+                    ? "/secured"
+                    : "/secured/pravas/my-tours"
+                );
             })
             .catch((err) => {
               resetForm({

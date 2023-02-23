@@ -1,5 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import React, {
+  useState,
+  useEffect,
+  FunctionComponent,
+  ReactComponentElement,
+} from "react";
+import {
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import BlankLayout from "./layouts/blank/BlankLayout";
 import FullLayout from "./layouts/full/FullLayout";
 import { createTheme, ThemeProvider } from "@mui/material";
@@ -9,6 +20,15 @@ import { Toast } from "./ui/toast/Toast";
 import { Helmet } from "react-helmet";
 import GoToTop from "./ui/GoToTop/GoToTop";
 import "./ui/owl-carousel/owl.css";
+import { useDispatch, useSelector } from "react-redux";
+import UserModel from "./shared/models/userModel";
+import { addLoggedUser, selectLoggedUser } from "./app/slices/AuthSlice";
+import AuthService from "./services/AuthService";
+import PageNotFound from "./ui/404/PageNotFound";
+
+interface ProtectedRouteProps {
+  children: ReactComponentElement<any>;
+}
 
 const theme = createTheme({
   typography: {
@@ -18,6 +38,12 @@ const theme = createTheme({
 const App = () => {
   const [hasNetworkOffline, setHasNetworkOffline] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const currentLoggedUser: UserModel = useSelector(selectLoggedUser);
+  const token = sessionStorage.getItem("aToken") as string;
+
   function checkConnections() {
     window.addEventListener("online", () => {
       setHasNetworkOffline(false);
@@ -26,6 +52,36 @@ const App = () => {
       setHasNetworkOffline(true);
     });
   }
+
+  let ProtectedRoute: FunctionComponent<ProtectedRouteProps> = ({
+    children,
+  }) => {
+    return token && currentLoggedUser?._id ? (
+      children
+    ) : (
+      <Navigate to="/login" />
+    );
+  };
+
+  const destroySession = () => {
+    sessionStorage.clear();
+    dispatch(addLoggedUser({}));
+    navigate("/login");
+  };
+
+  useEffect(() => {
+    if (currentLoggedUser?._id && !token) {
+      destroySession();
+    } else if (currentLoggedUser?._id && token) {
+      AuthService.validateToken(token)
+        .then((res) => {})
+        .catch((err) => {
+          console.error(err);
+          destroySession();
+        });
+    }
+  }, [pathname]);
+
   useEffect(() => {
     checkConnections();
   }, []);
@@ -43,7 +99,15 @@ const App = () => {
 
         <Routes>
           <Route path="/*" element={<BlankLayout />} />
-          <Route path="secured/*" element={<FullLayout />} />
+          <Route
+            path="secured/*"
+            element={
+              <ProtectedRoute>
+                <FullLayout />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
         <GoToTop />
       </div>
