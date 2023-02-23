@@ -38,7 +38,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
   const [dialogTourStatus, setDialogTourStatus] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const category = pathname.includes("packages") ? "package" : "tour";
+  const category = pathname?.split("/").includes("tours") ? "tour" : "package";
 
   //handle delete
   const handleDelete = (id: string) => {

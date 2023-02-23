@@ -8,6 +8,9 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import { NavLink as NLink, useLocation } from "react-router-dom";
+import UserModel from "../../shared/models/userModel";
+import { useSelector } from "react-redux";
+import { selectLoggedUser } from "../../app/slices/AuthSlice";
 
 const NavLink = styled(NLink)({
   textDecoration: "none",
@@ -23,6 +26,9 @@ const SecondaryBarMenus: React.FunctionComponent<ISecondaryBarMenus> = (
 ) => {
   const [value, setValue] = React.useState("recents");
 
+  const currentLoggedUser: UserModel = useSelector(
+    selectLoggedUser
+  ) as UserModel;
   const { pathname } = useLocation();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -37,7 +43,10 @@ const SecondaryBarMenus: React.FunctionComponent<ISecondaryBarMenus> = (
     >
       {Array.isArray(tabs?.tabs) &&
         tabs?.tabs
-          .filter((tab) => tab?.showInMenu)
+          .filter(
+            (tab) =>
+              tab?.showInMenu && tab?.roles.includes(currentLoggedUser?.role)
+          )
           .map((tab, i) => {
             return (
               <NavLink

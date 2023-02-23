@@ -516,8 +516,6 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
                   e?.preventDefault();
                   setEditForm(false);
 
-                  console.log(fetchedParticipants);
-                  return;
                   TourService.updateTour(values?.id, {
                     participants: fetchedParticipants,
                   })
@@ -527,7 +525,7 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
                     })
                     .catch((err) => {
                       console.error(err);
-                      errorToast("COuldn't added participants", 5000);
+                      errorToast("Couldn't added participants", 5000);
                     });
                 }}
               >
