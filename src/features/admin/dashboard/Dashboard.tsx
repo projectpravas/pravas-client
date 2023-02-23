@@ -1,10 +1,8 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
 import CustomTitle from "../../../ui/title/CustomTitle";
-import TopComp from "./Top Cards/TopComp";
 import Container from "@mui/material/Container";
 import LineAndPie from "./Line&Pie/LineAndPie";
-import TotalBlogsTours from "./TotalBlogs-Tours/TotalBlogsTours";
 import TotalBlogsNew from "./NewDesignTotalBlogs-Tours/TotalBlogsNew";
 import TopNewCards from "./Top Cards/TopNewCards";
 
@@ -17,9 +15,7 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
       <Outlet />
       <Container>
         <TopNewCards />
-        <TopComp />
         <LineAndPie />
-        {/* <TotalBlogsTours /> */}
         <TotalBlogsNew />
       </Container>
     </div>

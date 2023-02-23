@@ -59,8 +59,6 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
     loadBlogs();
   }, []);
 
-  console.log(blogs);
-
   const title = "Blogs";
   const columns = [
     {

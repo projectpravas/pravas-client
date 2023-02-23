@@ -3,6 +3,10 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
+import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
+import DirectionsBusFilledOutlinedIcon from "@mui/icons-material/DirectionsBusFilledOutlined";
+import { Avatar } from "@mui/material";
 
 const data = [
   {
@@ -10,12 +14,14 @@ const data = [
     title: "Choose Destination",
     desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
     image: "https://fikrimuhal.com/images/our-work-imgs/our-work9.png",
+    icon: <RoomOutlinedIcon />,
   },
   {
     id: 2,
     title: "Make Payment",
     desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
     image: "https://cdn-icons-png.flaticon.com/512/1087/1087097.png",
+    icon: <CurrencyRupeeOutlinedIcon />,
   },
   {
     id: 3,
@@ -23,6 +29,7 @@ const data = [
     desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
     image:
       "https://img.freepik.com/premium-vector/time-travel-world-vector-design-travel-explore-world-different-countries_572288-755.jpg?w=2000",
+    icon: <DirectionsBusFilledOutlinedIcon />,
   },
 ];
 interface IBookingStepsProps {}
@@ -43,30 +50,36 @@ const BookingSteps: React.FunctionComponent<IBookingStepsProps> = (props) => {
   return (
     <>
       <Container sx={{ py: 2 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={6}>
           {/* Booking Steps */}
           <Grid item xs={12} md={6}>
-            <Grid container>
-              {Array.isArray(data) &&
-                data.map((step, i) => (
-                  <>
-                    <Grid
-                      item
-                      key={i}
-                      sx={{ pb: 2 }}
-                      onMouseEnter={() => handleOpen((i = step.id))}
-                      onMouseLeave={handleClose}
+            {Array.isArray(data) &&
+              data.map((step, i) => (
+                <Grid container key={i} spacing={8}>
+                  <Grid item xs={1}>
+                    <Avatar
+                      sx={{ backgroundColor: "#f7a707" }}
+                      variant="rounded"
                     >
-                      <Typography sx={{ fontSize: 25, fontWeight: 600, pb: 1 }}>
-                        {step?.title}
-                      </Typography>
-                      <Typography sx={{ fontSize: 15, fontWeight: 450 }}>
-                        {step?.desc}
-                      </Typography>
-                    </Grid>
-                  </>
-                ))}
-            </Grid>
+                      {step?.icon}
+                    </Avatar>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={10}
+                    sx={{ pb: 2 }}
+                    onMouseEnter={() => handleOpen((i = step.id))}
+                    onMouseLeave={handleClose}
+                  >
+                    <Typography sx={{ fontSize: 25, fontWeight: 600, pb: 1 }}>
+                      {step?.title}
+                    </Typography>
+                    <Typography sx={{ fontSize: 15, fontWeight: 450 }}>
+                      {step?.desc}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ))}
           </Grid>
           {/* Steps Images */}
           <Grid item xs={12} md={6}>

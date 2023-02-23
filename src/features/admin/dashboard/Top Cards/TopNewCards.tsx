@@ -4,6 +4,7 @@ import Counter from "../../../../ui/Counter/Counter";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
+import TourService from "../../../../services/TourService";
 
 const ArrowAnimStyle = {
   color: "#fff",
@@ -38,6 +39,27 @@ const TypoValue = styled(Typography)({
 interface ITopNewCardsProps {}
 
 const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
+  const [totalPackages, setTotalPackages] = React.useState(0);
+  const [totalTours, setTotalTours] = React.useState(0);
+
+  React.useEffect(() => {
+    TourService.fetchAllTours(`?category=package`)
+      .then((res) => {
+        setTotalPackages(res?.data?.data?.length);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    TourService.fetchAllTours(`?category=tour`)
+      .then((res) => {
+        setTotalTours(res?.data?.data?.length);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [totalPackages, totalTours]);
+
   return (
     <>
       <Grid
@@ -51,14 +73,14 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#ed68ff, #be0ee1)",
+              backgroundColor: "#fa8158",
             }}
           >
             <Grid container justifyContent="space-between">
               {/* Values */}
               <Grid item>
                 <DetailsTypo>
-                  <Counter end={40} />
+                  <Counter end={totalPackages} />
                 </DetailsTypo>
                 <TypoValue>Total Packages</TypoValue>
               </Grid>
@@ -77,14 +99,14 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#4eda89, #1a9f53)",
+              backgroundColor: "#ffa63c",
             }}
           >
             <Grid container justifyContent="space-between">
               {/* Values */}
               <Grid item>
                 <DetailsTypo>
-                  <Counter end={13} />
+                  <Counter end={totalTours} />
                 </DetailsTypo>
                 <TypoValue>Total Tours</TypoValue>
               </Grid>
@@ -103,7 +125,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#64b3f6, #2b77e5)",
+              backgroundColor: "#ffd246",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -129,7 +151,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#ff6179, #f11133)",
+              backgroundColor: "#9ac900",
             }}
           >
             <Grid container justifyContent="space-between">

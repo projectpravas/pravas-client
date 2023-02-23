@@ -4,6 +4,7 @@ import Counter from "../../../../ui/Counter/Counter";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
+import BlogService from "../../../../services/BlogService";
 
 const ArrowAnimStyle = {
   color: "#fff",
@@ -33,6 +34,17 @@ const TypoValue = styled(Typography)({
 interface ITotalBlogsNewProps {}
 
 const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
+  const [totalBlogs, setTotalBlogs] = React.useState(0);
+
+  React.useEffect(() => {
+    BlogService.fetchAllBlogs()
+      .then((res) => {
+        setTotalBlogs(res?.data?.data?.length);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [totalBlogs]);
   return (
     <>
       <Grid container spacing={2} justifyContent="space-between" sx={{ py: 2 }}>
@@ -48,7 +60,7 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
               {/* Values */}
               <Grid item>
                 <DetailsTypo>
-                  <Counter end={40} />
+                  <Counter end={totalBlogs} />
                 </DetailsTypo>
                 <TypoValue>Total Blogs</TypoValue>
               </Grid>
