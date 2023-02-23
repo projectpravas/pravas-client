@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
@@ -12,8 +12,7 @@ import Link from "@mui/material/Link";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -44,6 +43,9 @@ import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 
 import MustWatchcard from "./MustWatchCard";
+import ReviewCarousel from "../home/ReviewCarousel";
+import ShareButton from "./ShareButton";
+import PopOverShare from "./PopOverShare";
 
 const options = {
   lazyLoad: true,
@@ -223,33 +225,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <meta name="keywords" content={tourDetails?.tourDesc} />
       </Helmet>
 
-      {/* slides of karshmir image */}
-      {/* <Grid container style={{ backgroundColor: "#eee" }}>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[0]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[1]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
-          />
-        </Grid>
-      </Grid> */}
+      {/* *******************slides of karshmir image ********************/}
 
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
@@ -453,7 +429,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           <Grid item>
             <Button
               sx={{
-                // bgcolor: "#f0f3f6",
                 color: "white",
                 fontWeight: "700",
                 backgroundColor: "#27488d",
@@ -469,7 +444,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             </Button>
           </Grid>
           {/* *******************share button******************** */}
-          <Grid item sx={{ position: "relative" }}>
+          {/* <Grid item sx={{ position: "relative" }}>
             <Button
               sx={{
                 bgcolor: "#f0f3f6",
@@ -531,6 +506,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                 </Link>
               </Grid>
             )}
+          </Grid> */}
+
+          <Grid item sx={{ position: "relative" }}>
+            <ShareButton />
           </Grid>
 
           {/* *************review button*************************/}
@@ -1144,20 +1123,24 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
       {/* Package Card Carousel  */}
       <Container>
-        <PravasHomeCarousel />
+        {/* <PravasHomeCarousel /> */}
+
+        {/* <ReviewCarousel /> */}
       </Container>
       <StartFromTop />
       <Outlet />
+
       <Grid
         sx={{
           display: "flex",
           alignItems: "center",
-          marginBottom: "20px",
+          marginY: "20px",
         }}
       >
         <Container
           sx={{
-            padding: "60px",
+            padding: "20px",
+            width: "70%",
 
             borderRadius: "20px",
             boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
@@ -1167,35 +1150,41 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             container
             sx={{
               display: "flex",
-              justifyContent: "space-between",
-              alignItem: "center",
-              alignContent: "center",
+
+              justifyContent: "space-evenly",
             }}
           >
-            <Grid item xs={12} md={6} lg={8}>
+            <Grid
+              item
+              xs={12}
+              md={8}
+              lg={9}
+              sx={{ paddingRight: "20px", marginBottom: { xs: "20px" } }}
+            >
               <Typography
                 sx={{
                   fontFamily: "Lato",
-                  fontSize: "36px",
+                  fontSize: "2rem",
                   fontWeight: 700,
-                  paddingBottom: "10px",
                 }}
               >
-                Customize Your<span style={{ color: "#09b2a0" }}> Tour</span>
+                Customize Your<span style={{ color: "#27488d" }}> Tour</span>
               </Typography>
               <Typography sx={{ lineHeight: "24px" }}>
-                You can plan your customized tour as well!. fill the form, we
-                will get back to you!
+                You can plan your customized tour as well!.
+              </Typography>
+              <Typography sx={{ lineHeight: "24px" }}>
+                fill the form, we will get back to you!
               </Typography>
             </Grid>
             <Grid
               item
               xs={12}
-              md={6}
-              lg={4}
+              md={4}
+              lg={3}
               sx={{
                 display: "flex",
-                justifyContent: "center",
+
                 alignItems: "center",
               }}
             >
