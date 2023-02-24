@@ -89,8 +89,6 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
       <FAQ />
 
       {/* **********************Review section right************ */}
-
-      <ReviewSection />
     </>
   );
 };

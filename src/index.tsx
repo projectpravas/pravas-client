@@ -9,6 +9,7 @@ import { persistStore } from "redux-persist";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./app/store";
+import "./ui/owl-carousel/owl.css";
 
 let persistor = persistStore(store);
 
