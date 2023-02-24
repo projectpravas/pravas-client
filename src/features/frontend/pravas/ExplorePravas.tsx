@@ -5,6 +5,7 @@ import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
 
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -22,7 +23,6 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-
 import {
   Navigate,
   NavLink,
@@ -37,7 +37,6 @@ import { useParams } from "react-router-dom";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import handlePayment from "../../../shared/razor-pay/razorPay-payment";
 import UserModel from "../../../shared/models/userModel";
-
 import {
   Table,
   TableHead,
@@ -49,14 +48,14 @@ import {
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
-
 import MustWatchcard from "./MustWatchCard";
 import ReviewSection from "./ReviewSection";
 import TourModel from "../../../shared/models/tourModel";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import { errorToast } from "../../../ui/toast/Toast";
-import ShareButtonBooking from "./ShareButtonBooking";
+import CustomiseTourPackage from "./CustomiseTourPackage";
+import SharePravasCard from "./SharePravasCard";
 
 const options = {
   lazyLoad: true,
@@ -82,7 +81,7 @@ const options = {
       items: 2,
     },
     1000: {
-      items: 3,
+      items: 4,
     },
   },
 };
@@ -270,26 +269,32 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
           <img
-            style={{ height: "275px" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[0]}`}
-          />
-        </Grid>
-        <Grid item>
-          <img
-            style={{ height: "275px" }}
+            style={{ height: "100%", objectFit: "cover" }}
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[1]}`}
           />
         </Grid>
         <Grid item>
           <img
-            style={{ height: "275px" }}
+            style={{ height: "100%" }}
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "100%" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[3]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "100%" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[4]}`}
           />
         </Grid>
       </OwlCarousel>
 
       {/* ************** Heading of Tour *******************    */}
-      <Grid sx={{ backgroundColor: "#faf5ee" }}>
+      <Grid sx={{ backgroundColor: "#faf5ee", marginTop: "20px" }}>
         <Container>
           <Grid
             container
@@ -491,7 +496,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           {/* *******************share button******************** */}
 
           <Grid item sx={{ position: "relative" }}>
-            <ShareButtonBooking />
+            <SharePravasCard />
           </Grid>
 
           {/* *************review button*************************/}
@@ -598,14 +603,14 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                             <DataTab rowSpan={2} sx={{ width: "30%" }}>
                               TourName
                             </DataTab>
-                            <DataTab rowSpan={1} colSpan={2}>
-                              Tour Dates
+                            <DataTab
+                              sx={{ width: "30%" }}
+                              rowSpan={1}
+                              colSpan={1}
+                            >
+                              From
                             </DataTab>
-                            <DataTab rowSpan={2} sx={{ width: "15%" }}>
-                              Booking
-                            </DataTab>
-                          </TableRow>
-                          <TableRow>
+
                             <DataTab
                               sx={{ width: "30%" }}
                               rowSpan={1}
@@ -613,12 +618,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                             >
                               To
                             </DataTab>
-                            <DataTab
-                              sx={{ width: "30%" }}
-                              rowSpan={1}
-                              colSpan={1}
-                            >
-                              From
+
+                            <DataTab rowSpan={2} sx={{ width: "15%" }}>
+                              Booking
                             </DataTab>
                           </TableRow>
                         </TableHead>
@@ -1124,99 +1126,17 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
-      <ReviewSection />
-      {/* Package Card Carousel  */}
-      <Container>
-        {/* <PravasHomeCarousel /> */}
+      {/* **********************Review section****************** */}
 
-        {/* <ReviewCarousel /> */}
-      </Container>
-      <StartFromTop />
+      <ReviewSection />
+
+      {/***********************  customize tour**************************  */}
+
       <Outlet />
 
-      <Grid
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          marginY: "20px",
-        }}
-      >
-        <Container
-          sx={{
-            padding: "20px",
-            width: "70%",
+      <CustomiseTourPackage />
 
-            borderRadius: "20px",
-            boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
-          }}
-        >
-          <Grid
-            container
-            sx={{
-              display: "flex",
-
-              justifyContent: "space-evenly",
-            }}
-          >
-            <Grid
-              item
-              xs={12}
-              md={8}
-              lg={9}
-              sx={{ paddingRight: "20px", marginBottom: { xs: "20px" } }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Lato",
-                  fontSize: "2rem",
-                  fontWeight: 700,
-                }}
-              >
-                Customize Your<span style={{ color: "#27488d" }}> Tour</span>
-              </Typography>
-              <Typography sx={{ lineHeight: "24px" }}>
-                You can plan your customized tour as well!.
-              </Typography>
-              <Typography sx={{ lineHeight: "24px" }}>
-                fill the form, we will get back to you!
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={4}
-              lg={3}
-              sx={{
-                display: "flex",
-
-                alignItems: "center",
-              }}
-            >
-              <Typography>
-                <Button
-                  sx={{
-                    color: "white",
-                    padding: "15px 50px",
-                    fontWeight: "700",
-                    backgroundColor: "#005D9D",
-                    fontFamily: "poppins",
-                    "&:hover": {
-                      bgcolor: "#27488d",
-                      color: "white",
-                    },
-                  }}
-                  onClick={handleClick}
-                >
-                  CUSTOMIZE
-                  <ArrowRightAltIcon
-                    sx={{ "&:hover": { color: "white" }, color: "white" }}
-                  />
-                </Button>
-              </Typography>
-            </Grid>
-          </Grid>
-        </Container>
-      </Grid>
+      <StartFromTop />
     </Grid>
   );
 };

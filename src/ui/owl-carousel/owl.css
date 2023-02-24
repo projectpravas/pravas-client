@@ -68,7 +68,7 @@ button.owl-next {
 .owl-nav-explore {
   position: "relative";
 
-  height: 270px;
+  /* height: px; */
 }
 
 .owl-nav-explore .owl-stage-outer {
