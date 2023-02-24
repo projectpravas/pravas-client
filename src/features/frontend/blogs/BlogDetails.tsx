@@ -4,13 +4,14 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { useParams } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import BlogService from "../../../services/BlogService";
 import { endPoints } from "../../../api";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import { IconButton } from "@mui/material";
+import { IconButton, Paper } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useNavigate } from "react-router-dom";
+import MustWatchBlogDetails from "./MustWatchBlogDetails";
 
 interface IBlogDetailsProps {}
 
@@ -37,26 +38,34 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
   return (
     <>
       <Helmet>
-        <title>{data?.title}</title>
+        <title>{data?.seoTitle}</title>
         <meta name="description" content={data?.metaDescription} />
+        <meta name="keywords" content={data?.focusKeyphrases} />
+        <link rel="canonical" href={`/${data?.slug}/`} />
       </Helmet>
-      <IconButton
-        size="small"
-        style={{ color: "#000" }}
-        onClick={() => navigate(-1)}
-      >
-        <ArrowBackIosNewIcon color="inherit" />
-        Back
-      </IconButton>
-      <Container sx={{ pt: 8 }}>
-        <Grid container>
-          {/* image Area  */}
-          <Grid item xs={12}>
-            <img
-              src={`${endPoints?.serverBaseURL}/${data?.image}`}
-              style={{ width: "100%", height: "100%" }}
-            />
-          </Grid>
+
+      <Grid>
+        {/* image Area  */}
+        <Grid item xs={12} sx={{ height: 420, backgroundColor: "blue" }}>
+          <img
+            src={`${endPoints?.serverBaseURL}/${data?.image}`}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </Grid>
+        <Container
+          sx={{
+            mt: -13,
+            position: "relative",
+            backgroundColor: "#fff",
+            borderRadius: 3,
+            zIndex: 11,
+            p: 2,
+          }}
+        >
           {/* Pravas & category */}
           <Grid item xs={12}>
             <Grid container sx={{ justifyContent: "space-between", p: 1 }}>
@@ -100,15 +109,36 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
               </Grid>
             </Grid>
           </Grid>
-          {/* Blog Details */}
-          <Grid
-            item
-            sx={{ fontFamily: "inherit" }}
-            xs={12}
-            dangerouslySetInnerHTML={{ __html: data?.richText }}
-          ></Grid>
-        </Grid>
-      </Container>
+          <Grid container spacing={8}>
+            {/* -----------------------------------------------Blog Details-------------- */}
+            <Grid item xs={12} md={8}>
+              <Grid
+                container
+                sx={{ fontFamily: "inherit" }}
+                dangerouslySetInnerHTML={{ __html: data?.richText }}
+              ></Grid>
+            </Grid>
+
+            {/* ---------------------------------------------------Must Watch ------------ */}
+            <Grid item xs={12} md={4}>
+              <Paper elevation={1}>
+                <Grid sx={{ p: 2 }}>
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontWeight: "900",
+                      textAlign: "left",
+                    }}
+                  >
+                    Must Watch
+                  </Typography>
+                  <MustWatchBlogDetails />
+                </Grid>
+              </Paper>
+            </Grid>
+          </Grid>
+        </Container>
+      </Grid>
     </>
   );
 };

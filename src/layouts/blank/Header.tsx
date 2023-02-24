@@ -164,7 +164,14 @@ const Header = () => {
               title={currentLoggedUser?._id ? "My Profile" : "Login / Register"}
             >
               {currentLoggedUser?._id ? (
-                <NavLink to="/secured/dashboard" sx={{ p: 0, mr: 0 }}>
+                <NavLink
+                  to={
+                    currentLoggedUser?.role != "customer"
+                      ? "/secured/dashboard"
+                      : "/secured/pravas/my-tours"
+                  }
+                  sx={{ p: 0, mr: 0 }}
+                >
                   <AccountCircleIcon fontSize="large" />
                 </NavLink>
               ) : (

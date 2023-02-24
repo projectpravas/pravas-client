@@ -4,7 +4,7 @@ import Counter from "../../../../ui/Counter/Counter";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
-import BlogService from "../../../../services/BlogService";
+import TourService from "../../../../services/TourService";
 
 const ArrowAnimStyle = {
   color: "#fff",
@@ -17,11 +17,15 @@ const ArrowAnimStyle = {
 const GridCardStyle = {
   p: 2.5,
   borderRadius: 2,
+  transition: "0.8s ease-in-out",
+  "&:hover": {
+    transform: "translateY(-5px)",
+  },
 };
 
 const DetailsTypo = styled(Typography)({
-  fontSize: 26,
-  fontWeight: 700,
+  fontSize: 40,
+  fontWeight: 800,
   textAlign: "left",
   color: "#ffffff",
   fontFamily: "inherit",
@@ -29,40 +33,56 @@ const DetailsTypo = styled(Typography)({
 
 const TypoValue = styled(Typography)({
   color: "#ffffff",
-  fontSize: 15,
+  fontSize: 20,
 });
-interface ITotalBlogsNewProps {}
 
-const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
-  const [totalBlogs, setTotalBlogs] = React.useState(0);
+interface ITopNewCardsProps {}
+
+const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
+  const [totalPackages, setTotalPackages] = React.useState(0);
+  const [totalTours, setTotalTours] = React.useState(0);
 
   React.useEffect(() => {
-    BlogService.fetchAllBlogs()
+    TourService.fetchAllTours(`?category=package`)
       .then((res) => {
-        setTotalBlogs(res?.data?.data?.length);
+        setTotalPackages(res?.data?.data?.length);
       })
       .catch((err) => {
         console.error(err);
       });
-  }, [totalBlogs]);
+
+    TourService.fetchAllTours(`?category=tour`)
+      .then((res) => {
+        setTotalTours(res?.data?.data?.length);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [totalPackages, totalTours]);
+
   return (
     <>
-      <Grid container spacing={2} justifyContent="space-between" sx={{ py: 2 }}>
-        {/* -----------------------------------------------------------Total Blogs */}
+      <Grid
+        container
+        spacing={2}
+        justifyContent="space-between"
+        sx={{ py: 2, mt: 2 }}
+      >
+        {/* -----------------------------------------------------------Total Packages */}
         <Grid item xs={12} sm={6} md={3}>
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#ed68ff, #be0ee1)",
+              backgroundColor: "#fa8158",
             }}
           >
             <Grid container justifyContent="space-between">
               {/* Values */}
               <Grid item>
                 <DetailsTypo>
-                  <Counter end={totalBlogs} />
+                  <Counter end={totalPackages} />
                 </DetailsTypo>
-                <TypoValue>Total Blogs</TypoValue>
+                <TypoValue>Total Packages</TypoValue>
               </Grid>
               {/* page link Arrow */}
               <NavLink to="/blogs">
@@ -79,14 +99,14 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#4eda89, #1a9f53)",
+              backgroundColor: "#ffa63c",
             }}
           >
             <Grid container justifyContent="space-between">
               {/* Values */}
               <Grid item>
                 <DetailsTypo>
-                  <Counter end={13} />
+                  <Counter end={totalTours} />
                 </DetailsTypo>
                 <TypoValue>Total Tours</TypoValue>
               </Grid>
@@ -100,12 +120,12 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
           </Grid>
         </Grid>
 
-        {/* --------------------------------------------------------------Wishlist */}
+        {/* --------------------------------------------------------------Ongoing */}
         <Grid item xs={12} sm={6} md={3}>
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#64b3f6, #2b77e5)",
+              backgroundColor: "#ffd246",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -114,7 +134,7 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
                 <DetailsTypo>
                   <Counter end={8} />
                 </DetailsTypo>
-                <TypoValue>Wishlist</TypoValue>
+                <TypoValue>Ongoing</TypoValue>
               </Grid>
               {/* page link Arrow */}
               <Link href="#" sx={{ textDecoration: "none" }}>
@@ -126,12 +146,12 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
           </Grid>
         </Grid>
 
-        {/* -----------------------------------------------------------Rating */}
+        {/* -----------------------------------------------------------Upcoming */}
         <Grid item xs={12} sm={6} md={3}>
           <Grid
             sx={{
               ...GridCardStyle,
-              background: "linear-gradient(#ff6179, #f11133)",
+              backgroundColor: "#9ac900",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -140,7 +160,7 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
                 <DetailsTypo>
                   <Counter end={5} />
                 </DetailsTypo>
-                <TypoValue>Rating</TypoValue>
+                <TypoValue>Upcoming</TypoValue>
               </Grid>
               {/* page link Arrow */}
               <Link href="#" sx={{ textDecoration: "none" }}>
@@ -156,4 +176,4 @@ const TotalBlogsNew: React.FunctionComponent<ITotalBlogsNewProps> = (props) => {
   );
 };
 
-export default TotalBlogsNew;
+export default TopNewCards;

@@ -30,7 +30,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
@@ -55,7 +55,12 @@ import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import { errorToast } from "../../../ui/toast/Toast";
 import CustomiseTourPackage from "./CustomiseTourPackage";
+
+import LoginWindow from "../../../ui/loginwindow/LoginWindow";
+
 import SharePravasCard from "./SharePravasCard";
+import ReviewCarousel from "../home/ReviewCarousel";
+import ExploreReviewCarousal from "./Review-carousal/ExploreReviewCarousal";
 
 const options = {
   lazyLoad: true,
@@ -155,6 +160,7 @@ interface TourDetails {
   duration: any;
   maxPersons: number | string;
   tourType: string[];
+  feedbacks: string[];
   tourPlan?: {
     itinerary: Iitinerary[];
     hotels?: Ihotel[] | any;
@@ -170,7 +176,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const currentLoggedUser: UserModel = useSelector(
     selectLoggedUser
   ) as UserModel;
-  const bookingRef = useRef<any>(null);
 
   //    -----share button state-------
   const [visible, setVisible] = useState(false);
@@ -180,6 +185,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
   const [bookingDates, setBookingDates] = useState<TourModel[]>([]);
+  const [openLoginWindowStatus, setOpenLoginWindowStatus] = useState(false);
+
+  console.log("tourDetails: ", tourDetails);
 
   const handleClickChange = () => {
     setExpanded("panel1");
@@ -225,9 +233,20 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       });
   };
 
+  const handleLoginOpen = () => {
+    setOpenLoginWindowStatus(true);
+  };
+
+  const handleLoginClose = () => {
+    setOpenLoginWindowStatus(false);
+  };
+
   const handleBooking = (price: string, customerId: string, tourId: string) => {
     if (!price || !tourId) return errorToast("Failed... Try Again...", 3000);
-    if (!customerId) return errorToast("Login First for booking...", 3000);
+    if (!customerId) {
+      handleLoginOpen();
+      return;
+    }
 
     price && customerId && tourId && handlePayment(price, customerId, tourId);
   };
@@ -263,9 +282,13 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <meta name="description" content={tourDetails?.tourDesc} />
         <meta name="keywords" content={tourDetails?.tourDesc} />
       </Helmet>
+      <LoginWindow
+        open={openLoginWindowStatus}
+        handleOpen={handleLoginOpen}
+        handleClose={handleLoginClose}
+      />
 
       {/* *******************slides of karshmir image ********************/}
-
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
           <img
@@ -292,7 +315,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           />
         </Grid>
       </OwlCarousel>
-
       {/* ************** Heading of Tour *******************    */}
       <Grid sx={{ backgroundColor: "#faf5ee", marginTop: "20px" }}>
         <Container>
@@ -454,7 +476,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Container>
       </Grid>
-
       {/* ----**************--share and review-------****************---- */}
       <Grid
         sx={{ backgroundColor: "white", borderBottom: "1px solid #faf5ee" }}
@@ -520,7 +541,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Grid>
-
       {/*-*****************-- kashmir description---*************--- */}
       <Container>
         <Grid container spacing={2}>
@@ -624,7 +644,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                             </DataTab>
                           </TableRow>
                         </TableHead>
-                        <TableBody ref={bookingRef}>
+                        <TableBody>
                           {Array.isArray(bookingDates) &&
                           bookingDates?.length > 0 ? (
                             bookingDates.map((obj: string | any, i: number) => (
@@ -1127,15 +1147,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         </Grid>
       </Container>
       {/* **********************Review section****************** */}
-
       <ReviewSection />
-
       {/***********************  customize tour**************************  */}
-
       <Outlet />
-
+      {/* ------------------------------------------------------------Reviews Carousal */}
+      <Container>
+        <ExploreReviewCarousal data={tourDetails?.feedbacks as any} />
+      </Container>
+      {/* -------------------------------------------------------------Customize Tour  */}
       <CustomiseTourPackage />
-
       <StartFromTop />
     </Grid>
   );

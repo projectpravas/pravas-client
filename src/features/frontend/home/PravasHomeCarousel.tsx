@@ -54,7 +54,7 @@ const PravasHomeCarousel: React.FunctionComponent<
     loadPackageData();
   }, []);
 
-  const HandleNagigation = (path: string) => {
+  const handleNavigation = (path: string) => {
     navigate(path);
   };
   // console.log(allPackageCardData);
@@ -70,7 +70,7 @@ const PravasHomeCarousel: React.FunctionComponent<
               return (
                 <div
                   onClick={() => {
-                    HandleNagigation(`/pravas/explore/${v?._id}`);
+                    handleNavigation(`/pravas/explore/${v?._id}`);
                   }}
                 >
                   <PravasPackageCard key={v?._id + i} {...v} />

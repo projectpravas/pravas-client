@@ -25,14 +25,15 @@ import MenuItem from "@mui/material/MenuItem";
 import Tooltip from "@mui/material/Tooltip";
 import SidebarMenu from "./SidebarMenu";
 import SidebarRoutes from "./SidebarRoutes";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { addLoggedUser } from "../../app/slices/AuthSlice";
+import { addLoggedUser, selectLoggedUser } from "../../app/slices/AuthSlice";
 import settingsRoutes from "../../shared/routes/AdminRoutes";
 import { NavLink as NLink } from "react-router-dom";
 import { successToast } from "../../ui/toast/Toast";
 import AdminRoutes from "../../shared/routes/AdminRoutes";
 import SecondaryAppbar from "../full/SecondaryAppbar";
+import UserModel from "../../shared/models/userModel";
 
 const customTheme = createTheme({
   breakpoints: {
@@ -129,13 +130,27 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const currentLoggedUser: UserModel = useSelector(
+    selectLoggedUser
+  ) as UserModel;
 
   const secondaryAppFlag =
     pathname.split("/").length >= 3 &&
     Array.isArray(AdminRoutes) &&
     AdminRoutes.map((route) => {
       if (route?.subMenus) return route?.path;
-    }).includes(pathname.split("/")[2]);
+    }).includes(pathname.split("/")[2]) &&
+    Array.from(
+      new Set(
+        AdminRoutes.map(
+          (route) =>
+            Array.isArray(route?.subMenus) &&
+            route?.subMenus?.flatMap((submenu) => submenu?.roles)
+        )
+          .filter((roles) => roles)
+          .flatMap((v: any) => v)
+      )
+    ).includes(currentLoggedUser?.role as string);
 
   const handleDrawerOpen = () => {
     setOpen(true);
