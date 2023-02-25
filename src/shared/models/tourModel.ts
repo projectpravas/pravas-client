@@ -74,6 +74,7 @@ interface TourModel {
   images?: Array<string | Blob>;
   tourPlan?: TourPlan;
   customized?: Boolean;
+  designation?: string;
   tourStatus?: string;
   packageStatus?: string;
   feedbacks?: Array<Feedbacks>;

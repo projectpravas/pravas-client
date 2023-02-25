@@ -30,6 +30,7 @@ interface UserModel {
   gender?: string;
   avatar?: string | File;
   status?: string;
+  designation?: String;
   userActivityDetails?: UserActivityDetails;
 }
 

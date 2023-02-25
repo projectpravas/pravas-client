@@ -6,7 +6,6 @@ import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-// import UserCountryState from "./CountryState";
 import User from "../../../shared/models/userModel";
 import { Formik } from "formik";
 import defineYupSchema from "../../../shared/yup-validations/user-validation/usersYupValidation";
@@ -38,8 +37,10 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Verified from "@mui/icons-material/VerifiedRounded";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import { endPoints } from "../../../api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createFD } from "./createFormData";
+import getAge from "../../../shared/user-utilities/age-calculation";
+import CustomTitle from "../../../ui/title/CustomTitle";
 
 interface IUserFormProps {
   currentUser: User;
@@ -54,24 +55,27 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
   roleProps,
   loadUser,
 }) => {
+  const { pathname } = useLocation();
+  const isAddingCustomer = pathname.split("/").includes("add");
+
   // yup schema and initial user
   const commonRequiredFields = {
     hasFirst: true,
     hasLast: true,
     hasMobile: true,
     hasEmail: true,
-    hasStreet: true,
-    hasPincode: true,
     hasDob: true,
     hasGender: true,
-    hasPassword: type == "add" ? true : false,
+    hasDesignation: roleProps != "customer" ? true : false,
   };
 
   let initialUserObj = defineInitialUser({
     ...commonRequiredFields,
+    hasStreet: true,
     hasCountry: true,
     hasState: true,
     hasCity: true,
+    hasPincode: true,
     hasAvatar: true,
     hasStatus: true,
     hasRole: true,
@@ -82,16 +86,13 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
   });
 
   //states
-  const [countyVal, setCountryVal] = useState("");
-  const [stateVal, setStateVal] = useState("");
-  const [cityVal, setCityVal] = useState("");
   const [profilePic, setProfilePic] = useState<string>("");
   const [initialUser, setInitialUser] = useState<User>(initialUserObj);
   const [userStatus, setUserStatus] = useState(initialUserObj?.status);
 
   const [editMode, setEditMode] = useState(false);
   const [activeElementId, setActiveElementId] = useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [age, setAge] = useState<Date | string | number>("");
 
   //mobile OTP timer
   const [OTPStatus, setOTPStatus] = useState({
@@ -100,6 +101,7 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
     sendOTP: false,
   });
   const [mobNumber, setMobNumber] = useState("");
+  const [alternativeMobNumber, setAlternativeMobNumber] = useState("");
   const [verifiedStatus, setVerifiedStatus] = useState(false);
   const [timer, setTimer] = useState(0);
   const [timerId, setTimerId] = useState(NaN);
@@ -141,23 +143,6 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
     },
   }));
 
-  // getData from CountryStateCity comp
-  function getAddressData(type: string, val: string) {
-    if (val) {
-      type == "country" && setCountryVal(val);
-      type == "state" && setStateVal(val);
-      type == "city" && setCityVal(val);
-    }
-  }
-
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
-
   const handlePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files && e?.target?.files[0];
 
@@ -176,13 +161,14 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
     setUserStatus(value == "active" ? "active" : "inactive");
   };
 
-  const updateUser = (id: string, fd: FormData) => {
+  const updateUser = (id: string, fd: FormData, resetForm: any) => {
     UserService.updateUser(id, fd)
       .then((res) => {
         const msg = res?.data?.message || "Updated successfully...";
         successToast(msg, 3000);
         setEditMode(false);
         type == "edit" && loadUser(id);
+        resetForm();
         // console.log(res);
       })
       .catch((err) => {
@@ -192,13 +178,14 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
       });
   };
 
-  const addUser = (fd: FormData) => {
+  const addUser = (fd: FormData, resetForm: any) => {
     UserService.createUser(fd)
       .then((res) => {
         const { _id, role } = res?.data?.data;
         const msg = res?.data?.message || "Created successfully...";
         successToast(msg, 3000);
         setEditMode(false);
+        resetForm();
         _id && role && navigate(`/secured/add-edit/${_id}/edit/${role}`);
         // console.log(res);
       })
@@ -215,22 +202,29 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
 
       for (let i of keyValuesInitial) {
         Object.entries(currentUser).forEach(([key, value], index) => {
-          if (i == key) initialUserObj[key as keyof typeof currentUser] = value;
+          if (i == key) {
+            if (key == "mobile") {
+              initialUserObj[key as keyof typeof currentUser] = value[0];
+            } else {
+              initialUserObj[key as keyof typeof currentUser] = value;
+            }
+          }
         });
       }
       // set Initial user as current user
       setInitialUser(initialUserObj);
-
       // setProfilePic and user status
       setUserStatus(currentUser?.status);
       setProfilePic(currentUser?.avatar as string);
-      // setVerifiedStatus(true);
-      currentUser?.mobile && setMobNumber(currentUser?.mobile);
-      currentUser?.mobile && setCheckMob(currentUser?.mobile);
+      currentUser?.mobile && setMobNumber(currentUser?.mobile[0]);
+      currentUser?.mobile && setAlternativeMobNumber(currentUser?.mobile[1]);
+      currentUser?.mobile && setCheckMob(currentUser?.mobile[0]);
+      setAge(getAge(initialUserObj?.dob as Date));
     } else {
       setInitialUser(initialUserObj);
       setUserStatus("active");
       setEditMode(true);
+      setVerifiedStatus(true);
     }
   }, [type, currentUser]);
 
@@ -277,13 +271,15 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
   return (
     <>
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-        <Typography variant="h5">{`${
-          type == "profile"
-            ? "My Profile"
-            : type == "add"
-            ? `Add ${roleProps == "admin" ? "Admin" : "Customer"}`
-            : `${roleProps == "admin" ? "Admin" : "Customer"} Profile`
-        }`}</Typography>
+        <CustomTitle
+          title={`${
+            type == "profile"
+              ? "My Profile"
+              : type == "add"
+              ? `Add ${roleProps == "admin" ? "Admin" : "Customer"}`
+              : `${roleProps == "admin" ? "Admin" : "Customer"} Profile`
+          }`}
+        />
         <IconButton
           size="small"
           style={{ color: "#000" }}
@@ -306,45 +302,52 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
           enableReinitialize
           validationSchema={userValidationSchema}
           onSubmit={(values, { resetForm }) => {
-            if (countyVal)
-              values?.address && (values.address.country = countyVal);
-            if (stateVal) values?.address && (values.address.state = stateVal);
-            if (cityVal) values?.address && (values.address.city = cityVal);
-            if (values?.role == "") values.role = roleProps;
-            if (userStatus) values?.status && (values.status = userStatus);
+            const finalValues: any = values;
+            if (finalValues?.role == "") finalValues.role = roleProps;
+            if (finalValues?.mobile) {
+              if (alternativeMobNumber) {
+                finalValues.mobile &&
+                  (finalValues.mobile = [mobNumber, alternativeMobNumber]);
+              } else {
+                finalValues.mobile && (finalValues.mobile = [mobNumber]);
+              }
+            }
+            if (userStatus)
+              finalValues?.status && (finalValues.status = userStatus);
 
-            // console.log(values);
-            // return;
+            // console.log(finalValues);
 
             //create FormData
-            const fd = createFD(values);
+            const fd = createFD(finalValues);
 
             if (type == "edit" || type == "profile") {
               if (
-                currentUser?.name?.first == values?.name?.first &&
-                currentUser?.name?.last == values?.name?.last &&
-                currentUser?.mobile == values?.mobile &&
-                currentUser?.email == values?.email &&
-                currentUser?.address?.street == values?.address?.street &&
-                currentUser?.address?.city == values?.address?.city &&
-                currentUser?.address?.state == values?.address?.state &&
-                currentUser?.address?.country == values?.address?.country &&
-                currentUser?.address?.pincode == values?.address?.pincode &&
-                currentUser?.dob == values?.dob &&
-                currentUser?.status == values?.status &&
-                currentUser?.avatar == values?.avatar
+                currentUser?.name?.first == finalValues?.name?.first &&
+                currentUser?.name?.last == finalValues?.name?.last &&
+                currentUser?.mobile == finalValues?.mobile &&
+                currentUser?.email == finalValues?.email &&
+                currentUser?.address?.street == finalValues?.address?.street &&
+                currentUser?.address?.city == finalValues?.address?.city &&
+                currentUser?.address?.state == finalValues?.address?.state &&
+                currentUser?.address?.country ==
+                  finalValues?.address?.country &&
+                currentUser?.address?.pincode ==
+                  finalValues?.address?.pincode &&
+                currentUser?.dob == finalValues?.dob &&
+                currentUser?.status == finalValues?.status &&
+                currentUser?.avatar == finalValues?.avatar
               ) {
                 successToast("Data have saved already", 3000);
                 return;
               }
               {
-                updateUser(currentUser?._id as string, fd);
+                updateUser(currentUser?._id as string, fd, resetForm);
               }
             } else {
               values?.password &&
                 fd.append("password", values?.password as string);
 
-              addUser(fd);
+              addUser(fd, resetForm);
             }
           }}
         >
@@ -352,6 +355,7 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
             values,
             errors,
             isValid,
+            dirty,
             touched,
             handleBlur,
             handleChange,
@@ -393,7 +397,6 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                             height: "100%",
                             padding: "0.25em",
                             borderRadius: "50%",
-                            // objectFit: "contain",
                           }}
                           alt="user-avatar"
                         />
@@ -541,60 +544,6 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                             </>
                           )}
                         </Box>
-                        {/* <Box sx={{ marginTop: "5px" }}>
-                          <Chip
-                            disabled={!editMode}
-                            size="small"
-                            label={userVerification ? "verified" : "unverified"}
-                            color={userVerification ? "primary" : "default"}
-                            onClick={(e) =>
-                              type != "profile" &&
-                              handleUserVerification(
-                                e,
-                                userVerification ? false : true
-                              )
-                            }
-                          />
-                          <ToggleButtonGroup
-                            value={userVerification}
-                            disabled={!editMode}
-                            exclusive
-                            id="verification"
-                            aria-label="verification-button-group"
-                            onChange={
-                              type != "profile"
-                                ? handleUserVerification
-                                : () => null
-                            }
-                            sx={{ verticalAlign: "middle" }}
-                          >
-                            <ToggleButton
-                              value={true}
-                              aria-label="verified"
-                              style={{
-                                display: "span",
-                                padding: 0,
-                                border: "none",
-                                backgroundColor: "inherit",
-                              }}
-                            >
-                              {userVerification ? (
-                                <VerifiedUserIcon
-                                  sx={{ color: "blue", width: "100%" }}
-                                />
-                              ) : (
-                                <UnverifiedUserIcon
-                                  sx={{ color: "black", width: "100%" }}
-                                />
-                              )}
-                            </ToggleButton>
-                          </ToggleButtonGroup>
-                          {type != "profile" && (
-                            <FormHelperText sx={{ fontSize: "0.5em" }}>
-                              &nbsp; *click to change
-                            </FormHelperText>
-                          )}
-                        </Box> */}
                       </Grid>
                       <Grid item xs={12} md={6}>
                         <TextField
@@ -662,7 +611,6 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           fullWidth
                           id="mobile"
                           label="Mobile"
-                          // disabled={verifiedStatus && !editMode}
                           InputLabelProps={{
                             shrink:
                               activeElementId == "mobile"
@@ -673,8 +621,12 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           }}
                           value={values?.mobile}
                           InputProps={{
-                            readOnly: !editMode ? true : verifiedStatus,
-                            startAdornment: (
+                            readOnly: !editMode
+                              ? true
+                              : isAddingCustomer
+                              ? false
+                              : verifiedStatus,
+                            startAdornment: !isAddingCustomer && (
                               <InputAdornment
                                 position="end"
                                 sx={{ order: 2, mr: "0.5em" }}
@@ -713,6 +665,7 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           onChange={(e) => {
                             handleChange(e);
                             setMobNumber(e.target.value);
+
                             stopTimer();
                           }}
                           onFocus={() => setActiveElementId("mobile")}
@@ -777,6 +730,29 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                         </Grid>
                       )}
 
+                      {/* alternative mobile */}
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          autoComplete="mobile"
+                          size="small"
+                          fullWidth
+                          id="altMob"
+                          label="Alternative Mobile"
+                          InputLabelProps={{
+                            shrink: alternativeMobNumber ? true : false,
+                          }}
+                          name="altMob"
+                          value={alternativeMobNumber}
+                          onBlur={handleBlur}
+                          onChange={(e: any) =>
+                            setAlternativeMobNumber(e?.target?.value)
+                          }
+                          InputProps={{
+                            readOnly: !editMode,
+                          }}
+                        />
+                      </Grid>
+
                       <Grid item xs={12} md={6}>
                         <TextField
                           autoComplete="email"
@@ -799,6 +775,36 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                         />
                       </Grid>
 
+                      {roleProps != "customer" ? (
+                        <Grid item xs={12} md={6}>
+                          <TextField
+                            autoComplete="designation"
+                            size="small"
+                            name="designation"
+                            required
+                            fullWidth
+                            id="designation"
+                            label="Designation"
+                            InputProps={{
+                              readOnly: !editMode,
+                            }}
+                            value={values?.designation}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            error={
+                              touched?.designation && errors?.designation
+                                ? true
+                                : false
+                            }
+                            helperText={
+                              touched?.designation && errors?.designation
+                                ? errors?.designation
+                                : ""
+                            }
+                          />
+                        </Grid>
+                      ) : null}
+
                       <Grid item xs={12} md={6}>
                         <TextField
                           type="date"
@@ -818,7 +824,10 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           }}
                           value={values?.dob?.toString().split("T")[0]}
                           onBlur={handleBlur}
-                          onChange={handleChange}
+                          onChange={(e: any) => {
+                            handleChange(e);
+                            setAge(getAge(e?.target?.value));
+                          }}
                           error={touched?.dob && errors?.dob ? true : false}
                           helperText={
                             touched?.dob && errors?.dob ? errors?.dob : ""
@@ -826,67 +835,21 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                         />
                       </Grid>
 
-                      {type == "add" && (
-                        <Grid item xs={12} md={6}>
-                          <TextField
-                            autoComplete="password"
-                            size="small"
-                            name="password"
-                            required
-                            fullWidth
-                            id="password"
-                            label="Password"
-                            value={values?.password}
-                            onFocus={() => setActiveElementId("password")}
-                            onChange={handleChange}
-                            onBlur={(e) => {
-                              handleBlur(e);
-                              setActiveElementId("");
-                            }}
-                            type={showPassword ? "text" : "password"}
-                            InputLabelProps={{
-                              shrink:
-                                activeElementId == "password"
-                                  ? true
-                                  : values?.password?.length != 0
-                                  ? true
-                                  : false,
-                            }}
-                            InputProps={{
-                              readOnly: !editMode,
-                              startAdornment: (
-                                <InputAdornment
-                                  position="end"
-                                  sx={{ order: 2, mr: "1em" }}
-                                >
-                                  <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    edge="end"
-                                  >
-                                    {showPassword ? (
-                                      <VisibilityOff />
-                                    ) : (
-                                      <Visibility />
-                                    )}
-                                  </IconButton>
-                                </InputAdornment>
-                              ),
-                            }}
-                            error={
-                              touched?.password && errors?.password
-                                ? true
-                                : false
-                            }
-                            helperText={
-                              touched?.password && errors?.password
-                                ? errors?.password
-                                : ""
-                            }
-                          />
-                        </Grid>
-                      )}
+                      <Grid item xs={12} md={6}>
+                        <TextField
+                          autoComplete="age"
+                          size="small"
+                          name="age"
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          fullWidth
+                          id="age"
+                          label="Age"
+                          value={age}
+                        />
+                      </Grid>
+
                       <Grid item xs={12}>
                         <FormControl
                           fullWidth
@@ -933,14 +896,16 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           </FormHelperText>
                         </FormControl>
                       </Grid>
-
                       {/* /// Address */}
+
                       <Grid item xs={12}>
+                        <Typography component="h5" sx={{ m: "16px 0px" }}>
+                          Address:
+                        </Typography>
                         <TextField
                           autoComplete="street"
                           size="small"
                           name="address.street"
-                          required
                           fullWidth
                           id="street"
                           label="Street"
@@ -950,34 +915,64 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           value={values?.address?.street}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          error={
-                            touchedValue?.address?.street &&
-                            errorsValue?.address?.street
-                              ? true
-                              : false
-                          }
-                          helperText={
-                            touchedValue?.address?.street &&
-                            errorsValue?.address?.street
-                              ? errorsValue?.address?.street
-                              : ""
-                          }
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          autoComplete="city"
+                          size="small"
+                          name="address.city"
+                          fullWidth
+                          id="city"
+                          label="City"
+                          InputProps={{
+                            readOnly: !editMode,
+                          }}
+                          value={values?.address?.city}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
                         />
                       </Grid>
 
-                      {/* // Address CountyStateCity.in */}
-                      {/* <UserCountryState
-                        values={values}
-                        sendValues={getAddressData}
-                        editMode={editMode}
-                      /> */}
+                      <Grid item xs={6}>
+                        <TextField
+                          autoComplete="state"
+                          size="small"
+                          name="address.state"
+                          fullWidth
+                          id="state"
+                          label="State"
+                          InputProps={{
+                            readOnly: !editMode,
+                          }}
+                          value={values?.address?.state}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                      </Grid>
+
+                      <Grid item xs={6}>
+                        <TextField
+                          autoComplete="country"
+                          size="small"
+                          name="address.country"
+                          fullWidth
+                          id="country"
+                          label="Country"
+                          InputProps={{
+                            readOnly: !editMode,
+                          }}
+                          value={values?.address?.country}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                        />
+                      </Grid>
 
                       <Grid item xs={12} md={6}>
                         <TextField
                           autoComplete="pin"
                           size="small"
                           name="address.pincode"
-                          required
                           fullWidth
                           id="pin"
                           label="Pin"
@@ -987,18 +982,6 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           value={values?.address?.pincode}
                           onBlur={handleBlur}
                           onChange={handleChange}
-                          error={
-                            touchedValue?.address?.pincode &&
-                            errorsValue?.address?.pincode
-                              ? true
-                              : false
-                          }
-                          helperText={
-                            touchedValue?.address?.pincode &&
-                            errorsValue?.address?.pincode
-                              ? errorsValue?.address?.pincode
-                              : ""
-                          }
                         />
                       </Grid>
                     </Grid>
@@ -1018,7 +1001,9 @@ const UserForm: React.FunctionComponent<IUserFormProps> = ({
                           : values?.mobile == checkMob && isValid
                           ? false
                           : verifiedStatus && isValid
-                          ? false
+                          ? isAddingCustomer
+                            ? !dirty
+                            : false
                           : true
                       }
                     >

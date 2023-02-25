@@ -26,6 +26,8 @@ export const createFD = (values: User) => {
   values?.avatar && fd.append("avatar", values?.avatar as string);
   values?.status && fd.append("status", values?.status as string);
   values?.gender && fd.append("gender", values?.gender as string);
+  values?.designation &&
+    fd.append("designation", values?.designation as string);
   values?.dob && fd.append("dob", values?.dob as unknown as string);
 
   return fd;
