@@ -278,6 +278,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
   return (
     <Grid>
+      <Outlet />
       <Helmet>
         <title>{tourDetails?.title}</title>
         <meta name="description" content={tourDetails?.tourDesc} />
@@ -288,7 +289,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         handleOpen={handleLoginOpen}
         handleClose={handleLoginClose}
       />
-      ========
+
       {/* *******************slides of karshmir image ********************/}
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>

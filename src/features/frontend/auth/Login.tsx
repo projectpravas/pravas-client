@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import TourService from "../../../services/TourService";
 import { Helmet } from "react-helmet-async";
 import LoginCard from "./LoginCard";
+import { Paper } from "@mui/material";
 
 const theme = createTheme();
 
@@ -51,8 +52,17 @@ const Login = () => {
               backgroundPosition: "center",
             }}
           />
-
-          <LoginCard />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={1}
+            square
+          >
+            <LoginCard />
+          </Grid>
         </Grid>
       </ThemeProvider>
     </>
