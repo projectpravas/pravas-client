@@ -41,7 +41,7 @@ const SidebarRoutes: React.FunctionComponent<ISidebarRoutesProps> = (props) => {
                       );
                     })}
               </Route>
-              {/* <Route path="*" element={<PageNotFound />} /> */}
+              <Route path="*" element={<PageNotFound />} />
             </React.Fragment>
           ))}
       </Routes>
