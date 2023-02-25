@@ -8,7 +8,7 @@ import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
 import BlogService from "../../../services/BlogService";
 import ReviewSection from "../pravas/ReviewSection";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 interface IBlogsProps {}
 
@@ -34,55 +34,64 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
   React.useEffect(() => {
     loadBlogs();
   }, []);
+  const { pathname } = useLocation();
+
+  const showBlogs =
+    pathname.split("/")[pathname.split("/").length - 1] == "blogs";
 
   return (
     <>
       <Outlet />
-      <Helmet>
-        <title>Pravas Blogs</title>
-        <meta name="description" content="Pravas Tourism Blogs" />
-        <meta name="keywords" content="Pravas Tourism Blogs" />
-        <link rel="canonical" href="/blogs" />
-      </Helmet>
-      <Container>
-        <Grid item>
-          <Grid
-            container
-            padding={1}
-            paddingY={6}
-            justifyContent="space-evenly"
-          >
-            {Array.isArray(data) &&
-              currentPosts.map((blog, i) => (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  key={blog?.title + i}
-                  sx={{ pt: 3 }}
-                >
-                  <BlogPost
-                    id={blog?._id}
-                    image={blog?.image}
-                    title={blog?.title}
-                    desc={blog?.richText}
-                    category={blog?.categories}
-                  />
-                </Grid>
-              ))}
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Pagination
-            totalPosts={data.length}
-            postsPerPage={postPerPage}
-            setCurrentPage={setCurrentPage}
-          />
-        </Grid>
-      </Container>
-      <AddBlog />
-      <FAQ />
+
+      {showBlogs && (
+        <>
+          <Helmet>
+            <title>Pravas Blogs</title>
+            <meta name="description" content="Pravas Tourism Blogs" />
+            <meta name="keywords" content="Pravas Tourism Blogs" />
+            <link rel="canonical" href="/blogs" />
+          </Helmet>
+          <Container>
+            <Grid item>
+              <Grid
+                container
+                padding={1}
+                paddingY={6}
+                justifyContent="space-evenly"
+              >
+                {Array.isArray(data) &&
+                  currentPosts.map((blog, i) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      key={blog?.title + i}
+                      sx={{ pt: 3 }}
+                    >
+                      <BlogPost
+                        id={blog?._id}
+                        image={blog?.image}
+                        title={blog?.title}
+                        desc={blog?.richText}
+                        category={blog?.categories}
+                      />
+                    </Grid>
+                  ))}
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Pagination
+                totalPosts={data.length}
+                postsPerPage={postPerPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </Grid>
+          </Container>
+          <AddBlog />
+          <FAQ />
+        </>
+      )}
 
       {/* **********************Review section right************ */}
     </>

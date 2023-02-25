@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import OwlCarousel from "react-owl-carousel";
-import "../../../ui/owl-carousel/owl.css";
+import "../../../ui/owl-carousel/owl.module.css";
 import Container from "@mui/material/Container";
 import PravasPackageCard from "../pravas/PravasPackageCard";
 import TourService from "../../../services/TourService";
