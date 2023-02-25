@@ -3,7 +3,7 @@ import Container from "@mui/material/Container";
 import * as React from "react";
 import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
 import BlogService from "../../../services/BlogService";
@@ -40,15 +40,9 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
         <title>Pravas Blogs</title>
         <meta name="description" content="Pravas Tourism Blogs" />
         <meta name="keywords" content="Pravas Tourism Blogs" />
+        <link rel="canonical" href="/blogs" />
       </Helmet>
-      <Container
-      // sx={{
-      //   display: "flex",
-      //   flexDirection: "column",
-      //   justifyContent: "center",
-      //   alignItems: "center",
-      // }}
-      >
+      <Container>
         <Grid item>
           <Grid
             container

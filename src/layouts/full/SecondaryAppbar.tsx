@@ -58,8 +58,8 @@ const SecondaryAppbar = (props: any) => {
               ml: -4,
               zIndex: 2,
               backgroundColor: "#faf5ee",
-              boxShadow:
-                "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
+              // boxShadow:
+              //   "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
             }}
           >
             {/* <Grid item>

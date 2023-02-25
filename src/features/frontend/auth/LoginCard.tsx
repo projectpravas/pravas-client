@@ -61,7 +61,7 @@ const LoginCard: React.FunctionComponent<ILoginCardProps> = (props) => {
     event.preventDefault();
   };
   return (
-    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={1} square>
+    <Grid item>
       <Formik
         initialValues={initialUser}
         enableReinitialize
@@ -80,7 +80,12 @@ const LoginCard: React.FunctionComponent<ILoginCardProps> = (props) => {
               setLoginChkBox(false);
               dispatch(addLoggedUser(res?.data?.data));
               resetForm({});
-              defaultLogin && navigate("/secured");
+              defaultLogin &&
+                navigate(
+                  res?.data?.data?.role != "customer"
+                    ? "/secured"
+                    : "/secured/pravas/my-tours"
+                );
             })
             .catch((err) => {
               resetForm({

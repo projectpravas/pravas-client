@@ -1,0 +1,32 @@
+.owl-review-nav .owl-nav button {
+  display: block;
+  height: 48px;
+  width: 48px;
+  border-radius: 48px;
+  font-size: 33px;
+  border: 1px solid;
+  padding: 0px;
+  color: #ec1212;
+  background-color: rgb(21, 54, 9);
+  box-shadow: 1px 1.5px 3px 0 rgba(0, 0, 0, 0.14),
+    0 2px 3px 0 rgba(0, 0, 0, 0.19);
+  /* display: none; */
+}
+.owl-review-nav {
+  position: "absolute";
+  height: 270px;
+}
+.owl-nav {
+  color: #ec1212;
+  width: 55vw;
+  position: absolute;
+  top: 15%;
+}
+
+button.owl-prev {
+  float: left;
+}
+
+button.owl-next {
+  float: right;
+}

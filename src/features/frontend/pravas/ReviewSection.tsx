@@ -91,7 +91,7 @@ const ReviewSection: React.FC<IReviewSectionProps> = () => {
               <Rating
                 name="rating"
                 defaultValue={0}
-                precision={1}
+                precision={0.5}
                 // value={singleReview?.rating}
                 onChange={handleChange}
               />

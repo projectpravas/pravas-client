@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
 import PravasPackageCard from "./PravasPackageCard";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
@@ -32,6 +32,7 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
         <title>Pravas Tours</title>
         <meta name="description" content="Pravas Tourism" />
         <meta name="keywords" content="Pravas Tourism" />
+        <link rel="canonical" href="/pravas" />
       </Helmet>
       <Container>
         <Grid container marginY={10}>

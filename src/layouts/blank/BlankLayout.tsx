@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import routes from "../../shared/routes/FrontendRoutes";
+import PageNotFound from "../../ui/404/PageNotFound";
 
 import Footer from "../../ui/footer/Footer";
 import Loader from "../../ui/loader/Loader";
@@ -22,6 +23,7 @@ const BlankLayout: React.FunctionComponent<IBlankLayoutProps> = (props) => {
                 element={route?.component}
               />
             ))}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
       <Footer />

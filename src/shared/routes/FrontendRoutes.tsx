@@ -87,13 +87,7 @@ export default [
     showInMenu: false,
     hasAuthenticate: "no",
   },
-  {
-    label: "Blog Details",
-    component: <BlogDetails />,
-    path: "home/:id",
-    showInMenu: false,
-    hasAuthenticate: "no",
-  },
+
   {
     label: "Contact Us",
     component: <ContactUs />,
