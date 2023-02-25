@@ -48,6 +48,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     padding: "0 4px",
   },
 }));
+
 const NLink = styled(Grid)({
   transition: "0.7s ease-in-out",
   "&:hover": {

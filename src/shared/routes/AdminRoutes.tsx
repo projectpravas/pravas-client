@@ -12,7 +12,7 @@ import Enquiries from "../../features/admin/enquiries/Enquiries";
 
 const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
 const MyTours = lazy(
-  () => import("../../features/admin/pravas/my-tours/Mytours")
+  () => import("../../features/admin/pravas/my-tours/MyTours")
 );
 const TourAndPackageForm = lazy(
   () => import("../../features/admin/pravas/TourAndPackageForm")
