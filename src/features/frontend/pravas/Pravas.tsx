@@ -28,6 +28,7 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
 
   return (
     <>
+      <Outlet />
       <Helmet>
         <title>Pravas Tours</title>
         <meta name="description" content="Pravas Tourism" />

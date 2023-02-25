@@ -102,7 +102,7 @@ const ExploreReviewCarousal: React.FunctionComponent<
                       <Rating
                         name="half-rating-read"
                         defaultValue={v?.rating}
-                        precision={0.1}
+                        precision={1}
                         readOnly
                       />
                     </>

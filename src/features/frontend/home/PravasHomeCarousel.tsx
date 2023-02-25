@@ -4,7 +4,7 @@ import "../../../ui/owl-carousel/owl.css";
 import Container from "@mui/material/Container";
 import PravasPackageCard from "../pravas/PravasPackageCard";
 import TourService from "../../../services/TourService";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addAllTours } from "../../../app/slices/TourSlice";
 import PravasCardList from "../pravas/PravasCardList";
@@ -86,6 +86,7 @@ const PravasHomeCarousel: React.FunctionComponent<
               })} */}
           <PravasCardList />
         </OwlCarousel>
+        <Outlet />
       </Container>
     </>
   );

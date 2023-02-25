@@ -19,7 +19,7 @@ const SidebarRoutes: React.FunctionComponent<ISidebarRoutesProps> = (props) => {
         {Array.isArray(routes) &&
           routes.map((route, i) => (
             <React.Fragment key={route?.path + i}>
-              <Route path={`${route?.path}`} element={route?.component}>
+              <Route path={`${route?.path}/*`} element={route?.component}>
                 {Array.isArray(route?.subMenus) &&
                   route?.subMenus
                     .filter((route) =>

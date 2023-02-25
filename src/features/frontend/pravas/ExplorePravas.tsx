@@ -278,6 +278,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
   return (
     <Grid>
+      <Outlet />
       <Helmet>
         <title>{tourDetails?.title}</title>
         <meta name="description" content={tourDetails?.tourDesc} />

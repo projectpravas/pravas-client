@@ -8,6 +8,7 @@ import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
 import BlogService from "../../../services/BlogService";
 import ReviewSection from "../pravas/ReviewSection";
+import { Outlet } from "react-router-dom";
 
 interface IBlogsProps {}
 
@@ -36,6 +37,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
 
   return (
     <>
+      <Outlet />
       <Helmet>
         <title>Pravas Blogs</title>
         <meta name="description" content="Pravas Tourism Blogs" />

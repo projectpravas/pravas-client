@@ -320,7 +320,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                 <NLink item sx={{ display: "flex" }}>
                   <Typography>
                     <NavLink
-                      to={`explore/${data?._id}`}
+                      to={`/pravas/explore/${data?._id}`}
                       style={{
                         textDecoration: "none",
                         color: "#2c5799",
