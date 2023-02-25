@@ -283,39 +283,12 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         <meta name="description" content={tourDetails?.tourDesc} />
         <meta name="keywords" content={tourDetails?.tourDesc} />
       </Helmet>
-      {/* slides of karshmir image */}
-      {/* <Grid container style={{ backgroundColor: "#eee" }}>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[0]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[1]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={3}>
-          <img
-            style={{ width: "100%", height: "100%" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
-          />
-        </Grid>
-      </Grid> */}
       <LoginWindow
         open={openLoginWindowStatus}
         handleOpen={handleLoginOpen}
         handleClose={handleLoginClose}
       />
-
+      ========
       {/* *******************slides of karshmir image ********************/}
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>

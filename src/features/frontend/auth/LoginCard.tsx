@@ -206,17 +206,7 @@ const LoginCard: React.FunctionComponent<ILoginCardProps> = (props) => {
                       }
                     />
                   </Grid>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        value="remember"
-                        color="primary"
-                        onChange={() => setLoginChkBox(!loginChkBox)}
-                        checked={loginChkBox}
-                      />
-                    }
-                    label="Remember me"
-                  />
+
                   <Button
                     type="submit"
                     fullWidth
