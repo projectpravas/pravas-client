@@ -548,6 +548,24 @@ const Register = () => {
                               }
                             />
                           </Grid>
+                          <Grid item xs={12}>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  color="primary"
+                                  id="signUpCheckbox"
+                                  name="signUpCheckbox"
+                                  value={signUpCheckbox}
+                                  onBlur={handleBlur}
+                                  onChange={() =>
+                                    setSignUpCheckbox(!signUpCheckbox)
+                                  }
+                                  checked={signUpCheckbox}
+                                />
+                              }
+                              label="I have provided valid Mobile number and Email to contact me"
+                            />
+                          </Grid>
                         </Grid>
                         <Button
                           type="submit"

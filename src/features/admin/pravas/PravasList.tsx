@@ -20,11 +20,10 @@ import TourModel from "../../../shared/models/tourModel";
 import TourService from "../../../services/TourService";
 import ParticipantsDialogue from "./ParticipantsDialogue";
 import CustomTitle from "../../../ui/title/CustomTitle";
-import { margin } from "@mui/system";
 
 interface IPravasListProps {
   title: string;
-  data: object[];
+  data: TourModel[];
   loadTours: Function;
 }
 
@@ -108,7 +107,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
   const columns = [
     {
       label: "Sr No",
-      name: "tourId",
+      name: "_id",
       options: {
         filter: false,
         sort: true,
@@ -214,43 +213,39 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
             ? {
                 names: ["completed", "upcoming", "ongoing"],
 
-                logic: (value: any, filters: any, data: any) => {
-                  const days = data.find((v: any) => {
-                    if (v?.days) return v;
-                  }).days
-                    ? data.find((v: any) => {
-                        if (v?.days) return v;
-                      }).days
-                    : 0;
+                logic: (value: any, filters: any, metaData: any) => {
+                  const tour: any = data.find((t) => t?._id == metaData[0]);
+                  const days = tour?.duration?.days ? tour?.duration?.days : 0;
 
                   const startDate = new Intl.DateTimeFormat("en-US").format(
-                    new Date(value)
+                    new Date(tour?.tourDate)
                   );
                   const lastDate = new Intl.DateTimeFormat("en-US").format(
                     new Date(
-                      new Date(value).setDate(
-                        new Date(value).getDate() + Number(days)
+                      new Date(tour?.tourDate).setDate(
+                        new Date(tour?.tourDate).getDate() + Number(days)
                       )
                     )
                   );
+
                   const today = new Intl.DateTimeFormat("en-US").format(
                     new Date(Date.now())
                   );
 
                   if (filters.includes("completed")) {
-                    if (!(lastDate < today)) {
+                    if (lastDate > today) {
+                      return data;
+                    }
+                  }
+
+                  if (filters.includes("ongoing")) {
+                    if (!(startDate <= today && today <= lastDate)) {
                       return data;
                     }
                   }
 
                   if (filters.includes("upcoming")) {
                     if (startDate <= today) {
-                      return data;
-                    }
-                  }
-
-                  if (filters.includes("ongoing")) {
-                    if (!(startDate < today && today < lastDate)) {
                       return data;
                     }
                   }
@@ -274,7 +269,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
 
         customBodyRender: (value: any, metaData: any) => {
           const tour: TourModel = data.find(
-            (tour: TourModel) => tour?.tourId == metaData.rowData[0]
+            (tour: TourModel) => tour?._id == metaData.rowData[0]
           ) as TourModel;
           const lastDate = new Date(
             new Date(`${tour?.tourDate}`).setDate(
