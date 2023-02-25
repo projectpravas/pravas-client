@@ -23,8 +23,9 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
 
   const MyCard = styled(Card)({
     ":hover": { boxShadow: "0.5px 0.5px 20px grey" },
-    maxWidth: "18%",
-    maxHeight: "60%",
+    maxWidth: "50%",
+    maxHeight: "50%",
+    justifyContent: "center",
   });
 
   const typoName = {
@@ -97,7 +98,7 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
         items: 2,
       },
       1000: {
-        items: 2,
+        items: 4,
       },
     },
   };
@@ -319,57 +320,71 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
               height: "70%",
               width: "100%",
               alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "lightgray",
               // padding: "6%",
             }}
           >
-            <Typography
-              sx={{
-                fontSize: "50px",
-                display: "flex",
-                justifyContent: "center",
-                fontWeight: 700,
-                lineHeight: 1.2,
-                marginBottom: "3%",
-                color: "#2e2e3e",
-              }}
-            >
-              Meet the Team
-            </Typography>
-
-            <Item
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                bgcolor: "transparent",
-              }}
-            >
-              <OwlCarousel
-                className="owl-theme owl-carousel owl-nav-pravas"
-                {...options}
+            <Grid>
+              <Typography
+                sx={{
+                  fontSize: "50px",
+                  display: "flex",
+                  justifyContent: "center",
+                  fontWeight: 700,
+                  lineHeight: 1.2,
+                  marginBottom: "3%",
+                  color: "#2e2e3e",
+                }}
               >
-                <MyCard>
-                  <CardMedia
-                    component="img"
-                    height="250rem"
-                    image="https://pravasthejourney.com/wp-content/uploads/2022/06/Akshay.jpg"
-                    alt="green iguana"
-                  />
-                  <Typography sx={typoName}>Akshay</Typography>
-                  <Typography sx={typePosition}>DIRECTOR</Typography>
-                </MyCard>
+                Meet the Team
+              </Typography>
+              <Item
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  bgcolor: "transparent",
+                }}
+              >
+                <OwlCarousel
+                  className="owl-theme owl-carousel owl-nav-team"
+                  {...options}
+                >
+                  <MyCard>
+                    <CardMedia
+                      component="img"
+                      height="200px"
+                      image="https://pravasthejourney.com/wp-content/uploads/2022/06/Akshay.jpg"
+                      alt="green iguana"
+                    />
+                    <Typography sx={typoName}>Akshay</Typography>
+                    <Typography sx={typePosition}>DIRECTOR</Typography>
+                  </MyCard>
 
-                <MyCard>
-                  <CardMedia
-                    component="img"
-                    height="250rem"
-                    image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
-                    alt="green iguana"
-                  />
-                  <Typography sx={typoName}>Asha</Typography>
-                  <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
-                </MyCard>
-              </OwlCarousel>
-            </Item>
+                  <MyCard>
+                    <CardMedia
+                      component="img"
+                      height="200px"
+                      image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
+                      alt="green iguana"
+                    />
+                    <Typography sx={typoName}>Asha</Typography>
+                    <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
+                  </MyCard>
+
+                  <MyCard>
+                    <CardMedia
+                      component="img"
+                      height="200px"
+                      image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
+                      alt="green iguana"
+                    />
+                    <Typography sx={typoName}>Asha </Typography>
+                    <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
+                  </MyCard>
+                </OwlCarousel>
+              </Item>
+            </Grid>
           </Box>
         </Grid>
       </Container>

@@ -61,7 +61,6 @@ import LoginWindow from "../../../ui/loginwindow/LoginWindow";
 
 import ShareButtonBooking from "./ShareButtonBooking";
 
-
 const options = {
   lazyLoad: true,
   loop: true,
@@ -312,10 +311,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         handleOpen={handleLoginOpen}
         handleClose={handleLoginClose}
       />
-=======
 
       {/* *******************slides of karshmir image ********************/}
-
 
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>

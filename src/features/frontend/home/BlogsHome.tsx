@@ -63,7 +63,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
       <Container>
         <OwlCarousel
           {...options}
-          className="owl-theme owl-carousel nav-btn"
+          className="owl-theme owl-carousel owl-nav-blogs"
           lazyLoad={true}
           loop
           dots={false}

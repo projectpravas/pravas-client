@@ -34,12 +34,14 @@ const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
     const filterData: any = data.filter((item: any) => {
       if (item.heading === itemHead) setImages([...item.image]);
     });
+    console.log("filtered data", filterData);
   };
 
   return (
     <Grid>
       <Grid
         item
+        marginTop={"15rem"}
         marginLeft={{ xs: "20px", sm: "75px", md: "70px", lg: "120px" }}
       >
         {collectionHead.map((itemHead: string, i: number) => (

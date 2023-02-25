@@ -2,7 +2,6 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -25,9 +24,9 @@ import { ResponsiveContainer } from "recharts";
 const options = {
   lazyLoad: true,
   loop: true,
-  autoplay: true,
+  autoplay: false,
   autoplayHoverPause: true,
-  margin: 20,
+  margin: 30,
   responsiveClass: true,
   nav: true,
   dots: false,
@@ -46,7 +45,7 @@ const options = {
       items: 2,
     },
     1000: {
-      items: 4,
+      items: 3,
     },
   },
 };
@@ -60,9 +59,10 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = (
     <>
       <Container>
         <OwlCarousel
-          className=" owl-stage-review owl-nav MuiPaper-root "
+          className="owl-theme owl-carousel owl-nav-review"
           {...options}
           autoPlay={true}
+          nav
         >
           <Box sx={{ padding: "10px" }}>
             <Card>
