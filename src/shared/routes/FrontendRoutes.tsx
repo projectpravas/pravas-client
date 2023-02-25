@@ -74,13 +74,6 @@ export default [
       },
     ],
   },
-  // {
-  //   label: "Explore Details",
-  //   component: <ExplorePravas />,
-  //   path: "explore/:id",
-  //   showInMenu: false,
-  //   hasAuthenticate: "all",
-  // },
 
   {
     label: "Blogs",
@@ -98,13 +91,6 @@ export default [
       },
     ],
   },
-  // {
-  //   label: "Blog Details",
-  //   component: <BlogDetails />,
-  //   path: "blogs/:id",
-  //   showInMenu: false,
-  //   hasAuthenticate: "no",
-  // },
 
   {
     label: "Contact Us",
