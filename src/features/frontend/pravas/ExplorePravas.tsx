@@ -1086,6 +1086,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       )}
                   </AccordionDetails>
                 </Accordion>
+                {/* reviews */}
+                <ReviewSection />
               </div>
             </Box>
           </Grid>
@@ -1145,7 +1147,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
-      <ReviewSection />
       {/* Package Card Carousel  */}
       <Container>
         {/* <PravasHomeCarousel /> */}

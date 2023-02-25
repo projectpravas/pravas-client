@@ -77,22 +77,17 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
           {Array.isArray(data) &&
             data?.map((blog, i) => {
               return (
-                <div
-                  style={{ margin: "0 -2" }}
-                  onClick={() => navigate(`/blogs/details/${blog?._id}`)}
-                >
-                  <BlogPost
-                    id={blog?._id}
-                    image={blog?.image}
-                    title={blog?.title}
-                    desc={blog?.richText}
-                    key={blog?._id + i}
-                    category={blog?.categories}
-                  />
-                </div>
+                <BlogPost
+                  id={blog?._id}
+                  image={blog?.image}
+                  title={blog?.title}
+                  desc={blog?.richText}
+                  key={blog?._id + i}
+                  category={blog?.categories}
+                />
               );
             })}
-        </OwlCarousel>{" "}
+        </OwlCarousel>
       </Container>
       {/* </Grid>  */}
     </>
