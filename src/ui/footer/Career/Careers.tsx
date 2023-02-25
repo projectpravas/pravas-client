@@ -2,7 +2,7 @@ import * as React from "react";
 import { Container, Grid, Paper } from "@mui/material";
 import CareerCard from "./CareerCard";
 import { careerDetails } from "./CareerData";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 interface ICareersProps {}
 
@@ -13,6 +13,7 @@ const Careers: React.FunctionComponent<ICareersProps> = (props) => {
         <title>Pravas Careers</title>
         <meta name="description" content="Careers With Us" />
         <meta name="keywords" content="Pravas Tourism Careers" />
+        <link rel="canonical" href="/careers" />
       </Helmet>
       <Container sx={{ py: 4 }}>
         <Grid container justifyContent="center">

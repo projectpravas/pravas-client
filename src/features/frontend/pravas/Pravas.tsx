@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
 import PravasPackageCard from "./PravasPackageCard";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";

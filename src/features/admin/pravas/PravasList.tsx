@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import UserService from "../../../services/UserService";
 import User from "../../../shared/models/userModel";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Chip, MenuItem, Select } from "@mui/material";
+import { Chip, Grid, MenuItem, Select } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import NoteAddRoundedIcon from "@mui/icons-material/NoteAddRounded";
@@ -19,6 +19,8 @@ import Container from "@mui/material/Container";
 import TourModel from "../../../shared/models/tourModel";
 import TourService from "../../../services/TourService";
 import ParticipantsDialogue from "./ParticipantsDialogue";
+import CustomTitle from "../../../ui/title/CustomTitle";
+import { margin } from "@mui/system";
 
 interface IPravasListProps {
   title: string;
@@ -190,7 +192,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         filter: false,
         sort: false,
         customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
-          const tour: any = data[rowIndex];
+          const tour: any = data[dataIndex];
           return (
             <>
               {tour?.duration?.days}D{tour?.duration?.nights}N
@@ -271,7 +273,9 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               },
 
         customBodyRender: (value: any, metaData: any) => {
-          const tour: TourModel = data[metaData.rowIndex];
+          const tour: TourModel = data.find(
+            (tour: TourModel) => tour?.tourId == metaData.rowData[0]
+          ) as TourModel;
           const lastDate = new Date(
             new Date(`${tour?.tourDate}`).setDate(
               new Date(`${tour?.tourDate}`).getDate() +
@@ -285,6 +289,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               : lastDate < new Date()
               ? "completed"
               : "ongoing";
+          console.log("status", metaData);
 
           return (
             <>
@@ -307,11 +312,6 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
                           ? "#00a300"
                           : "#b32800"
                         : "#fff",
-                    //     : statusVal == "upcoming"
-                    //     ? "#c9e9ff"
-                    //     : statusVal == "completed"
-                    //     ? "#b32800"
-                    //     : "#00a300",
                   }}
                   label={
                     tour?.category == "package"
@@ -325,15 +325,6 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
                     handleStatus("status", value, tour)
                   }
                 />
-
-                //    { tour?.category == "package"
-                //       ? value == "active"
-                //         ? "active"
-                //         : "inactive"
-                //       : statusVal
-                // }
-
-                // </Chip>
               }
             </>
           );
@@ -388,8 +379,8 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       options: {
         filter: false,
         sort: false,
-        customBodyRenderLite: (index: number) => {
-          const tour: TourModel = data[index];
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          const tour: TourModel = data[dataIndex];
           const lastDate = new Date(
             new Date(`${tour?.tourDate}`).setDate(
               new Date(`${tour?.tourDate}`).getDate() +
@@ -436,8 +427,8 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       options: {
         filter: true,
         sort: true,
-        customBodyRenderLite: (index: number) => {
-          const tour: TourModel = data[index];
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          const tour: TourModel = data[dataIndex];
           return (
             <Box sx={{ display: "flex" }}>
               <IconButton
@@ -485,8 +476,10 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
             status={dialogTourStatus}
           />
         )}
+        {/* <CustomTitle title={title} /> */}
         <MUIDataTables
-          title={title}
+          title={<h3>{title}</h3>}
+          // title={title}
           columns={
             category == "tour"
               ? (columns?.filter(

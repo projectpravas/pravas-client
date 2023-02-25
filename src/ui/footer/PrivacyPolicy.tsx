@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import styled from "@emotion/styled";
 import ListItem from "@mui/material/ListItem";
 import Typography from "@mui/material/Typography";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 interface IPrivacyPolicyProps {}
 
@@ -38,6 +38,7 @@ const PrivacyPolicy: React.FunctionComponent<IPrivacyPolicyProps> = (props) => {
         <title>Privacy Policy</title>
         <meta name="description" content="Privacy Policy" />
         <meta name="keywords" content="Privacy Policy" />
+        <link rel="canonical" href="/privacy-policy" />
       </Helmet>
       <Grid sx={{ marginBottom: "6%" }}>
         <Typography

@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import { CardMedia } from "@mui/material";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { Container } from "@mui/system";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
@@ -108,6 +108,7 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
         <title>About Pravas Tourism</title>
         <meta name="description" content="About Pravas Tourism" />
         <meta name="keywords" content="About Pravas Tourism" />
+        <link rel="canonical" href="/about-us" />
       </Helmet>
       <Container>
         <Grid container sx={{ flexWrap: "wrap", margin: "2% 0 8% 0" }}>

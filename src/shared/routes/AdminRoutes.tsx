@@ -26,7 +26,7 @@ const Dashboard = lazy(
 );
 const Bookings = lazy(() => import("../../features/admin/bookings/Bookings"));
 const Quotes = lazy(() => import("../../features/admin/enquiries/Enquiries"));
-const Records = lazy(() => import("../../features/admin/records/Records"));
+const Blogs = lazy(() => import("../../features/admin/records/Blogs"));
 const Users = lazy(() => import("../../features/admin/users/Users"));
 const UserProfile = lazy(
   () => import("../../features/admin/user-profile/UserProfile")
@@ -125,10 +125,10 @@ export default [
     roles: ["admin", "superAdmin"],
   },
   {
-    label: "Records",
-    component: <Records />,
+    label: "Blogs",
+    component: <Blogs />,
     icon: <ReceiptLongIcon />,
-    path: "records",
+    path: "blogs",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin"],
