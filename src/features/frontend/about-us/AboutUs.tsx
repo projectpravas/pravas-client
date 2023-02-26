@@ -9,7 +9,9 @@ import { Helmet } from "react-helmet-async";
 import { Container } from "@mui/system";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
-import "../../../ui/owl-carousel/owl.css";
+// import "../../../ui/owl-carousel/owl.css";
+import "../../../ui/owl-carousel/owl.module.css";
+
 interface IAboutUsProps {}
 
 const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {

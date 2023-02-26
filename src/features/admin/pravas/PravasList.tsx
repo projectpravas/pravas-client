@@ -284,6 +284,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               : lastDate < new Date()
               ? "completed"
               : "ongoing";
+          console.log("status", metaData);
 
           return (
             <>

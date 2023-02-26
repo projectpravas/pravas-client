@@ -67,7 +67,7 @@ import Carousel from "react-material-ui-carousel";
 import { Paper, Button, Box, Grid } from "@mui/material";
 
 interface ILocationClickProps {
-  items: Array<string>;
+  items: Array<any>;
 }
 
 const LocationClick: React.FunctionComponent<ILocationClickProps> = ({
