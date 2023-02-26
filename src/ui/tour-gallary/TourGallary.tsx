@@ -36,12 +36,14 @@ const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
         setImages([...item.image]);
       }
     });
+    console.log("filtered data", filterData);
   };
 
   return (
     <Grid style={{ marginTop: "500px" }}>
       <Grid
         item
+        // marginTop={"15rem"}
         marginLeft={{ xs: "20px", sm: "75px", md: "70px", lg: "120px" }}
       >
         <Button variant="contained" onClick={() => setImages(reqdata)}>
