@@ -291,6 +291,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       />
 
       {/* *******************slides of karshmir image ********************/}
+
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
           <img
