@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import UserService from "../../../services/UserService";
 import User from "../../../shared/models/userModel";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Chip, MenuItem, Select } from "@mui/material";
+import { Chip, Grid, MenuItem, Select } from "@mui/material";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import NoteAddRoundedIcon from "@mui/icons-material/NoteAddRounded";
@@ -19,10 +19,11 @@ import Container from "@mui/material/Container";
 import TourModel from "../../../shared/models/tourModel";
 import TourService from "../../../services/TourService";
 import ParticipantsDialogue from "./ParticipantsDialogue";
+import CustomTitle from "../../../ui/title/CustomTitle";
 
 interface IPravasListProps {
   title: string;
-  data: object[];
+  data: TourModel[];
   loadTours: Function;
 }
 
@@ -106,7 +107,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
   const columns = [
     {
       label: "Sr No",
-      name: "tourId",
+      name: "_id",
       options: {
         filter: false,
         sort: true,
@@ -190,7 +191,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
         filter: false,
         sort: false,
         customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
-          const tour: any = data[rowIndex];
+          const tour: any = data[dataIndex];
           return (
             <>
               {tour?.duration?.days}D{tour?.duration?.nights}N
@@ -212,43 +213,39 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
             ? {
                 names: ["completed", "upcoming", "ongoing"],
 
-                logic: (value: any, filters: any, data: any) => {
-                  const days = data.find((v: any) => {
-                    if (v?.days) return v;
-                  }).days
-                    ? data.find((v: any) => {
-                        if (v?.days) return v;
-                      }).days
-                    : 0;
+                logic: (value: any, filters: any, metaData: any) => {
+                  const tour: any = data.find((t) => t?._id == metaData[0]);
+                  const days = tour?.duration?.days ? tour?.duration?.days : 0;
 
                   const startDate = new Intl.DateTimeFormat("en-US").format(
-                    new Date(value)
+                    new Date(tour?.tourDate)
                   );
                   const lastDate = new Intl.DateTimeFormat("en-US").format(
                     new Date(
-                      new Date(value).setDate(
-                        new Date(value).getDate() + Number(days)
+                      new Date(tour?.tourDate).setDate(
+                        new Date(tour?.tourDate).getDate() + Number(days)
                       )
                     )
                   );
+
                   const today = new Intl.DateTimeFormat("en-US").format(
                     new Date(Date.now())
                   );
 
                   if (filters.includes("completed")) {
-                    if (!(lastDate < today)) {
+                    if (lastDate > today) {
+                      return data;
+                    }
+                  }
+
+                  if (filters.includes("ongoing")) {
+                    if (!(startDate <= today && today <= lastDate)) {
                       return data;
                     }
                   }
 
                   if (filters.includes("upcoming")) {
                     if (startDate <= today) {
-                      return data;
-                    }
-                  }
-
-                  if (filters.includes("ongoing")) {
-                    if (!(startDate < today && today < lastDate)) {
                       return data;
                     }
                   }
@@ -271,7 +268,9 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               },
 
         customBodyRender: (value: any, metaData: any) => {
-          const tour: TourModel = data[metaData.rowIndex];
+          const tour: TourModel = data.find(
+            (tour: TourModel) => tour?._id == metaData.rowData[0]
+          ) as TourModel;
           const lastDate = new Date(
             new Date(`${tour?.tourDate}`).setDate(
               new Date(`${tour?.tourDate}`).getDate() +
@@ -285,6 +284,7 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
               : lastDate < new Date()
               ? "completed"
               : "ongoing";
+          console.log("status", metaData);
 
           return (
             <>
@@ -307,11 +307,6 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
                           ? "#00a300"
                           : "#b32800"
                         : "#fff",
-                    //     : statusVal == "upcoming"
-                    //     ? "#c9e9ff"
-                    //     : statusVal == "completed"
-                    //     ? "#b32800"
-                    //     : "#00a300",
                   }}
                   label={
                     tour?.category == "package"
@@ -325,15 +320,6 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
                     handleStatus("status", value, tour)
                   }
                 />
-
-                //    { tour?.category == "package"
-                //       ? value == "active"
-                //         ? "active"
-                //         : "inactive"
-                //       : statusVal
-                // }
-
-                // </Chip>
               }
             </>
           );
@@ -388,8 +374,8 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       options: {
         filter: false,
         sort: false,
-        customBodyRenderLite: (index: number) => {
-          const tour: TourModel = data[index];
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          const tour: TourModel = data[dataIndex];
           const lastDate = new Date(
             new Date(`${tour?.tourDate}`).setDate(
               new Date(`${tour?.tourDate}`).getDate() +
@@ -436,8 +422,8 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
       options: {
         filter: true,
         sort: true,
-        customBodyRenderLite: (index: number) => {
-          const tour: TourModel = data[index];
+        customBodyRenderLite: (dataIndex: any, rowIndex: any) => {
+          const tour: TourModel = data[dataIndex];
           return (
             <Box sx={{ display: "flex" }}>
               <IconButton
@@ -485,8 +471,10 @@ const PravasList: React.FunctionComponent<IPravasListProps> = ({
             status={dialogTourStatus}
           />
         )}
+        {/* <CustomTitle title={title} /> */}
         <MUIDataTables
-          title={title}
+          title={<h3>{title}</h3>}
+          // title={title}
           columns={
             category == "tour"
               ? (columns?.filter(

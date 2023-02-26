@@ -14,13 +14,15 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   const showPravas =
     pathname.split("/")[pathname.split("/").length - 1] == "pravas";
 
-  const navPath =
-    pathname.split("/")[pathname.split("/").length - 1] == "pravas"
-      ? "tours"
-      : pathname.split("/")[pathname.split("/").length - 1];
-
   const navigate = useNavigate();
   const currentLoggedUser: UserModel = useSelector(selectLoggedUser);
+
+  const navPath =
+    pathname.split("/")[pathname.split("/").length - 1] == "pravas"
+      ? currentLoggedUser?.role == "customer"
+        ? "my-tours"
+        : "tours"
+      : pathname.split("/")[pathname.split("/").length - 1];
 
   const loadTours = () => {
     TourService.fetchAllTours(

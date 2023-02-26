@@ -53,22 +53,14 @@ const SecondaryAppbar = (props: any) => {
                 ? `cal(100% - 240px)`
                 : `cal(100% - 65px)`,
               position: "fixed",
-
+              minHeight: "64px",
+              alignItems: "center",
               p: 1,
               ml: -4,
               zIndex: 2,
               backgroundColor: "#faf5ee",
-              // boxShadow:
-              //   "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
             }}
           >
-            {/* <Grid item>
-              <Grid container sx={{ ml: 8 }} columnSpacing={2}>
-                <Grid item>item-1</Grid>
-                <Grid item>item-2</Grid>
-                <Grid item>item-3</Grid>
-              </Grid>
-            </Grid> */}
             <SecondaryBarMenus tabs={Array.isArray(subMenus) ? subMenus : []} />
           </Grid>
         </Paper>

@@ -61,7 +61,7 @@ const LoginCard: React.FunctionComponent<ILoginCardProps> = (props) => {
     event.preventDefault();
   };
   return (
-    <Grid item xs={12} sm={8} md={5} component={Paper} elevation={1} square>
+    <Grid item>
       <Formik
         initialValues={initialUser}
         enableReinitialize
@@ -206,17 +206,7 @@ const LoginCard: React.FunctionComponent<ILoginCardProps> = (props) => {
                       }
                     />
                   </Grid>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        value="remember"
-                        color="primary"
-                        onChange={() => setLoginChkBox(!loginChkBox)}
-                        checked={loginChkBox}
-                      />
-                    }
-                    label="Remember me"
-                  />
+
                   <Button
                     type="submit"
                     fullWidth

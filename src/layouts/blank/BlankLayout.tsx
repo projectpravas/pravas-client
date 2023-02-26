@@ -19,9 +19,18 @@ const BlankLayout: React.FunctionComponent<IBlankLayoutProps> = (props) => {
             routes.map((route, i) => (
               <Route
                 key={route.path + i}
-                path={`${route?.path}`}
+                path={`${route?.path}/*`}
                 element={route?.component}
-              />
+              >
+                {Array.isArray(route.subRoutes) &&
+                  route.subRoutes.map((v, i) => (
+                    <Route
+                      path={v.path}
+                      element={v.component}
+                      key={v.path + i}
+                    />
+                  ))}
+              </Route>
             ))}
           <Route path="*" element={<PageNotFound />} />
         </Routes>

@@ -58,7 +58,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
           }}
         >
           <NavLink
-            to={`${id}`}
+            to={`/blogs/details/${id}`}
             style={{ textDecoration: "none", color: "black" }}
           >
             <Grid container sx={{ p: 2, pb: 1.2 }} xs={12}>

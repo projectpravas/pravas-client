@@ -26,6 +26,13 @@ import UserService from "../../../services/UserService";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import TourService from "../../../services/TourService";
 import { Helmet } from "react-helmet-async";
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 
 const Link = styled(NLink)({
   textDecoration: "none",
@@ -37,6 +44,8 @@ const combineFields = {
   hasMobile: true,
   hasEmail: true,
   hasPassword: true,
+  hasDob: true,
+  hasGender: true,
 };
 
 const signupInitialUser = defineInitialUser({ ...combineFields });
@@ -411,6 +420,75 @@ const Register = () => {
                               }
                             />
                           </Grid>
+
+                          <Grid item xs={12} md={6}>
+                            <TextField
+                              type="date"
+                              autoComplete="dob"
+                              size="small"
+                              name="dob"
+                              required
+                              fullWidth
+                              id="dob"
+                              label="Date of Birth"
+                              InputLabelProps={{
+                                shrink: true,
+                              }}
+                              value={values?.dob?.toString().split("T")[0]}
+                              onBlur={handleBlur}
+                              onChange={(e: any) => {
+                                handleChange(e);
+                              }}
+                              error={touched?.dob && errors?.dob ? true : false}
+                              helperText={
+                                touched?.dob && errors?.dob ? errors?.dob : ""
+                              }
+                            />
+                          </Grid>
+
+                          <Grid item xs={12}>
+                            <FormControl
+                              size="small"
+                              fullWidth
+                              required
+                              error={
+                                touched?.gender && errors?.gender ? true : false
+                              }
+                            >
+                              <FormLabel id="gender">Gender</FormLabel>
+                              <RadioGroup
+                                row
+                                aria-labelledby="gender-radio-buttons-group-label"
+                                name="gender"
+                                value={values?.gender}
+                                onBlur={handleBlur}
+                                onChange={handleChange}
+                              >
+                                <FormControlLabel
+                                  value="male"
+                                  control={<Radio size="small" />}
+                                  label="Male"
+                                />
+                                <FormControlLabel
+                                  value="female"
+                                  control={<Radio size="small" />}
+                                  label="Female"
+                                />
+                                <FormControlLabel
+                                  value="other"
+                                  control={<Radio size="small" />}
+                                  label="Other"
+                                />
+                              </RadioGroup>
+
+                              <FormHelperText>
+                                {touched?.gender && errors?.gender
+                                  ? errors?.gender
+                                  : ""}
+                              </FormHelperText>
+                            </FormControl>
+                          </Grid>
+
                           <Grid item xs={12}>
                             <TextField
                               required
