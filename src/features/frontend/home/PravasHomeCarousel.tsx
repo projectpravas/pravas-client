@@ -1,19 +1,16 @@
 import { useState, useEffect } from "react";
 import OwlCarousel from "react-owl-carousel";
-import "../../../ui/owl-carousel/owl.module.css";
 import Container from "@mui/material/Container";
-import PravasPackageCard from "../pravas/PravasPackageCard";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addAllTours } from "../../../app/slices/TourSlice";
+
 import PravasCardList from "../pravas/PravasCardList";
 interface IPravasHomeCarouselProps {}
 
 const options = {
   lazyLoad: true,
   loop: true,
-  autoplay: false,
+  autoplay: true,
   autoplayHoverPause: true,
   margin: 30,
   responsiveClass: true,
@@ -47,7 +44,6 @@ const PravasHomeCarousel: React.FunctionComponent<
 
   const loadPackageData = () => {
     TourService.fetchAllTours().then((response) => {
-      // console.log("loadPackages", response?.data?.data);
       let packages = response?.data?.data;
       setAllPackageCardData(packages);
     });
@@ -60,7 +56,7 @@ const PravasHomeCarousel: React.FunctionComponent<
   const handleNavigation = (path: string) => {
     navigate(path);
   };
-  // console.log(allPackageCardData);
+
   return (
     <>
       <Container sx={{ mb: 3 }}>

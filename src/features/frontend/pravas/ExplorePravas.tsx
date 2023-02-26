@@ -290,6 +290,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         handleClose={handleLoginClose}
       />
       {/* *******************slides of karshmir image ********************/}
+
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
           <img

@@ -17,7 +17,7 @@ interface IHomeProps {}
 const imgZoom = {
   overflow: "hidden",
   transform: "scale(1)",
-  transition: "5s",
+  transition: "2s",
   "&:hover": {
     transform: "scale(1.1)",
     overflow: "hidden",
@@ -49,18 +49,17 @@ const typohead = {
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
-      <Outlet />
-      <Helmet>
-        <title>Pravas Tourism</title>
-        <meta name="description" content="Pravas Tourism" />
-        <meta name="keywords" content="Pravas Tourism" />
-        <link rel="canonical" href="/home" />
-      </Helmet>
+      {/* <Grid> */}
       {/* head banner */}
-      <Grid container minWidth="300px" sx={{ position: "relative" }}>
-        <Grid>
+      <Grid
+        container
+        minWidth="300px"
+        sx={{ position: "relative", justifyContent: "center", order: 1 }}
+      >
+        <Grid sx={{ height: { xs: "300px", md: "100%" } }}>
           <img
-            src="https://pravasthejourney.com/wp-content/uploads/2022/09/Web-C2.jpg"
+            src="./banner-2.webp"
+            style={{ objectFit: "cover" }}
             width="100%"
             height="100%"
             alt="not"
@@ -87,12 +86,12 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
           </Typography>
           <Typography
             sx={{
-              paddingTop: "4%",
+              // paddingTop: "2%",
               lineHeight: "1.86em",
               letterSpacing: "-.2px",
               fontSize: "1rem",
               position: "absolute",
-              top: { xs: "55%", md: "48%" },
+              top: { xs: "55%", md: "60%" },
               left: "8%",
               color: "#fff",
               textShadow: "0 0 10px rgb(0 0 0 / 30%)",
@@ -102,100 +101,123 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
             Travel, Be out in Nature and explore..
           </Typography>
         </Grid>
-
         {/* Search Bar  */}
-        <SearchBar />
+        <Container
+          sx={{
+            mx: "center",
+            position: "absolute",
+            bottom: { xs: "-7rem", md: "-2.3rem" },
+          }}
+        >
+          <Grid>
+            <SearchBar />
+          </Grid>
+        </Container>
       </Grid>
 
       {/* Youtube video section */}
-      <Container>
-        <Grid
-          container
-          sx={{ paddingTop: { xs: 20, sm: 17, md: 15 } }}
-          pt={18}
-          pb={10}
-          spacing={8}
-        >
-          <Grid item xs={12} md={6} sx={imgZoom}>
-            <a
-              href="https://www.youtube.com/watch?v=NYlnaBkB7RY"
-              target="blank"
-              style={{ width: "100%", height: "415px" }}
-            >
-              <img
-                width="100%"
-                src="https://pravasthejourney.com/wp-content/uploads/2022/09/omkar-mulgund.webp"
-                alt="not"
-              />
-            </a>
-          </Grid>
+      <Grid sx={{ order: 3 }}>
+        <Container>
+          <Grid
+            container
+            sx={{ paddingTop: { xs: 20, sm: 28, md: 15 } }}
+            pt={18}
+            pb={8}
+            spacing={8}
+          >
+            <Grid item xs={12} md={6} sx={imgZoom}>
+              <a
+                href="https://www.youtube.com/watch?v=NYlnaBkB7RY"
+                target="blank"
+                style={{ width: "100%", height: "415px" }}
+              >
+                <img
+                  width="100%"
+                  src="https://pravasthejourney.com/wp-content/uploads/2022/09/omkar-mulgund.webp"
+                  alt="not"
+                />
+              </a>
+            </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Typography
-              sx={{
-                fontFamily: "monospace",
-                color: "#f39100",
-                fontSize: "1.25rem",
-              }}
-            >
-              Experiance
-            </Typography>
-            <Typography
-              sx={{
-                fontWeight: 700,
-                color: "#313041",
-                lineHeight: 1.2,
-                fontSize: { xs: "2rem", md: "3rem" },
-              }}
-            >
-              WORLD OF SMILES.
-            </Typography>
-            <Typography
-              sx={{
-                paddingTop: "2.1rem",
-                paddingBottom: { xs: "1.8rem", md: "1.2rem" },
-                lineHeight: "1.86em",
-                color: "#90929b",
-                letterSpacing: ".-2px",
-              }}
-            >
-              Pravas - A chance to rush-n-crush the daily routine moreover has
-              some peaceful moments. Or get over boredom and be far from a
-              problem or stress. We will take you to the quiet place where you
-              can breathe fresh, spend quality time, revives your energy to grow
-              further. Yes, you can find all these treasures all-in-one trip.
-            </Typography>
-            <NavLink to="/about-us" style={{ textDecoration: "none" }}>
-              <Button sx={seeMore}>See More</Button>
-            </NavLink>
+            <Grid item xs={12} md={6}>
+              <Typography
+                sx={{
+                  fontFamily: "monospace",
+                  color: "#f39100",
+                  fontSize: "1.25rem",
+                }}
+              >
+                Experiance
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  color: "#313041",
+                  lineHeight: 1.2,
+                  fontSize: { xs: "2rem", md: "3rem" },
+                }}
+              >
+                WORLD OF SMILES.
+              </Typography>
+              <Typography
+                sx={{
+                  paddingTop: "2.1rem",
+                  paddingBottom: { xs: "1.8rem", md: "1.2rem" },
+                  lineHeight: "1.86em",
+                  color: "#90929b",
+                  letterSpacing: ".-2px",
+                }}
+              >
+                Pravas - A chance to rush-n-crush the daily routine moreover has
+                some peaceful moments. Or get over boredom and be far from a
+                problem or stress. We will take you to the quiet place where you
+                can breathe fresh, spend quality time, revives your energy to
+                grow further. Yes, you can find all these treasures all-in-one
+                trip.
+              </Typography>
+              <NavLink to="/about-us" style={{ textDecoration: "none" }}>
+                <Button sx={seeMore}>See More</Button>
+              </NavLink>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-
-      {/* blogs cards carousel  */}
-      <BlogsHome />
+        </Container>
+      </Grid>
 
       {/* Pravas cards carousel  */}
-      <PravasHomeCarousel />
+      <Grid sx={{ order: 2 }}>
+        <PravasHomeCarousel />
+      </Grid>
+
+      {/* Booking Steps */}
+      <Grid sx={{ marginTop: 10 }}>
+        <BookingSteps />
+      </Grid>
+
+      {/* blogs cards carousel  */}
+      <Grid sx={{ marginTop: 10 }}>
+        <BlogsHome />
+      </Grid>
 
       {/****************Review Carousel**************/}
+      <Grid order={5}>
+        <ReviewCarousel />
+      </Grid>
 
-      <ReviewCarousel />
+      {/* gallery  */}
+      <Grid sx={{ marginTop: 10 }}>
+        <TourGallery />
+      </Grid>
+
+      {/* render from top  */}
+      <StartFromTop />
 
       <Helmet>
         <title>Pravas Tourism</title>
         <meta name="description" content="Pravas Tourism" />
         <meta name="keywords" content="Pravas Tourism" />
+        <link rel="canonical" href="/home" />
       </Helmet>
-
-      {/* gallery  */}
-      <TourGallery />
-
-      {/* render from top  */}
-      <StartFromTop />
-
-      {/* Booking Steps */}
-      <BookingSteps />
+      {/* </Grid> */}
     </>
   );
 };

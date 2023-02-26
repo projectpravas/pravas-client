@@ -150,29 +150,13 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
 
   return (
     <Container>
-      {/* <NavLink
-        to={
-          navPath
-            ? `/pravas/explore/${data?._id}`
-            : `/pravas/explore/${data?._id}`
-        }
-        style={{
-          textDecoration: "none",
-          color: "#2c5799",
-          fontWeight: "bold",
+      <Grid
+        container
+        sx={{
+          fontFamily: "Poppins",
+          justifyContent: { xs: "center", sm: "left" },
         }}
-      > */}
-      {/* <div
-        onClick={() =>
-          navigate(
-            navPath
-              ? `/pravas/explore/${data?._id}`
-              : `/pravas/explore/${data?._id}`
-          )
-        }
-      > */}
-      <Grid container sx={{ fontFamily: "Poppins" }}></Grid>
-      <Grid container sx={{ fontFamily: "Poppins" }}>
+      >
         <Card
           sx={{
             padding: "15px 0px 15px 0px",
