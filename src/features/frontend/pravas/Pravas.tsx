@@ -2,7 +2,6 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-
 import PravasPackageCard from "./PravasPackageCard";
 import { Helmet } from "react-helmet-async";
 import TourService from "../../../services/TourService";

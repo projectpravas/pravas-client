@@ -37,21 +37,47 @@ const WeatherViewer: React.FunctionComponent<IWeatherViewerProps> = ({
         <Grid
           sx={{ maxWidth: "356px", border: "1px solid black", height: "356px" }}
         >
-          <Typography>
-            {cityData.EnglishName}
-            {cityData.Country.EnglishName}
-          </Typography>
-          <Box>
-            <Box>
+          <Grid container spacing={2}>
+            <Grid item>
               <Typography>
-                {Math.ceil(wData?.Temperature?.Metric?.Value)}
+                <b>City- </b>
+                {cityData.EnglishName}
               </Typography>
-              <Typography>&deg;{wData?.Temperature?.Metric?.Unit}</Typography>
-            </Box>
-            {wData.IsDayTime === true && <img src={wData?.sun} alt="sun" />}
-            {wData.IsDayTime === false && <img src={wData?.moon} alt="moon" />}
-            <Typography>{wData?.WeatherText}</Typography>
-          </Box>
+            </Grid>
+            <Grid item>
+              <Typography>
+                <b>Country- </b>
+                {cityData.Country.EnglishName}
+              </Typography>
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            sx={{ d: "flex", alignItems: "center", justifyContent: "center" }}
+          >
+            <Grid item lg={3}>
+              <Typography
+                sx={{ margin: "20px", fontSize: "2.5rem", fontWeight: 800 }}
+              >
+                {Math.ceil(wData?.Temperature?.Metric?.Value)}
+                <span>&deg;{wData?.Temperature?.Metric?.Unit}</span>
+              </Typography>
+            </Grid>
+            <Grid item lg={9}>
+              {wData.IsDayTime === true && (
+                <img src={"/sun-img.png"} alt="sun" style={{ width: "100%" }} />
+              )}
+              {wData.IsDayTime === false && (
+                <img
+                  src={"/moon-img.png"}
+                  alt="moon"
+                  style={{ width: "100%" }}
+                />
+              )}
+            </Grid>
+          </Grid>
+          <Typography>{wData?.WeatherText}</Typography>
         </Grid>
       )}
     </React.Suspense>

@@ -9,7 +9,6 @@ const PackageCardCarousel: React.FunctionComponent<
   return (
     <>
       <h3>PackageCard carousel</h3>
-      {/* <PackageCardCarousel /> */}
     </>
   );
 };

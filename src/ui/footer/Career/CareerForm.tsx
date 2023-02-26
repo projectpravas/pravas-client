@@ -1,24 +1,18 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { careerDetails } from "./CareerData";
-
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import styled from "@emotion/styled";
-
 import { Formik, Form, FormikProps } from "formik";
-
 import * as yup from "yup";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -58,7 +52,7 @@ const validationAppSchema = yup.object().shape({
     .required("Required"),
 
   age: yup.number().required("required"),
-  gender: yup.boolean().required("equired"),
+  gender: yup.string().required("equired"),
   qualification: yup.string().required("Enter valid Qualification"),
   experience: yup.number().required("Experience in year"),
 });
@@ -71,7 +65,7 @@ interface MyFormValues {
   experience: string;
   mobile: string;
   age: string;
-  uploadResume: string | File;
+
   gender: any;
 }
 
@@ -91,10 +85,7 @@ const CareerForm: React.FunctionComponent<{}> = () => {
     experience: "",
     age: "",
     gender: "",
-    uploadResume: "",
   };
-
-  console.log(id);
 
   return (
     <Grid
@@ -121,7 +112,18 @@ const CareerForm: React.FunctionComponent<{}> = () => {
         >
           Job Application Form
         </Typography>
-        <Typography variant="h5">{singleCareerData?.jobTitle}</Typography>
+        <Typography
+          variant="h5"
+          sx={{
+            color: "#27488D",
+            fontFamily: "Sans-serif",
+            height: "30px",
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
+          <b> Job Title-</b> {singleCareerData?.jobTitle}
+        </Typography>
         <Typography
           sx={{
             color: "#27488D",

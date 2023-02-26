@@ -13,6 +13,7 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
   Link,
   Routes,
@@ -27,7 +28,6 @@ import { endPoints } from "../../../api";
 import { duration } from "@mui/material";
 import { number } from "yup";
 import { SrvRecord } from "dns";
-
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import LoginWindow from "../../../ui/loginwindow/LoginWindow";
@@ -38,8 +38,7 @@ import TourService from "../../../services/TourService";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import TourModel from "../../../shared/models/tourModel";
 import { selectAllTours } from "../../../app/slices/TourSlice";
-import data from "./data";
-import zIndex from "@mui/material/styles/zIndex";
+
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: 6,
@@ -88,17 +87,11 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
   const { pathname } = useLocation();
   const navigate = useNavigate();
   let navPath = pathname.split("/").includes("home");
-  // const returnNavpath = (id: string | number) => {
-  //   navPath = pathname.split("/").includes("home")
-  //     ? `/pravas/explore/${id}` : `/explore/${id}`;
-  //   return navPath;
-  // };
-  // Dialog open
+
   const loggedUser: UserModel = useSelector(selectLoggedUser);
   const singleObj = data?.feedbacks?.find(
     (v: any, i: number) => loggedUser?._id == v?.pravasiId
   );
-  // console.log(singleObj);
 
   const [liked, setLiked] = useState({
     pravasiId: loggedUser._id,
@@ -151,20 +144,6 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
 
   return (
     <Container>
-      {/* <NavLink
-        to={
-          navPath
-            ? `/pravas/explore/${data?._id}`
-            : `/pravas/explore/${data?._id}`
-        }
-        style={{
-          textDecoration: "none",
-          color: "#2c5799",
-          fontWeight: "bold",
-        }}
-      > */}
-
-      {/* <Grid container sx={{ fontFamily: "Poppins" }}></Grid> */}
       <Grid container sx={{ fontFamily: "Poppins" }}>
         <Card
           sx={{
@@ -250,23 +229,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                       display: "flex",
                       flexDirection: "row-reverse",
                     }}
-                  >
-                    {/* <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
-                      <StyledBadge
-                        badgeContent={data?.images?.length}
-                        color="primary"
-                      >
-                        <IconButton onClick={handleDialogOpen}>
-                          <CameraAltOutlinedIcon />
-                        </IconButton>
-                      </StyledBadge>
-                      <Dialog open={openDialog} onClose={handleDialogClose}>
-                        <LocationClick
-                          items={data?.images ? data?.images : []}
-                        />
-                      </Dialog>
-                    </Typography> */}
-                  </Grid>
+                  ></Grid>
                 </Grid>
               </Grid>
 
@@ -356,13 +319,14 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                 handleLike(liked.liked, data?._id as string);
               }}
             >
-              <FavoriteBorderOutlinedIcon
+              <FavoriteIcon
                 sx={{
-                  color: `${liked.liked ? "red" : "#ffffff"}`,
+                  fontSize: 20,
+                  color: `${liked.liked ? "#f7a707" : "#ffffff"}`,
                   bgcolor: "#0000008a",
-                  opacity: 0.5,
-                  borderRadius: "5px",
-                  padding: "2px",
+                  // opacity: 0.5,
+                  borderRadius: "20px",
+                  padding: 0.8,
                   zIndex: 100,
                 }}
               />
@@ -393,7 +357,6 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
         </Card>
       </Grid>
 
-      {/* </NavLink> */}
       <LoginWindow
         handleOpen={handleLoginOpen}
         handleClose={handleLoginClose}

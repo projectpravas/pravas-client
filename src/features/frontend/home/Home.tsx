@@ -192,17 +192,17 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         <meta name="keywords" content="Pravas Tourism" />
       </Helmet>
 
-      {/* gallery  */}
+      {/* ************gallery*******************  */}
       <TourGallery />
 
       {/* render from top  */}
       <StartFromTop />
 
-      {/* Booking Steps */}
+      {/***************** Booking Steps *******************/}
       <BookingSteps />
-      <Grid>
+      {/* <Grid>
         <CurrentWeather />
-      </Grid>
+      </Grid> */}
     </>
   );
 };

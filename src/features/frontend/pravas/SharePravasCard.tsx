@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
 import * as React from "react";
+import Button from "@mui/material/Button";
 import { useSearchParams } from "react-router-dom";
 import { RWebShare } from "react-web-share";
 import { useLocation } from "react-router-dom";

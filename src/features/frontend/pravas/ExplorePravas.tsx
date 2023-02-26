@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
-
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -13,7 +12,6 @@ import Link from "@mui/material/Link";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
@@ -55,9 +53,7 @@ import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import { errorToast } from "../../../ui/toast/Toast";
 import CustomiseTourPackage from "./CustomiseTourPackage";
-
 import LoginWindow from "../../../ui/loginwindow/LoginWindow";
-
 import SharePravasCard from "./SharePravasCard";
 import ReviewCarousel from "../home/ReviewCarousel";
 import ExploreReviewCarousal from "./Review-carousal/ExploreReviewCarousal";
@@ -94,7 +90,7 @@ const options = {
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
   color: "#5c5e64",
-  border: "1px solid gray ",
+
   letterSpacing: "-.2px",
   fontSize: "16px",
   textAlign: "center",
@@ -201,9 +197,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const handleClick = () => {
     navigate("/pravas/explore/custom-tour-form");
   };
-
   // -------upcoming tour  info-----
-
   const columns = [
     {
       name: "tourDates",
@@ -232,7 +226,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         console.log(err);
       });
   };
-
   const handleLoginOpen = () => {
     setOpenLoginWindowStatus(true);
   };
@@ -240,14 +233,12 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const handleLoginClose = () => {
     setOpenLoginWindowStatus(false);
   };
-
   const handleBooking = (price: string, customerId: string, tourId: string) => {
     if (!price || !tourId) return errorToast("Failed... Try Again...", 3000);
     if (!customerId) {
       handleLoginOpen();
       return;
     }
-
     price && customerId && tourId && handlePayment(price, customerId, tourId);
   };
 
@@ -621,7 +612,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     }}
                   >
                     <TableContainer id="booking-table">
-                      <Table sx={{ border: "1px solid gray" }}>
+                      <Table sx={{ border: "1px solid #e0e0e0" }}>
                         <TableHead>
                           <TableRow>
                             <DataTab rowSpan={2} sx={{ width: "10%" }}>
@@ -699,9 +690,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                 >
                                   <Button
                                     variant="contained"
-                                    // disabled={
-                                    //   currentLoggedUser?._id ? false : true
-                                    // }
                                     sx={{
                                       bgcolor: "#2c5799",
                                       color: "white",
@@ -1148,7 +1136,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               </Box>
             </Paper>
             {/*************************must Watch************************ */}
-
             <MustWatchcard />
           </Grid>
         </Grid>
