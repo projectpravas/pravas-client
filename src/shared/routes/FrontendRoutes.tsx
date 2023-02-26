@@ -64,13 +64,15 @@ export default [
     path: "pravas",
     showInMenu: true,
     hasAuthenticate: "all",
-  },
-  {
-    label: "Explore Details",
-    component: <ExplorePravas />,
-    path: "pravas/explore/:id",
-    showInMenu: false,
-    hasAuthenticate: "all",
+    subRoutes: [
+      {
+        label: "Explore Details",
+        component: <ExplorePravas />,
+        path: "explore/:id",
+        showInMenu: false,
+        hasAuthenticate: "all",
+      },
+    ],
   },
 
   {
@@ -79,13 +81,15 @@ export default [
     path: "blogs",
     showInMenu: true,
     hasAuthenticate: "all",
-  },
-  {
-    label: "Blog Details",
-    component: <BlogDetails />,
-    path: "blogs/:id",
-    showInMenu: false,
-    hasAuthenticate: "no",
+    subRoutes: [
+      {
+        label: "Blog Details",
+        component: <BlogDetails />,
+        path: "details/:id",
+        showInMenu: false,
+        hasAuthenticate: "no",
+      },
+    ],
   },
 
   {

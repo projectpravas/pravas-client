@@ -18,7 +18,8 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import OwlCarousel from "react-owl-carousel";
-import "../../../ui/owl-carousel/owl.css";
+// import "../../../ui/owl-carousel/owl.css";
+import "../../../ui/owl-carousel/owl.module.css";
 
 const options = {
   lazyLoad: true,

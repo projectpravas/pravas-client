@@ -2,13 +2,15 @@ import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import "../../../ui/owl-carousel/owl.css";
+// import "../../../ui/owl-carousel/owl.css";
 import BlogPost from "../blogs/BlogPost";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import BlogService from "../../../services/BlogService";
 import { useNavigate } from "react-router-dom";
+import "../../../ui/owl-carousel/owl.module.css";
+
 interface IOwlCarouselProps {}
 
 const options = {
@@ -77,7 +79,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
               return (
                 <div
                   style={{ margin: "0 -2" }}
-                  onClick={() => navigate(`/blogs/${blog?._id}`)}
+                  onClick={() => navigate(`/blogs/details/${blog?._id}`)}
                 >
                   <BlogPost
                     id={blog?._id}

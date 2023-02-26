@@ -61,7 +61,6 @@ const ContactForm: React.FunctionComponent<IContactFormProps> = (props) => {
                     name="name"
                     size="small"
                     required
-                    autoFocus
                     value={values?.name}
                     onBlur={handleBlur}
                     onChange={handleChange}
