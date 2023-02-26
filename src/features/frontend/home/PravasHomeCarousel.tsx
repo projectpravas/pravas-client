@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import OwlCarousel from "react-owl-carousel";
-import "../../../ui/owl-carousel/owl.module.css";
 import Container from "@mui/material/Container";
-import PravasPackageCard from "../pravas/PravasPackageCard";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addAllTours } from "../../../app/slices/TourSlice";
+
 import PravasCardList from "../pravas/PravasCardList";
 interface IPravasHomeCarouselProps {}
 
@@ -47,7 +44,6 @@ const PravasHomeCarousel: React.FunctionComponent<
 
   const loadPackageData = () => {
     TourService.fetchAllTours().then((response) => {
-      // console.log("loadPackages", response?.data?.data);
       let packages = response?.data?.data;
       setAllPackageCardData(packages);
     });
@@ -60,7 +56,7 @@ const PravasHomeCarousel: React.FunctionComponent<
   const handleNavigation = (path: string) => {
     navigate(path);
   };
-  // console.log(allPackageCardData);
+
   return (
     <>
       <Container>
@@ -68,23 +64,6 @@ const PravasHomeCarousel: React.FunctionComponent<
           className="owl-theme owl-carousel owl-nav-pravas "
           {...options}
         >
-          {/* {Array.isArray(allPackageCardData) &&
-            allPackageCardData
-              .filter(
-                (v, i) => v.category == "package" && v.packageStatus == "active"
-              )
-              .map((v, i) => {
-                return (
-                  <div
-                  style={{ padding: "10px 0" }}
-                    onClick={() => {
-                      HandleNagigation(`/pravas/explore/${v?._id}`);
-                    }}
-                  >
-                    <PravasPackageCard key={v?._id + i} {...v} />
-                  </div>
-                );
-              })} */}
           <PravasCardList />
         </OwlCarousel>
         <Outlet />
