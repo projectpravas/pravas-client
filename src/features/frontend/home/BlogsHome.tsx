@@ -1,22 +1,15 @@
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
-// import "../../../ui/owl-carousel/owl.css";
 import BlogPost from "../blogs/BlogPost";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import BlogService from "../../../services/BlogService";
 import { useNavigate } from "react-router-dom";
-import "../../../ui/owl-carousel/owl.module.css";
-
 interface IOwlCarouselProps {}
 
 const options = {
   margin: 30,
   responsiveClass: true,
-  nav: true,
+  nav: false,
   dots: false,
   autoplay: false,
   smartSpeed: 1000,
@@ -65,14 +58,15 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
       <Container>
         <OwlCarousel
           {...options}
-          className="owl-theme owl-carousel nav-btn"
+          className="owl-theme owl-carousel owl-nav-blogs"
           lazyLoad={true}
           loop
           dots={false}
-          nav={true}
-          autoplay={false}
+          nav={false}
+          autoplay={true}
           autoplayHoverPause={true}
           margin={8}
+          style={{ height: 560 }}
         >
           {Array.isArray(data) &&
             data?.map((blog, i) => {

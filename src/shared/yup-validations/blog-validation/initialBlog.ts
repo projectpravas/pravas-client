@@ -13,6 +13,7 @@ const defineInitialBlog = ({
   hasTags = false,
   hasImage = false,
   hasBlogStatus = false,
+  hasCreationDate = false,
 }) => {
   const initialBlog: BolgModel = {};
 
@@ -28,6 +29,7 @@ const defineInitialBlog = ({
   if (hasTags) initialBlog.tags = [""];
   if (hasImage) initialBlog.image = "";
   if (hasBlogStatus) initialBlog.blogStatus = false;
+  if (hasCreationDate) initialBlog.creationDate = "";
 
   return initialBlog;
 };

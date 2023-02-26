@@ -4,10 +4,7 @@ import * as React from "react";
 import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
 import { Helmet } from "react-helmet-async";
-import AddBlog from "./AddBlog/AddBlog";
-import FAQ from "./FAQ";
 import BlogService from "../../../services/BlogService";
-import ReviewSection from "../pravas/ReviewSection";
 import { Outlet, useLocation } from "react-router-dom";
 
 interface IBlogsProps {}
@@ -75,12 +72,13 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
                         title={blog?.title}
                         desc={blog?.richText}
                         category={blog?.categories}
+                        date={blog?.creationDate}
                       />
                     </Grid>
                   ))}
               </Grid>
             </Grid>
-            <Grid item>
+            <Grid item sx={{ mb: 3 }}>
               <Pagination
                 totalPosts={data.length}
                 postsPerPage={postPerPage}
@@ -88,8 +86,6 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
               />
             </Grid>
           </Container>
-          <AddBlog />
-          <FAQ />
         </>
       )}
 

@@ -11,6 +11,7 @@ interface BlogModel {
   tags?: string[];
   image?: string | File;
   blogStatus?: Boolean;
+  creationDate?: Date | String;
 }
 
 export default BlogModel;
