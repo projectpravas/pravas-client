@@ -90,7 +90,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
                 </div>
               );
             })}
-        </OwlCarousel>{" "}
+        </OwlCarousel>
       </Container>
       {/* </Grid>  */}
     </>

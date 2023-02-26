@@ -32,16 +32,21 @@ const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
 
   const gallary_filter = (itemHead: any) => {
     const filterData: any = data.filter((item: any) => {
-      if (item.heading === itemHead) setImages([...item.image]);
+      if (item.heading === itemHead) {
+        setImages([...item.image]);
+      }
     });
   };
 
   return (
-    <Grid>
+    <Grid style={{ marginTop: "500px" }}>
       <Grid
         item
         marginLeft={{ xs: "20px", sm: "75px", md: "70px", lg: "120px" }}
       >
+        <Button variant="contained" onClick={() => setImages(reqdata)}>
+          All
+        </Button>
         {collectionHead.map((itemHead: string, i: number) => (
           <Button
             style={{ margin: "5px" }}

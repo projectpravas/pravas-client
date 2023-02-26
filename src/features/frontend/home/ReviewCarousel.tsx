@@ -57,7 +57,8 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
     <>
       <Container>
         <OwlCarousel
-          className="owl-stage-review owl-nav MuiPaper-root"
+          style={{ height: "200px" }}
+          className=" owl-nav MuiPaper-root"
           {...options}
           autoPlay={true}
         >

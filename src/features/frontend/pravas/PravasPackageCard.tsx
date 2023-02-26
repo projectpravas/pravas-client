@@ -91,15 +91,15 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
     setOpen(false);
   };
 
-  const items = [
-    "https://pravasthejourney.com/wp-content/uploads/2021/09/KASHMIR4.jpg",
+  // const items = [
+  //   "https://pravasthejourney.com/wp-content/uploads/2021/09/KASHMIR4.jpg",
 
-    "https://cdn.wallpapersafari.com/6/59/Lqkei8.jpg",
+  //   "https://cdn.wallpapersafari.com/6/59/Lqkei8.jpg",
 
-    "https://media.istockphoto.com/id/485422676/photo/shikara-boats-on-dal-lake-srinagar.jpg?s=612x612&w=0&k=20&c=AnenqHTLf68PPJVtke7MoktZoQ4tLs8mXTvedeTSPOk=",
+  //   "https://media.istockphoto.com/id/485422676/photo/shikara-boats-on-dal-lake-srinagar.jpg?s=612x612&w=0&k=20&c=AnenqHTLf68PPJVtke7MoktZoQ4tLs8mXTvedeTSPOk=",
 
-    "https://w0.peakpx.com/wallpaper/936/401/HD-wallpaper-neelam-valley-jammu-kashmir-landscape-mountain-mountains-pak-pakistan-pakistani.jpg",
-  ];
+  //   "https://w0.peakpx.com/wallpaper/936/401/HD-wallpaper-neelam-valley-jammu-kashmir-landscape-mountain-mountains-pak-pakistan-pakistani.jpg",
+  // ];
 
   return (
     <Container>
@@ -131,12 +131,12 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                   component="img"
                   onError={({ currentTarget }) => {
                     currentTarget.onerror = null;
-                    currentTarget.src = "placeholder-blogs.png";
+                    currentTarget.src = "placeholder-tour.jpg";
                   }}
                   src={
                     images.length !== 0
                       ? `${endPoints?.serverBaseURL}/${images[0]}`
-                      : `/placeholder-blogs.png`
+                      : `/placeholder-tour.jpg`
                   }
                   alt={title}
                 />

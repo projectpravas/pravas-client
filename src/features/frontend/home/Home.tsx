@@ -12,6 +12,7 @@ import PravasHomeCarousel from "./PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ReviewCarousel from "./ReviewCarousel";
 import BookingSteps from "./Booking-steps/BookingSteps";
+import CurrentWeather from "./weather_location/CurrentWeather";
 interface IHomeProps {}
 
 const imgZoom = {
@@ -172,10 +173,13 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       </Container>
 
       {/* blogs cards carousel  */}
+
       <BlogsHome />
 
       {/* Pravas cards carousel  */}
-      <PravasHomeCarousel />
+      <Grid>
+        <PravasHomeCarousel />
+      </Grid>
 
       {/****************Review Carousel**************/}
 
@@ -195,6 +199,9 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
       {/* Booking Steps */}
       <BookingSteps />
+      <Grid>
+        <CurrentWeather />
+      </Grid>
     </>
   );
 };

@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
+import { careerDetails } from "./CareerData";
 
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -19,7 +20,7 @@ import styled from "@emotion/styled";
 import { Formik, Form, FormikProps } from "formik";
 
 import * as yup from "yup";
-import { margin } from "@mui/system";
+import { useLocation, useParams } from "react-router-dom";
 
 const TextFieldDesign = styled(TextField)({
   margin: "10px",
@@ -57,28 +58,43 @@ const validationAppSchema = yup.object().shape({
     .required("Required"),
 
   age: yup.number().required("required"),
+  gender: yup.boolean().required("equired"),
+  qualification: yup.string().required("Enter valid Qualification"),
+  experience: yup.number().required("Experience in year"),
 });
 
 interface MyFormValues {
   firstName: string;
   lastName: string;
   email: string;
-
+  qualification: string;
+  experience: string;
   mobile: string;
   age: string;
+  uploadResume: string | File;
+  gender: any;
 }
 
 const CareerForm: React.FunctionComponent<{}> = () => {
   const [fomrData, setFormData] = React.useState([]);
+
+  const { id } = useParams();
+
+  const singleCareerData = careerDetails.find((obj) => obj?.id == Number(id));
 
   const initialValues: MyFormValues = {
     firstName: "",
     lastName: "",
     mobile: "",
     email: "",
-
+    qualification: "",
+    experience: "",
     age: "",
+    gender: "",
+    uploadResume: "",
   };
+
+  console.log(id);
 
   return (
     <Grid
@@ -105,6 +121,7 @@ const CareerForm: React.FunctionComponent<{}> = () => {
         >
           Job Application Form
         </Typography>
+        <Typography variant="h5">{singleCareerData?.jobTitle}</Typography>
         <Typography
           sx={{
             color: "#27488D",
@@ -135,6 +152,7 @@ const CareerForm: React.FunctionComponent<{}> = () => {
           return (
             <Form onSubmit={handleSubmit}>
               <Grid sx={{ margin: { xs: "auto" } }}>
+                {/* *************lastand first name section***************** */}
                 <Grid item sx={{ m: 2 }}>
                   <TextFieldDesign
                     name="firstName"
@@ -169,6 +187,7 @@ const CareerForm: React.FunctionComponent<{}> = () => {
                     }
                   />
                 </Grid>
+                {/* *********************mobile and email section******* */}
                 <Grid item sx={{ m: 2 }}>
                   <TextFieldDesign
                     name="mobile"
@@ -197,7 +216,46 @@ const CareerForm: React.FunctionComponent<{}> = () => {
                     }
                   />
                 </Grid>
-
+                {/* ************qualification and Total experience*************** */}
+                <Grid item sx={{ m: 2 }}>
+                  <TextFieldDesign
+                    name="qualification"
+                    id="qualification"
+                    type="text"
+                    label="Qualification"
+                    value={values.qualification}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={
+                      touched?.qualification && errors?.qualification
+                        ? true
+                        : false
+                    }
+                    helperText={
+                      touched?.qualification && errors?.qualification
+                        ? errors?.qualification
+                        : ""
+                    }
+                  />
+                  <TextFieldDesign
+                    name="experience"
+                    id="experience"
+                    type="experience"
+                    label="Total Experience in year"
+                    value={values.experience}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={
+                      touched?.experience && errors?.experience ? true : false
+                    }
+                    helperText={
+                      touched?.experience && errors?.experience
+                        ? errors?.experience
+                        : ""
+                    }
+                  />
+                </Grid>
+                {/* ********************age and gender******************* */}
                 <Grid item sx={{ m: 2 }}>
                   <TextFieldDesign
                     name="age"
@@ -222,7 +280,13 @@ const CareerForm: React.FunctionComponent<{}> = () => {
                     <FormLabel id="gender" sx={{ color: "#919191", m: 1 }}>
                       Gender
                     </FormLabel>
-                    <RadioGroup row name="gender" sx={{ ml: 1 }}>
+                    <RadioGroup
+                      row
+                      name="gender"
+                      sx={{ ml: 1 }}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    >
                       <FormControlLabel
                         sx={{ color: "#919191" }}
                         value="female"
@@ -243,6 +307,34 @@ const CareerForm: React.FunctionComponent<{}> = () => {
                       />
                     </RadioGroup>
                   </FormControl>
+                  {/* <Grid
+                    item
+                    sx={{
+                      m: 2,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        marginLeft: " 10px",
+                        alignItems: "center",
+                        margin: "auto",
+                        color: "#7A7A7A",
+                      }}
+                    >
+                      Upload Resume
+                    </Typography>
+                    <TextFieldDesign
+                      name="uploadResume"
+                      id="uploadResume"
+                      type="file"
+                      value={values.uploadResume}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                  </Grid> */}
 
                   <Grid container sx={{ marginTop: "50px" }}>
                     <Button

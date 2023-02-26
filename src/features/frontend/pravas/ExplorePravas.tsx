@@ -86,7 +86,7 @@ const options = {
       items: 2,
     },
     1000: {
-      items: 4,
+      items: 5,
     },
   },
 };
@@ -312,6 +312,12 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           <img
             style={{ height: "100%" }}
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[4]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "100%" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[5]}`}
           />
         </Grid>
       </OwlCarousel>
