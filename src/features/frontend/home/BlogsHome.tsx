@@ -86,6 +86,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
                     desc={blog?.richText}
                     key={blog?._id + i}
                     category={blog?.categories}
+                    date={blog?.creationDate}
                   />
                 </div>
               );

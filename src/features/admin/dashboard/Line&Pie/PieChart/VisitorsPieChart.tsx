@@ -112,7 +112,7 @@ const VisitorsPieChart: React.FunctionComponent<IVisitorsPieChartProps> = ({
     <Box
       sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
     >
-      <ResponsiveContainer width="100%" height={270}>
+      <ResponsiveContainer width="100%" height={320}>
         <PieChart width={300} height={100}>
           <Pie
             activeIndex={activeIndex}

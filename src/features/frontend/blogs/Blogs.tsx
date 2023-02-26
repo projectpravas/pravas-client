@@ -4,7 +4,6 @@ import * as React from "react";
 import BlogPost from "./BlogPost";
 import Pagination from "./Pagination";
 import { Helmet } from "react-helmet-async";
-import AddBlog from "./AddBlog/AddBlog";
 import FAQ from "./FAQ";
 import BlogService from "../../../services/BlogService";
 import ReviewSection from "../pravas/ReviewSection";
@@ -15,7 +14,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
   const [data, setData] = React.useState<Array<any>>([]);
   // Pagination
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postPerPage] = React.useState(3);
+  const [postPerPage] = React.useState(6);
   const lastPostIndex = currentPage * postPerPage;
   const firstPostIndex = lastPostIndex - postPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
@@ -66,6 +65,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
                     title={blog?.title}
                     desc={blog?.richText}
                     category={blog?.categories}
+                    date={blog?.creationDate}
                   />
                 </Grid>
               ))}
@@ -79,7 +79,6 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
           />
         </Grid>
       </Container>
-      <AddBlog />
       <FAQ />
 
       {/* **********************Review section right************ */}

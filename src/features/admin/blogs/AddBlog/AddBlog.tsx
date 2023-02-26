@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import FormControl from "@mui/material/FormControl";
@@ -22,6 +22,7 @@ import defineBlogYupSchema from "../../../../shared/yup-validations/blog-validat
 import BolgModel from "../../../../shared/models/blogModel";
 import { errorToast, successToast } from "../../../../ui/toast/Toast";
 import BlogService from "../../../../services/BlogService";
+import { useParams } from "react-router-dom";
 
 interface IAddBlogProps {}
 
@@ -77,6 +78,8 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
     []
   );
 
+  const { id } = useParams();
+
   // Rich Text Editor State
   const [cat, setCat] = useState("");
   const [showCategory, setShowCategory] = useState([
@@ -97,6 +100,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
     categories: [] as string[],
     tags: [] as string[],
     image: "",
+    creationDate: "",
   });
 
   const customHandleChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
@@ -111,7 +115,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
     }
   };
 
-  // Catrgory
+  // Category
   const handleCategory = (e: any) => {
     const { name, checked } = e?.target;
 
@@ -223,6 +227,17 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
     }
   };
 
+  useEffect(() => {
+    id &&
+      BlogService.fetchOneBlog(id as string)
+        .then((res) => {
+          setFormData(res?.data?.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+  }, [id]);
+
   return (
     <>
       <Container sx={{ my: 3 }}>
@@ -243,6 +258,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
           validationSchema={blogSchema}
           onSubmit={(values, { resetForm }) => {
             formData.tags = chipValue;
+            formData.creationDate = `${Date.now()}`;
             formData.focusKeyphrases = keyPhraseChipValue?.join(", ");
 
             const fd = new FormData();
@@ -257,6 +273,8 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
             if (formData?.focusKeyphrases)
               fd.append("focusKeyphrases", formData?.focusKeyphrases as string);
             if (formData?.slug) fd.append("slug", formData?.slug as string);
+            if (formData?.creationDate)
+              fd.append("creationDate", formData?.creationDate as string);
             if (formData?.categories)
               fd.append("categories", JSON.stringify(formData?.categories));
             if (formData?.tags)

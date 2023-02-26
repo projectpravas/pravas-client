@@ -10,6 +10,7 @@ import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
 import endPoints from "../../../api/endpoints";
+import moment from "moment";
 
 const ExploreGrid = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -24,6 +25,7 @@ interface IBlogPostProps {
   desc: string;
   id: number | any;
   category: any;
+  date?: number;
 }
 const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   image,
@@ -31,7 +33,15 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   desc,
   id,
   category,
+  date,
 }) => {
+  let dateObj = date && new Date(Number(date));
+  let month = dateObj && dateObj.getMonth() + 1;
+  let year = dateObj && dateObj.getFullYear();
+  let day = dateObj && dateObj.getDate();
+
+  console.log(day, moment(month).format("MMM"));
+
   return (
     <>
       <Grid container sx={{ pt: 2, px: 2 }}>
@@ -90,7 +100,10 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       color="#fff"
                       fontSize={15}
                     >
-                      02 <b>Jan</b>
+                      <b>
+                        {day} {moment(month).format("MMM")}
+                      </b>
+                      {/* 02 <b>Jan</b> */}
                     </Box>
                   </Box>
                 </Grid>

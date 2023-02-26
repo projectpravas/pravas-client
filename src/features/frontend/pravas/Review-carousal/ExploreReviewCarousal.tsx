@@ -6,6 +6,7 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import { green } from "@mui/material/colors";
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
 // import "./ReviewOwlCarousal.module.css";
@@ -15,9 +16,9 @@ const options = {
   loop: true,
   autoplay: true,
   autoplayHoverPause: true,
-  margin: 20,
+  margin: 10,
   responsiveClass: true,
-  nav: true,
+  nav: false,
   dots: false,
   smartSpeed: 1000,
   responsive: {
@@ -68,16 +69,26 @@ const ExploreReviewCarousal: React.FunctionComponent<
         className="owl-review-nav"
         {...options}
         autoPlay={true}
-        style={{ maxWidth: "95%" }}
+        style={{ height: 160 }}
       >
         {Array.isArray(data) &&
           data?.map((v, i: number) => {
+            // const func = (dateObj: Date) => {
+            //   let month = dateObj.getMonth() + 1;
+            //   let year = dateObj.getFullYear();
+            //   let date = dateObj.getDate();
+
+            //   return `${date}/${month}/${year}`;
+            // };
             return (
-              <Card>
+              <Card sx={{ backgroundColor: "#f5f2ed", borderRadius: 2 }}>
                 <CardHeader
                   avatar={
                     <Avatar
-                      {...stringAvatar(`${v?.name ? v?.name : "No Name"}`)}
+                      sx={{ bgcolor: green[500] }}
+                      {...stringAvatar(
+                        `${v?.name ? v?.name?.toUpperCase() : "No Name"}`
+                      )}
                     />
                   }
                   title={
@@ -89,7 +100,9 @@ const ExploreReviewCarousal: React.FunctionComponent<
                         fontFamily: "Open sans",
                       }}
                     >
-                      {v?.name ? v?.name : "No Name"}
+                      {v?.name
+                        ? v?.name?.charAt(0).toUpperCase() + v?.name?.slice(1)
+                        : "No Name"}
                     </Typography>
                   }
                   subheader={

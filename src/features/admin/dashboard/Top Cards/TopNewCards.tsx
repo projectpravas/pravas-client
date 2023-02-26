@@ -73,7 +73,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              backgroundColor: "#fa8158",
+              background: "linear-gradient(#fa8158, #ff5d26)",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -99,7 +99,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              backgroundColor: "#ffa63c",
+              background: "linear-gradient(#ffa63c, #e97f00)",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -125,7 +125,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              backgroundColor: "#ffd246",
+              background: "linear-gradient(#ffd246, #ffac00)",
             }}
           >
             <Grid container justifyContent="space-between">
@@ -151,7 +151,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
           <Grid
             sx={{
               ...GridCardStyle,
-              backgroundColor: "#9ac900",
+              background: "linear-gradient(#9ac900, #5ca900)",
             }}
           >
             <Grid container justifyContent="space-between">
