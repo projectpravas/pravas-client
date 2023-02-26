@@ -19,6 +19,7 @@ interface YupschemaInterface {
   hasGender?: boolean;
   hasAvatar?: boolean;
   hasStatus?: boolean;
+  hasDesignation?: boolean;
 }
 
 const defineUserYupValidation = ({
@@ -40,6 +41,7 @@ const defineUserYupValidation = ({
   hasGender = false,
   hasAvatar = false,
   hasStatus = false,
+  hasDesignation = false,
 }: YupschemaInterface) => {
   const schemaObj: any = {};
   const nameObj: any = {};
@@ -96,6 +98,8 @@ const defineUserYupValidation = ({
   if (hasGender) schemaObj.gender = yup.string().required("Gender is required");
   if (hasAvatar) schemaObj.avatar = yup.string().required("Avatar is required");
   if (hasStatus) schemaObj.status = yup.string().required("Status is required");
+  if (hasDesignation)
+    schemaObj.designation = yup.string().required("Designation is required");
 
   return yup.object().shape(schemaObj);
 };

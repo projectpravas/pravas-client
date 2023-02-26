@@ -124,7 +124,6 @@ export const createFD = (
     tourPlan: tourPlanData,
   };
 
-  console.log(tourObj);
   /////////////////////////////////////
   const fd = new FormData();
 

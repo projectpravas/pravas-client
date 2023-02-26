@@ -16,6 +16,7 @@ const defineInitialUser = ({
   hasRole = false,
   hasAvatar = false,
   hasGender = false,
+  hasDesignation = false,
   hasDob = false,
   hasPassword = false,
   hasUserActivityDetails = false,
@@ -45,6 +46,7 @@ const defineInitialUser = ({
     initialUser.address = address;
 
   if (hasPassword) initialUser.password = "";
+  if (hasDesignation) initialUser.designation = "";
 
   if (hasStatus) initialUser.status = "inactive";
 

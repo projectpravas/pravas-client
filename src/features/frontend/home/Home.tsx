@@ -7,7 +7,7 @@ import BlogsHome from "./BlogsHome";
 import TourGallery from "../../../ui/tour-gallary/TourGallary";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import PravasHomeCarousel from "./PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ReviewCarousel from "./ReviewCarousel";
@@ -50,6 +50,7 @@ const typohead = {
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
+      <Outlet />
       <Helmet>
         <title>Pravas Tourism</title>
         <meta name="description" content="Pravas Tourism" />

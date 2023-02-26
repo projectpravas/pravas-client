@@ -25,11 +25,13 @@ interface UserModel {
   email?: string;
   address?: Address;
   password?: string;
+  tours?: Array<any>;
   role?: string;
   dob?: Date | string;
   gender?: string;
   avatar?: string | File;
   status?: string;
+  designation?: String;
   userActivityDetails?: UserActivityDetails;
 }
 

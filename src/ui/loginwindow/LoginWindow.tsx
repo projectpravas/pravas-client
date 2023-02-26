@@ -12,6 +12,7 @@ import LoginCard from "../../features/frontend/auth/LoginCard";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../app/slices/AuthSlice";
 import UserModel from "../../shared/models/userModel";
+import { Grid } from "@mui/material";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -55,13 +56,13 @@ const LoginWindow: React.FC<LoginWindowProps> = ({
   }, [currentLoggedUser]);
 
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <BootstrapDialog
         onClose={() => handleClose()}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogContent dividers>
+        <DialogContent>
           <IconButton
             aria-label="close"
             onClick={() => handleClose()}

@@ -1,6 +1,7 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import userReducer from "./slices/UserSlice";
 import authReducer from "./slices/AuthSlice";
+import toursReducer from "./slices/TourSlice";
 import {
   FLUSH,
   REHYDRATE,
@@ -15,6 +16,7 @@ import storage from "redux-persist/lib/storage";
 const rootReducer = combineReducers({
   users: userReducer,
   auth: authReducer,
+  tours: toursReducer,
 });
 
 const persistConfig = {

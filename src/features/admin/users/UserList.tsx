@@ -80,7 +80,6 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
         : value == true
         ? false
         : true;
-    console.log(value, newValue);
 
     //create form data
     const fd = new FormData();
@@ -164,30 +163,6 @@ const UserList: React.FunctionComponent<IUserListProps> = ({
                   onClick={() =>
                     handleStausAndVerification("status", value, user)
                   }
-                />
-              }
-            </>
-          );
-        },
-      },
-    },
-    {
-      label: "Verified",
-      name: "verified",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRender: (value: boolean, metaData: any) => {
-          const user = data[metaData.rowIndex];
-          return (
-            <>
-              {
-                <Chip
-                  color={value == true ? "primary" : "warning"}
-                  label={value == true ? "Verified" : "unverified"}
-                  // onClick={() =>
-                  //   handleStausAndVerification("verified", value, user)
-                  // }
                 />
               }
             </>
