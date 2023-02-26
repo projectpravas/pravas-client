@@ -31,7 +31,7 @@ button.owl-next {
   position: absolute;
   top: 40%;
 }
-*/ .owl-nav button :hover {
+.owl-nav button :hover {
   color: #2c5799;
   background-color: #f0e3e1;
   border-radius: 100px;
@@ -77,7 +77,6 @@ button.owl-next {
 /* ****************Review Carousel***** */
 .owl-stage--outer-review {
   height: 200px;
-  /* background-color: cyan; */
 }
 .owl-stage-review .owl-nav {
   position: absolute;

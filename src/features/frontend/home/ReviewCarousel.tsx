@@ -19,7 +19,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import OwlCarousel from "react-owl-carousel";
-// import "../../../ui/owl-carousel/owl.css";
+
 import "../../../ui/owl-carousel/owl.module.css";
 
 const options = {
@@ -59,7 +59,7 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
       <Container>
         <OwlCarousel
           style={{ height: "200px" }}
-          className=" owl-nav MuiPaper-root"
+          className=" owl-nav MuiPaper-root "
           {...options}
           autoPlay={true}
         >

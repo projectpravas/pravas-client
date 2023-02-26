@@ -71,6 +71,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
     color: "#27488d",
     marginTop: "20px ",
     fontFamily: "Poppins",
+
     fontSize: {
       xs: "1rem",
       md: "0.9rem",
@@ -162,15 +163,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
           fontWeight: "bold",
         }}
       > */}
-      {/* <div
-        onClick={() =>
-          navigate(
-            navPath
-              ? `/pravas/explore/${data?._id}`
-              : `/pravas/explore/${data?._id}`
-          )
-        }
-      > */}
+
       {/* <Grid container sx={{ fontFamily: "Poppins" }}></Grid> */}
       <Grid container sx={{ fontFamily: "Poppins" }}>
         <Card
@@ -184,165 +177,179 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
             ":hover": { boxShadow: "1px 1px 10px grey" },
           }}
         >
-          {/* / ------------------image -area----- / */}
-          <Grid item>
-            <CardActionArea sx={{ width: "90%", margin: "auto" }}>
-              <CardMedia
-                sx={{ borderRadius: "15px" }}
-                component="img"
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null;
-                  currentTarget.src = "placeholder-blogs.png";
-                }}
-                src={
-                  data?.images?.length !== 0
-                    ? `${endPoints?.serverBaseURL}/${
-                        data?.images && data?.images[0]
-                      }`
-                    : `/placeholder-blogs.png`
-                }
-                alt={data?.title}
-              />
-            </CardActionArea>
-          </Grid>
-          {/*----------- heading----------- */}
-          <Grid item>
-            <Grid container>
-              <Grid item xs={8}>
-                <NavLink
-                  to={`explore/${data?._id}`}
-                  style={{
-                    textDecoration: "none",
-                    color: "#2c5799",
-                    fontWeight: "bold",
-                  }}
-                >
-                  <Typography variant="h5" sx={typoHead}>
-                    {data?.title}
-                  </Typography>
-                </NavLink>
-
-                <Typography sx={{ display: "flex", p: 2 }}>
-                  <span
-                    style={{
-                      marginLeft: "2px",
-                      color: "#97978F",
-                      fontWeight: "bold",
+          <div
+            onClick={() =>
+              navigate(
+                navPath
+                  ? `/pravas/explore/${data?._id}`
+                  : `/pravas/explore/${data?._id}`
+              )
+            }
+          >
+            <Grid>
+              {/* / ------------------image -area----- / */}
+              <Grid item>
+                <CardActionArea sx={{ width: "90%", margin: "auto" }}>
+                  <CardMedia
+                    sx={{ borderRadius: "15px" }}
+                    component="img"
+                    onError={({ currentTarget }) => {
+                      currentTarget.onerror = null;
+                      currentTarget.src = "placeholder-blogs.png";
                     }}
-                  >
-                    From
-                  </span>
-                  <span style={{ marginLeft: "5px", color: "#41257b" }}>
-                    ₹{data?.price}
-                  </span>
-                </Typography>
+                    src={
+                      data?.images?.length !== 0
+                        ? `${endPoints?.serverBaseURL}/${
+                            data?.images && data?.images[0]
+                          }`
+                        : `/placeholder-blogs.png`
+                    }
+                    alt={data?.title}
+                  />
+                </CardActionArea>
               </Grid>
-              <Grid
-                item
-                xs={3.4}
-                sx={{
-                  color: "#005792",
-
-                  width: "80%",
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                }}
-              >
-                <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
-                  <StyledBadge
-                    badgeContent={data?.images?.length}
-                    color="primary"
-                  >
-                    <IconButton onClick={handleDialogOpen}>
-                      <CameraAltOutlinedIcon />
-                    </IconButton>
-                  </StyledBadge>
-                  <Dialog open={openDialog} onClose={handleDialogClose}>
-                    <LocationClick items={data?.images ? data?.images : []} />
-                  </Dialog>
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
-
-          {/* / ----------------days seat explorer---- / */}
-          <Grid item>
-            <Card
-              elevation={0}
-              sx={{
-                width: "90%",
-                margin: "auto",
-                backgroundColor: "#faf8f4",
-
-                borderRadius: "10px",
-              }}
-            >
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  marginTop: "2%",
-                  padding: "10px 0px 10px 0px",
-                  justifyContent: "space-evenly",
-                }}
-              >
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <CalendarMonthIcon
-                      sx={{ color: "#005792", fontSize: "130%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    {data?.duration?.days}
-                  </Typography>
-                </Grid>
-                <Grid item sx={{ display: "flex" }}>
-                  <Typography sx={{ alignSelf: "center" }}>
-                    <PeopleOutlineIcon
-                      sx={{ color: "#005792", fontSize: "150%" }}
-                    />
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#97978F",
-                      fontWeight: "bold",
-                      paddingLeft: "5px",
-                    }}
-                  >
-                    {data?.maxPersons}
-                  </Typography>
-                </Grid>
-                <NLink item sx={{ display: "flex" }}>
-                  <Typography>
+              {/*----------- heading----------- */}
+              <Grid item>
+                <Grid container>
+                  <Grid item xs={8}>
                     <NavLink
-                      to={`/pravas/explore/${data?._id}`}
+                      to={`explore/${data?._id}`}
                       style={{
                         textDecoration: "none",
                         color: "#2c5799",
                         fontWeight: "bold",
                       }}
                     >
-                      {"Explore"}
+                      <Typography variant="h5" sx={typoHead}>
+                        {data?.title}
+                      </Typography>
                     </NavLink>
-                  </Typography>
-                  <Typography>
-                    <ArrowRightAltIcon
-                      sx={{
-                        "&:hover": { color: "#2c5799" },
-                        color: "#2c5799",
-                      }}
-                    />
-                  </Typography>
-                </NLink>
+
+                    <Typography sx={{ display: "flex", p: 2 }}>
+                      <span
+                        style={{
+                          marginLeft: "2px",
+                          color: "#97978F",
+                          fontWeight: "bold",
+                        }}
+                      >
+                        From
+                      </span>
+                      <span style={{ marginLeft: "5px", color: "#41257b" }}>
+                        ₹{data?.price}
+                      </span>
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={3.4}
+                    sx={{
+                      color: "#005792",
+
+                      width: "80%",
+                      display: "flex",
+                      flexDirection: "row-reverse",
+                    }}
+                  >
+                    {/* <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
+                      <StyledBadge
+                        badgeContent={data?.images?.length}
+                        color="primary"
+                      >
+                        <IconButton onClick={handleDialogOpen}>
+                          <CameraAltOutlinedIcon />
+                        </IconButton>
+                      </StyledBadge>
+                      <Dialog open={openDialog} onClose={handleDialogClose}>
+                        <LocationClick
+                          items={data?.images ? data?.images : []}
+                        />
+                      </Dialog>
+                    </Typography> */}
+                  </Grid>
+                </Grid>
               </Grid>
-            </Card>
-          </Grid>
+
+              {/* / ----------------days seat explorer---- / */}
+              <Grid item>
+                <Card
+                  elevation={0}
+                  sx={{
+                    width: "90%",
+                    margin: "auto",
+                    backgroundColor: "#faf8f4",
+
+                    borderRadius: "10px",
+                  }}
+                >
+                  <Grid
+                    container
+                    sx={{
+                      display: "flex",
+                      marginTop: "2%",
+                      padding: "10px 0px 10px 0px",
+                      justifyContent: "space-evenly",
+                    }}
+                  >
+                    <Grid item sx={{ display: "flex" }}>
+                      <Typography sx={{ alignSelf: "center" }}>
+                        <CalendarMonthIcon
+                          sx={{ color: "#005792", fontSize: "130%" }}
+                        />
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#97978F",
+                          fontWeight: "bold",
+                          paddingLeft: "5px",
+                        }}
+                      >
+                        {data?.duration?.days}
+                      </Typography>
+                    </Grid>
+                    <Grid item sx={{ display: "flex" }}>
+                      <Typography sx={{ alignSelf: "center" }}>
+                        <PeopleOutlineIcon
+                          sx={{ color: "#005792", fontSize: "150%" }}
+                        />
+                      </Typography>
+                      <Typography
+                        sx={{
+                          color: "#97978F",
+                          fontWeight: "bold",
+                          paddingLeft: "5px",
+                        }}
+                      >
+                        {data?.maxPersons}
+                      </Typography>
+                    </Grid>
+                    <NLink item sx={{ display: "flex" }}>
+                      <Typography>
+                        <NavLink
+                          to={`/pravas/explore/${data?._id}`}
+                          style={{
+                            textDecoration: "none",
+                            color: "#2c5799",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {"Explore"}
+                        </NavLink>
+                      </Typography>
+                      <Typography>
+                        <ArrowRightAltIcon
+                          sx={{
+                            "&:hover": { color: "#2c5799" },
+                            color: "#2c5799",
+                          }}
+                        />
+                      </Typography>
+                    </NLink>
+                  </Grid>
+                </Card>
+              </Grid>
+            </Grid>
+          </div>
           <Grid item sx={{ position: "absolute", top: "8%", right: "10%" }}>
             <IconButton
               onClick={(e: any) => {
@@ -361,9 +368,31 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
               />
             </IconButton>
           </Grid>
+          <Grid
+            sx={{
+              position: "absolute",
+              top: {
+                xs: "63%",
+                sm: "55%",
+                lg: "57%",
+              },
+              right: "5%",
+            }}
+          >
+            <Typography sx={{ color: "#673ab9", mt: 1.5 }}>
+              <StyledBadge badgeContent={data?.images?.length} color="primary">
+                <IconButton onClick={handleDialogOpen}>
+                  <CameraAltOutlinedIcon />
+                </IconButton>
+              </StyledBadge>
+              <Dialog open={openDialog} onClose={handleDialogClose}>
+                <LocationClick items={data?.images ? data?.images : []} />
+              </Dialog>
+            </Typography>
+          </Grid>
         </Card>
       </Grid>
-      {/* </div> */}
+
       {/* </NavLink> */}
       <LoginWindow
         handleOpen={handleLoginOpen}
