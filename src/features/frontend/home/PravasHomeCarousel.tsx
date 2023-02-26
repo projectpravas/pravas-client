@@ -59,7 +59,7 @@ const PravasHomeCarousel: React.FunctionComponent<
 
   return (
     <>
-      <Container>
+      <Container sx={{ mb: 3 }}>
         <OwlCarousel
           className="owl-theme owl-carousel owl-nav-pravas "
           {...options}

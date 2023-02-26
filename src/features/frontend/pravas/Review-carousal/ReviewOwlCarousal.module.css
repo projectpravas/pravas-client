@@ -1,6 +1,6 @@
 .owl-review-nav .owl-nav button {
   display: block;
-  height: 48px;
+  height: 28px;
   width: 48px;
   border-radius: 48px;
   font-size: 33px;
@@ -14,7 +14,7 @@
 }
 .owl-review-nav {
   position: "absolute";
-  height: 270px;
+  height: 20px;
 }
 .owl-nav {
   color: #ec1212;

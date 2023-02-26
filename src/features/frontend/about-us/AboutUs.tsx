@@ -10,6 +10,8 @@ import { Container } from "@mui/system";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 import TeamCarousel from "./TeamCarousel";
+import FAQ from "./FAQ";
+
 interface IAboutUsProps {}
 
 const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
@@ -281,6 +283,8 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
 
       <TeamCarousel />
       {/* team carousel  */}
+
+      {/* <FAQ /> */}
 
       {/* loads page from top  */}
       <StartFromTop />

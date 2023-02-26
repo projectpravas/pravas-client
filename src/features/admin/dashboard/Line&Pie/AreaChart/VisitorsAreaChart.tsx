@@ -38,7 +38,7 @@ const VisitorsAreaChart: React.FunctionComponent<IVisitorsAreaChartProps> = ({
 
   return (
     <Box>
-      <ResponsiveContainer width="100%" height={270}>
+      <ResponsiveContainer width="100%" height={320}>
         <AreaChart
           width={700}
           height={200}

@@ -9,7 +9,7 @@ interface IOwlCarouselProps {}
 const options = {
   margin: 30,
   responsiveClass: true,
-  nav: true,
+  nav: false,
   dots: false,
   autoplay: false,
   smartSpeed: 1000,
@@ -66,6 +66,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
           autoplay={true}
           autoplayHoverPause={true}
           margin={8}
+          style={{ height: 560 }}
         >
           {Array.isArray(data) &&
             data?.map((blog, i) => {
@@ -73,19 +74,20 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
                 <div
                   style={{ margin: "0 -2" }}
                   onClick={() => navigate(`/blogs/details/${blog?._id}`)}
+                  key={blog?.title + i}
                 >
                   <BlogPost
                     id={blog?._id}
                     image={blog?.image}
                     title={blog?.title}
                     desc={blog?.richText}
-                    key={blog?._id + i}
                     category={blog?.categories}
+                    date={blog?.creationDate}
                   />
                 </div>
               );
             })}
-        </OwlCarousel>{" "}
+        </OwlCarousel>
       </Container>
       {/* </Grid>  */}
     </>

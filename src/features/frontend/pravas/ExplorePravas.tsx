@@ -19,7 +19,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
 
@@ -289,7 +289,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         handleOpen={handleLoginOpen}
         handleClose={handleLoginClose}
       />
-
       {/* *******************slides of karshmir image ********************/}
 
       <OwlCarousel className=" owl-nav-explore" {...options}>
@@ -1113,13 +1112,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   </Box>
                   <Box sx={{ marginLeft: "10px" }}>
                     <TypoTourInfo>Max Guests</TypoTourInfo>
-                    <TypoTourInfo>15</TypoTourInfo>
+                    <TypoTourInfo sx={{ color: "#2c5799", fontSize: 19 }}>
+                      15
+                    </TypoTourInfo>
                   </Box>
                 </Grid>
                 <Grid sx={{ display: "flex" }}>
                   <Box>
                     <Typography>
-                      <DirectionsCarIcon sx={{ color: "#2c5799" }} />
+                      <LocationOnOutlinedIcon sx={{ color: "#2c5799" }} />
                     </Typography>
                   </Box>
                   <Box sx={{ marginLeft: "10px" }}>
@@ -1130,6 +1131,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                           textDecoration: "none",
                           color: "#2c5799",
                           fontWeight: "bolder",
+                          fontSize: 19,
                         }}
                         href="https://pravasthejourney.com/ba_location/kashmir/"
                       >
@@ -1156,7 +1158,19 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <StartFromTop />
       <Outlet />
       {/* ------------------------------------------------------------Reviews Carousal */}
-      <Container>
+      <Container sx={{ mb: 12 }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontSize: "1.5rem",
+            fontWeight: 800,
+            color: "#005e9d",
+            lineHeight: 1.334,
+            mb: 2,
+          }}
+        >
+          What People Say About This Destination
+        </Typography>
         <ExploreReviewCarousal data={tourDetails?.feedbacks as any} />
       </Container>
       {/* -------------------------------------------------------------Customize Tour  */}
@@ -1165,6 +1179,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           display: "flex",
           alignItems: "center",
           marginY: "20px",
+          mb: 8,
         }}
       >
         <Container
@@ -1193,7 +1208,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
             >
               <Typography
                 sx={{
-                  fontFamily: "Lato",
+                  fontFamily: "inherit",
                   fontSize: "2rem",
                   fontWeight: 700,
                 }}
