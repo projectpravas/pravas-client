@@ -11,6 +11,7 @@ import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
 // import "../../../ui/owl-carousel/owl.css";
 import "../../../ui/owl-carousel/owl.module.css";
+import FAQ from "./FAQ";
 
 interface IAboutUsProps {}
 
@@ -377,6 +378,8 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
         </Grid>
       </Container>
       {/*team*/}
+
+      {/* <FAQ /> */}
 
       {/* loads page from top  */}
       <StartFromTop />

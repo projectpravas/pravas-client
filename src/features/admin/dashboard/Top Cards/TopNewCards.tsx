@@ -1,10 +1,13 @@
-import { Grid, Link, Paper, Typography } from "@mui/material";
 import * as React from "react";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 import Counter from "../../../../ui/Counter/Counter";
 import ArrowOutwardRoundedIcon from "@mui/icons-material/ArrowOutwardRounded";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
 import TourService from "../../../../services/TourService";
+import TourModel from "../../../../shared/models/tourModel";
 
 const ArrowAnimStyle = {
   color: "#fff",
@@ -41,23 +44,71 @@ interface ITopNewCardsProps {}
 const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
   const [totalPackages, setTotalPackages] = React.useState(0);
   const [totalTours, setTotalTours] = React.useState(0);
+  const [ongoing, setOngoing] = React.useState(0);
+  const [upcoming, setUpcoming] = React.useState(0);
+
+  const getTourStatus = (allTours: Array<TourModel>) => {
+    const ongoingTours: Array<TourModel> = [];
+    const upcomingTours: Array<TourModel> = [];
+
+    const today = new Intl.DateTimeFormat("en-US").format(new Date(Date.now()));
+
+    allTours.filter((tour: TourModel) => {
+      const days = tour?.duration?.days ? tour?.duration?.days : 0;
+
+      const startDate = tour?.tourDate
+        ? new Intl.DateTimeFormat("en-US").format(new Date(`${tour?.tourDate}`))
+        : today;
+
+      const lastDate = startDate
+        ? new Intl.DateTimeFormat("en-US").format(
+            new Date(
+              new Date(startDate).setDate(
+                new Date(startDate).getDate() + Number(days)
+              )
+            )
+          )
+        : today;
+
+      //ongoing
+      if (startDate <= today && lastDate >= today) ongoingTours.push(tour);
+
+      //upcoming
+      if (startDate > today) upcomingTours.push(tour);
+    });
+    return { ongoingTours, upcomingTours };
+  };
 
   React.useEffect(() => {
-    TourService.fetchAllTours(`?category=package`)
+    TourService.fetchAllTours()
       .then((res) => {
-        setTotalPackages(res?.data?.data?.length);
+        const response = res?.data?.data;
+
+        const allPackages = response?.filter(
+          (p: TourModel) => p?.category == "package"
+        );
+        const allTours = response?.filter(
+          (p: TourModel) => p?.category == "tour"
+        );
+
+        const { ongoingTours, upcomingTours } = getTourStatus(allTours);
+
+        setTotalPackages(allPackages?.length);
+        setTotalTours(allTours?.length);
+        setOngoing(ongoingTours?.length);
+        setUpcoming(upcomingTours?.length);
       })
       .catch((err) => {
         console.error(err);
       });
 
-    TourService.fetchAllTours(`?category=tour`)
-      .then((res) => {
-        setTotalTours(res?.data?.data?.length);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // TourService.fetchAllTours(`?category=tour`)
+    //   .then((res) => {
+    //     setTotalTours(res?.data?.data?.length);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   }, [totalPackages, totalTours]);
 
   return (
@@ -85,7 +136,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
                 <TypoValue>Total Packages</TypoValue>
               </Grid>
               {/* page link Arrow */}
-              <NavLink to="/blogs">
+              <NavLink to="/secured/pravas/packages">
                 <Grid item sx={ArrowAnimStyle}>
                   <ArrowOutwardRoundedIcon fontSize="large" />
                 </Grid>
@@ -111,7 +162,7 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
                 <TypoValue>Total Tours</TypoValue>
               </Grid>
               {/* page link Arrow */}
-              <NavLink to="/pravas">
+              <NavLink to="/secured/pravas/tours">
                 <Grid item sx={ArrowAnimStyle}>
                   <ArrowOutwardRoundedIcon fontSize="large" />
                 </Grid>
@@ -132,16 +183,16 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
               {/* Values */}
               <Grid item>
                 <DetailsTypo>
-                  <Counter end={8} />
+                  <Counter end={ongoing} />
                 </DetailsTypo>
                 <TypoValue>Ongoing</TypoValue>
               </Grid>
               {/* page link Arrow */}
-              <Link href="#" sx={{ textDecoration: "none" }}>
+              <NavLink to="/secured/pravas/tours">
                 <Grid item sx={ArrowAnimStyle}>
                   <ArrowOutwardRoundedIcon fontSize="large" />
                 </Grid>
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </Grid>
@@ -158,16 +209,16 @@ const TopNewCards: React.FunctionComponent<ITopNewCardsProps> = (props) => {
               {/* Values */}
               <Grid item>
                 <DetailsTypo>
-                  <Counter end={5} />
+                  <Counter end={upcoming} />
                 </DetailsTypo>
                 <TypoValue>Upcoming</TypoValue>
               </Grid>
               {/* page link Arrow */}
-              <Link href="#" sx={{ textDecoration: "none" }}>
+              <NavLink to="/secured/pravas/tours">
                 <Grid item sx={ArrowAnimStyle}>
                   <ArrowOutwardRoundedIcon fontSize="large" />
                 </Grid>
-              </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </Grid>

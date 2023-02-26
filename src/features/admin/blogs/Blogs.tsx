@@ -1,10 +1,10 @@
-import { Box, IconButton } from "@mui/material";
-import MUIDataTable from "mui-datatables";
 import React, { useEffect, useState } from "react";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import MUIDataTable from "mui-datatables";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BlogService from "../../../services/BlogService";
 import BlogModel from "../../../shared/models/blogModel";
-import CustomTitle from "../../../ui/title/CustomTitle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";

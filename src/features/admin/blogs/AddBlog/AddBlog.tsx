@@ -238,6 +238,8 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
         });
   }, [id]);
 
+  console.log("formData :", formData);
+
   return (
     <>
       <Container sx={{ my: 3 }}>

@@ -40,8 +40,6 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   let year = dateObj && dateObj.getFullYear();
   let day = dateObj && dateObj.getDate();
 
-  console.log(day, moment(month).format("MMM"));
-
   return (
     <>
       <Grid container sx={{ pt: 2, px: 2 }}>
@@ -100,9 +98,9 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       color="#fff"
                       fontSize={15}
                     >
-                      <b>
+                      <span>
                         {day} {moment(month).format("MMM")}
-                      </b>
+                      </span>
                       {/* 02 <b>Jan</b> */}
                     </Box>
                   </Box>

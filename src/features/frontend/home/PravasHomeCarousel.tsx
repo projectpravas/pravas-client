@@ -17,7 +17,7 @@ const options = {
   autoplayHoverPause: true,
   margin: 30,
   responsiveClass: true,
-  nav: true,
+  nav: false,
   dots: false,
   smartSpeed: 1000,
   responsive: {
@@ -63,27 +63,11 @@ const PravasHomeCarousel: React.FunctionComponent<
   // console.log(allPackageCardData);
   return (
     <>
-      <Container>
+      <Container sx={{ mb: 3 }}>
         <OwlCarousel
           className="owl-theme owl-carousel owl-nav-pravas "
           {...options}
         >
-          {/* {Array.isArray(allPackageCardData) &&
-            allPackageCardData
-              .filter(
-                (v, i) => v.category == "package" && v.packageStatus == "active"
-              )
-              .map((v, i) => {
-                return (
-                  <div
-                    onClick={() => {
-                      HandleNagigation(`/pravas/explore/${v?._id}`);
-                    }}
-                  >
-                    <PravasPackageCard key={v?._id + i} {...v} />
-                  </div>
-                );
-              })} */}
           <PravasCardList />
         </OwlCarousel>
         <Outlet />

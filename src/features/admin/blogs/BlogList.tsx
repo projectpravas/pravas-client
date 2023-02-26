@@ -1,10 +1,11 @@
-import { Box, IconButton, Tooltip } from "@mui/material";
+import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
 import MUIDataTable from "mui-datatables";
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import BlogService from "../../../services/BlogService";
 import BlogModel from "../../../shared/models/blogModel";
-import CustomTitle from "../../../ui/title/CustomTitle";
 import EditIcon from "@mui/icons-material/Edit";
 import AddToQueueRoundedIcon from "@mui/icons-material/AddToQueueRounded";
 import DeleteIcon from "@mui/icons-material/Delete";

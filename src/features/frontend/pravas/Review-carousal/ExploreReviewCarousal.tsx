@@ -1,11 +1,9 @@
-import {
-  Avatar,
-  Card,
-  CardContent,
-  CardHeader,
-  Rating,
-  Typography,
-} from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
+import Rating from "@mui/material/Rating";
+import Typography from "@mui/material/Typography";
 import { green } from "@mui/material/colors";
 import * as React from "react";
 import OwlCarousel from "react-owl-carousel";
@@ -16,7 +14,7 @@ const options = {
   loop: true,
   autoplay: true,
   autoplayHoverPause: true,
-  margin: 10,
+  margin: 20,
   responsiveClass: true,
   nav: false,
   dots: false,
@@ -61,7 +59,6 @@ const ExploreReviewCarousal: React.FunctionComponent<
       children: `${name?.split(" ")[0][0]}${name?.split(" ")[1][0]}`,
     };
   }
-  //   console.log("data ;", data);
 
   return (
     <>
@@ -83,61 +80,51 @@ const ExploreReviewCarousal: React.FunctionComponent<
             return (
               <Card sx={{ backgroundColor: "#f5f2ed", borderRadius: 2 }}>
                 <CardHeader
-                  avatar={
-                    <Avatar
-                      sx={{ bgcolor: green[500] }}
-                      {...stringAvatar(
-                        `${v?.name ? v?.name?.toUpperCase() : "No Name"}`
-                      )}
-                    />
-                  }
+                  // avatar={
+                  //   <Avatar
+                  //     sx={{ bgcolor: green[500] }}
+                  //     {...stringAvatar(
+                  //       `${v?.name ? v?.name?.toUpperCase() : "No Name"}`
+                  //     )}
+                  //   />
+                  // }
                   title={
-                    <Typography
-                      sx={{
-                        fontWeight: 700,
-                        fontSize: 18,
-                        color: "#444",
-                        fontFamily: "Open sans",
-                      }}
-                    >
-                      {v?.name
-                        ? v?.name?.charAt(0).toUpperCase() + v?.name?.slice(1)
-                        : "No Name"}
-                    </Typography>
-                  }
-                  subheader={
                     <>
-                      <Typography
-                        sx={{ color: "#444", opacity: ".5", fontSize: "12px" }}
-                      >
-                        {v?.date ? v?.date : "September 14, 2016"}
-                      </Typography>
                       <Rating
+                        size="small"
                         name="half-rating-read"
                         defaultValue={v?.rating}
                         precision={0.1}
                         readOnly
                       />
+                      <Typography
+                        sx={{
+                          fontFamily: "inherit",
+                          fontWeight: 700,
+                          fontSize: 16,
+                          color: "#444",
+                        }}
+                      >
+                        {v?.name
+                          ? v?.name?.charAt(0).toUpperCase() + v?.name?.slice(1)
+                          : "No Name"}
+                      </Typography>
                     </>
                   }
-                  // action={
-                  //   <CardMedia
-                  //     component="img"
-                  //     style={{
-                  //       width: "25px",
-                  //       margin: "10px 20px 0 0",
-                  //     }}
-                  //     image="https://cdn.trustindex.io/assets/platform/Google/icon.svg"
-                  //     alt="Paella dish"
-                  //   />
-                  // }
+                  subheader={
+                    <>
+                      <Typography sx={{ color: "#979797", fontSize: "12px" }}>
+                        {v?.date ? v?.date : "September 14, 2016"}
+                      </Typography>
+                    </>
+                  }
                 />
                 <CardContent>
                   <Typography
                     sx={{
                       lineHeight: "16px",
                       fontSize: "13px",
-                      fontStyle: "normal",
+                      fontFamily: "inherit",
                     }}
                   >
                     {v?.comment ? v?.comment : "No Comment"}
