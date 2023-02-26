@@ -41,7 +41,7 @@ const TourGallery: React.FunctionComponent<IImageGallaryProps> = ({
     <Grid>
       <Grid
         item
-        marginTop={"15rem"}
+        // marginTop={"15rem"}
         marginLeft={{ xs: "20px", sm: "75px", md: "70px", lg: "120px" }}
       >
         {collectionHead.map((itemHead: string, i: number) => (

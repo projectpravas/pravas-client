@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 import { Container } from "@mui/system";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
-import "../../../ui/owl-carousel/owl.css";
+import TeamCarousel from "./TeamCarousel";
 interface IAboutUsProps {}
 
 const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
@@ -20,13 +20,6 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
     textAlign: "center",
     color: theme.palette.text.secondary,
   }));
-
-  const MyCard = styled(Card)({
-    ":hover": { boxShadow: "0.5px 0.5px 20px grey" },
-    maxWidth: "50%",
-    maxHeight: "50%",
-    justifyContent: "center",
-  });
 
   const typoName = {
     fontSize: "25px",
@@ -74,34 +67,6 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
     fontSize: "16px",
   };
 
-  const options = {
-    lazyLoad: true,
-    loop: true,
-    autoplay: false,
-    autoplayHoverPause: true,
-    margin: 30,
-    responsiveClass: true,
-    nav: true,
-    dots: false,
-    smartSpeed: 1000,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      400: {
-        items: 1,
-      },
-      600: {
-        items: 2,
-      },
-      700: {
-        items: 2,
-      },
-      1000: {
-        items: 4,
-      },
-    },
-  };
   return (
     <>
       <Helmet>
@@ -314,82 +279,8 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
       </Container>
       {/*Vision*/}
 
-      <Container>
-        <Grid container sx={{ flexWrap: "wrap", minWidth: "xs" }}>
-          <Box
-            sx={{
-              height: "70%",
-              width: "100%",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "lightgray",
-              // padding: "6%",
-            }}
-          >
-            <Grid>
-              <Typography
-                sx={{
-                  fontSize: "50px",
-                  display: "flex",
-                  justifyContent: "center",
-                  fontWeight: 700,
-                  lineHeight: 1.2,
-                  marginBottom: "3%",
-                  color: "#2e2e3e",
-                }}
-              >
-                Meet the Team
-              </Typography>
-              <Item
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  bgcolor: "transparent",
-                }}
-              >
-                <OwlCarousel
-                  className="owl-theme owl-carousel owl-nav-team"
-                  {...options}
-                >
-                  <MyCard>
-                    <CardMedia
-                      component="img"
-                      height="200px"
-                      image="https://pravasthejourney.com/wp-content/uploads/2022/06/Akshay.jpg"
-                      alt="green iguana"
-                    />
-                    <Typography sx={typoName}>Akshay</Typography>
-                    <Typography sx={typePosition}>DIRECTOR</Typography>
-                  </MyCard>
-
-                  <MyCard>
-                    <CardMedia
-                      component="img"
-                      height="200px"
-                      image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
-                      alt="green iguana"
-                    />
-                    <Typography sx={typoName}>Asha</Typography>
-                    <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
-                  </MyCard>
-
-                  <MyCard>
-                    <CardMedia
-                      component="img"
-                      height="200px"
-                      image="https://pravasthejourney.com/wp-content/uploads/2022/06/Asha.jpg"
-                      alt="green iguana"
-                    />
-                    <Typography sx={typoName}>Asha </Typography>
-                    <Typography sx={typePosition}>ACCOUNTS HEAD</Typography>
-                  </MyCard>
-                </OwlCarousel>
-              </Item>
-            </Grid>
-          </Box>
-        </Grid>
-      </Container>
-      {/*team*/}
+      <TeamCarousel />
+      {/* team carousel  */}
 
       {/* loads page from top  */}
       <StartFromTop />

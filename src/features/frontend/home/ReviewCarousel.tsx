@@ -27,7 +27,7 @@ const options = {
   autoplayHoverPause: true,
   margin: 30,
   responsiveClass: true,
-  nav: true,
+  nav: false,
   dots: false,
   smartSpeed: 1000,
   responsive: {
@@ -61,7 +61,7 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
           autoPlay={true}
           nav
         >
-          <Card>
+          <Card sx={{ marginY: "10px" }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

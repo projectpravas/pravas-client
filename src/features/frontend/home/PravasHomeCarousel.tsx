@@ -10,11 +10,11 @@ interface IPravasHomeCarouselProps {}
 const options = {
   lazyLoad: true,
   loop: true,
-  autoplay: false,
+  autoplay: true,
   autoplayHoverPause: true,
   margin: 30,
   responsiveClass: true,
-  nav: true,
+  nav: false,
   dots: false,
   smartSpeed: 1000,
   responsive: {
@@ -69,6 +69,7 @@ const PravasHomeCarousel: React.FunctionComponent<
             allPackageCardData.map((v, i) => {
               return (
                 <div
+                  style={{ padding: "10px 0" }}
                   onClick={() => {
                     handleNavigation(`/pravas/explore/${v?._id}`);
                   }}

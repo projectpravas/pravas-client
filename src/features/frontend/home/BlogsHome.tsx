@@ -67,8 +67,8 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
           lazyLoad={true}
           loop
           dots={false}
-          nav={true}
-          autoplay={false}
+          nav={false}
+          autoplay={true}
           autoplayHoverPause={true}
           margin={8}
         >
