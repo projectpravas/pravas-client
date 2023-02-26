@@ -90,7 +90,7 @@ const options = {
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
   color: "#5c5e64",
-
+  border: "1px solid #aaa",
   letterSpacing: "-.2px",
   fontSize: "16px",
   textAlign: "center",
@@ -638,23 +638,14 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                               To
                             </DataTab>
 
-                            <DataTab rowSpan={2} sx={{ width: "15%" }}>
-                              Booking
-                            </DataTab>
+                            <DataTab sx={{ width: "15%" }}>Booking</DataTab>
                           </TableRow>
                         </TableHead>
                         <TableBody>
                           {Array.isArray(bookingDates) &&
                           bookingDates?.length > 0 ? (
                             bookingDates.map((obj: string | any, i: number) => (
-                              <TableRow
-                                key={obj._id + i}
-                                sx={{
-                                  "&:last-child td, &:last-child th": {
-                                    border: 0,
-                                  },
-                                }}
-                              >
+                              <TableRow key={obj._id + i} sx={{}}>
                                 <DataTab component="th" scope="row">
                                   {i + 1}
                                 </DataTab>
@@ -681,10 +672,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                 <DataTab
                                   align="right"
                                   sx={{
-                                    "&:last-child td, &:last-child th": {
-                                      border: 0,
-                                    },
-                                    display: "flex",
+                                    display: "table-cell",
                                     justifyContent: "center",
                                     alignItems: "center",
                                   }}

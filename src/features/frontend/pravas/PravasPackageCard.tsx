@@ -180,14 +180,14 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
                     component="img"
                     onError={({ currentTarget }) => {
                       currentTarget.onerror = null;
-                      currentTarget.src = "placeholder-blogs.png";
+                      currentTarget.src = "placeholder-tour.jpg";
                     }}
                     src={
                       data?.images?.length !== 0
                         ? `${endPoints?.serverBaseURL}/${
                             data?.images && data?.images[0]
                           }`
-                        : `/placeholder-blogs.png`
+                        : `/placeholder-tour.jpg`
                     }
                     alt={data?.title}
                   />

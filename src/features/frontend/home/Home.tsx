@@ -50,6 +50,12 @@ const typohead = {
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
+      <Helmet>
+        <title>Pravas Tourism</title>
+        <meta name="description" content="Pravas Tourism" />
+        <meta name="keywords" content="Pravas Tourism" />
+        <link rel="canonical" href="/home" />
+      </Helmet>
       {/* <Grid> */}
       {/* head banner */}
       <Grid
@@ -211,16 +217,6 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
 
       {/* render from top  */}
       <StartFromTop />
-
-      <Helmet>
-        <title>Pravas Tourism</title>
-        <meta name="description" content="Pravas Tourism" />
-        <meta name="keywords" content="Pravas Tourism" />
-        <link rel="canonical" href="/home" />
-      </Helmet>
-
-      {/* ************gallery*******************  */}
-      <TourGallery />
 
       {/* render from top  */}
       <StartFromTop />
