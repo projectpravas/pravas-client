@@ -171,7 +171,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
           )
         }
       > */}
-      <Grid container sx={{ fontFamily: "Poppins" }}></Grid>
+      {/* <Grid container sx={{ fontFamily: "Poppins" }}></Grid> */}
       <Grid container sx={{ fontFamily: "Poppins" }}>
         <Card
           sx={{
