@@ -69,70 +69,73 @@ const ExploreReviewCarousal: React.FunctionComponent<
         style={{ height: 160 }}
       >
         {Array.isArray(data) &&
-          data?.map((v, i: number) => {
-            // const func = (dateObj: Date) => {
-            //   let month = dateObj.getMonth() + 1;
-            //   let year = dateObj.getFullYear();
-            //   let date = dateObj.getDate();
+          data
+            ?.filter((v, i) => v?.approved == "true")
+            .map((v, i: number) => {
+              // const func = (dateObj: Date) => {
+              //   let month = dateObj.getMonth() + 1;
+              //   let year = dateObj.getFullYear();
+              //   let date = dateObj.getDate();
 
-            //   return `${date}/${month}/${year}`;
-            // };
-            return (
-              <Card sx={{ backgroundColor: "#f5f2ed", borderRadius: 2 }}>
-                <CardHeader
-                  // avatar={
-                  //   <Avatar
-                  //     sx={{ bgcolor: green[500] }}
-                  //     {...stringAvatar(
-                  //       `${v?.name ? v?.name?.toUpperCase() : "No Name"}`
-                  //     )}
-                  //   />
-                  // }
-                  title={
-                    <>
-                      <Rating
-                        size="small"
-                        name="half-rating-read"
-                        defaultValue={v?.rating}
-                        precision={0.1}
-                        readOnly
-                      />
-                      <Typography
-                        sx={{
-                          fontFamily: "inherit",
-                          fontWeight: 700,
-                          fontSize: 16,
-                          color: "#444",
-                        }}
-                      >
-                        {v?.name
-                          ? v?.name?.charAt(0).toUpperCase() + v?.name?.slice(1)
-                          : "No Name"}
-                      </Typography>
-                    </>
-                  }
-                  subheader={
-                    <>
-                      <Typography sx={{ color: "#979797", fontSize: "12px" }}>
-                        {v?.date ? v?.date : "September 14, 2016"}
-                      </Typography>
-                    </>
-                  }
-                />
-                <CardContent>
-                  <Typography
-                    sx={{
-                      lineHeight: "16px",
-                      fontSize: "13px",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    {v?.comment ? v?.comment : "No Comment"}
-                  </Typography>
-                </CardContent>
-              </Card>
-            );
-          })}
+              //   return `${date}/${month}/${year}`;
+              // };
+              return (
+                <Card sx={{ backgroundColor: "#f5f2ed", borderRadius: 2 }}>
+                  <CardHeader
+                    // avatar={
+                    //   <Avatar
+                    //     sx={{ bgcolor: green[500] }}
+                    //     {...stringAvatar(
+                    //       `${v?.name ? v?.name?.toUpperCase() : "No Name"}`
+                    //     )}
+                    //   />
+                    // }
+                    title={
+                      <>
+                        <Rating
+                          size="small"
+                          name="half-rating-read"
+                          defaultValue={v?.rating}
+                          precision={0.1}
+                          readOnly
+                        />
+                        <Typography
+                          sx={{
+                            fontFamily: "inherit",
+                            fontWeight: 700,
+                            fontSize: 16,
+                            color: "#444",
+                          }}
+                        >
+                          {v?.name
+                            ? v?.name?.charAt(0).toUpperCase() +
+                              v?.name?.slice(1)
+                            : "No Name"}
+                        </Typography>
+                      </>
+                    }
+                    subheader={
+                      <>
+                        <Typography sx={{ color: "#979797", fontSize: "12px" }}>
+                          {v?.date ? v?.date : "September 14, 2016"}
+                        </Typography>
+                      </>
+                    }
+                  />
+                  <CardContent>
+                    <Typography
+                      sx={{
+                        lineHeight: "16px",
+                        fontSize: "13px",
+                        fontFamily: "inherit",
+                      }}
+                    >
+                      {v?.comment ? v?.comment : "No Comment"}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              );
+            })}
       </OwlCarousel>
     </>
   );

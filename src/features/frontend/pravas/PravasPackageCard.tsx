@@ -40,6 +40,7 @@ import TourModel from "../../../shared/models/tourModel";
 import { selectAllTours } from "../../../app/slices/TourSlice";
 import data from "./data";
 import zIndex from "@mui/material/styles/zIndex";
+import UserService from "../../../services/UserService";
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: 6,
@@ -97,7 +98,10 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
   const singleObj = data?.feedbacks?.find(
     (v: any, i: number) => loggedUser?._id == v?.pravasiId
   );
+
   // console.log(singleObj);
+
+  const [user, setUser] = useState();
 
   const [liked, setLiked] = useState({
     pravasiId: loggedUser._id,
@@ -123,7 +127,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
     setOpenLoginWindow(false);
   };
 
-  const handleLike = (value: any, tourId: string) => {
+  const handleLike = (value: any, tourId: string, op: string) => {
     loggedUser?._id && setLiked({ ...liked, liked: !value });
     loggedUser?._id
       ? tourId &&
@@ -140,6 +144,18 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
           .catch((err) => {
             console.log(err);
             errorToast("could not Like..", 2000);
+          })
+      : setOpenLoginWindow(!openLoginWindow);
+    loggedUser?._id
+      ? tourId &&
+        UserService.addRemoveWishlist({
+          userId: loggedUser._id,
+          op: op,
+          tourId: tourId,
+        })
+          .then((res) => {})
+          .catch((err) => {
+            console.log(err);
           })
       : setOpenLoginWindow(!openLoginWindow);
   };
@@ -194,7 +210,7 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
             <Grid container>
               <Grid item xs={8}>
                 <NavLink
-                  to={`explore/${data?._id}`}
+                  to={`/pravas/explore/${data?._id}`}
                   style={{
                     textDecoration: "none",
                     color: "#2c5799",
@@ -330,7 +346,11 @@ const PravasPackageCard: React.FunctionComponent<IPravasPackageCardProps> = ({
           <Grid item sx={{ position: "absolute", top: "8%", right: "10%" }}>
             <IconButton
               onClick={(e: any) => {
-                handleLike(liked.liked, data?._id as string);
+                handleLike(
+                  liked.liked,
+                  data?._id as string,
+                  liked.liked ? "remove" : "add"
+                );
               }}
             >
               <FavoriteBorderOutlinedIcon

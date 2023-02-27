@@ -71,7 +71,7 @@ const closedMixin = (theme: Theme): CSSObject => ({
   overflowX: "hidden",
   width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(10)} + 1px)`,
   },
 });
 
@@ -214,6 +214,7 @@ const Sidebar = () => {
                     margin: "15px",
                     maxHeight: "64px",
                   }}
+                  md={1}
                 >
                   <NavLink to="/home">
                     <img
@@ -299,12 +300,14 @@ const Sidebar = () => {
               sx={{ minHeight: { xs: "64px", md: "70px", lg: "90px" } }}
             >
               <Grid container padding={1}>
-                <NavLink to="/home">
-                  <img
-                    src="/PTSM-LOGO.png"
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                </NavLink>
+                <Grid item md={6}>
+                  <NavLink to="/home">
+                    <img
+                      src="/PTSM-LOGO.png"
+                      style={{ width: "100%", height: "auto" }}
+                    />
+                  </NavLink>
+                </Grid>
               </Grid>
               <IconButton onClick={handleDrawerClose} sx={{ mr: 1 }}>
                 {theme.direction === "rtl" ? (
