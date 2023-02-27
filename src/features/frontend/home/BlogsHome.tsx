@@ -13,6 +13,7 @@ const options = {
   dots: false,
   autoplay: false,
   smartSpeed: 1000,
+  autoplayTimeout: 2500,
   responsive: {
     0: {
       items: 1,

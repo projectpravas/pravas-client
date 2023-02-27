@@ -21,29 +21,30 @@ interface IPravasProps {}
 
 const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   //---------------- AllDatafetch -------------
-  const [allPackage, setAllPackage] = React.useState<any[]>([]);
-  const [loadState, setLoadState] = React.useState(false);
+  // const [allPackage, setAllPackage] = React.useState<any[]>([]);
+  // const [loadState, setLoadState] = React.useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   let paramValue = searchParams.toString();
 
-  const loadPackages = (paramValue = "") => {
-    TourService.fetchAllTours(`?category=package&${paramValue}`)
-      .then((response) => {
-        setAllPackage(response?.data?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const loadPackages = (paramValue = "") => {
+  //   TourService.fetchAllTours(`?category=package&${paramValue}`)
+  //     .then((response) => {
+  //       setAllPackage(response?.data?.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   paramValue = paramValue?.replaceAll("=all", "=");
 
-  React.useEffect(() => {
-    loadPackages(paramValue);
-  }, [searchParams]);
+  // React.useEffect(() => {
+  //   loadPackages(paramValue);
+  // }, [searchParams]);
+
   const showPravas =
     pathname.split("/")[pathname.split("/").length - 1] == "pravas";
 
@@ -51,32 +52,42 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
     navigate("custom-tour-form");
   };
 
-  React.useEffect(() => {
-    if (allPackage.length === 0) {
-      setTimeout(() => {
-        setLoadState(true);
-      }, 2000);
-    } else {
-      setLoadState(false);
-    }
-  }, [allPackage]);
+  // React.useEffect(() => {
+  //   if (allPackage.length === 0) {
+  //     setTimeout(() => {
+  //       setLoadState(true);
+  //     }, 2000);
+  //   } else {
+  //     setLoadState(false);
+  //   }
+  // }, [allPackage]);
+
+  console.log("param", paramValue);
 
   return (
     <>
       <Outlet />
+      <Helmet>
+        <title>Pravas Tours</title>
+        <meta name="description" content="Pravas Tourism" />
+        <meta name="keywords" content="Pravas Tourism" />
+        <link rel="canonical" href="/pravas" />
+      </Helmet>
+
+      <Container sx={{ marginTop: "40px", order: { xs: 2, md: 0 } }}>
+        <Grid sx={{ order: { xs: 1, md: 0 } }}>
+          <SearchBar />
+        </Grid>
+      </Container>
+
       {showPravas && (
         <>
-          <Helmet>
-            <title>Pravas Tours</title>
-            <meta name="description" content="Pravas Tourism" />
-            <meta name="keywords" content="Pravas Tourism" />
-            <link rel="canonical" href="/pravas" />
-          </Helmet>
           <Container>
-            <Grid container marginY={10}>
+            <Grid container marginY={5} sx={{ order: { xs: 0, md: 0 } }}>
               <PravasCardList />
             </Grid>
           </Container>
+
           <StartFromTop />
 
           {/* *******************customize tour***************** */}

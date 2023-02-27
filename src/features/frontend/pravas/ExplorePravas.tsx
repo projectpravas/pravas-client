@@ -313,7 +313,13 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         </Grid>
       </OwlCarousel>
       {/* ************** Heading of Tour *******************    */}
-      <Grid sx={{ backgroundColor: "#faf5ee" }}>
+      <Grid
+        sx={{
+          backgroundColor: "#faf5ee",
+          marginTop: "20px",
+          paddingBottom: { xs: "20px", md: "15px", lg: "5px" },
+        }}
+      >
         <Container>
           <Grid
             container

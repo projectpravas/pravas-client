@@ -168,6 +168,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       fontSize: 16,
                       fontWeight: 400,
                       fontFamily: "inherit",
+                      overflow: "hidden",
                     }}
                     dangerouslySetInnerHTML={{
                       __html: desc.slice(

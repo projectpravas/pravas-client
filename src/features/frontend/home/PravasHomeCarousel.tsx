@@ -3,8 +3,11 @@ import OwlCarousel from "react-owl-carousel";
 import Container from "@mui/material/Container";
 import TourService from "../../../services/TourService";
 import { Outlet, useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 import PravasCardList from "../pravas/PravasCardList";
+import Grid from "@mui/material/Grid";
+import { Typography } from "@mui/material";
 interface IPravasHomeCarouselProps {}
 
 const options = {
@@ -17,6 +20,7 @@ const options = {
   nav: false,
   dots: false,
   smartSpeed: 1000,
+  autoplayTimeout: 2500,
   responsive: {
     0: {
       items: 1,
@@ -36,6 +40,23 @@ const options = {
   },
 };
 
+const seeMore = {
+  // fontSize: "0.8em",
+  backgroundColor: "#2c5799",
+  color: "#fff",
+  fontWeight: 400,
+  height: "35px",
+  padding: "1px 6px",
+  letterSpacing: "1.3px",
+  borderRadius: "8px",
+  border: "2px solid #2c5799",
+  "&:hover": {
+    color: "#2c5799",
+    backgroundColor: "#fff",
+    border: "2px solid #2c5799",
+    transition: "0.2s",
+  },
+};
 const PravasHomeCarousel: React.FunctionComponent<
   IPravasHomeCarouselProps
 > = () => {
@@ -57,9 +78,48 @@ const PravasHomeCarousel: React.FunctionComponent<
     navigate(path);
   };
 
+  const handleNavigateChange = () => {
+    navigate("/pravas");
+  };
   return (
     <>
       <Container>
+        <Grid container>
+          <Grid item sm={9}>
+            <Typography
+              sx={{ fontWeight: 800, fontSize: "1.5em", paddingLeft: "2%" }}
+            >
+              Explore to destination
+            </Typography>
+            <Typography
+              sx={{
+                color: "#90929b",
+                paddingLeft: "2%",
+                paddingRight: { xs: "0", md: "24%" },
+              }}
+            >
+              There's a sunrise and a sunset every single day, and they are
+              absolutely free. Don't miss so many of them.
+            </Typography>
+          </Grid>
+
+          <Grid
+            item
+            sm={3}
+            sx={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              paddingRight: { sm: "2%" },
+              paddingLeft: { xs: "2%" },
+              paddingTop: { xs: "1%" },
+              alignItems: "center",
+            }}
+          >
+            <Button size="small" sx={seeMore} onClick={handleNavigateChange}>
+              View all
+            </Button>
+          </Grid>
+        </Grid>
         <OwlCarousel
           className="owl-theme owl-carousel owl-nav-pravas "
           {...options}
