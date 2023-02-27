@@ -58,7 +58,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       >
         <Grid sx={{ height: { xs: "300px", md: "100%" } }}>
           <img
-            src="./banner-2.webp"
+            src="/banner-2.webp"
             style={{ objectFit: "cover" }}
             width="100%"
             height="100%"
