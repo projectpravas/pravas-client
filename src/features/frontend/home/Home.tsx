@@ -12,6 +12,7 @@ import PravasHomeCarousel from "./PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ReviewCarousel from "./ReviewCarousel";
 import BookingSteps from "./Booking-steps/BookingSteps";
+import CustomiseTourPackage from "../pravas/CustomiseTourPackage";
 
 interface IHomeProps {}
 
@@ -210,6 +211,10 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         <ReviewCarousel />
       </Grid>
 
+      {/* *******************Customise tour***************** */}
+      <Grid sx={{ marginBottom: "40px" }}>
+        <CustomiseTourPackage />
+      </Grid>
       {/* render from top  */}
       <StartFromTop />
     </>
