@@ -27,9 +27,6 @@ const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
       });
   };
 
-  // console.log("loadWatchCard:", loadWatchCard);
-  // console.log("allPackageWatch:", allPackageWatch);
-
   React.useEffect(() => {
     loadWatchCard();
   }, []);

@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import SearchBar from "./SearchBar";
 import { Helmet } from "react-helmet-async";
 import BlogsHome from "./BlogsHome";
-import TourGallery from "../../../ui/tour-gallary/TourGallary";
+
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { NavLink, Outlet } from "react-router-dom";
@@ -12,6 +12,7 @@ import PravasHomeCarousel from "./PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ReviewCarousel from "./ReviewCarousel";
 import BookingSteps from "./Booking-steps/BookingSteps";
+
 interface IHomeProps {}
 
 const imgZoom = {
@@ -49,6 +50,12 @@ const typohead = {
 const Home: React.FunctionComponent<IHomeProps> = (props) => {
   return (
     <>
+      <Helmet>
+        <title>Pravas Tourism</title>
+        <meta name="description" content="Pravas Tourism" />
+        <meta name="keywords" content="Pravas Tourism" />
+        <link rel="canonical" href="/home" />
+      </Helmet>
       {/* <Grid> */}
       {/* head banner */}
       <Grid
@@ -203,21 +210,8 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
         <ReviewCarousel />
       </Grid>
 
-      {/* gallery  */}
-      <Grid sx={{ marginTop: 10 }}>
-        <TourGallery />
-      </Grid>
-
       {/* render from top  */}
       <StartFromTop />
-
-      <Helmet>
-        <title>Pravas Tourism</title>
-        <meta name="description" content="Pravas Tourism" />
-        <meta name="keywords" content="Pravas Tourism" />
-        <link rel="canonical" href="/home" />
-      </Helmet>
-      {/* </Grid> */}
     </>
   );
 };

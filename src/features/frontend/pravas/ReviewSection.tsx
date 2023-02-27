@@ -1,10 +1,8 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
@@ -75,83 +73,86 @@ const ReviewSection: React.FC<IReviewSectionProps> = () => {
   return (
     <>
       <Container sx={{ margin: "auto", my: 5 }}>
-        <form onSubmit={handleSubmit} style={{ margin: "15px 0 15px 0" }}>
-          <Grid item>
-            <Typography
-              sx={{
-                fontSize: "22px",
-                color: "#27488d",
-                fontWeight: "800",
-                fontFamily: "poppins",
-              }}
-            >
-              Add Tour Review or Feedback if any
-            </Typography>
-          </Grid>
-          <Grid item sx={{ marginTop: "20px" }}>
-            <Stack spacing={1}>
-              <Rating
-                name="rating"
-                defaultValue={0}
-                precision={0.5}
-                // value={singleReview?.rating}
+        <Grid container>
+          <Grid item lg={8}>
+            <form onSubmit={handleSubmit} style={{ margin: "15px 0 15px 0" }}>
+              <Grid item>
+                <Typography
+                  sx={{
+                    fontSize: "22px",
+                    color: "#27488d",
+                    fontWeight: "800",
+                    fontFamily: "poppins",
+                  }}
+                >
+                  Add Tour Review or Feedback if any
+                </Typography>
+              </Grid>
+              <Grid item sx={{ marginTop: "20px" }}>
+                <Stack spacing={1}>
+                  <Rating
+                    name="rating"
+                    defaultValue={0}
+                    precision={0.5}
+                    // value={singleReview?.rating}
+                    onChange={handleChange}
+                  />
+                </Stack>
+              </Grid>
+
+              {!loggedUser._id && (
+                <TextField
+                  sx={{
+                    backgroundColor: "#faf5ee",
+                    color: "#c4c0ba ",
+                    width: "100%",
+                    fontSize: "16px",
+                    fontFamily: "poppins",
+                    my: 2,
+                  }}
+                  placeholder="Your Name * "
+                  name="name"
+                  size="small"
+                  // value={setSingleReview.}
+                  onChange={handleChange}
+                />
+              )}
+
+              <TextField
+                multiline
+                minRows={4}
+                style={{
+                  backgroundColor: "#faf5ee",
+                  width: "100%",
+                  borderRadius: "5px",
+
+                  fontSize: "17px",
+                  minHeight: "100px",
+                  fontFamily: "poppins",
+                }}
+                placeholder="  Write Your Comment *"
+                name="comment"
+                // value={singleReview?.message}
                 onChange={handleChange}
               />
-            </Stack>
+
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  display: "flex",
+                  margin: "auto",
+                  mb: 3,
+                  mt: 1,
+                  borderRadius: "20px",
+                  bgcolor: "#27488d",
+                }}
+              >
+                Submit
+              </Button>
+            </form>
           </Grid>
-
-          {!loggedUser._id && (
-            <TextField
-              sx={{
-                backgroundColor: "#faf5ee",
-                color: "#c4c0ba ",
-                width: "100%",
-                fontSize: "16px",
-                fontFamily: "poppins",
-                my: 2,
-              }}
-              placeholder="Your Name * "
-              name="name"
-              size="small"
-              // value={setSingleReview.}
-              onChange={handleChange}
-            />
-          )}
-
-          <TextField
-            multiline
-            minRows={4}
-            style={{
-              backgroundColor: "#faf5ee",
-              width: "99.5%",
-              borderRadius: "5px",
-
-              fontSize: "17px",
-              minHeight: "100px",
-              fontFamily: "poppins",
-              paddingTop: "10px",
-            }}
-            placeholder="  Write Your Comment *"
-            name="comment"
-            // value={singleReview?.message}
-            onChange={handleChange}
-          />
-
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{
-              display: "flex",
-              margin: "auto",
-              mb: 3,
-              mt: 1,
-              borderRadius: "20px",
-              bgcolor: "#27488d",
-            }}
-          >
-            Submit
-          </Button>
-        </form>
+        </Grid>
         <LoginWindow
           handleOpen={handleOpen}
           handleClose={handleClose}
