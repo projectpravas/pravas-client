@@ -8,8 +8,7 @@ import { Helmet } from "react-helmet-async";
 import BlogService from "../../../services/BlogService";
 import { endPoints } from "../../../api";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
-import { IconButton, Paper } from "@mui/material";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { Paper } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MustWatchBlogDetails from "./MustWatchBlogDetails";
 

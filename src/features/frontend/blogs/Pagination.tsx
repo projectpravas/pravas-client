@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Paginations from "@mui/material/Pagination";
+import { Stack } from "@mui/material";
 
 interface IPaginationProps {
   totalPosts: number;
@@ -25,15 +25,16 @@ const Pagination: React.FunctionComponent<IPaginationProps> = ({
 
   return (
     <>
-      <div>
+      <Stack>
         <Paginations
+          sx={{ display: "flex", justifyContent: "center" }}
           count={totalPages}
           color="primary"
           defaultPage={1}
           size="large"
           onChange={(event, value) => setPage(value)}
         />
-      </div>
+      </Stack>
     </>
   );
 };
