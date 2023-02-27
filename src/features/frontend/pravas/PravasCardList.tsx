@@ -16,7 +16,6 @@ const PravasCardList: React.FunctionComponent<IPravasCardListProps> = ({}) => {
     TourService.fetchAllTours(`?category=package`)
       .then((response) => {
         setData(response?.data?.data);
-        // dispatch(addAllTours(response?.data?.data));
       })
       .catch((err) => {
         console.log(err);
