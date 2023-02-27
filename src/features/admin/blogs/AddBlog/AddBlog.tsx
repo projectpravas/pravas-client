@@ -728,7 +728,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                     src={
                                       previewImage
                                         ? previewImage
-                                        : "./image-thumb.jpeg"
+                                        : "/image-thumb.jpeg"
                                     }
                                   />
                                   <label htmlFor="image">

@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
 import DirectionsBusFilledOutlinedIcon from "@mui/icons-material/DirectionsBusFilledOutlined";
-import { Avatar } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 
 const data = [
   {
@@ -83,7 +83,12 @@ const BookingSteps: React.FunctionComponent<IBookingStepsProps> = (props) => {
           </Grid>
           {/* Steps Images */}
           <Grid item xs={12} md={6}>
-            <Box sx={{ height: 400 }}>
+            <Box
+              sx={{
+                height: 400,
+                objectFit: "cover",
+              }}
+            >
               <img
                 style={{
                   height: "100%",
