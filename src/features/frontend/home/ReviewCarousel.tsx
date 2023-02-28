@@ -2,7 +2,6 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -19,17 +18,15 @@ import ShareIcon from "@mui/icons-material/Share";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import OwlCarousel from "react-owl-carousel";
-// import "../../../ui/owl-carousel/owl.css";
-import "../../../ui/owl-carousel/owl.module.css";
 
 const options = {
   lazyLoad: true,
   loop: true,
-  autoplay: true,
+  autoplay: false,
   autoplayHoverPause: true,
-  margin: 20,
+  margin: 30,
   responsiveClass: true,
-  nav: true,
+  nav: false,
   dots: false,
   smartSpeed: 1000,
   responsive: {
@@ -46,7 +43,7 @@ const options = {
       items: 2,
     },
     1000: {
-      items: 4,
+      items: 3,
     },
   },
 };
@@ -58,11 +55,12 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
     <>
       <Container>
         <OwlCarousel
-          className="owl-stage-review owl-nav MuiPaper-root"
+          className="owl-theme owl-carousel owl-nav-review"
           {...options}
           autoPlay={true}
+          nav
         >
-          <Card>
+          <Card sx={{ marginY: "10px" }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">

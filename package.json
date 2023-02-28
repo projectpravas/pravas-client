@@ -38,6 +38,7 @@
     "react-table": "^7.8.0",
     "react-to-print": "^2.14.12",
     "react-toastify": "^9.1.1",
+    "react-web-share": "^2.0.2",
     "recharts": "^2.4.1",
     "redux-persist": "^6.0.0",
     "sweetalert2": "^11.7.1",

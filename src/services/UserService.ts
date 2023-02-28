@@ -38,5 +38,9 @@ class UserService {
   static addRemoveTourId(obj: ITourModifyingObj): Promise<AxiosResponse> {
     return API.post(endPoints.api.users.addRemoveTourId, obj);
   } //addRemoveTourId
+
+  static addRemoveWishlist(obj: ITourModifyingObj): Promise<AxiosResponse> {
+    return API.post(endPoints.api.users.addRemoveWishlist, obj);
+  } //addRemoveWishlist
 }
 export default UserService;

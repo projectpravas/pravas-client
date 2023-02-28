@@ -1,5 +1,7 @@
-import { Divider, Grid, Typography } from "@mui/material";
 import * as React from "react";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 import { endPoints } from "../../../api";
 import BlogService from "../../../services/BlogService";
 
@@ -68,6 +70,7 @@ const MustWatchBlogDetails: React.FunctionComponent<
               <Divider sx={{ pt: 1 }} />
             </Grid>
           ))}
+        <img src="./adPlaceholder.jpg" style={{ width: "100%" }} />
       </Grid>
     </>
   );
