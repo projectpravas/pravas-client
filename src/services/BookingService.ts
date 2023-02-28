@@ -17,5 +17,9 @@ class BookingService {
   }) {
     return API.post(endPoints.api.bookingOrders.getPaymentHistory, queryObj);
   } //verifyOrder
+
+  static refund(refundObj: { pId: string; amount: string }) {
+    return API.post(endPoints?.api.bookingOrders.refund, refundObj);
+  } //refund
 }
 export default BookingService;

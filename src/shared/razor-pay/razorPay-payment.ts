@@ -1,9 +1,48 @@
 import BookingService from "../../services/BookingService";
+import TourService from "../../services/TourService";
+import UserService from "../../services/UserService";
 
-let customersId: string;
-let toursId: string;
+async function getData(tourId: string, customerId: string) {
+  let tourTitle = "";
+  let tourDate: any = "";
+  let name = "";
 
-const handleOpenRazorPay = (data: any) => {
+  await TourService.fetchOneTour(tourId)
+    .then(async (res) => {
+      const tour = await res?.data?.data;
+
+      tourTitle = tour?.title ? tour?.title : "";
+      tourDate = tour?.tourDate
+        ? new Intl.DateTimeFormat("en-IN").format(
+            new Date(tour?.tourDate.toString())
+          )
+        : "";
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  await UserService.fetchOneUser(customerId)
+    .then(async (res) => {
+      const user = await res?.data?.data;
+
+      name = `${user?.name ? user?.name?.first : ""} ${
+        user?.name ? user?.name?.last : ""
+      }`;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+
+  return { tourDate, tourTitle, name };
+}
+
+const handleOpenRazorPay = (
+  data: any,
+  notesData: any,
+  tourId: string,
+  customerId: string
+) => {
   const options = {
     key: "rzp_test_577RSEw8WtsFyW",
     amount: data?.amount,
@@ -15,8 +54,8 @@ const handleOpenRazorPay = (data: any) => {
     handler: (response: any) => {
       BookingService.verifyOrder({
         ...response,
-        tourId: toursId,
-        customerId: customersId,
+        tourId: tourId,
+        customerId: customerId,
       })
 
         .then((res) => {
@@ -33,8 +72,7 @@ const handleOpenRazorPay = (data: any) => {
     //   contact: "9000090000",
     // },
     notes: {
-      customerId: customersId,
-      tourId: toursId,
+      ...notesData,
       paymentTime: Date.now(),
     },
     // theme: {
@@ -52,17 +90,20 @@ const handleOpenRazorPay = (data: any) => {
   }
 };
 
-const handlePayment = (amount: string, customerId: string, tourId: string) => {
-  customersId = customerId;
-  toursId = tourId;
-
+const handlePayment = async (
+  amount: string,
+  customerId: string,
+  tourId: string
+) => {
   if (!amount || !customerId || !tourId) return false;
+
+  const notesData = await getData(tourId, customerId);
 
   if (customerId)
     BookingService.createOrder(amount)
       .then((result) => {
         // on order creation open RazorPay interface
-        handleOpenRazorPay(result?.data?.data);
+        handleOpenRazorPay(result?.data?.data, notesData, tourId, customerId);
       })
       .catch((err) => {
         console.error(err);
