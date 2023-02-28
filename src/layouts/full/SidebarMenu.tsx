@@ -66,8 +66,8 @@ const SidebarMenu: React.FunctionComponent<ISidebarMenuProps> = ({
                     <NavLink
                       to={path}
                       style={({ isActive }) => ({
-                        color: isActive ? "#27488d" : "black",
-                        borderBottom: isActive ? "3px solid #27488d" : "black",
+                        color: isActive ? "#f7a707" : "black",
+                        // borderBottom: isActive ? "3px solid #27488d" : "black",
                       })}
                     >
                       <Box
