@@ -19,6 +19,20 @@ const ExploreGrid = styled(Grid)({
   },
 });
 
+const DescArea = styled(Typography)`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+`;
+
+const TitleArea = styled(Typography)`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+`;
+
 interface IBlogPostProps {
   image: string;
   title: string;
@@ -161,8 +175,8 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     minHeight: 152,
                   }}
                 >
-                  <Typography
-                    className="blog-post-line-clamp-title"
+                  <TitleArea
+                    // className="blog-post-line-clamp-title"
                     sx={{
                       color: "#005d9d",
                       fontSize: 19,
@@ -171,14 +185,15 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     }}
                   >
                     {title}
-                  </Typography>
-                  <Typography
-                    className="blog-post-line-clamp-p"
+                  </TitleArea>
+                  <DescArea
+                    // className="blog-post-line-clamp-p"
                     sx={{
                       color: "#7a7a7a",
                       fontSize: 16,
                       fontWeight: 400,
                       fontFamily: "inherit",
+                      overflow: "hidden",
                     }}
                     dangerouslySetInnerHTML={{
                       __html: desc.slice(
@@ -186,7 +201,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         desc.indexOf("</p>")
                       ),
                     }}
-                  ></Typography>
+                  ></DescArea>
                 </Grid>
                 {/* ---------------------Divider-------------------- */}
                 <Divider />

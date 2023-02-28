@@ -1,4 +1,6 @@
-import { Box, Button, Grid } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
 import * as React from "react";
 import Lottie from "lottie-react";
 import notFoundAnim from "./not-found.json";

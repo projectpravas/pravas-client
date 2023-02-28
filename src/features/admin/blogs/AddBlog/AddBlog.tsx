@@ -728,7 +728,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                                     src={
                                       previewImage
                                         ? previewImage
-                                        : "./image-thumb.jpeg"
+                                        : "/image-thumb.jpeg"
                                     }
                                   />
                                   <label htmlFor="image">
@@ -807,7 +807,7 @@ const AddBlog: React.FunctionComponent<IAddBlogProps> = (props) => {
                             : true
                         }
                         endIcon={<OpenInBrowserIcon />}
-                        sx={{ backgroundColor: "#27488d", mx: 2 }}
+                        sx={{ backgroundColor: "#27488d", mt: 2 }}
                       >
                         Publish
                       </Button>

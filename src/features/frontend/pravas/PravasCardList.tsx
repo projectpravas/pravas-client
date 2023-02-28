@@ -6,14 +6,19 @@ import { selectAllTours } from "../../../app/slices/TourSlice";
 import TourService from "../../../services/TourService";
 import TourModel from "../../../shared/models/tourModel";
 import PravasPackageCard from "./PravasPackageCard";
+import { useSearchParams } from "react-router-dom";
 
 interface IPravasCardListProps {}
 
 const PravasCardList: React.FunctionComponent<IPravasCardListProps> = ({}) => {
   const [data, setData] = React.useState<Array<TourModel>>();
+  const [loadState, setLoadState] = React.useState(false);
+  const [searchParams] = useSearchParams();
 
-  const loadPackages = () => {
-    TourService.fetchAllTours(`?category=package`)
+  let paramValue = searchParams.toString();
+
+  const loadPackages = (paramValue = "") => {
+    TourService.fetchAllTours(`?category=package&${paramValue}`)
       .then((response) => {
         setData(response?.data?.data);
       })
@@ -22,9 +27,11 @@ const PravasCardList: React.FunctionComponent<IPravasCardListProps> = ({}) => {
       });
   };
 
+  paramValue = paramValue?.replaceAll("=all", "=");
+
   React.useEffect(() => {
-    loadPackages();
-  }, []);
+    loadPackages(paramValue);
+  }, [searchParams]);
 
   return (
     <>

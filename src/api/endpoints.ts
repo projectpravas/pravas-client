@@ -49,6 +49,7 @@ export default {
       bookNow: "/bookingOrders/create-order",
       verify: "/bookingOrders/verify-order",
       getPaymentHistory: "/bookingOrders/payment-history",
+      refund: "/bookingOrders/refund",
     },
   },
 };
