@@ -47,7 +47,7 @@ const typePosition = {
 const options = {
   lazyLoad: true,
   loop: true,
-  autoplay: false,
+  autoplay: true,
   autoplayHoverPause: true,
   // margin: 30,
   responsiveClass: true,
