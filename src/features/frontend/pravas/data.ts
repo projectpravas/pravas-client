@@ -5,7 +5,6 @@ export default [
     image: [
       "https://pravasthejourney.com/wp-content/uploads/2022/06/Hampi.jpg",
       "https://pravasthejourney.com/wp-content/uploads/2022/06/Hampi.jpg",
-      "https://pravasthejourney.com/wp-content/uploads/2022/06/Hampi.jpg",
     ],
 
     price: " ₹15800 / P",
