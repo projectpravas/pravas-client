@@ -1073,6 +1073,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       )}
                   </AccordionDetails>
                 </Accordion>
+                {/* reviews */}
+                <ReviewSection />
               </div>
             </Box>
           </Grid>

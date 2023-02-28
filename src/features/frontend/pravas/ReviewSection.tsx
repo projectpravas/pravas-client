@@ -22,6 +22,7 @@ import UserModel from "../../../shared/models/userModel";
 import TourModel from "../../../shared/models/tourModel";
 import { errorToast, successToast } from "../../../ui/toast/Toast";
 import LoginWindow from "../../../ui/loginwindow/LoginWindow";
+import UserService from "../../../services/UserService";
 
 interface IReviewSectionProps {}
 
@@ -42,6 +43,7 @@ const ReviewSection: React.FC<IReviewSectionProps> = () => {
     liked: false,
     comment: "",
     date: new Date(),
+    approved: "false",
   });
 
   const handleChange = (e: any) => {

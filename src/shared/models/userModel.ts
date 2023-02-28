@@ -26,6 +26,7 @@ interface UserModel {
   address?: Address;
   password?: string;
   tours?: Array<any>;
+  wishlist?: Array<any>;
   role?: string;
   dob?: Date | string;
   gender?: string;

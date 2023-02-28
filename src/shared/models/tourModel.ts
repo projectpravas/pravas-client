@@ -53,6 +53,7 @@ interface Feedbacks {
   liked?: Boolean;
   comment?: string;
   date?: Date;
+  approved?: string;
 }
 
 interface TourModel {
