@@ -11,6 +11,7 @@ import { NavLink as NLink, useLocation } from "react-router-dom";
 import UserModel from "../../shared/models/userModel";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../app/slices/AuthSlice";
+import { Typography } from "@mui/material";
 
 const NavLink = styled(NLink)({
   textDecoration: "none",
@@ -59,7 +60,8 @@ const SecondaryBarMenus: React.FunctionComponent<ISecondaryBarMenus> = (
                 })}
               >
                 <Grid item xs={12} alignSelf="center">
-                  <BottomNavigationAction
+                  <Typography sx={{ margin: 2 }}>{tab?.label}</Typography>
+                  {/* <BottomNavigationAction
                     label={tab?.label}
                     value={tab?.path}
                     showLabel={true}
@@ -70,7 +72,7 @@ const SecondaryBarMenus: React.FunctionComponent<ISecondaryBarMenus> = (
                         verticalAlign: "middle",
                       },
                     }}
-                  />
+                  /> */}
                 </Grid>
               </NavLink>
             );

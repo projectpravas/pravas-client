@@ -1191,9 +1191,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
-      <Container id="reviewCarousal">
-        <ReviewSection />
-      </Container>
+
       <StartFromTop />
       <Outlet />
       {/* ------------------------------------------------------------Reviews Carousal */}
