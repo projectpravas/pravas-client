@@ -70,15 +70,15 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                 top: "32%",
                 left: "8%",
                 fontSize: { xs: "1.5rem", md: "2.8rem" },
-                fontFamily: " cursive",
+                fontFamily: "domine",
                 fontStyle: "italic",
                 color: "white",
-                textShadow: "0 0 10px rgb(0 0 0 / 30%)",
+                textShadow: "4px 4px 10px rgb(0 0 0 / 30%)",
                 maxWidth: "71.25",
                 minHeight: "31.25",
-                fontWeight: 500,
+                fontWeight: 600,
                 lineHeight: 1.2,
-                letterSpacing: -1,
+                letterSpacing: 0,
               }}
             >
               Bun ke pravasee <br />
@@ -88,10 +88,10 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
               sx={{
                 // paddingTop: "2%",
                 lineHeight: "1.86em",
-                letterSpacing: "-.2px",
-                fontSize: "1rem",
+                letterSpacing: "-.1px",
+                fontSize: "1.2em",
                 position: "absolute",
-                top: { xs: "55%", md: "60%" },
+                top: { xs: "55%", sm: "59%" },
                 left: "8%",
                 color: "#fff",
                 textShadow: "0 0 10px rgb(0 0 0 / 30%)",
