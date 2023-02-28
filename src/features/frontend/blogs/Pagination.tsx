@@ -1,6 +1,6 @@
 import React from "react";
 import Paginations from "@mui/material/Pagination";
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 
 interface IPaginationProps {
   totalPosts: number;

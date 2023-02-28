@@ -22,13 +22,14 @@ import OwlCarousel from "react-owl-carousel";
 const options = {
   lazyLoad: true,
   loop: true,
-  autoplay: false,
+  autoplay: true,
   autoplayHoverPause: true,
   margin: 30,
   responsiveClass: true,
   nav: false,
   dots: false,
   smartSpeed: 1000,
+  autoplayTimeout: 2500,
   responsive: {
     0: {
       items: 1,
@@ -43,7 +44,7 @@ const options = {
       items: 2,
     },
     1000: {
-      items: 3,
+      items: 4,
     },
   },
 };
@@ -57,14 +58,12 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
         <OwlCarousel
           className="owl-theme owl-carousel owl-nav-review"
           {...options}
-          autoPlay={true}
-          nav
         >
           <Card sx={{ marginY: "10px" }}>
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  AB
+                  KK
                 </Avatar>
               }
               title={
@@ -76,14 +75,14 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
                     fontFamily: "Open sans",
                   }}
                 >
-                  Abhi Gujar
+                  Kirti Kumar
                 </Typography>
               }
               subheader={
                 <Typography
                   sx={{ color: "#444", opacity: ".5", fontSize: "12px" }}
                 >
-                  September 14, 2016
+                  September 14, 2022
                 </Typography>
               }
               // action={
