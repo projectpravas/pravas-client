@@ -200,15 +200,10 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
           <BlogsHome />
         </Grid>
 
-        {/****************Review Carousel**************/}
-        {/* <Grid order={5}>
-          <ReviewCarousel />
-        </Grid> */}
-
-        {/* gallery  */}
-        {/* <Grid sx={{ marginTop: 10 }}>
-          <TourGallery />
-        </Grid> */}
+        {/****************custome tour **************/}
+        <Container sx={{ marginBottom: "30px" }}>
+          <CustomiseTourPackage />
+        </Container>
 
         {/* render from top  */}
         <StartFromTop />
