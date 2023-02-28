@@ -10,6 +10,8 @@ import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import CardTravelTwoToneIcon from "@mui/icons-material/CardTravelTwoTone";
 import Enquiries from "../../features/admin/enquiries/Enquiries";
 import BookmarksOutlinedIcon from "@mui/icons-material/BookmarksOutlined";
+import ReviewList from "../../features/admin/reviews/ReviewList";
+import MyWishlist from "../../features/admin/pravas/my-wishlist/MyWishlist";
 
 const Tours = lazy(() => import("../../features/admin/pravas/tours/Tours"));
 const MyTours = lazy(
@@ -58,7 +60,7 @@ export default [
     label: "Dashboard",
     component: <Dashboard />,
     // icon: <DashboardCustomizeIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/1.png" />,
+    icon: <img style={{ width: 24, height: 24 }} src="/1.png" />,
     path: "dashboard",
     showInMenu: true,
     showInSettings: false,
@@ -69,7 +71,7 @@ export default [
     label: "Pravas",
     component: <Pravas />,
     // icon: <TourIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/2.png" />,
+    icon: <img style={{ width: 24, height: 24 }} src="/2.png" />,
 
     path: "pravas",
     showInMenu: true,
@@ -113,13 +115,22 @@ export default [
         showInSettings: false,
         roles: ["admin", "superAdmin", "customer"],
       },
+      {
+        label: "My Wishlist",
+        component: <MyWishlist />,
+        icon: <TravelExploreIcon />,
+        path: "my-wishlist",
+        showInMenu: true,
+        showInSettings: false,
+        roles: ["admin", "superAdmin", "customer"],
+      },
     ],
   },
   {
     label: "Bookings",
     component: <Bookings />,
     // icon: <BookOnlineIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/3.png" />,
+    icon: <img style={{ width: 24, height: 24 }} src="/3.png" />,
     path: "bookings",
     showInMenu: true,
     showInSettings: false,
@@ -129,7 +140,7 @@ export default [
     label: "Enquiries",
     component: <Enquiries />,
     // icon: <RequestQuoteIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/4.png" />,
+    icon: <img style={{ width: 24, height: 24 }} src="/4.png" />,
     path: "enquiries",
     showInMenu: true,
     showInSettings: false,
@@ -139,7 +150,7 @@ export default [
     label: "Blogs",
     component: <Blogs />,
     // icon: <ReceiptLongIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/5.png" />,
+    icon: <img style={{ width: 24, height: 24 }} src="/5.png" />,
     path: "admin-blogs",
     showInMenu: true,
     showInSettings: false,
@@ -169,7 +180,7 @@ export default [
     label: "Users",
     component: <Users />,
     // icon: <PeopleIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/6.png" />,
+    icon: <img style={{ width: 24, height: 24 }} src="/6.png" />,
     path: "users",
     showInMenu: true,
     showInSettings: false,
@@ -179,18 +190,19 @@ export default [
     label: "Customers",
     component: <Users />,
     // icon: <PeopleIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/7.png" />,
+    icon: <img style={{ width: 24, height: 24 }} src="/7.png" />,
     path: "customers",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin"],
   },
+
   {
-    label: "Wishlist",
-    component: <Wishlist />,
+    label: "Review List",
+    component: <ReviewList />,
     // icon: <BookmarksOutlinedIcon />,
-    icon: <img style={{ width: 24, height: 24 }} src="../dash-icons/8.png" />,
-    path: "wishlist",
+    icon: <img style={{ width: 24, height: 24 }} src="/8.png" />,
+    path: "reviewlist",
     showInMenu: true,
     showInSettings: false,
     roles: ["admin", "superAdmin"],

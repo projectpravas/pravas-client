@@ -17,6 +17,12 @@ import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableBody from "@mui/material/TableBody";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import Carousel from "react-material-ui-carousel";
@@ -33,16 +39,9 @@ import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import EditIcon from "@mui/icons-material/Edit";
 import handlePayment from "../../../shared/razor-pay/razorPay-payment";
 import UserModel from "../../../shared/models/userModel";
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableContainer,
-  TableBody,
-  TableCell,
-} from "@mui/material";
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
@@ -219,8 +218,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       .then((response) => {
         setTourDetails(response?.data?.data);
         setAllPackageWatch(response?.data?.data);
-        // const tourObj = result.find((obj) => obj?._id == id);
-        // if (tourObj) setTourDetails(tourObj);
       })
       .catch((err) => {
         console.log(err);
@@ -314,7 +311,13 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         </Grid>
       </OwlCarousel>
       {/* ************** Heading of Tour *******************    */}
-      <Grid sx={{ backgroundColor: "#faf5ee", marginTop: "20px" }}>
+      <Grid
+        sx={{
+          backgroundColor: "#faf5ee",
+          marginTop: "20px",
+          paddingBottom: { xs: "20px", md: "15px", lg: "5px" },
+        }}
+      >
         <Container>
           <Grid
             container
@@ -478,66 +481,66 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <Grid
         sx={{ backgroundColor: "white", borderBottom: "1px solid #faf5ee" }}
       >
-        <Grid
-          container
-          spacing={2}
-          sx={{
-            height: "100px",
-            display: "flex",
-            justifyContent: "end",
-            alignItems: "center",
-            marginRight: "10px",
-            width: "100%",
-          }}
-        >
-          <Grid item>
-            <a href="#booking-table" style={{ textDecoration: "none" }}>
+        <Container>
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              height: "100px",
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+              marginRight: "10px",
+              width: "100%",
+            }}
+          >
+            <Grid item>
+              <a href="#booking-table" style={{ textDecoration: "none" }}>
+                <Button
+                  sx={{
+                    color: "white",
+                    fontWeight: "700",
+                    backgroundColor: "#27488d",
+                    fontFamily: "poppins",
+                    "&:hover": {
+                      bgcolor: "#27488d",
+                      color: "white",
+                    },
+                  }}
+                  onClick={() => {
+                    handleClickChange();
+                  }}
+                >
+                  Booking
+                </Button>
+              </a>
+            </Grid>
+            {/* *******************share button******************** */}
+
+            <Grid item sx={{ position: "relative" }}>
+              <SharePravasCard />
+            </Grid>
+
+            {/* *************review button*************************/}
+            <Grid item>
               <Button
                 sx={{
-                  // bgcolor: "#f0f3f6",
-                  color: "white",
+                  bgcolor: "#f0f3f6",
+                  color: "#838590",
                   fontWeight: "700",
-                  backgroundColor: "#27488d",
                   fontFamily: "poppins",
                   "&:hover": {
                     bgcolor: "#27488d",
                     color: "white",
                   },
                 }}
-                onClick={() => {
-                  handleClickChange();
-                }}
               >
-                Booking
+                <EditIcon />
+                Review
               </Button>
-            </a>
+            </Grid>
           </Grid>
-          {/* *******************share button******************** */}
-
-          <Grid item sx={{ position: "relative" }}>
-            <SharePravasCard />
-          </Grid>
-
-          {/* *************review button*************************/}
-          <Grid item>
-            <Button
-              sx={{
-                marginLeft: "10px",
-                bgcolor: "#f0f3f6",
-                color: "#838590",
-                fontWeight: "700",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
-                  color: "white",
-                },
-              }}
-            >
-              <NearMeOutlinedIcon />
-              Review
-            </Button>
-          </Grid>
-        </Grid>
+        </Container>
       </Grid>
       {/*-*****************-- kashmir description---*************--- */}
       <Container>
@@ -1070,6 +1073,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       )}
                   </AccordionDetails>
                 </Accordion>
+                {/* reviews */}
+                <ReviewSection />
               </div>
             </Box>
           </Grid>
