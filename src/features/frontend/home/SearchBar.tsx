@@ -148,6 +148,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
             backgroundColor: { xs: "white", md: "transparent" },
             boxShadow: "3px 5px 20px 1px rgb(0 0 0 / 23%)",
             backdropFilter: "blur(60px)",
+            border: "1px solid #5a5a5a82",
           }}
         >
           {/* Tour Location  */}

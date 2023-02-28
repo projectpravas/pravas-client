@@ -15,13 +15,13 @@ class TourService {
     return API.delete(endPoints.api.tours.delete + id);
   } //deleteTour
 
-  static fetchOneTour(id: string) {
-    return API.get(endPoints.api.tours.getOne + id);
-  } //fetchOneTour
-
   static fetchAllTours(query = "") {
     return API.get(endPoints.api.tours.getAll + query);
   } //fetchAllTours
+
+  static fetchOneTour(id: string) {
+    return API.get(endPoints.api.tours.getOne + id);
+  } //fetchOneTour
 
   static updateReview(id: string, review: TourModel | FormData | Object) {
     return API.put(endPoints.api.tours.updateReview + id, review);

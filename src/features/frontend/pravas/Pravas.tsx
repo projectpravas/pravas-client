@@ -21,29 +21,14 @@ interface IPravasProps {}
 
 const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
   //---------------- AllDatafetch -------------
-  const [allPackage, setAllPackage] = React.useState<any[]>([]);
-  const [loadState, setLoadState] = React.useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   let paramValue = searchParams.toString();
 
-  const loadPackages = (paramValue = "") => {
-    TourService.fetchAllTours(`?category=package&${paramValue}`)
-      .then((response) => {
-        setAllPackage(response?.data?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   paramValue = paramValue?.replaceAll("=all", "=");
 
-  React.useEffect(() => {
-    loadPackages(paramValue);
-  }, [searchParams]);
   const showPravas =
     pathname.split("/")[pathname.split("/").length - 1] == "pravas";
 
@@ -51,32 +36,28 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
     navigate("custom-tour-form");
   };
 
-  React.useEffect(() => {
-    if (allPackage.length === 0) {
-      setTimeout(() => {
-        setLoadState(true);
-      }, 2000);
-    } else {
-      setLoadState(false);
-    }
-  }, [allPackage]);
-
   return (
     <>
       <Outlet />
+      <Helmet>
+        <title>Pravas Tours</title>
+        <meta name="description" content="Pravas Tourism" />
+        <meta name="keywords" content="Pravas Tourism" />
+        <link rel="canonical" href="/pravas" />
+      </Helmet>
+
+      <Container sx={{ marginTop: "40px" }}>
+        <SearchBar />
+      </Container>
+
       {showPravas && (
         <>
-          <Helmet>
-            <title>Pravas Tours</title>
-            <meta name="description" content="Pravas Tourism" />
-            <meta name="keywords" content="Pravas Tourism" />
-            <link rel="canonical" href="/pravas" />
-          </Helmet>
           <Container>
-            <Grid container marginY={10}>
+            <Grid container marginY={5}>
               <PravasCardList />
             </Grid>
           </Container>
+
           <StartFromTop />
 
           {/* *******************customize tour***************** */}
