@@ -62,6 +62,7 @@ import LoginWindow from "../../../ui/loginwindow/LoginWindow";
 import ShareButtonBooking from "./ShareButtonBooking";
 import ReviewCarousel from "../home/ReviewCarousel";
 import ExploreReviewCarousal from "./Review-carousal/ExploreReviewCarousal";
+import UserService from "../../../services/UserService";
 
 const options = {
   lazyLoad: true,
@@ -187,6 +188,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [allPackageWatch, setAllPackageWatch] = useState<TourDetails>();
   const [bookingDates, setBookingDates] = useState<TourModel[]>([]);
   const [openLoginWindowStatus, setOpenLoginWindowStatus] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserModel>({});
 
   console.log("tourDetails: ", tourDetails);
 
@@ -242,6 +244,17 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     setOpenLoginWindowStatus(false);
   };
 
+  const getCurrentUser = () => {
+    currentLoggedUser &&
+      UserService.fetchOneUser(currentLoggedUser?._id as string)
+        .then((res) => {
+          setCurrentUser(res?.data?.data);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+  };
+
   const handleBooking = (price: string, customerId: string, tourId: string) => {
     if (!price || !tourId) return errorToast("Failed... Try Again...", 3000);
     if (!customerId) {
@@ -250,6 +263,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     }
 
     price && customerId && tourId && handlePayment(price, customerId, tourId);
+    price && customerId && tourId && getCurrentUser();
   };
 
   const fetchUpcomingTours = () => {
@@ -275,6 +289,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     loadExplore();
     fetchUpcomingTours();
   }, [id]);
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   return (
     <Grid>
@@ -518,22 +536,24 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
 
           {/* *************review button*************************/}
           <Grid item>
-            <Button
-              sx={{
-                marginLeft: "10px",
-                bgcolor: "#f0f3f6",
-                color: "#838590",
-                fontWeight: "700",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
-                  color: "white",
-                },
-              }}
-            >
-              <NearMeOutlinedIcon />
-              Review
-            </Button>
+            <a href="#reviewCarousal" style={{ textDecoration: "none" }}>
+              <Button
+                sx={{
+                  marginLeft: "10px",
+                  bgcolor: "#f0f3f6",
+                  color: "#838590",
+                  fontWeight: "700",
+                  fontFamily: "poppins",
+                  "&:hover": {
+                    bgcolor: "#27488d",
+                    color: "white",
+                  },
+                }}
+              >
+                <NearMeOutlinedIcon />
+                Review
+              </Button>
+            </a>
           </Grid>
         </Grid>
       </Grid>
@@ -692,23 +712,61 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                   <Button
                                     variant="contained"
                                     // disabled={
-                                    //   currentLoggedUser?._id ? false : true
+                                    //   currentLoggedUser?.tours?.find(
+                                    //     (t) => t?._id == obj?._id
+                                    //   )?._id
+                                    //     ? true
+                                    //     : false
                                     // }
                                     sx={{
-                                      bgcolor: "#2c5799",
+                                      bgcolor: currentUser?.tours?.find(
+                                        (t) => t?._id == obj?._id
+                                      )?._id
+                                        ? "#00a300"
+                                        : "#2c5799",
                                       color: "white",
                                       borderRadius: "15px",
+                                      border: currentUser?.tours?.find(
+                                        (t) => t?._id == obj?._id
+                                      )?._id
+                                        ? "1px solid #00a300"
+                                        : "1px solid #2c5799",
                                       fontSize: "12px",
+                                      "&:hover": {
+                                        backgroundColor:
+                                          currentUser?.tours?.find(
+                                            (t) => t?._id == obj?._id
+                                          )?._id
+                                            ? "#fff"
+                                            : "#fff",
+                                        border: currentUser?.tours?.find(
+                                          (t) => t?._id == obj?._id
+                                        )?._id
+                                          ? "1px solid #00a300"
+                                          : "1px solid #2c5799",
+                                        color: currentUser?.tours?.find(
+                                          (t) => t?._id == obj?._id
+                                        )?._id
+                                          ? "#00a300"
+                                          : "#2c5799",
+                                      },
                                     }}
                                     onClick={() =>
+                                      !currentUser?.tours?.find(
+                                        (t) => t?._id == obj?._id
+                                      )?._id &&
                                       handleBooking(
                                         obj?.price,
-                                        currentLoggedUser?._id as string,
+                                        currentUser?._id as string,
                                         obj?._id
                                       )
                                     }
                                   >
-                                    Booking
+                                    {currentUser?.tours?.find(
+                                      (t) => t?._id == obj?._id
+                                    )?._id
+                                      ? "Booked"
+                                      : "Book"}
                                   </Button>
                                 </DataTab>
                               </TableRow>
@@ -1145,12 +1203,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
-      <ReviewSection />
-      {/* Package Card Carousel  */}
-      <Container>
-        {/* <PravasHomeCarousel /> */}
-
-        {/* <ReviewCarousel /> */}
+      <Container id="reviewCarousal">
+        <ReviewSection />
       </Container>
       <StartFromTop />
       <Outlet />
