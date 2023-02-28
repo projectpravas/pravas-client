@@ -7,7 +7,7 @@ class TourService {
     return API.post(endPoints.api.tours.create, tour);
   } //createTour
 
-  static updateTour(id: string, tour: TourModel | FormData | Object) {
+  static updateTour(id: string, tour: TourModel | FormData) {
     return API.put(endPoints.api.tours.update + id, tour);
   } //updateTour
 

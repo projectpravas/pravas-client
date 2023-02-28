@@ -1,10 +1,10 @@
-import { Box, IconButton } from "@mui/material";
-import MUIDataTable from "mui-datatables";
 import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import MUIDataTable from "mui-datatables";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import BlogService from "../../../services/BlogService";
 import BlogModel from "../../../shared/models/blogModel";
-import CustomTitle from "../../../ui/title/CustomTitle";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
@@ -15,6 +15,18 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
   const [blogs, setBlogs] = useState<BlogModel[]>([]);
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const showAdminBlogs =
+    pathname.split("/")[pathname.split("/").length - 1] == "admin-blogs";
+
+  const navPath =
+    pathname.split("/")[pathname.split("/").length - 1] == "admin-blogs"
+      ? "blogs"
+      : pathname.split("/")[pathname.split("/").length - 1];
+
+  const handleEdit = () => {
+    // navigate("")
+  };
 
   //handle delete
   const handleDelete = (id: string) => {
@@ -116,11 +128,14 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
       },
     },
   ];
+  useEffect(() => {
+    if (showAdminBlogs) navigate(`${navPath}`);
+  }, [navPath]);
   return (
     <>
       {/* <h1>Blogs</h1> */}
-      <CustomTitle title="Blogs" />
-      <MUIDataTable title={title} columns={columns} data={blogs} />
+      {/* <CustomTitle title="Blogs" /> */}
+      {/* <MUIDataTable title={title} columns={columns} data={blogs} /> */}
 
       <Outlet />
     </>

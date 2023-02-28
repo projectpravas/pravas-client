@@ -100,8 +100,8 @@ const Header = () => {
                       sx={{ color: "#fff" }}
                       to={route.path}
                       style={({ isActive }) => ({
-                        color: isActive ? "grey" : "black",
-                        borderBottom: isActive ? "3px solid #27488d" : "",
+                        color: isActive ? "#f7a71e" : "black",
+                        // borderBottom: isActive ? "3px solid #27488d" : "",
                       })}
                     >
                       {route.label}
@@ -148,8 +148,8 @@ const Header = () => {
                       sx={{ color: "#fff" }}
                       to={route.path}
                       style={({ isActive }) => ({
-                        color: isActive ? "grey" : "black",
-                        borderBottom: isActive ? "3px solid #27488d" : "",
+                        color: isActive ? "#f7a71e" : "black",
+                        // borderBottom: isActive ? "3px solid #27488d" : "",
                       })}
                     >
                       {route.label}

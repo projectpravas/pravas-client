@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import AccountBalanceWalletOutlinedIcon from "@mui/icons-material/AccountBalanceWalletOutlined";
 import AccessTimeOutlinedIcon from "@mui/icons-material/AccessTimeOutlined";
 import LocalCarWashOutlinedIcon from "@mui/icons-material/LocalCarWashOutlined";
-
 import NearMeOutlinedIcon from "@mui/icons-material/NearMeOutlined";
 import Grid from "@mui/material/Grid";
+import Card from "@mui/material/Card";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -12,17 +12,21 @@ import Link from "@mui/material/Link";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Paper from "@mui/material/Paper";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Button from "@mui/material/Button";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableBody from "@mui/material/TableBody";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import Carousel from "react-material-ui-carousel";
 import { styled } from "@mui/system";
-
 import {
   Navigate,
   NavLink,
@@ -35,31 +39,21 @@ import { endPoints } from "../../../api";
 import TourService from "../../../services/TourService";
 import { useParams } from "react-router-dom";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import EditIcon from "@mui/icons-material/Edit";
 import handlePayment from "../../../shared/razor-pay/razorPay-payment";
 import UserModel from "../../../shared/models/userModel";
-
-import {
-  Table,
-  TableHead,
-  TableRow,
-  TableContainer,
-  TableBody,
-  TableCell,
-} from "@mui/material";
 import PravasHomeCarousel from "../home/PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import OwlCarousel from "react-owl-carousel";
-
 import MustWatchcard from "./MustWatchCard";
 import ReviewSection from "./ReviewSection";
 import TourModel from "../../../shared/models/tourModel";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
 import { errorToast } from "../../../ui/toast/Toast";
-
+import CustomiseTourPackage from "./CustomiseTourPackage";
 import LoginWindow from "../../../ui/loginwindow/LoginWindow";
-
-import ShareButtonBooking from "./ShareButtonBooking";
+import SharePravasCard from "./SharePravasCard";
 import ReviewCarousel from "../home/ReviewCarousel";
 import ExploreReviewCarousal from "./Review-carousal/ExploreReviewCarousal";
 
@@ -87,7 +81,7 @@ const options = {
       items: 2,
     },
     1000: {
-      items: 3,
+      items: 5,
     },
   },
 };
@@ -95,7 +89,7 @@ const options = {
 // -----tableCellstyles---
 const DataTab = styled(TableCell)({
   color: "#5c5e64",
-  border: "1px solid gray ",
+  border: "1px solid #aaa",
   letterSpacing: "-.2px",
   fontSize: "16px",
   textAlign: "center",
@@ -202,9 +196,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const handleClick = () => {
     navigate("/pravas/explore/custom-tour-form");
   };
-
   // -------upcoming tour  info-----
-
   const columns = [
     {
       name: "tourDates",
@@ -226,14 +218,11 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       .then((response) => {
         setTourDetails(response?.data?.data);
         setAllPackageWatch(response?.data?.data);
-        // const tourObj = result.find((obj) => obj?._id == id);
-        // if (tourObj) setTourDetails(tourObj);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
   const handleLoginOpen = () => {
     setOpenLoginWindowStatus(true);
   };
@@ -241,14 +230,12 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const handleLoginClose = () => {
     setOpenLoginWindowStatus(false);
   };
-
   const handleBooking = (price: string, customerId: string, tourId: string) => {
     if (!price || !tourId) return errorToast("Failed... Try Again...", 3000);
     if (!customerId) {
       handleLoginOpen();
       return;
     }
-
     price && customerId && tourId && handlePayment(price, customerId, tourId);
   };
 
@@ -289,26 +276,37 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         handleOpen={handleLoginOpen}
         handleClose={handleLoginClose}
       />
-
       {/* *******************slides of karshmir image ********************/}
 
       <OwlCarousel className=" owl-nav-explore" {...options}>
         <Grid item>
           <img
-            style={{ height: "275px" }}
-            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[0]}`}
-          />
-        </Grid>
-        <Grid item>
-          <img
-            style={{ height: "275px" }}
+            style={{ height: "100%", objectFit: "cover" }}
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[1]}`}
           />
         </Grid>
         <Grid item>
           <img
-            style={{ height: "275px" }}
+            style={{ height: "100%" }}
             src={`${endPoints?.serverBaseURL}/${tourDetails?.images[2]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "100%" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[3]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "100%" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[4]}`}
+          />
+        </Grid>
+        <Grid item>
+          <img
+            style={{ height: "100%" }}
+            src={`${endPoints?.serverBaseURL}/${tourDetails?.images[5]}`}
           />
         </Grid>
       </OwlCarousel>
@@ -483,66 +481,66 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
       <Grid
         sx={{ backgroundColor: "white", borderBottom: "1px solid #faf5ee" }}
       >
-        <Grid
-          container
-          spacing={2}
-          sx={{
-            height: "100px",
-            display: "flex",
-            justifyContent: "end",
-            alignItems: "center",
-            marginRight: "10px",
-            width: "100%",
-          }}
-        >
-          <Grid item>
-            <a href="#booking-table" style={{ textDecoration: "none" }}>
+        <Container>
+          <Grid
+            container
+            spacing={2}
+            sx={{
+              height: "100px",
+              display: "flex",
+              justifyContent: "end",
+              alignItems: "center",
+              marginRight: "10px",
+              width: "100%",
+            }}
+          >
+            <Grid item>
+              <a href="#booking-table" style={{ textDecoration: "none" }}>
+                <Button
+                  sx={{
+                    color: "white",
+                    fontWeight: "700",
+                    backgroundColor: "#27488d",
+                    fontFamily: "poppins",
+                    "&:hover": {
+                      bgcolor: "#27488d",
+                      color: "white",
+                    },
+                  }}
+                  onClick={() => {
+                    handleClickChange();
+                  }}
+                >
+                  Booking
+                </Button>
+              </a>
+            </Grid>
+            {/* *******************share button******************** */}
+
+            <Grid item sx={{ position: "relative" }}>
+              <SharePravasCard />
+            </Grid>
+
+            {/* *************review button*************************/}
+            <Grid item>
               <Button
                 sx={{
-                  // bgcolor: "#f0f3f6",
-                  color: "white",
+                  bgcolor: "#f0f3f6",
+                  color: "#838590",
                   fontWeight: "700",
-                  backgroundColor: "#27488d",
                   fontFamily: "poppins",
                   "&:hover": {
                     bgcolor: "#27488d",
                     color: "white",
                   },
                 }}
-                onClick={() => {
-                  handleClickChange();
-                }}
               >
-                Booking
+                <EditIcon />
+                Review
               </Button>
-            </a>
+            </Grid>
           </Grid>
-          {/* *******************share button******************** */}
-
-          <Grid item sx={{ position: "relative" }}>
-            <ShareButtonBooking />
-          </Grid>
-
-          {/* *************review button*************************/}
-          <Grid item>
-            <Button
-              sx={{
-                marginLeft: "10px",
-                bgcolor: "#f0f3f6",
-                color: "#838590",
-                fontWeight: "700",
-                fontFamily: "poppins",
-                "&:hover": {
-                  bgcolor: "#27488d",
-                  color: "white",
-                },
-              }}
-            >
-              <NearMeOutlinedIcon />
-              Review
-            </Button>
-          </Grid>
-        </Grid>
+        </Container>
       </Grid>
       {/*-*****************-- kashmir description---*************--- */}
       <Container>
@@ -617,7 +615,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                     }}
                   >
                     <TableContainer id="booking-table">
-                      <Table sx={{ border: "1px solid gray" }}>
+                      <Table sx={{ border: "1px solid #e0e0e0" }}>
                         <TableHead>
                           <TableRow>
                             <DataTab rowSpan={2} sx={{ width: "10%" }}>
@@ -626,21 +624,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                             <DataTab rowSpan={2} sx={{ width: "30%" }}>
                               TourName
                             </DataTab>
-                            <DataTab rowSpan={1} colSpan={2}>
-                              Tour Dates
-                            </DataTab>
-                            <DataTab rowSpan={2} sx={{ width: "15%" }}>
-                              Booking
-                            </DataTab>
-                          </TableRow>
-                          <TableRow>
-                            <DataTab
-                              sx={{ width: "30%" }}
-                              rowSpan={1}
-                              colSpan={1}
-                            >
-                              To
-                            </DataTab>
                             <DataTab
                               sx={{ width: "30%" }}
                               rowSpan={1}
@@ -648,20 +631,23 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                             >
                               From
                             </DataTab>
+
+                            <DataTab
+                              sx={{ width: "30%" }}
+                              rowSpan={1}
+                              colSpan={1}
+                            >
+                              To
+                            </DataTab>
+
+                            <DataTab sx={{ width: "15%" }}>Booking</DataTab>
                           </TableRow>
                         </TableHead>
                         <TableBody>
                           {Array.isArray(bookingDates) &&
                           bookingDates?.length > 0 ? (
                             bookingDates.map((obj: string | any, i: number) => (
-                              <TableRow
-                                key={obj._id + i}
-                                sx={{
-                                  "&:last-child td, &:last-child th": {
-                                    border: 0,
-                                  },
-                                }}
-                              >
+                              <TableRow key={obj._id + i} sx={{}}>
                                 <DataTab component="th" scope="row">
                                   {i + 1}
                                 </DataTab>
@@ -688,19 +674,13 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                 <DataTab
                                   align="right"
                                   sx={{
-                                    "&:last-child td, &:last-child th": {
-                                      border: 0,
-                                    },
-                                    display: "flex",
+                                    display: "table-cell",
                                     justifyContent: "center",
                                     alignItems: "center",
                                   }}
                                 >
                                   <Button
                                     variant="contained"
-                                    // disabled={
-                                    //   currentLoggedUser?._id ? false : true
-                                    // }
                                     sx={{
                                       bgcolor: "#2c5799",
                                       color: "white",
@@ -1093,6 +1073,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       )}
                   </AccordionDetails>
                 </Accordion>
+                {/* reviews */}
+                <ReviewSection />
               </div>
             </Box>
           </Grid>
@@ -1119,13 +1101,15 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                   </Box>
                   <Box sx={{ marginLeft: "10px" }}>
                     <TypoTourInfo>Max Guests</TypoTourInfo>
-                    <TypoTourInfo>15</TypoTourInfo>
+                    <TypoTourInfo sx={{ color: "#2c5799", fontSize: 19 }}>
+                      15
+                    </TypoTourInfo>
                   </Box>
                 </Grid>
                 <Grid sx={{ display: "flex" }}>
                   <Box>
                     <Typography>
-                      <DirectionsCarIcon sx={{ color: "#2c5799" }} />
+                      <LocationOnOutlinedIcon sx={{ color: "#2c5799" }} />
                     </Typography>
                   </Box>
                   <Box sx={{ marginLeft: "10px" }}>
@@ -1136,6 +1120,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                           textDecoration: "none",
                           color: "#2c5799",
                           fontWeight: "bolder",
+                          fontSize: 19,
                         }}
                         href="https://pravasthejourney.com/ba_location/kashmir/"
                       >
@@ -1147,108 +1132,33 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
               </Box>
             </Paper>
             {/*************************must Watch************************ */}
-
             <MustWatchcard />
           </Grid>
         </Grid>
       </Container>
+      {/* **********************Review section****************** */}
       <ReviewSection />
-      {/* Package Card Carousel  */}
-      <Container>
-        {/* <PravasHomeCarousel /> */}
-
-        {/* <ReviewCarousel /> */}
-      </Container>
-      <StartFromTop />
+      {/***********************  customize tour**************************  */}
       <Outlet />
       {/* ------------------------------------------------------------Reviews Carousal */}
-      <Container>
+      <Container sx={{ mb: 12 }}>
+        <Typography
+          variant="h3"
+          sx={{
+            fontSize: "1.5rem",
+            fontWeight: 800,
+            color: "#005e9d",
+            lineHeight: 1.334,
+            mb: 2,
+          }}
+        >
+          What People Say About This Destination
+        </Typography>
         <ExploreReviewCarousal data={tourDetails?.feedbacks as any} />
       </Container>
       {/* -------------------------------------------------------------Customize Tour  */}
-      <Grid
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          marginY: "20px",
-        }}
-      >
-        <Container
-          sx={{
-            padding: "20px",
-            width: "70%",
-
-            borderRadius: "20px",
-            boxShadow: "3px 3px 17px 0px rgba(0,0,0,0.2)",
-          }}
-        >
-          <Grid
-            container
-            sx={{
-              display: "flex",
-
-              justifyContent: "space-evenly",
-            }}
-          >
-            <Grid
-              item
-              xs={12}
-              md={8}
-              lg={9}
-              sx={{ paddingRight: "20px", marginBottom: { xs: "20px" } }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Lato",
-                  fontSize: "2rem",
-                  fontWeight: 700,
-                }}
-              >
-                Customize Your<span style={{ color: "#27488d" }}> Tour</span>
-              </Typography>
-              <Typography sx={{ lineHeight: "24px" }}>
-                You can plan your customized tour as well!.
-              </Typography>
-              <Typography sx={{ lineHeight: "24px" }}>
-                fill the form, we will get back to you!
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              md={4}
-              lg={3}
-              sx={{
-                display: "flex",
-
-                alignItems: "center",
-              }}
-            >
-              <Typography>
-                <Button
-                  sx={{
-                    color: "white",
-                    padding: "15px 50px",
-                    fontWeight: "700",
-                    backgroundColor: "#005D9D",
-                    fontFamily: "poppins",
-                    "&:hover": {
-                      bgcolor: "#27488d",
-                      color: "white",
-                    },
-                  }}
-                  onClick={handleClick}
-                >
-                  CUSTOMIZE
-                  <ArrowRightAltIcon
-                    sx={{ "&:hover": { color: "white" }, color: "white" }}
-                  />
-                </Button>
-              </Typography>
-            </Grid>
-          </Grid>
-        </Container>
-      </Grid>
+      <CustomiseTourPackage />
+      <StartFromTop />
     </Grid>
   );
 };

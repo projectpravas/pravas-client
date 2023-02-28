@@ -63,7 +63,7 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
             <CardHeader
               avatar={
                 <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  AB
+                  KK
                 </Avatar>
               }
               title={
@@ -75,14 +75,14 @@ const ReviewCarousel: React.FunctionComponent<IReviewCarouselProps> = () => {
                     fontFamily: "Open sans",
                   }}
                 >
-                  Abhi Gujar
+                  Kirti Kumar
                 </Typography>
               }
               subheader={
                 <Typography
                   sx={{ color: "#444", opacity: ".5", fontSize: "12px" }}
                 >
-                  September 14, 2016
+                  September 14, 2022
                 </Typography>
               }
               // action={

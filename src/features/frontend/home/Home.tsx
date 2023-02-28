@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 import SearchBar from "./SearchBar";
 import { Helmet } from "react-helmet-async";
 import BlogsHome from "./BlogsHome";
-import TourGallery from "../../../ui/tour-gallary/TourGallary";
+
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { NavLink, Outlet } from "react-router-dom";
@@ -12,6 +12,8 @@ import PravasHomeCarousel from "./PravasHomeCarousel";
 import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 import ReviewCarousel from "./ReviewCarousel";
 import BookingSteps from "./Booking-steps/BookingSteps";
+import CustomiseTourPackage from "../pravas/CustomiseTourPackage";
+
 interface IHomeProps {}
 
 const imgZoom = {

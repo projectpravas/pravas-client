@@ -82,7 +82,7 @@ const FAQ = () => {
     };
 
   return (
-    <Container>
+    <Container sx={{ mt: 2 }}>
       <Grid container spacing={2}>
         {/* ----------------------------------------------------------Accordion Area */}
         <Grid item xs={12} sm={6} md={6}>

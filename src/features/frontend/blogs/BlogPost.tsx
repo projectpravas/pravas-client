@@ -10,6 +10,7 @@ import EastIcon from "@mui/icons-material/East";
 import { styled } from "@mui/system";
 import { NavLink } from "react-router-dom";
 import endPoints from "../../../api/endpoints";
+import moment from "moment";
 
 const ExploreGrid = styled(Grid)({
   transition: "0.7s ease-in-out",
@@ -18,12 +19,27 @@ const ExploreGrid = styled(Grid)({
   },
 });
 
+const DescArea = styled(Typography)`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+`;
+
+const TitleArea = styled(Typography)`
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+`;
+
 interface IBlogPostProps {
   image: string;
   title: string;
   desc: string;
   id: number | any;
   category: any;
+  date?: number;
 }
 const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   image,
@@ -31,7 +47,13 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
   desc,
   id,
   category,
+  date,
 }) => {
+  let dateObj = date && new Date(Number(date));
+  let month = dateObj && dateObj.getMonth() + 1;
+  let year = dateObj && dateObj.getFullYear();
+  let day = dateObj && dateObj.getDate();
+
   return (
     <>
       <Grid container sx={{ pt: 2, px: 2 }}>
@@ -90,7 +112,10 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       color="#fff"
                       fontSize={15}
                     >
-                      02 <b>Jan</b>
+                      <span>
+                        {day} {moment(month).format("MMM")}
+                      </span>
+                      {/* 02 <b>Jan</b> */}
                     </Box>
                   </Box>
                 </Grid>
@@ -150,8 +175,8 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     minHeight: 152,
                   }}
                 >
-                  <Typography
-                    className="blog-post-line-clamp-title"
+                  <TitleArea
+                    // className="blog-post-line-clamp-title"
                     sx={{
                       color: "#005d9d",
                       fontSize: 19,
@@ -160,9 +185,9 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     }}
                   >
                     {title}
-                  </Typography>
-                  <Typography
-                    className="blog-post-line-clamp-p"
+                  </TitleArea>
+                  <DescArea
+                    // className="blog-post-line-clamp-p"
                     sx={{
                       color: "#7a7a7a",
                       fontSize: 16,
@@ -176,7 +201,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         desc.indexOf("</p>")
                       ),
                     }}
-                  ></Typography>
+                  ></DescArea>
                 </Grid>
                 {/* ---------------------Divider-------------------- */}
                 <Divider />

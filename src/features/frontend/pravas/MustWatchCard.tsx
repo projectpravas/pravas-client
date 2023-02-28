@@ -15,15 +15,17 @@ const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
   const loadWatchCard = () => {
     TourService.fetchAllTours()
       .then((response) => {
-        setAllPackageWatch(response?.data?.data);
+        setAllPackageWatch(
+          response?.data?.data.filter(
+            (v: any, i: number) =>
+              v.category == "package" && v.packageStatus == "active"
+          )
+        );
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
-  // console.log("loadWatchCard:", loadWatchCard);
-  // console.log("allPackageWatch:", allPackageWatch);
 
   React.useEffect(() => {
     loadWatchCard();
@@ -61,7 +63,7 @@ const MustWatchcard: React.FunctionComponent<IMustWatchCardProps> = (props) => {
                 (v, i) =>
                   v.category == "package" &&
                   v.packageStatus == "active" &&
-                  v.featured == true
+                  i < 9
               )
               .map((watchCard: any, i: number) => (
                 <Container
