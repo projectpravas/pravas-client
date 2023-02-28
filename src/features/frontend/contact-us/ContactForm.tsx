@@ -2,7 +2,6 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import SendIcon from "@mui/icons-material/Send";
 import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
 import { Formik } from "formik";
 import defineUserYupValidation from "../../../shared/yup-validations/user-validation/usersYupValidation";

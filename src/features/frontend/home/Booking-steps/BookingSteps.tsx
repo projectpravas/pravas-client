@@ -5,31 +5,31 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
 import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined";
-import DirectionsBusFilledOutlinedIcon from "@mui/icons-material/DirectionsBusFilledOutlined";
-import { Avatar } from "@mui/material";
+import ListAltOutlinedIcon from "@mui/icons-material/ListAltOutlined";
+import Avatar from "@mui/material/Avatar";
 
 const data = [
   {
     id: 1,
-    title: "Choose Destination",
+    title: "Find Your Destination",
     desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
     image: "https://fikrimuhal.com/images/our-work-imgs/our-work9.png",
     icon: <RoomOutlinedIcon />,
   },
   {
     id: 2,
-    title: "Make Payment",
+    title: "Fill Your Details",
     desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
     image: "https://cdn-icons-png.flaticon.com/512/1087/1087097.png",
-    icon: <CurrencyRupeeOutlinedIcon />,
+    icon: <ListAltOutlinedIcon />,
   },
   {
     id: 3,
-    title: "Reach to Bus",
+    title: "Make Payment",
     desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
     image:
       "https://img.freepik.com/premium-vector/time-travel-world-vector-design-travel-explore-world-different-countries_572288-755.jpg?w=2000",
-    icon: <DirectionsBusFilledOutlinedIcon />,
+    icon: <CurrencyRupeeOutlinedIcon />,
   },
 ];
 interface IBookingStepsProps {}
@@ -50,16 +50,22 @@ const BookingSteps: React.FunctionComponent<IBookingStepsProps> = (props) => {
   return (
     <>
       <Container sx={{ py: 2 }}>
-        <Grid container spacing={6}>
+        <Grid
+          container
+          spacing={4}
+          sx={{ px: 3 }}
+          justifyContent="center"
+          alignItems="center"
+        >
           {/* Booking Steps */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} alignSelf="center">
             {Array.isArray(data) &&
               data.map((step, i) => (
                 <Grid container key={i} spacing={8}>
                   <Grid item xs={1}>
                     <Avatar
                       sx={{ backgroundColor: "#f7a707" }}
-                      variant="rounded"
+                      variant="circular"
                     >
                       {step?.icon}
                     </Avatar>
@@ -71,10 +77,12 @@ const BookingSteps: React.FunctionComponent<IBookingStepsProps> = (props) => {
                     onMouseEnter={() => handleOpen((i = step.id))}
                     onMouseLeave={handleClose}
                   >
-                    <Typography sx={{ fontSize: 25, fontWeight: 600, pb: 1 }}>
+                    <Typography sx={{ fontSize: 22, fontWeight: 600, pb: 1 }}>
                       {step?.title}
                     </Typography>
-                    <Typography sx={{ fontSize: 15, fontWeight: 450 }}>
+                    <Typography
+                      sx={{ fontSize: 14, fontWeight: 450, color: "#5d5d5d" }}
+                    >
                       {step?.desc}
                     </Typography>
                   </Grid>
@@ -83,16 +91,22 @@ const BookingSteps: React.FunctionComponent<IBookingStepsProps> = (props) => {
           </Grid>
           {/* Steps Images */}
           <Grid item xs={12} md={6}>
-            <Box sx={{ height: 400 }}>
+            <Box
+              sx={{
+                width: 540,
+              }}
+            >
               <img
                 style={{
-                  height: "100%",
                   width: "100%",
+                  // height: "100%",
+                  objectFit: "cover",
                   borderRadius: 9,
                   transition: "1s ease-in-out",
                 }}
-                src={singleImage?.image ? singleImage?.image : data[0]?.image}
-                alt={singleImage?.title}
+                // src={singleImage?.image ? singleImage?.image : data[0]?.image}
+                src="../home-steps-img/destination.webp"
+                // alt={singleImage?.title}
               />
             </Box>
           </Grid>

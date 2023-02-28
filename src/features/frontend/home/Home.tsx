@@ -197,7 +197,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       </Grid>
 
       {/* Booking Steps */}
-      <Grid sx={{ marginTop: 10 }}>
+      <Grid sx={{ marginTop: 4, py: 5, backgroundColor: "#f7a70712" }}>
         <BookingSteps />
       </Grid>
 
@@ -207,9 +207,9 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       </Grid>
 
       {/****************Review Carousel**************/}
-      <Grid order={5}>
+      {/* <Grid order={5}>
         <ReviewCarousel />
-      </Grid>
+      </Grid> */}
 
       {/* *******************Customise tour***************** */}
       <Grid sx={{ marginBottom: "40px" }}>

@@ -70,7 +70,10 @@ const MustWatchBlogDetails: React.FunctionComponent<
               <Divider sx={{ pt: 1 }} />
             </Grid>
           ))}
-        <img src="./adPlaceholder.jpg" style={{ width: "100%" }} />
+        <img
+          src="/adPlaceholder.jpeg"
+          style={{ width: "100%", borderRadius: 5 }}
+        />
       </Grid>
     </>
   );
