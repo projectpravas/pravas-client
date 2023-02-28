@@ -1128,10 +1128,11 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                       )}
                   </AccordionDetails>
                 </Accordion>
-                {/* reviews */}
-                <ReviewSection />
               </div>
             </Box>
+            <Container id="reviewCarousal">
+              <ReviewSection />
+            </Container>
           </Grid>
           {/*---------- *****---Tour Information------***--------- */}
           <Grid item xs={12} md={4} lg={4}>
@@ -1191,12 +1192,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
           </Grid>
         </Grid>
       </Container>
-      <Container id="reviewCarousal">
-        <ReviewSection />
-      </Container>
+
       <StartFromTop />
       <Outlet />
-      {/* ------------------------------------------------------------Reviews Carousal */}
+      {/* -------------------------------Reviews Carousal ----------------------------*/}
       <Container sx={{ mb: 12 }}>
         <Typography
           variant="h3"
@@ -1212,7 +1211,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         </Typography>
         <ExploreReviewCarousal data={tourDetails?.feedbacks as any} />
       </Container>
-      {/* -------------------------------------------------------------Customize Tour  */}
+      {/* ----------------------------Customize Tour  -----------------------------*/}
       <CustomiseTourPackage />
       <StartFromTop />
     </Grid>
