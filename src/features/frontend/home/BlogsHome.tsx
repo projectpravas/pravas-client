@@ -74,7 +74,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
               return (
                 <div
                   style={{ margin: "0 -2" }}
-                  onClick={() => navigate(`/blogs/details/${blog?._id}`)}
+                  // onClick={() => navigate(`/blogs/details/${blog?._id}`)}
                   key={blog?.title + i}
                 >
                   <BlogPost
