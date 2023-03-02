@@ -19,19 +19,26 @@ const ExploreGrid = styled(Grid)({
   },
 });
 
-const DescArea = styled(Typography)`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-`;
-
 const TitleArea = styled(Typography)`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 `;
+
+const DescArea = styled(Typography)({
+  overflow: "hidden",
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 3,
+});
+
+const descAreaStyle = {
+  display: "-webkit-box",
+  "-webkit-line-clamp": 3,
+  "-webkit-box-orient": "vertical",
+  overflow: "hidden",
+};
 
 interface IBlogPostProps {
   image: string;
@@ -193,8 +200,9 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       fontSize: 16,
                       fontWeight: 400,
                       fontFamily: "inherit",
-                      overflow: "hidden",
+                      // overflow: "hidden",
                     }}
+                    style={descAreaStyle}
                     dangerouslySetInnerHTML={{
                       __html: desc.slice(
                         desc.indexOf("<p"),
