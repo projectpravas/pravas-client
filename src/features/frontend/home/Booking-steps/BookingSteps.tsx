@@ -12,7 +12,7 @@ const data = [
   {
     id: 1,
     title: "Find Your Destination",
-    desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
+    desc: "lorem ipsum asd asd sd dw cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
     image: "https://fikrimuhal.com/images/our-work-imgs/our-work9.png",
     icon: <RoomOutlinedIcon />,
   },
