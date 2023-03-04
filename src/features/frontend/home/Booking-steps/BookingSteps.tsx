@@ -12,21 +12,21 @@ const data = [
   {
     id: 1,
     title: "Find Your Destination",
-    desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
+    desc: "We offer a variety of travel options. Choose your dream destination and plan your journey of smiles with us.",
     image: "https://fikrimuhal.com/images/our-work-imgs/our-work9.png",
     icon: <RoomOutlinedIcon />,
   },
   {
     id: 2,
     title: "Fill Your Details",
-    desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
+    desc: "We belive vacations are to relax, explore and spend quality time with your lovedones. So share your details and our team will plan a journey for you.",
     image: "https://cdn-icons-png.flaticon.com/512/1087/1087097.png",
     icon: <ListAltOutlinedIcon />,
   },
   {
     id: 3,
     title: "Make Payment",
-    desc: "lorem ipsum asd asd sd dw  asd  asd  cj jwkc kjo ck kj askjnasicnauicascnAJH  Yacu jyGWYUSDGIAIUCsduy AHIUSDHI  OIUHXJH HSIUD8ANCNKNOIJH IjOIJXIASHChjznch ",
+    desc: "Choose your payment option and easily pay for what you have opt for.",
     image:
       "https://img.freepik.com/premium-vector/time-travel-world-vector-design-travel-explore-world-different-countries_572288-755.jpg?w=2000",
     icon: <CurrencyRupeeOutlinedIcon />,
