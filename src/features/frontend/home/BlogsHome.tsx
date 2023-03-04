@@ -51,6 +51,7 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
   React.useEffect(() => {
     loadBlogs();
   }, []);
+  console.log(data);
 
   return (
     <>
