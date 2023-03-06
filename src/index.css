@@ -30,3 +30,13 @@ code {
 .hideScrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel .owl-nav button.owl-next {
+  width: 48px;
+}
+
+.owl-prev,
+.owl-next {
+  font-size: 48px !important;
+}

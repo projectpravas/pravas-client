@@ -19,19 +19,26 @@ const ExploreGrid = styled(Grid)({
   },
 });
 
-const DescArea = styled(Typography)`
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-`;
-
 const TitleArea = styled(Typography)`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
 `;
+
+const DescArea = styled(Typography)({
+  overflow: "hidden",
+  display: "-webkit-box",
+  WebkitBoxOrient: "vertical",
+  WebkitLineClamp: 3,
+});
+
+const descAreaStyle = {
+  display: "-webkit-box",
+  "-webkit-line-clamp": 3,
+  "-webkit-box-orient": "vertical",
+  overflow: "hidden",
+};
 
 interface IBlogPostProps {
   image: string;
@@ -51,7 +58,6 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
 }) => {
   let dateObj = date && new Date(Number(date));
   let month = dateObj && dateObj.getMonth() + 1;
-  let year = dateObj && dateObj.getFullYear();
   let day = dateObj && dateObj.getDate();
 
   return (
@@ -93,6 +99,10 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         borderRadius: 10,
                         objectFit: "cover",
                       }}
+                      onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src = "placeholder-blogs.png";
+                      }}
                       src={
                         `${endPoints?.serverBaseURL}/${image}`
                           ? `${endPoints?.serverBaseURL}/${image}`
@@ -115,7 +125,6 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       <span>
                         {day} {moment(month).format("MMM")}
                       </span>
-                      {/* 02 <b>Jan</b> */}
                     </Box>
                   </Box>
                 </Grid>
@@ -172,7 +181,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    minHeight: 152,
+                    minHeight: 168,
                   }}
                 >
                   <TitleArea
@@ -193,8 +202,9 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       fontSize: 16,
                       fontWeight: 400,
                       fontFamily: "inherit",
-                      overflow: "hidden",
+                      // overflow: "hidden",
                     }}
+                    style={descAreaStyle}
                     dangerouslySetInnerHTML={{
                       __html: desc.slice(
                         desc.indexOf("<p"),

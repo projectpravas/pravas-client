@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import PravasCardList from "../pravas/PravasCardList";
 import Grid from "@mui/material/Grid";
 import { Typography } from "@mui/material";
+import Blogs from "../blogs/Blogs";
 interface IPravasHomeCarouselProps {}
 
 const options = {

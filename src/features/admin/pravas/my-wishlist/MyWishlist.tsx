@@ -75,23 +75,6 @@ const MyWishlist: React.FunctionComponent<IMyWishlistProps> = () => {
         },
       },
     },
-    {
-      label: "Book Now",
-      name: "",
-      options: {
-        filter: true,
-        sort: true,
-        customBodyRenderLite: (index: any) => {
-          return (
-            <>
-              <IconButton>
-                <Chip label="Book Now" color="primary" />
-              </IconButton>
-            </>
-          );
-        },
-      },
-    },
   ];
 
   const options: object = {

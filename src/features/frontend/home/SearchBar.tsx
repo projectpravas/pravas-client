@@ -162,7 +162,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
                 <Grid sx={{ height: { xs: "34px", md: "35px" } }}>
                   <img
                     style={{ color: "red" }}
-                    src="./Destination-icon.svg"
+                    src="/Destination-icon.svg"
                     width="100%"
                     height="100%"
                     alt=""
@@ -232,12 +232,7 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
               {/* Type Icon  */}
               <Grid item xs={2}>
                 <Grid sx={{ height: { xs: "34px", md: "35px" } }}>
-                  <img
-                    src="./Tour-type.svg"
-                    width="100%"
-                    height="100%"
-                    alt=""
-                  />
+                  <img src="/Tour-type.svg" width="100%" height="100%" alt="" />
                 </Grid>
               </Grid>
               {/* Type Input Field  */}
