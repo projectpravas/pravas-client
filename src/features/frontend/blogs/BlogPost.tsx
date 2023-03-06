@@ -100,6 +100,10 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         borderRadius: 10,
                         objectFit: "cover",
                       }}
+                      onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src = "placeholder-blogs.png";
+                      }}
                       src={
                         `${endPoints?.serverBaseURL}/${image}`
                           ? `${endPoints?.serverBaseURL}/${image}`

@@ -6,6 +6,7 @@ import Pagination from "./Pagination";
 import { Helmet } from "react-helmet-async";
 import BlogService from "../../../services/BlogService";
 import { Outlet, useLocation } from "react-router-dom";
+import { Repeat } from "@mui/icons-material";
 
 interface IBlogsProps {}
 
@@ -51,9 +52,11 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
           <Container>
             <Grid item>
               <Grid
-                container
+                // container
                 padding={1}
                 paddingY={6}
+                display="grid"
+                gridTemplateColumns="repeat(3, 1fr)"
                 justifyContent="space-evenly"
               >
                 {Array.isArray(data) &&
