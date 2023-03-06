@@ -24,6 +24,8 @@ import UserModel from "./shared/models/userModel";
 import { addLoggedUser, selectLoggedUser } from "./app/slices/AuthSlice";
 import AuthService from "./services/AuthService";
 import PageNotFound from "./ui/404/PageNotFound";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 interface ProtectedRouteProps {
   children: ReactComponentElement<any>;
