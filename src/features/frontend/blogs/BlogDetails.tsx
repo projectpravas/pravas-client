@@ -101,8 +101,13 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
                     <Typography
                       sx={{ fontSize: "1rem", textTransform: "capitalize" }}
                     >
-                      {data?.categories.toString()}
-                      {/* {data?.categories.split(",").join(", ") as string} */}
+                      {/* {data?.categories.toString()} */}
+                      {
+                        data?.categories
+                          .toString()
+                          .split(",")
+                          .join(", ") as string
+                      }
                     </Typography>
                   </Box>
                 </Grid>
