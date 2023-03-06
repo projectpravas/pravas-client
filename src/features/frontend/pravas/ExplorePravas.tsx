@@ -57,6 +57,7 @@ import SharePravasCard from "./SharePravasCard";
 import ReviewCarousel from "../home/ReviewCarousel";
 import ExploreReviewCarousal from "./Review-carousal/ExploreReviewCarousal";
 import UserService from "../../../services/UserService";
+import { current } from "@reduxjs/toolkit";
 
 const options = {
   lazyLoad: true,
@@ -184,8 +185,6 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   const [openLoginWindowStatus, setOpenLoginWindowStatus] = useState(false);
   const [currentUser, setCurrentUser] = useState<UserModel>({});
 
-  console.log("tourDetails: ", tourDetails);
-
   const handleClickChange = () => {
     setExpanded("panel1");
   };
@@ -244,13 +243,19 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
         });
   };
 
-  const handleBooking = (price: string, customerId: string, tourId: string) => {
+  const handleBooking = (price: string, cId: string, tourId: string) => {
+    let customerId: any = cId ? cId : currentUser?._id;
     if (!price || !tourId) return errorToast("Failed... Try Again...", 3000);
+
     if (!customerId) {
       handleLoginOpen();
       return;
     }
-    price && customerId && tourId && handlePayment(price, customerId, tourId);
+
+    price &&
+      customerId &&
+      tourId &&
+      handlePayment(price, customerId, tourId, getCurrentUser);
     price && customerId && tourId && getCurrentUser();
   };
 
@@ -281,6 +286,10 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   useEffect(() => {
     getCurrentUser();
   }, []);
+
+  useEffect(() => {
+    setCurrentUser(currentLoggedUser);
+  }, [currentLoggedUser]);
 
   return (
     <Grid>
@@ -741,7 +750,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                       )?._id &&
                                       handleBooking(
                                         obj?.price,
-                                        currentUser?._id as string,
+                                        currentLoggedUser?._id as string,
                                         obj?._id
                                       )
                                     }

@@ -7,6 +7,8 @@ async function getData(tourId: string, customerId: string) {
   let tourDate: any = "";
   let name = "";
 
+  if (!customerId || !tourId) return;
+
   await TourService.fetchOneTour(tourId)
     .then(async (res) => {
       const tour = await res?.data?.data;
@@ -41,7 +43,8 @@ const handleOpenRazorPay = (
   data: any,
   notesData: any,
   tourId: string,
-  customerId: string
+  customerId: string,
+  getCurrentUser: Function
 ) => {
   const options = {
     key: "rzp_test_577RSEw8WtsFyW",
@@ -60,6 +63,7 @@ const handleOpenRazorPay = (
 
         .then((res) => {
           /// successfull payment
+          getCurrentUser();
           return res;
         })
         .catch((err) => {
@@ -93,7 +97,8 @@ const handleOpenRazorPay = (
 const handlePayment = async (
   amount: string,
   customerId: string,
-  tourId: string
+  tourId: string,
+  getCurrentUser: Function
 ) => {
   if (!amount || !customerId || !tourId) return false;
 
@@ -103,7 +108,13 @@ const handlePayment = async (
     BookingService.createOrder(amount)
       .then((result) => {
         // on order creation open RazorPay interface
-        handleOpenRazorPay(result?.data?.data, notesData, tourId, customerId);
+        handleOpenRazorPay(
+          result?.data?.data,
+          notesData,
+          tourId,
+          customerId,
+          getCurrentUser
+        );
       })
       .catch((err) => {
         console.error(err);
