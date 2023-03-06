@@ -33,6 +33,7 @@ import { errorToast, successToast } from "../../../ui/toast/Toast";
 import Container from "@mui/material/Container";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
+import StartFromTop from "../../../ui/GoToTop/StartFromTop";
 
 const today = new Date();
 
@@ -804,6 +805,8 @@ const CustomTourForm: React.FunctionComponent<ICustomTourFormProps> = (
           ""
         )}
       </form>
+
+      <StartFromTop />
     </Container>
   );
 };
