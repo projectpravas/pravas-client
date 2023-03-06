@@ -14,7 +14,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
   const [data, setData] = React.useState<Array<any>>([]);
   // Pagination
   const [currentPage, setCurrentPage] = React.useState(1);
-  const [postPerPage] = React.useState(9);
+  const [postPerPage] = React.useState(3);
   const lastPostIndex = currentPage * postPerPage;
   const firstPostIndex = lastPostIndex - postPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
