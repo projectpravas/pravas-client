@@ -58,7 +58,6 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
 }) => {
   let dateObj = date && new Date(Number(date));
   let month = dateObj && dateObj.getMonth() + 1;
-  let year = dateObj && dateObj.getFullYear();
   let day = dateObj && dateObj.getDate();
 
   return (
@@ -100,6 +99,10 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                         borderRadius: 10,
                         objectFit: "cover",
                       }}
+                      onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src = "placeholder-blogs.png";
+                      }}
                       src={
                         `${endPoints?.serverBaseURL}/${image}`
                           ? `${endPoints?.serverBaseURL}/${image}`
@@ -122,7 +125,6 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                       <span>
                         {day} {moment(month).format("MMM")}
                       </span>
-                      {/* 02 <b>Jan</b> */}
                     </Box>
                   </Box>
                 </Grid>
@@ -179,7 +181,7 @@ const BlogPost: React.FunctionComponent<IBlogPostProps> = ({
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    minHeight: 152,
+                    minHeight: 168,
                   }}
                 >
                   <TitleArea
