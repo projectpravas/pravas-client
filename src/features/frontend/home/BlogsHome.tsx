@@ -8,10 +8,12 @@ interface IOwlCarouselProps {}
 
 const options = {
   margin: 30,
+  autoHeight: true,
   responsiveClass: true,
-  nav: false,
-  dots: false,
-  autoplay: false,
+  nav: true,
+  dots: true,
+  autoplay: true,
+  // loop: true,
   smartSpeed: 1000,
   autoplayTimeout: 2500,
   responsive: {
@@ -51,7 +53,6 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
   React.useEffect(() => {
     loadBlogs();
   }, []);
-  console.log(data);
 
   return (
     <>
@@ -60,21 +61,18 @@ const BlogsHome: React.FunctionComponent<IOwlCarouselProps> = (props) => {
       <Container>
         <OwlCarousel
           {...options}
-          className="owl-theme owl-carousel owl-nav-blogs"
-          lazyLoad={true}
-          loop
-          dots={false}
-          nav={false}
-          autoplay={true}
-          autoplayHoverPause={true}
-          margin={8}
-          style={{ height: 560 }}
+          className="owl-theme owl-carousel owl-nav-blogs "
+          style={{ height: "100%" }}
         >
           {Array.isArray(data) &&
             data?.map((blog, i) => {
               return (
                 <div
-                  style={{ margin: "0 -2" }}
+                  style={{
+                    margin: "0 -2",
+                    width: "100%",
+                    marginBottom: 2,
+                  }}
                   // onClick={() => navigate(`/blogs/details/${blog?._id}`)}
                   key={blog?.title + i}
                 >
