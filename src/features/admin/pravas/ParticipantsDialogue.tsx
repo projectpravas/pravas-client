@@ -520,7 +520,6 @@ const ParticipantsDialogue: React.FunctionComponent<IPaerticipantsDialogue> = ({
                     participants: fetchedParticipants,
                   })
                     .then((res) => {
-                      console.log(res);
                       successToast("Participants added successfully", 3000);
                     })
                     .catch((err) => {

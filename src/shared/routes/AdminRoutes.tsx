@@ -134,7 +134,7 @@ export default [
     path: "bookings",
     showInMenu: true,
     showInSettings: false,
-    roles: ["admin", "superAdmin", "customer"],
+    roles: ["admin", "superAdmin"],
   },
   {
     label: "Enquiries",
