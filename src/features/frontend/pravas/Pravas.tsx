@@ -46,12 +46,11 @@ const Pravas: React.FunctionComponent<IPravasProps> = (props) => {
         <link rel="canonical" href="/pravas" />
       </Helmet>
 
-      <Container sx={{ marginTop: "40px" }}>
-        <SearchBar />
-      </Container>
-
       {showPravas && (
         <>
+          <Container sx={{ marginTop: "40px" }}>
+            <SearchBar />
+          </Container>
           <Container>
             <Grid container marginY={5}>
               <PravasCardList />
