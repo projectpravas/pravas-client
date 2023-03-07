@@ -50,7 +50,7 @@ import ReviewSection from "./ReviewSection";
 import TourModel from "../../../shared/models/tourModel";
 import { useSelector } from "react-redux";
 import { selectLoggedUser } from "../../../app/slices/AuthSlice";
-import { errorToast } from "../../../ui/toast/Toast";
+import { errorToast, successToast } from "../../../ui/toast/Toast";
 import CustomiseTourPackage from "./CustomiseTourPackage";
 import LoginWindow from "../../../ui/loginwindow/LoginWindow";
 import SharePravasCard from "./SharePravasCard";
@@ -255,7 +255,14 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
     price &&
       customerId &&
       tourId &&
-      handlePayment(price, customerId, tourId, getCurrentUser);
+      handlePayment(price, customerId, tourId, getCurrentUser)
+        .then((res: any) => {
+          const msg = res?.data?.data?.message || "Payment Successful";
+          // successToast(msg, 4000);
+        })
+        .catch((err) => {
+          errorToast(err, 3000);
+        });
     price && customerId && tourId && getCurrentUser();
   };
 
@@ -716,6 +723,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                         (t) => t?._id == obj?._id
                                       )?._id
                                         ? "#00a300"
+                                        : Number(obj?.maxPersons) >=
+                                          obj?.participants?.length
+                                        ? "#f7a707"
                                         : "#2c5799",
                                       color: "white",
                                       borderRadius: "15px",
@@ -723,6 +733,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                         (t) => t?._id == obj?._id
                                       )?._id
                                         ? "1px solid #00a300"
+                                        : Number(obj?.maxPersons) >=
+                                          obj?.participants?.length
+                                        ? "1px solid #f7a707"
                                         : "1px solid #2c5799",
                                       fontSize: "12px",
                                       "&:hover": {
@@ -736,11 +749,17 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                           (t) => t?._id == obj?._id
                                         )?._id
                                           ? "1px solid #00a300"
+                                          : Number(obj?.maxPersons) >=
+                                            obj?.participants?.length
+                                          ? "1px solid #f7a707"
                                           : "1px solid #2c5799",
                                         color: currentUser?.tours?.find(
                                           (t) => t?._id == obj?._id
                                         )?._id
                                           ? "#00a300"
+                                          : Number(obj?.maxPersons) >=
+                                            obj?.participants?.length
+                                          ? "#f7a707"
                                           : "#2c5799",
                                       },
                                     }}
@@ -748,6 +767,8 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                       !currentUser?.tours?.find(
                                         (t) => t?._id == obj?._id
                                       )?._id &&
+                                      Number(obj?.maxPersons) >
+                                        obj?.participants?.length &&
                                       handleBooking(
                                         obj?.price,
                                         currentLoggedUser?._id as string,
@@ -759,6 +780,9 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
                                       (t) => t?._id == obj?._id
                                     )?._id
                                       ? "Booked"
+                                      : Number(obj?.maxPersons) >=
+                                        obj?.participants?.length
+                                      ? "Full"
                                       : "Book"}
                                   </Button>
                                 </DataTab>

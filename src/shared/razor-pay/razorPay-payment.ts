@@ -68,6 +68,8 @@ const handleOpenRazorPay = (
         })
         .catch((err) => {
           console.error(err);
+          const msg = err?.response?.data?.message || "Payment Failed";
+          return msg;
         });
     },
     // prefill: {
@@ -90,7 +92,9 @@ const handleOpenRazorPay = (
   try {
     rzp.open();
   } catch (e) {
-    console.log("Error: ", e);
+    console.error("Error: ", e);
+    const msg = "Payment Failed";
+    return msg;
   }
 };
 
@@ -118,6 +122,8 @@ const handlePayment = async (
       })
       .catch((err) => {
         console.error(err);
+        const msg = err?.response?.data?.message || "Payment Failed";
+        return msg;
       });
 };
 
