@@ -159,7 +159,7 @@ const AboutUs: React.FunctionComponent<IAboutUsProps> = (props: any) => {
               backgroundColor: "transparent",
               height: "92%",
               width: { xs: "100%", lg: "84%" },
-              paddingLeft: "0%",
+              paddingX: "0%",
             }}
           >
             <img
