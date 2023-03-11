@@ -25,9 +25,6 @@ import {
 import LocationClick from "./LocationClick";
 import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
 import { endPoints } from "../../../api";
-import { duration } from "@mui/material";
-import { number } from "yup";
-import { SrvRecord } from "dns";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import LoginWindow from "../../../ui/loginwindow/LoginWindow";
