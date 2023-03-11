@@ -11,12 +11,25 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
 import MustWatchBlogDetails from "./MustWatchBlogDetails";
+import { LinearProgress } from "@mui/material";
+import { indigo } from "@mui/material/colors";
 
 interface IBlogDetailsProps {}
 
 const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
   const [data, setData] = React.useState<any>();
   const { id } = useParams();
+  const [scrollBar, setScrollBar] = React.useState(0);
+
+  const onScroll = () => {
+    const winScroll = document.documentElement.scrollTop;
+    const height =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+
+    const scroll = (winScroll / height) * 100;
+    setScrollBar(scroll);
+  };
 
   const loadBlogs = () => {
     BlogService.fetchOneBlog(id as string)
@@ -30,6 +43,10 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
 
   React.useEffect(() => {
     loadBlogs();
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   const navigate = useNavigate();
@@ -42,6 +59,16 @@ const BlogDetails: React.FunctionComponent<IBlogDetailsProps> = () => {
         <meta name="keywords" content={data?.focusKeyphrases} />
         <link rel="canonical" href={`/${data?.slug}/`} />
       </Helmet>
+      <LinearProgress
+        variant="determinate"
+        value={scrollBar}
+        sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 22,
+          color: "red",
+        }}
+      />
 
       <Grid>
         {/* image Area  */}
