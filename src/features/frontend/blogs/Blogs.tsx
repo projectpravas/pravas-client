@@ -17,7 +17,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
   const [postPerPage] = React.useState(9);
   const lastPostIndex = currentPage * postPerPage;
   const firstPostIndex = lastPostIndex - postPerPage;
-  const currentPosts = data.slice(firstPostIndex, lastPostIndex);
+  const currentPosts = data?.slice(firstPostIndex, lastPostIndex);
 
   const loadBlogs = () => {
     BlogService.fetchAllBlogs()
@@ -83,7 +83,7 @@ const Blogs: React.FunctionComponent<IBlogsProps> = (props) => {
             </Grid>
             <Grid item sx={{ mb: 3 }}>
               <Pagination
-                totalPosts={data.length}
+                totalPosts={data?.length}
                 postsPerPage={postPerPage}
                 setCurrentPage={setCurrentPage}
               />

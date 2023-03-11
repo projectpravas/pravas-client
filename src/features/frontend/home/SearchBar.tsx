@@ -201,8 +201,8 @@ const SearchBar: React.FunctionComponent<ISearchBarProps> = (props) => {
                     {Array.from(
                       new Set(
                         allTours
-                          .filter((item) => item?.category == "package")
-                          .map((obj) => obj?.tourLocation)
+                          ?.filter((item) => item?.category == "package")
+                          ?.map((obj) => obj?.tourLocation)
                       )
                     ).map((location, i) => (
                       <MenuItem
