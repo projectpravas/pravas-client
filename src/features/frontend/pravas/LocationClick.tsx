@@ -18,7 +18,7 @@ const LocationClick: React.FunctionComponent<ILocationClickProps> = ({
           <Box key={i}>
             <img
               style={{ width: "700px", height: "550px" }}
-              src={`http://localhost:9999/${image}`}
+              src={`http://181.215.68.168:9999/${image}`}
             />
           </Box>
         ))}
