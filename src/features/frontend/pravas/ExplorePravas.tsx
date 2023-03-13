@@ -233,7 +233,7 @@ const ExplorePravas: React.FunctionComponent<IExplorePravasProps> = (props) => {
   };
 
   const getCurrentUser = () => {
-    currentLoggedUser &&
+    currentLoggedUser?._id &&
       UserService.fetchOneUser(currentLoggedUser?._id as string)
         .then((res) => {
           setCurrentUser(res?.data?.data);
