@@ -143,7 +143,7 @@ const Register = () => {
             sm={4}
             md={7}
             sx={{
-              backgroundImage: `url(http://localhost:9999/${
+              backgroundImage: `url(http://181.215.68.168:9999/${
                 images[Math.floor(Math.random() * images.length)]
               })`,
               backgroundRepeat: "no-repeat",
