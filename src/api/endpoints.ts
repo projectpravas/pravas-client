@@ -1,5 +1,5 @@
 export default {
-  serverBaseURL: "http://181.215.68.168:9999",
+  serverBaseURL: "https://181.215.68.168:443",
   api: {
     users: {
       create: "/users",
