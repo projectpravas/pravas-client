@@ -1,5 +1,5 @@
 export default {
-  serverBaseURL: "https://181.215.68.168:9998",
+  serverBaseURL: "https://pravastourism.com:9998",
   api: {
     users: {
       create: "/users",

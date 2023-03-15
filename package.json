@@ -1,7 +1,7 @@
 {
   "name": "pravas-client",
-  "proxy": "https://181.215.68.168:9998",
-  "homepage": "https://181.215.68.168",
+  "proxy": "https://pravastourism.com:9998",
+  "homepage": "https://pravastourism.com",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
