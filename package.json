@@ -1,6 +1,6 @@
 {
   "name": "pravas-client",
-  "proxy": "https://181.215.68.168:443",
+  "proxy": "https://181.215.68.168:9998",
   "homepage": "https://181.215.68.168",
   "version": "0.1.0",
   "private": true,
@@ -50,7 +50,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && mv build /var/www/pravas",
+    "build": "react-scripts build && cp -r build/* /var/www/pravas/build/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
